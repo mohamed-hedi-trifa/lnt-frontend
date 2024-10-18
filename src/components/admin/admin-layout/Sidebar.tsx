@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { ChatBubbleLeftRightIcon, ClipboardDocumentCheckIcon, ExclamationTriangleIcon, HomeIcon, InformationCircleIcon, ListBulletIcon, MapPinIcon, PencilSquareIcon, PlusIcon, QuestionMarkCircleIcon, TagIcon, UserPlusIcon, UsersIcon } from '@heroicons/react/24/outline';
+import { ChatBubbleLeftRightIcon, ClipboardDocumentCheckIcon, ExclamationTriangleIcon, HomeIcon, InformationCircleIcon, ListBulletIcon, MapPinIcon, PencilSquareIcon, PhotoIcon, PlusIcon, QuestionMarkCircleIcon, TagIcon, TruckIcon, UserPlusIcon, UsersIcon } from '@heroicons/react/24/outline';
 import { Link } from 'gatsby';
 import { useAuthContext } from '../../../contexts/AuthProvider';
 
@@ -34,9 +34,14 @@ export default function Sidebar() {
             </>
                 : <></>}
 
+            <Link to="/admin/services" className="flex flex-row gap-4 p-4 no-underline">
+                <TruckIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
+                <span>Services</span>
+            </Link>
+
             <Link to="/admin/blogs" className="flex flex-row gap-4 p-4 no-underline">
-                <PencilSquareIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
-                <span>Blogs</span>
+                <PhotoIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
+                <span>Galery</span>
             </Link>
 
         </div>

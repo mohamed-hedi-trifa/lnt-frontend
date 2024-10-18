@@ -1,14 +1,24 @@
-import * as React from "react"
-import type { HeadFC, PageProps } from "gatsby"
+import React, { useEffect } from "react";
+import { navigate } from "gatsby";
 
-const IndexPage: React.FC<PageProps> = () => {
-  return (
-    <main>
+const IndexPage = () => {
+    useEffect(() => {
+        const userLang = navigator.language || (navigator as any).userLanguage; // Get user's language
+        const langCode = userLang.split('-')[0]; // Get the language code (e.g., 'fr')
 
-    </main>
-  )
-}
+        // Redirect if the language is supported
+        const supportedLanguages = [`en`, `fr`]; // Add your supported languages here
+        if (supportedLanguages.includes(langCode)) {
+            navigate(`/${langCode}`); // Redirect to the corresponding language page
+        }
+    }, []);
 
-export default IndexPage
+    return (
+        <div>
+            <h1>Welcome to my website!</h1>
+            {/* Other content */}
+        </div>
+    );
+};
 
-export const Head: HeadFC = () => <title>Home Page</title>
+export default IndexPage;

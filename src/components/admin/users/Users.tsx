@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import ReactLoading from "react-loading"
 import AddUserModal from './AddUserModal';
 import EditUserModal from './EditUserModal';
+import Card from '../../Card';
+import Table from '../../Table';
 
 export default function Users() {
 
@@ -79,21 +81,22 @@ export default function Users() {
     return (
         <>
             <div className="max-w-[80rem] p-5 mx-auto">
-                <div className='rounded-lg shadow-lg'>
-                    <div className="flex justify-between items-center bg-gray-100 p-3 rounded-t-lg">
-                        <h5 className=''>Users ( {itemsList?.length} )</h5>
-                        <button type='button' className='bg-blue-600 text-white p-2 rounded' onClick={() => { setModalShow(true) }}>Add User</button>
-                    </div>
-                    <div className="p-5">
-
-                        {itemsList?.length > 0 ? <>
-                            <div className='mx-0 grid grid-cols-12 text-center break-all'>
-                                <div className='pb-3 hidden md:block text-start col-span-1'>ID</div>
-                                <div className='pb-3 text-start col-span-6 md:col-span-4'>User</div>
-                                <div className='pb-3 col-span-3 md:col-span-4'>Role</div>
-                                <div className='pb-3 text-end sm:text-center col-span-3'>Actions</div>
-                            </div>
-                            <div className='divide-y'>
+                <Card
+                    title="users"
+                    right={<button type='button' className='bg-white text-blue-500 font-bold p-2 rounded' onClick={() => { setModalShow(true) }}>Add User</button>}
+                >
+                    <div className="overflow-x-auto">
+                        <div className="min-w-[600px]">
+                            <Table
+                                head={
+                                    <>
+                                        <div className='pb-3 hidden md:block text-start col-span-1'>ID</div>
+                                        <div className='pb-3 text-start col-span-6 md:col-span-4'>User</div>
+                                        <div className='pb-3 col-span-3 md:col-span-4'>Role</div>
+                                        <div className='pb-3 text-end sm:text-center col-span-3'>Actions</div>
+                                    </>
+                                }
+                            >
                                 {itemsList?.map((item: User) => {
                                     return (
 
@@ -111,15 +114,10 @@ export default function Users() {
 
                                     )
                                 })}
-                            </div>
-                        </> : <div className="flex flex-col gap-4 items-center justify-center text-center h-[25vh]">
-
-                            <InboxIcon className="block h-20 w-20" aria-hidden="true" />
-                            <h3 className='text-2xl font-bold'>There is no users</h3>
-
-                        </div>}
+                            </Table>
+                        </div>
                     </div>
-                </div>
+                </Card>
 
             </div>
             <AddUserModal show={modalShow} hide={() => { setModalShow(false); getUsers() }} />

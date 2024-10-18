@@ -30,6 +30,14 @@ const config: GatsbyConfig = {
         "path": "./src/pages/"
       },
       __key: "pages"
+    },
+    {
+      resolve: 'gatsby-plugin-i18n',
+      options: {
+        languages: [`en`, `fr`],
+        langKeyDefault: 'en',
+        useLangKeyLayout: false
+      }
     }]
 };
 
