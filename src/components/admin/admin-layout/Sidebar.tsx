@@ -39,9 +39,14 @@ export default function Sidebar() {
                 <span>Services</span>
             </Link>
 
-            <Link to="/admin/blogs" className="flex flex-row gap-4 p-4 no-underline">
+            <Link to="/admin/posts" className="flex flex-row gap-4 p-4 no-underline">
                 <PhotoIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
                 <span>Galery</span>
+            </Link>
+
+            <Link to="/admin/blog" className="flex flex-row gap-4 p-4 no-underline">
+                <PhotoIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
+                <span>Blog</span>
             </Link>
 
         </div>

@@ -13,7 +13,7 @@ const translations = {
     en: [
         { name: "Home", path: "/" },
         { name: "About us", path: "/about/" },
-        { name: "Services", path: "/services/" },
+        { name: "Activities", path: "/activities/" },
         { name: "Protected armarine", path: "/protected-armarine/" },
         { name: "Festivals", path: "/festivals/" },
         { name: "Contact", path: "/contact/" },
@@ -22,7 +22,7 @@ const translations = {
     fr: [
         { name: "Accueil", path: "/" },
         { name: "À propos", path: "/about/" },
-        { name: "Services", path: "/services/" },
+        { name: "Activities", path: "/activities/" },
         { name: "Protégé armarine", path: "/protected-armarine/" },
         { name: "Festivals", path: "/festivals/" },
         { name: "Contact", path: "/contact/" },
@@ -66,7 +66,7 @@ function Navbar({ location }: { location: any }) {
             <div className="w-full max-w-7xl flex items-center justify-between m-auto px-3 py-4">
                 <Link to={`${lang}/`}>
                     <h2 className="uppercase font-poppins font-light text-xl scr1100:text-3xl text-center transition-all duration-300">
-                        Marine
+                        AKDDCL
                     </h2>
                 </Link>
                 <ul className="hidden min-[950px]:flex gap-4 text-sm list-none">

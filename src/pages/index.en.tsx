@@ -1,10 +1,11 @@
 import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
+import Home from "../components/home/Home"
 
 const IndexPage: React.FC<PageProps> = () => {
   return (
     <main>
-      english version
+      <Home />
     </main>
   )
 }
