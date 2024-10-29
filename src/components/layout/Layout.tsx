@@ -5,28 +5,26 @@
  * See: https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
  */
 
-import * as React from "react"
+import * as React from "react";
 
-import Navbar from "./Navbar"
+import Navbar from "./Navbar";
 
-
-const Layout = ({ children, location = { pathname: "" } }: { children: React.ReactNode, location: any }) => {
-
-    const haveLayout = () => {
-        return location?.pathname.indexOf("/contact") !== 0 && location?.pathname.indexOf("/login") !== 0 && location?.pathname.indexOf("/register") !== 0 && location?.pathname.indexOf("/check-certificate") !== 0
-    }
-
+const Layout = ({ children, location = { pathname: "" } }: { children: React.ReactNode; location: any }) => {
+  const haveLayout = () => {
     return (
-        <>
+      location?.pathname.indexOf("/contact") !== 0 &&
+      location?.pathname.indexOf("/login") !== 0 &&
+      location?.pathname.indexOf("/register") !== 0 &&
+      location?.pathname.indexOf("/check-certificate") !== 0
+    );
+  };
 
-            {haveLayout() ? (
-                <Navbar location={location} />
-            ) : (
-                ""
-            )}
-            <div className="pt-[80px]">{children}</div>
-        </>
-    )
-}
+  return (
+    <>
+      {haveLayout() ? <Navbar location={location} /> : ""}
+      <div className="pt-[80px]">{children}</div>
+    </>
+  );
+};
 
-export default Layout
+export default Layout;
