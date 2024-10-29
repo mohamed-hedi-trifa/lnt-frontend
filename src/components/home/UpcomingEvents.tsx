@@ -168,7 +168,7 @@ export default function UpcomingEvents() {
               </swiper-slide>
             ))}
           </swiper-container>
-          <div className="relative z-10 flex justify-between max-w-[300px] md:max-w-xl mx-auto px-3 translate-y-[-90px] md:translate-y-0">
+          <div className="relative z-10 flex justify-between max-w-[300px] md:max-w-4xl mx-auto px-3 translate-y-[-90px] md:translate-y-0">
             <button id="events-prev">
               <div className="hidden md:block p-[2.5px] rounded-l-xl bg-gradient-to-r from-[#50ACC6] to-[#3344DC]">
                 <div className="flex items-center gap-2 pl-1 pr-4 rounded-l-[10px] bg-white">
@@ -192,7 +192,7 @@ export default function UpcomingEvents() {
               </div>
             </button>
           </div>
-          <button className="block mx-auto mt-4 md:-mt-4 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right">
+          <button className="block mx-auto mt-4 md:-mt-4 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]">
             Voir tous les événements
           </button>
         </article>
