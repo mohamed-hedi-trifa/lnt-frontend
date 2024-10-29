@@ -171,7 +171,7 @@ export default function UpcomingEvents() {
           <div className="relative z-10 flex justify-between max-w-[300px] md:max-w-4xl mx-auto px-3 translate-y-[-90px] md:translate-y-0">
             <button id="events-prev">
               <div className="hidden md:block p-[2.5px] rounded-l-xl bg-gradient-to-r from-[#50ACC6] to-[#3344DC]">
-                <div className="flex items-center gap-2 pl-1 pr-4 rounded-l-[10px] bg-white">
+                <div className="flex items-center gap-2 pl-1 pr-4 rounded-l-[10px] bg-white hover:bg-slate-200 duration-200">
                   <ArrowLeftCircleIcon className="text-primary w-8 h-8" />
                   <p>Previous</p>
                 </div>
@@ -182,7 +182,7 @@ export default function UpcomingEvents() {
             </button>
             <button id="events-next">
               <div className="hidden md:block p-[2.5px] rounded-r-xl bg-gradient-to-r from-[#50ACC6] to-[#3344DC]">
-                <div className="flex items-center gap-2 pl-4 pr-1 rounded-r-[10px] bg-white">
+                <div className="flex items-center gap-2 pl-4 pr-1 rounded-r-[10px] bg-white hover:bg-slate-200 duration-200">
                   <p>Next</p>
                   <ArrowRightCircleIcon className="text-primary w-8 h-8" />
                 </div>
