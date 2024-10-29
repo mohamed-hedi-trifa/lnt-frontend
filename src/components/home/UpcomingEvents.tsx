@@ -155,7 +155,7 @@ export default function UpcomingEvents() {
   }, []);
 
   return (
-    <section className="px-3 py-10">
+    <section className="px-3 py-20">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-primary text-3xl text-center font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
           Événements à venir

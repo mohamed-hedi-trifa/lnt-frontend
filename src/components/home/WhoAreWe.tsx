@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 export default function WhoAreWe() {
   return (
-    <section className="relative px-3 py-10 bg-slate-100 isolate">
+    <section className="relative px-3 py-20 bg-slate-100 isolate">
       <div className="absolute top-0 left-0 z-[-1] w-[120px]  h-[200px] bg-[radial-gradient(circle,#cbd5e1_3px,transparent_1px)] bg-[length:12px_12px]"></div>
       <div className="absolute bottom-0 right-0 z-[-1] w-[120px]  h-[200px] bg-[radial-gradient(circle,#cbd5e1_3px,transparent_1px)] bg-[length:12px_12px]"></div>
       <div className="grid md:grid-cols-2 gap-3 items-center max-w-7xl mx-auto">

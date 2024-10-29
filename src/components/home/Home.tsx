@@ -3,6 +3,7 @@ import NewsLetterSub from "../NewsLetterSub";
 import Hero from "./Hero";
 import UpcomingEvents from "./UpcomingEvents";
 import WhoAreWe from "./WhoAreWe";
+import Archipel from "./Archipel";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Hero />
       <UpcomingEvents />
       <WhoAreWe />
+      <Archipel />
     </div>
   );
 }
