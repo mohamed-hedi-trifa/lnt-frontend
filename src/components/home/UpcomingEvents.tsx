@@ -4,6 +4,7 @@ import Swiper, { SwiperOptions } from "swiper";
 import { SwiperSlideProps } from "swiper/react";
 import UpcomingEventCard from "./UpcomingEventCard";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import LangLink from "../LangLink";
 type Kebab<T extends string, A extends string = ""> = T extends `${infer F}${infer R}`
   ? Kebab<R, `${A}${F extends Lowercase<F> ? "" : "-"}${Lowercase<F>}`>
   : A;
@@ -192,9 +193,12 @@ export default function UpcomingEvents() {
               </div>
             </button>
           </div>
-          <button className="block mx-auto mt-4 md:-mt-4 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]">
+          <LangLink
+            to="/events"
+            className="block w-fit mx-auto mt-4 md:-mt-4 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
+          >
             Voir tous les événements
-          </button>
+          </LangLink>
         </article>
       </div>
     </section>

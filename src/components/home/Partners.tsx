@@ -42,8 +42,8 @@ export default function Partners() {
           notre impact et aide à protéger notre environnement marin tout en enrichissant notre communauté.
         </p>
         <div className="mt-8 grid grid-cols-3 md:grid-cols-5 gap-10 place-items-center">
-          {partners.map((partner) => (
-            <div className="h-20">
+          {partners.map((partner, index) => (
+            <div key={index} className="h-20">
               <img src={partner.image} alt="" className="h-full object-contain" />
             </div>
           ))}

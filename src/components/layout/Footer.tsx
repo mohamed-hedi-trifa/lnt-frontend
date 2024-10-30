@@ -1,8 +1,11 @@
 import { Link } from "gatsby";
 import React, { useEffect } from "react";
 import NewsLetterSub from "../NewsLetterSub";
+import LangLink from "../LangLink";
 
 export default function Footer() {
+  const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
+
   return (
     <footer className="px-3 py-20 bg-gradient-to-r from-[#51ADC6] to-[#006E9F]">
       <div className="max-w-7xl mx-auto text-white">
@@ -24,7 +27,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               {links.map((element) => (
                 <li key={element.text} className="hover:text-sky-900 duration-200">
-                  <Link to={element.path}>{element.text}</Link>
+                  <LangLink to={element.path}>{element.text}</LangLink>
                 </li>
               ))}
             </ul>

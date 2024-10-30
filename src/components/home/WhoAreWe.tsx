@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import LangLink from "../LangLink";
 
 export default function WhoAreWe() {
   return (
@@ -37,9 +38,12 @@ export default function WhoAreWe() {
             notre environnement et de nos traditions, tout en créant des opportunités pour les générations futures. Notre mission est de rassembler la
             communauté autour de valeurs de durabilité, de culture et de solidarité pour bâtir un avenir meilleur pour notre île et ses habitants.
           </p>
-          <button className="block mt-4 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]">
+          <LangLink
+            to="/who-are-we"
+            className="block w-fit mt-4 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
+          >
             En savoir plus
-          </button>
+          </LangLink>
         </article>
       </div>
     </section>

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import NewsCard from "./NewsCard";
+import { Link } from "gatsby";
+import LangLink from "../LangLink";
 
 type News = {
   image?: string;
@@ -78,18 +80,21 @@ export default function LatestNews() {
           Dernières actualités
         </h2>
         <div className="grid md:grid-cols-3 gap-5 mt-5">
-          {news.slice(0, 3).map((news) => (
-            <NewsCard news={news} />
+          {news.slice(0, 3).map((news, index) => (
+            <NewsCard key={index} news={news} />
           ))}
         </div>
         <div className="hidden md:grid md:grid-cols-3 gap-5 mt-5">
-          {news.slice(3, 6).map((news) => (
-            <NewsCard news={news} />
+          {news.slice(3, 6).map((news, index) => (
+            <NewsCard key={index} news={news} />
           ))}
         </div>
-        <button className="block mx-auto mt-8 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]">
+        <LangLink
+          to="/news"
+          className="block w-fit mx-auto mt-8 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
+        >
           Voir tous les actualités
-        </button>
+        </LangLink>
       </div>
     </section>
   );

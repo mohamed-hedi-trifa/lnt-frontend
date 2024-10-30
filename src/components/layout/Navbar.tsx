@@ -2,6 +2,7 @@ import { Link } from "gatsby";
 import React from "react";
 import Dropdown from "../Dropdown";
 import { Bars3Icon, GlobeAltIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import LangLink from "../LangLink";
 
 interface NavItem {
   name: string;
@@ -80,9 +81,12 @@ function Navbar({ location }: { location: any }) {
               <MagnifyingGlassIcon className="h-8 w-8 text-white -scale-x-100" />
             </button>
             <div className="hidden md:inline h-8 w-px bg-white"></div>
-            <button className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right">
+            <LangLink
+              to="/benevole"
+              className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right"
+            >
               DEVENIR BÉNÉVOLE
-            </button>
+            </LangLink>
             <button className="flex items-center">
               <GlobeAltIcon className="h-8 w-8 text-white" />
               <p className="text-white font-bold">EN</p>
