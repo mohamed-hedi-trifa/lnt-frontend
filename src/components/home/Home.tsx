@@ -5,6 +5,7 @@ import UpcomingEvents from "./UpcomingEvents";
 import WhoAreWe from "./WhoAreWe";
 import Archipel from "./Archipel";
 import LatestNews from "./LatestNews";
+import Partners from "./Partners";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <WhoAreWe />
       <Archipel />
       <LatestNews />
+      <Partners />
     </div>
   );
 }
