@@ -7,6 +7,7 @@ import Archipel from "./Archipel";
 import LatestNews from "./LatestNews";
 import Partners from "./Partners";
 import ContactUs from "./ContactUs";
+import Scientific from "./Scientific";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <UpcomingEvents />
       <WhoAreWe />
       <Archipel />
+      <Scientific />
       <LatestNews />
       <Partners />
       <ContactUs />

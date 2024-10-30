@@ -34,8 +34,8 @@ declare global {
     }
 
     interface SwiperContainerAttributes extends KebabObjectKeys<SwiperOptions> {
-      ref?: RefObject<SwiperRef>;
-      children?: ReactNode;
+      ref?: React.RefObject<SwiperRef>;
+      children?: React.ReactNode;
     }
     interface SwiperSlideAttributes extends KebabObjectKeys<SwiperSlideProps> {}
   }
