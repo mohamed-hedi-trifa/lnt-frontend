@@ -32,7 +32,7 @@ export default function ContactUs() {
               className="w-full px-4 py-2 rounded border-[2px] border-slate-400 text-sm"
             />
             <input
-              type="text"
+              type="email"
               value={input.email}
               onChange={(e) => setInput((prev) => ({ ...prev, email: e.target.value }))}
               placeholder="Email"

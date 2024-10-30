@@ -8,6 +8,7 @@
 import * as React from "react";
 
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const Layout = ({ children, location = { pathname: "" } }: { children: React.ReactNode; location: any }) => {
   const haveLayout = () => {
@@ -23,6 +24,7 @@ const Layout = ({ children, location = { pathname: "" } }: { children: React.Rea
     <>
       {haveLayout() ? <Navbar location={location} /> : ""}
       <div className="pt-[80px]">{children}</div>
+      <Footer />
     </>
   );
 };
