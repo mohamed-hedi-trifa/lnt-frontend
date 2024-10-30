@@ -1,8 +1,9 @@
 import { Link } from "gatsby";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Dropdown from "../Dropdown";
-import { Bars3Icon, GlobeAltIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, ChevronDownIcon, GlobeAltIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import LangLink from "../LangLink";
+import NavDropdown from "../NavDropdown";
 
 interface NavItem {
   name: string;
@@ -33,6 +34,8 @@ const translations = {
 };
 
 function Navbar({ location }: { location: any }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+
   // Extract the language from the URL path (assuming it's the first part of the path, e.g., /en/ or /fr/)
   const lang = location?.pathname.startsWith("/fr/") ? "fr" : "en";
 
@@ -65,17 +68,27 @@ function Navbar({ location }: { location: any }) {
     });
   };
 
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > window.innerHeight - 100) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    });
+  }, []);
+
   return (
     <div className="fixed z-30 w-full">
-      <header className="w-full px-3 py-1.5 bg-primary/25">
+      <header className={`w-full px-3 py-1.5 bg-slate-900 ${isScrolled ? "" : "bg-opacity-25"} duration-200`}>
         <div className="flex items-center justify-between max-w-7xl mx-auto ">
-          <div className="flex gap-1 items-center">
+          <LangLink to="/" className="flex gap-1 items-center">
             <img src="/logo.png" alt="AKDDCL" className="w-11 h-11 shrink-0" />
             <p className="max-w-[200px] text-white text-xs font-bold">
               <span className="hidden md:inline">Association Kratten du Développement Durable de la Culture et du Loisir</span>
               <span className="inline md:hidden">AKDDCL</span>
             </p>
-          </div>
+          </LangLink>
           <div className="flex gap-3 items-center">
             <button className="hidden md:block">
               <MagnifyingGlassIcon className="h-8 w-8 text-white -scale-x-100" />
@@ -97,15 +110,40 @@ function Navbar({ location }: { location: any }) {
           </div>
         </div>
       </header>
-      <nav className="hidden md:block w-full px-3 py-1.5 bg-slate-700/50">
+      <nav className={`hidden md:block w-full px-3 py-0.5 bg-slate-700 ${isScrolled ? "" : "bg-opacity-50"} duration-200`}>
         <ul className="flex items-center justify-between w-full max-w-7xl mx-auto text-white text-[10px] lg:text-sm">
-          <li>Qui Somme-Nous</li>
-          <li>Air Marine et Côtière Protégée</li>
-          <li>Notre Festival</li>
-          <li>Actualités</li>
-          <li>Evénements</li>
-          <li>Opportuniés</li>
-          <li>Contact</li>
+          {items.map((item, index) => {
+            if (item.items) {
+              return (
+                <li key={index}>
+                  <NavDropdown
+                    items={item.items}
+                    position="left"
+                    renderItem={(item) => (
+                      <LangLink to={item.path || ""} className="block py-2 px-3 rounded font-normal text-black hover:bg-slate-200 transition duration-300">
+                        {item.label}
+                      </LangLink>
+                    )}
+                  >
+                    {(isOpen) => (
+                      <button className={`flex items-center gap-2 hover:underline underline-offset-4`}>
+                        {item.label}
+                        <ChevronDownIcon className={`w-6 h-6 duration-200 ${isOpen ? "-rotate-180" : ""}`} />
+                      </button>
+                    )}
+                  </NavDropdown>
+                </li>
+              );
+            } else {
+              return (
+                <li key={index} className="">
+                  <LangLink to={item.path} className="block py-2 font-open font-normal transition duration-500 hover:underline underline-offset-4">
+                    {item.label}
+                  </LangLink>
+                </li>
+              );
+            }
+          })}
         </ul>
       </nav>
     </div>
@@ -113,3 +151,111 @@ function Navbar({ location }: { location: any }) {
 }
 
 export default Navbar;
+
+const items = [
+  {
+    label: "Qui Somme-nous",
+    items: [
+      {
+        label: "Notre Histoire",
+        path: "/history",
+      },
+      {
+        label: "Principes et Valeurs",
+        path: "/values",
+      },
+      {
+        label: "Nos Réalisations",
+        path: "/achievements",
+      },
+      {
+        label: "Notre Équipe",
+        path: "/team",
+      },
+      {
+        label: "Partenaires",
+        path: "/partners",
+      },
+      {
+        label: "Rapport Financier",
+        path: "/financial-report",
+      },
+    ],
+  },
+  {
+    label: "Air Marine et Côtière Protégée",
+    items: [
+      {
+        label: "Info",
+        path: "/info",
+      },
+      {
+        label: "Suivi Scientifique",
+        path: "/scientific-research",
+      },
+      {
+        label: "Formation et Campement Scientifique",
+        path: "/achievements",
+      },
+      {
+        label: "Équipe",
+        path: "/team",
+      },
+    ],
+  },
+  {
+    label: "Notre Festival",
+    items: [
+      {
+        label: "Prochains Festivals",
+        path: "/next-festivals",
+      },
+      {
+        label: "Éditions Précédentes",
+        path: "/previous-editions",
+      },
+    ],
+  },
+  {
+    label: "Actualités",
+    path: "/news",
+  },
+  {
+    label: "Événements",
+    items: [
+      {
+        label: "Ateliers et Formations",
+        path: "/training-sessions",
+      },
+      {
+        label: "Événements Culturels",
+        path: "/culturel-events",
+      },
+      {
+        label: "Activités de Loisirs et Sportives",
+        path: "/sport-events",
+      },
+    ],
+  },
+  {
+    label: "Opportunités",
+    items: [
+      {
+        label: "Offres d'Emplois",
+        path: "/job-offers",
+      },
+      {
+        label: "Appels d'Offres",
+        path: "/tenders",
+      },
+      {
+        label: "Stages",
+        path: "/internships",
+      },
+    ],
+  },
+  {
+    label: "Contact",
+    path: "/contact",
+  },
+];

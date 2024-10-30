@@ -148,7 +148,7 @@ export default function Scientific() {
             <p className="font-bold text-white text-sm">{activeResearch.importance}</p>
           </div>
         </div>
-        <div className="mt-6 grid grid-cols-[repeat(3,minmax(auto,300px))] gap-3 justify-between">
+        <div className="mt-6 grid grid-cols-[repeat(2,minmax(auto,300px))] md:grid-cols-[repeat(3,minmax(auto,300px))] gap-3 justify-between">
           {researches.map((research, index) => (
             <div
               onMouseEnter={() => {
