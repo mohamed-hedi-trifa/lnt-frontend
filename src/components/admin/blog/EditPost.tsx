@@ -247,7 +247,6 @@ const EditPost = ({ location, params }: { location: any, params: any }) => {
             <div className=" mb-1 ">
               <Button
                 type="button"
-                bg="bg-white"
                 customClassnames=" !py-1 !px-3 !text-xs !flex justify-center items-center  "
                 onClick={() => addNewItem("title")}
               >
@@ -258,7 +257,6 @@ const EditPost = ({ location, params }: { location: any, params: any }) => {
             <div className=" mb-1 ">
               <Button
                 type="button"
-                bg="bg-white"
                 customClassnames=" !py-1 !px-3 !text-xs !flex justify-center items-center "
                 onClick={() => addNewItem("text")}
               >
@@ -269,8 +267,7 @@ const EditPost = ({ location, params }: { location: any, params: any }) => {
             <div className=" mb-1 ">
               <Button
                 type="button"
-                bg="bg-white"
-                customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center "
+                customClassnames="bg-primary !py-1 !px-3 !text-xs !flex justify-center items-center "
                 onClick={() => addNewItem("image")}
               >
                 <PlusIcon className="h-4 w-4" />
@@ -280,8 +277,7 @@ const EditPost = ({ location, params }: { location: any, params: any }) => {
             <div className=" mb-1 ">
               <Button
                 type="button"
-                bg="bg-white"
-                customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center "
+                customClassnames="bg-primary !py-1 !px-3 !text-xs !flex justify-center items-center "
                 onClick={() => addNewItem("pdf")}
               >
                 <PlusIcon className="h-4 w-4" />

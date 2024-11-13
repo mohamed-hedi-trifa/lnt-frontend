@@ -3,7 +3,7 @@ import { ChatBubbleLeftRightIcon, ClipboardDocumentCheckIcon, ExclamationTriangl
 import { Link } from 'gatsby';
 import { useAuthContext } from '../../../contexts/AuthProvider';
 
-export default function Sidebar() {
+export default function SidebarAdmin() {
 
     const { user, setUser } = useAuthContext()
 

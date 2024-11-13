@@ -21,7 +21,7 @@ export default function Post({ post }: { post: any }) {
         <div className='text-sm flex items-center posts-center gap-2'>
           <span className='font-semibold text-gray-500'>languages available:</span>
           {post.title_en && <div className='bg-gray-600 text-white font-bold p-1 rounded'>en</div>}
-          {post.title_fr && <div className='bg-gray-600 text-white font-bold p-1 rounded'>ar</div>}
+          {post.title_fr && <div className='bg-gray-600 text-white font-bold p-1 rounded'>fr</div>}
         </div>
       </section>
     </Link>
