@@ -158,7 +158,7 @@ const items = [
     items: [
       {
         label: "Notre Histoire",
-        path: "/history",
+        path: "/who-are-we/our-history",
       },
       {
         label: "Principes et Valeurs",
@@ -170,7 +170,7 @@ const items = [
       },
       {
         label: "Notre Équipe",
-        path: "/team",
+        path: "/who-are-we/our-team",
       },
       {
         label: "Partenaires",

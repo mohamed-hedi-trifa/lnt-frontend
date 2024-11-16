@@ -3,7 +3,7 @@ import React from 'react'
 export default function PageTitle({ title, width }: { title: string, width?: string }) {
     return (
         <section className='my-8'>
-            <div className='flex justify-center'>
+            <div className='ml-[750px]'>
                 <div className='flex flex-col items-start'>
                     <h1 className='text-primary font-bold text-[64px]'>{title}</h1>
                     <div className="flex gap-2 mt-[-8px]">
