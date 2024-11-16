@@ -9,6 +9,7 @@ import jamilK from "../../../../images/JamilK.png"
 import karimB from "../../../../images/KarimB.png"
 import najahH from "../../../../images/NajahH.png"
 import ImageHistoire from './ImageHistoire'
+import historyHero from "../../../../images/history-hero.jpg";
 
 const IMAGES = [
     ahmedYellow,
@@ -24,6 +25,7 @@ export default function OurTeam() {
 
     return (
         <div className=''>
+            <img className='w-full object-cover h-[80vh]' src={historyHero} />
             <PageTitle title='Our Team' width='w-[160px]' />
             <section>
                 <div className='max-w-6xl mx-auto'>

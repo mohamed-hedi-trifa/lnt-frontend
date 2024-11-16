@@ -1,31 +1,16 @@
 import React from 'react'
 import PageTitle from '../../../PageTitle'
 import Sidebar from '../../../layout/Sidebar'
-import ahmedYellow from "../../../../images/ahmed-yellow.png"
-import fatmaB from "../../../../images/FatmaB.png"
-import habibK from "../../../../images/HabibK.png"
-import hakimS from "../../../../images/HakimS.png"
-import jamilK from "../../../../images/JamilK.png"
-import karimB from "../../../../images/KarimB.png"
-import najahH from "../../../../images/NajahH.png"
 import ImageHistoire from '../our-team/ImageHistoire'
 import Keyword from './Keyword'
-
-const IMAGES = [
-    ahmedYellow,
-    fatmaB,
-    habibK,
-    hakimS,
-    jamilK,
-    karimB,
-    najahH
-]
+import historyHero from "../../../../images/history-hero.jpg";
 
 export default function OurHistory() {
 
     return (
         <div className=''>
-            <PageTitle title='Our Team' width='w-[160px]' />
+            <img className='w-full object-cover h-[80vh]' src={historyHero} />
+            <PageTitle title='Our History' width='w-[160px]' />
             <section>
                 <div className='max-w-6xl mx-auto'>
                     <section className='w-full flex relative gap-8 py-10'>

@@ -23,7 +23,7 @@ const Layout = ({ children, location = { pathname: "" } }: { children: React.Rea
   return (
     <>
       {haveLayout() ? <Navbar location={location} /> : ""}
-      <div className="pt-[100px]">{children}</div>
+      <div className="">{children}</div>
       <Footer />
     </>
   );

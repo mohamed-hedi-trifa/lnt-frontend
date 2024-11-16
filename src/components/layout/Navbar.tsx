@@ -162,11 +162,11 @@ const items = [
       },
       {
         label: "Principes et Valeurs",
-        path: "/values",
+        path: "/who-are-we/our-values",
       },
       {
         label: "Nos Réalisations",
-        path: "/achievements",
+        path: "/who-are-we/our-achievements",
       },
       {
         label: "Notre Équipe",
