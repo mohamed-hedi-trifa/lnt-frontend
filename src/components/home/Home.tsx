@@ -11,7 +11,7 @@ import Scientific from "./Scientific";
 
 export default function Home() {
   return (
-    <div className="mt-[-80px]">
+    <div className="">
       <Hero />
       <UpcomingEvents />
       <WhoAreWe />

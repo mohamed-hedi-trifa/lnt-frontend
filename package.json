@@ -34,6 +34,7 @@
     "postcss": "^8.4.47",
     "react": "^18.2.0",
     "react-animation-on-scroll": "^5.1.0",
+    "react-date-range": "^2.0.1",
     "react-dom": "^18.2.0",
     "react-loading": "^2.0.3",
     "react-sortable-hoc": "^2.0.0",
@@ -45,6 +46,7 @@
   "devDependencies": {
     "@types/node": "^20.11.19",
     "@types/react": "^18.2.55",
+    "@types/react-date-range": "^1.4.9",
     "@types/react-dom": "^18.2.19",
     "typescript": "^5.3.3"
   }

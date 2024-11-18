@@ -174,11 +174,11 @@ const items = [
       },
       {
         label: "Partenaires",
-        path: "/partners",
+        path: "/who-are-we/partners",
       },
       {
         label: "Rapport Financier",
-        path: "/financial-report",
+        path: "/who-are-we/financial-report",
       },
     ],
   },
