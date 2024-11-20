@@ -1,8 +1,7 @@
 import React from 'react';
-import './keywordsStyle.css'
 
 // The component
-const Keyword = () => {
+const KeyMoments = () => {
   const items = [
     "2014 : Création de l'association et premières actions de sensibilisation.",
     "2016 : Organisation du premier Festival de la Culture des Îles Méditerranéennes de Kerkennah.",
@@ -12,23 +11,15 @@ const Keyword = () => {
 
   return (
     <div>
-      <h3 className='keywords'>Moments Clés :</h3>
+      <h3 className='text-primary font-bold text-4xl leading-10 flex justify-center'>Moments Clés :</h3>
       <br></br>
       <ul>
         {items.map((item, index) => (
-          <li className='itemsCertifications' key={index} style={{
-            fontSize: '14px',
-            fontWeight: '500',
-            lineHeight: '36px',
-            textAlign: 'left',
-            textUnderlinePosition: 'from-font',
-            textDecorationSkipInk: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            marginBottom: '16px'
-          }}>
+          <li className=' !pl-0 flex gap-6 text-lg sm:text-2xl font-medium leading-9' key={index}>
+            <div className='shrink-0 pt-1'>
             <img src={'/icons/certificate.png'} width="20px" height="25px"/>
-            <p className='itemDescription'>{item}</p>
+            </div>
+            <div className=''>{item}</div>
           </li>
         ))}
       </ul>
@@ -36,4 +27,4 @@ const Keyword = () => {
   );
 }
 
-export default Keyword;
+export default KeyMoments;
