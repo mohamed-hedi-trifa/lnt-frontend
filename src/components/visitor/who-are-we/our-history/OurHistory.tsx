@@ -10,11 +10,11 @@ export default function OurHistory() {
 
     return (
         <div className=''>
-            <img className='w-full object-cover h-[80vh]' src={historyHero} />
+            <img className='w-full object-cover h-[50vh] sm:h-[80vh]' src={historyHero} />
             <PageTitle title='Our History' width='w-[160px]' />
             <section className='px-4 sm:px-0'>
                 <div className='max-w-6xl mx-auto'>
-                    <section className='w-full flex flex-col sm:flex-row relative gap-8 py-10'>
+                    <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
                     <Sidebar />
 
                     <section className='w-fit flex flex-col gap-12'>

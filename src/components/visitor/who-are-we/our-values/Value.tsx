@@ -13,21 +13,20 @@ const Value: React.FC<ValueProps> = ({ title, description, imageUrl,titlesrc }) 
     <div className="flex flex-col">
          <div className="flex items-center justify-center ">
          </div>
-      <div className="flex items-center justify-center ">
+      <div className="flex items-center justify-start ">
         <div className=" rounded-lg ">
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2 ">
                 <img src={titlesrc}/>
-                <h2 className="text-xl font-bold mt-4">{title}</h2>
+                <span className="text-[24px] sm:text-[30px] font-bold">{title}</span>
             </div>
           
-            <div className="text-center md:text-left ">
-            <p className=" text-justify descriptionText">
-            Notre association, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), est profondément enracinée dans la préservation du patrimoine unique de Kerkennah et engagée dans le développement durable. Nos principes et valeurs guident chaque initiative, de la protection de l’environnement à l’inclusion sociale, et reflètent notre vision d’une communauté prospère et autonome.
+            <div className=" md:text-left  w-[372px] lg:w-[650px]">
+            <p className=" text-justify">
+            {description}
             </p>
         </div>
-          <div className="flex justify-center items-center">
+          <div className="flex justify-start items-center">
           <img src={imageUrl} alt={title} className="lg:w-[650px] lg:h-[433px] w-[372px] h-[248px] object-cover rounded-lg mt-4 "/>
-
           </div>
         </div>
       </div>

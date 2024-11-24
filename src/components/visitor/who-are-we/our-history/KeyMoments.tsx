@@ -10,10 +10,10 @@ const KeyMoments = () => {
   ];
 
   return (
-    <div>
+    <div className='px-3'>
       <h3 className='text-primary font-bold text-4xl leading-10 flex justify-center'>Moments Clés :</h3>
       <br></br>
-      <ul>
+      <ul className='flex flex-col gap-7 sm:gap-10'>
         {items.map((item, index) => (
           <li className=' !pl-0 flex gap-6 text-lg sm:text-2xl font-medium leading-9' key={index}>
             <div className='shrink-0 pt-1'>

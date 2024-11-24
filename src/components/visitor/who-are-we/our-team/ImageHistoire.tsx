@@ -35,10 +35,10 @@ const ImageHistoire = () => {
   ];
 
   return (
-    <div className='images flex justify-center items-center flex-col'>
+    <div className='images flex justify-center items-center flex-col my-10'>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         {images.map((image, index) => (
-          <div key={index} className="w-full rounded-[10px] relative group my-10">
+          <div key={index} className="w-full rounded-[10px] relative group">
             <img
               src={image.src}
               className=" object-cover rounded-[10px] w-[372px] h-[297px] lg:w-[450px] lg:h-[200px]"
@@ -75,8 +75,8 @@ const ImageHistoire = () => {
 
       {/** **/}
 
-      <div className="flex justify-center mt-6">
-          <div key={4} className="w-full rounded-[10px] relative group col-span-2 flex items-end justify-end my-10">
+      <div className="flex justify-center">
+          <div key={4} className="w-full rounded-[10px] relative group col-span-2 flex items-end justify-end my-6">
             <img
               className=" object-cover rounded-[10px] w-full h-[297px] lg:w-[450px] lg:h-[200px] "
 
