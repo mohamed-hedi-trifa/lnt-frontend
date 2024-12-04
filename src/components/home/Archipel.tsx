@@ -1,6 +1,7 @@
 import { Link } from "gatsby";
 import React, { useEffect, useRef, useState } from "react";
 import LangLink from "../LangLink";
+import Button from "../Button";
 
 export default function Archipel() {
   return (
@@ -24,9 +25,11 @@ export default function Archipel() {
           </p>
           <LangLink
             to="/aire"
-            className="block w-fit mt-4 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
+            className="block mt-4"
           >
+            <Button variant="primary">
             En savoir plus
+            </Button>
           </LangLink>
         </article>
         <article className="shrink-0 w-full md:w-5/12 max-w-[400px]">

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import LangLink from "../LangLink";
+import Button from "../Button";
 
 export default function WhoAreWe() {
   return (
@@ -22,7 +23,7 @@ export default function WhoAreWe() {
           <h2 className="text-primary text-2xl font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
             Qui Somme-Nous
           </h2>
-          <p className="mt-3 text-lg md:text-2xl font-bold">Association Kratten du Développement Durable de la Culture et du Loisir</p>
+          <p className="mt-3 text-lg md:text-3xl font-bold">Association Kratten du Développement Durable de la Culture et du Loisir</p>
           <div className="mt-2 flex gap-2">
             <div className="h-[5px] w-5 bg-[#006E9F]"></div>
             <div className="h-[5px] w-20 bg-[#006E9F]"></div>
@@ -40,9 +41,11 @@ export default function WhoAreWe() {
           </p>
           <LangLink
             to="/who-are-we"
-            className="block w-fit mt-4 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
+            className="block mt-4"
           >
+            <Button variant="primary">
             En savoir plus
+            </Button>
           </LangLink>
         </article>
       </div>

@@ -158,11 +158,11 @@ export default function UpcomingEvents() {
   return (
     <section className="px-3 py-20">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-primary text-3xl text-center font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
+        <h2 className="text-primary text-[40px] text-center font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
           Événements à venir
         </h2>
         <article className="mt-10">
-          <swiper-container ref={swiperRef} class="w-full mx-auto max-w-[300px] md:max-w-4xl" init="false">
+          <swiper-container ref={swiperRef} class="w-full mx-auto max-w-[300px] md:max-w-7xl" init="false">
             {events?.map((event, index) => (
               <swiper-slide key={index} class="relative pb-10">
                 <UpcomingEventCard event={event} />
@@ -195,7 +195,7 @@ export default function UpcomingEvents() {
           </div>
           <LangLink
             to="/events"
-            className="block w-fit mx-auto mt-4 md:-mt-4 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
+            className="block w-fit mx-auto mt-4 md:-mt-4 px-5 py-4 text-white font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
           >
             Voir tous les événements
           </LangLink>

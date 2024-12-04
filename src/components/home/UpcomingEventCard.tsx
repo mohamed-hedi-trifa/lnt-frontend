@@ -61,11 +61,11 @@ export default function UpcomingEventCard({ event }: Props) {
           </div>
           <p className="font-bold text-sm">Restants</p>
         </div>
-        <h4 className="mt-3 text-sm font-bold">{event.title}</h4>
-        <p className="mt-2 text-xs">{event.content}</p>
-        <h4 className="mt-2 text-right font-bold text-xs">{event.sub}</h4>
+        <h4 className="mt-3 text-lg font-bold">{event.title}</h4>
+        <p className="mt-2 text-sm">{event.content}</p>
+        <h4 className="mt-2 text-right font-bold text-sm">{event.sub}</h4>
         <div className="h-px my-3 bg-slate-300"></div>
-        <p className="text-center text-sm">
+        <p className="text-center">
           <span className="text-primary">Lieu: </span>
           <span>{event.location}</span>
         </p>
