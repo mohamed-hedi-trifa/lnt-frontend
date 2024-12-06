@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import NewsCard from "./NewsCard";
 import { Link } from "gatsby";
 import LangLink from "../LangLink";
+import Button from "../Button";
 
 type News = {
   image?: string;
@@ -91,9 +92,11 @@ export default function LatestNews() {
         </div>
         <LangLink
           to="/news"
-          className="block w-fit mx-auto mt-8 px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
+          className="mt-4 flex justify-center w-full"
         >
+          <Button variant="primary">
           Voir tous les actualités
+          </Button>
         </LangLink>
       </div>
     </section>

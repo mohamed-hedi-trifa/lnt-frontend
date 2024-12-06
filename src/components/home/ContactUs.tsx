@@ -14,16 +14,17 @@ export default function ContactUs() {
 
   return (
     <section className="relative px-3 py-20 overflow-hidden">
-      <div className="flex flex-col md:flex-row gap-10 items-center justify-between max-w-7xl mx-auto">
-        <article className="max-w-[600px]">
+      <div className="flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
+        <article className="max-w-[600px] flex flex-col gap-6">
           <h2 className="text-slate-800 text-2xl md:text-4xl font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.33)" }}>
             Contactez<span className="text-primary">-Nous</span>
           </h2>
-          <p className="mt-4 font-semibold text-sm" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.33)" }}>
+          <p className="font-semibold text-sm" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.33)" }}>
             Vous avez des questions ou souhaitez en savoir plus sur nos projets et activités ? N'hésitez pas à nous contacter ! Notre équipe est à votre écoute
             pour toute demande d'information ou de collaboration.
           </p>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-4 ">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <section className="flex flex-col gap-3">
             <input
               type="text"
               value={input.name}
@@ -48,8 +49,8 @@ export default function ContactUs() {
             <textarea
               value={input.message}
               onChange={(e) => setInput((prev) => ({ ...prev, message: e.target.value }))}
-              placeholder="Numéro de téléphone *"
-              className="w-full px-4 py-2 rounded border-[2px] border-slate-400 text-sm resize-none"
+              placeholder="Message *"
+              className="w-full px-4 py-2 rounded border-[2px] border-slate-400 text-sm resize-none min-h-[140px]"
             ></textarea>
             <button
               type="submit"
@@ -57,6 +58,7 @@ export default function ContactUs() {
             >
               Envoyer
             </button>
+            </section>
             <div className="flex gap-x-8 gap-y-2 flex-wrap">
               <a href="tel:+21654525509" className="flex gap-2 items-center">
                 <CallRinging04Icon />
@@ -75,12 +77,12 @@ export default function ContactUs() {
             </div>
           </form>
         </article>
-        <article className="relative flex gap-4 flex-col md:flex-row shrink-0 w-full md:w-5/12 max-w-[400px]">
+        <article className="relative flex gap-8 flex-col md:flex-row shrink-0 w-full md:w-5/12 max-w-[400px]">
           <div className="absolute top-1/2 md:top-[-50px] bottom-[-50px] md:left-1/2 -left-1/2 -right-1/2 bg-sky-700"></div>
-          <div className="relative z-10 rounded-lg aspect-[7/10] mr-auto overflow-hidden">
+          <div className="relative z-10 rounded-lg aspect-[7/10] mr-auto overflow-hidden md:min-w-[445px]">
             <img src="/kerkennah_map.png" alt="" className="w-full h-full object-cover" />
           </div>
-          <div className="z-10 flex md:flex-col gap-3 justify-center items-center flex-wrap">
+          <div className="z-10 flex md:flex-col gap-12 justify-center items-center flex-wrap">
             <a href="#" className="shrink-0 flex items-center justify-center size-12 bg-[#0866ff] rounded-full">
               <FacebookIcon />
             </a>

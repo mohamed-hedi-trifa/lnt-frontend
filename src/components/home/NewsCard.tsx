@@ -19,9 +19,9 @@ export default function NewsCard({ news }: Props) {
         <img src={news.image || ""} alt="" className="w-full h-full object-fill" />
       </div>
       <div className="flex flex-col grow mx-3 pb-14 md:pb-4">
-        <p className="mt-3 w-fit px-2 py-1 rounded-lg bg-blue-50 text-blue-800 text-xs font-medium ">{news.category}</p>
-        <h4 className="mt-2 mb-4 text-sm font-bold">{news.title}</h4>
-        <h4 className="mt-auto font-medium text-xs text-slate-500">
+        <p className="mt-3 w-fit px-2 py-1 rounded-lg bg-blue-50 text-blue-800 text-sm font-medium ">{news.category}</p>
+        <h4 className="mt-2 mb-4 font-bold">{news.title}</h4>
+        <h4 className="mt-auto font-medium text-sm text-slate-500">
           Le {new Date(news.date || "").toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
         </h4>
       </div>

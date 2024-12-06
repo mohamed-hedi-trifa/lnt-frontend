@@ -34,8 +34,8 @@ export default function Partners() {
         <img src="/spot.png" alt="" className="w-full h-full object-contain" />
       </div>
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-white text-center font-bold text-lg md:text-2xl">Avec qui nous sommes engagés...</h2>
-        <p className="mt-4 text-white text-center text-sm md:text-base leading-relaxed">
+        <h2 className="text-white text-center font-bold text-lg md:text-3xl">Avec qui nous sommes engagés...</h2>
+        <p className="mt-4 text-white text-center md:text-base leading-relaxed">
           L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL) s'associe à des partenaires locaux et internationaux qui partagent
           notre engagement pour la durabilité et le bien-être communautaire. Ensemble, nous soutenons les pêcheurs dans des pratiques durables, organisons des
           événements culturels et préservons le patrimoine de la région de Kerkennah, notamment à travers l'aire marine protégée. Cette collaboration renforce
