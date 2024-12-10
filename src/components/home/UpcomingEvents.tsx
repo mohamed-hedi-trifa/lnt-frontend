@@ -158,11 +158,11 @@ export default function UpcomingEvents() {
   return (
     <section className="px-3 py-20">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-primary text-[40px] text-center font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
+        <h2 className="text-primary text-2xl sm:text-[40px] text-center font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
           Événements à venir
         </h2>
         <article className="mt-10">
-          <swiper-container ref={swiperRef} class="w-full mx-auto max-w-[300px] md:max-w-7xl" init="false">
+          <swiper-container ref={swiperRef} class="w-full mx-auto max-w-[360px] md:max-w-7xl" init="false">
             {events?.map((event, index) => (
               <swiper-slide key={index} class="relative pb-10">
                 <UpcomingEventCard event={event} />

@@ -66,7 +66,7 @@ export default function UpcomingEventCard({ event }: Props) {
         <h4 className="mt-2 text-right font-bold text-sm">{event.sub}</h4>
         <div className="h-px my-3 bg-slate-300"></div>
         <p className="text-center">
-          <span className="text-primary">Lieu: </span>
+          <span className="text-primary font-semibold">Lieu: </span>
           <span>{event.location}</span>
         </p>
       </div>

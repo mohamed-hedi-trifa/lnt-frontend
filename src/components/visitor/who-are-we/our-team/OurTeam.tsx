@@ -10,6 +10,7 @@ import karimB from "../../../../images/KarimB.png"
 import najahH from "../../../../images/NajahH.png"
 import ImageHistoire from './ImageHistoire'
 import historyHero from "../../../../images/history-hero.jpg";
+import HeroSection from '../../HeroSection'
 
 const IMAGES = [
     ahmedYellow,
@@ -25,7 +26,7 @@ export default function OurTeam() {
 
     return (
         <div className=''>
-            <img className='w-full object-cover h-[80vh]' src={historyHero} />
+            <HeroSection imgSrc={historyHero} title="Les Visages de Notre Mission" subTitle="Une équipe dévouée, passionnée par la préservation de Kerkennah et animée par une vision commune" />
             <PageTitle title='Our Team' width='w-[160px]' />
             <section>
                 <div className='max-w-6xl mx-auto'>

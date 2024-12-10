@@ -35,8 +35,8 @@ export default function OurValues() {
                     <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
                     <Sidebar />
 
-                    <section className='w-fit text-justify text-[22px] flex flex-col gap-10'>
-                        <div className='leading-10'>Notre association, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), est profondément enracinée dans la préservation du patrimoine unique de Kerkennah et engagée dans le développement durable. Nos principes et valeurs guident chaque initiative, de la protection de l’environnement à l’inclusion sociale, et reflètent notre vision d’une communauté prospère et autonome.</div>
+                    <section className='w-fit text-justify  flex flex-col gap-10 '>
+                        <div className='leading-7'>Notre association, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), est profondément enracinée dans la préservation du patrimoine unique de Kerkennah et engagée dans le développement durable. Nos principes et valeurs guident chaque initiative, de la protection de l’environnement à l’inclusion sociale, et reflètent notre vision d’une communauté prospère et autonome.</div>
                         <img src='/images/principe1.png'alt="Kerkennah Archipelago" className="w-full  h-auto rounded-lg" />
                     
                         <ParagraphTitle title={'Nos principes : '}/>

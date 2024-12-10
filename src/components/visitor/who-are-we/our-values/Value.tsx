@@ -20,13 +20,13 @@ const Value: React.FC<ValueProps> = ({ title, description, imageUrl,titlesrc }) 
                 <span className="text-[24px] sm:text-[30px] font-bold">{title}</span>
             </div>
           
-            <div className=" md:text-left  w-[372px] lg:w-[650px]">
-            <p className=" text-justify">
+            <div className=" md:text-left  ">
+            <p className=" text-justify leading-7">
             {description}
             </p>
         </div>
           <div className="flex justify-start items-center">
-          <img src={imageUrl} alt={title} className="lg:w-[650px] lg:h-[433px] w-[372px] h-[248px] object-cover rounded-lg mt-4 "/>
+          <img src={imageUrl} alt={title} className=" rounded-lg mt-4 w-full"/>
           </div>
         </div>
       </div>

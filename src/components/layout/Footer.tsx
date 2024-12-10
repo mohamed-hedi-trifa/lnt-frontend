@@ -7,23 +7,23 @@ export default function Footer() {
   const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
 
   return (
-    <footer className="px-3 py-20 bg-gradient-to-r from-[#51ADC6] to-[#006E9F]">
-      <div className="max-w-7xl mx-auto text-white">
-        <section className="divide-y sm:divide-y-0 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 ">
-          <div>
+    <footer className="px-5 sm:px-3 py-20 mt-[150px] sm:mt-0 bg-gradient-to-r from-[#51ADC6] to-[#006E9F]">
+      <div className="max-w-7xl mx-auto text-white mt-[-150px] sm:mt-0">
+        <section className="divide-y sm:divide-y-0 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="order-2 sm:order-1 text-justify">
             <div className="flex gap-1 items-center">
               <img src="/logo.png" alt="AKDDCL" className="w-11 h-11 shrink-0" />
-              <p className="max-w-[200px] text-white text-xs font-bold">
+              <p className="max-w-[200px] text-white text-xl font-bold">
                 <span className="">AKDDCL</span>
               </p>
             </div>
-            <p className="font-medium text-[13px]">
+            <p className="font-medium leading-7">
               <b>L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL)</b> œuvre pour la préservation des ressources naturelles et
               du patrimoine culturel de Kerkennah, en soutenant le développement durable et la biodiversité marine.
             </p>
           </div>
-          <div className="">
-            <h3 className="pb-4 font-bold text-lg">Accés rapide</h3>
+          <div className="order-3">
+            <h3 className="pb-4 font-bold text-lg mt-2">Liens rapides</h3>
             <ul className="space-y-2 text-sm">
               {links.map((element) => (
                 <li key={element.text} className="hover:text-sky-900 duration-200">
@@ -32,8 +32,8 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-          <div className="">
-            <h3 className="pb-4 font-bold text-lg ">Contact</h3>
+          <div className="order-4">
+            <h3 className="pb-4 font-bold text-lg mt-2">Contact</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <p className="font-bold">Email:</p>
@@ -94,7 +94,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div>
+          <div className="order-1 sm:order-4">
             <NewsLetterSub />
           </div>
         </section>

@@ -10,7 +10,7 @@ const KeyMoments = () => {
   ];
 
   return (
-    <div className='px-3'>
+    <div className='px-2 my-7'>
       <h3 className='text-primary font-bold text-4xl leading-10 flex justify-center'>Moments Clés :</h3>
       <br></br>
       <ul className='flex flex-col gap-7 sm:gap-10'>

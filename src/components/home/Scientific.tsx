@@ -121,7 +121,7 @@ export default function Scientific() {
   }, [activeIndex]);
 
   return (
-    <section className="relative px-3 py-8 bg-cover">
+    <section className="relative px-3 py-10 bg-cover">
       <div className="z-[-1] absolute inset-0">
         <swiper-container ref={swiperRef} class="w-full h-full mx-auto" init="false">
           {researches.map((research, index) => (
@@ -132,7 +132,7 @@ export default function Scientific() {
         </swiper-container>
       </div>
       <div className="max-w-7xl mx-auto">
-        <h3 className="text-white text-xl font-bold text-center">Suivi Scientifique</h3>
+        <h3 className="text-white text-xl font-bold text-center mb-8">Suivi Scientifique</h3>
         <div className="w-fit border-l-4 pl-3 pr-6 py-3 bg-black/50" style={{ borderColor: activeResearch.color }}>
           <h3 className="font-bold text-xl text-white">{activeResearch.title}</h3>
         </div>

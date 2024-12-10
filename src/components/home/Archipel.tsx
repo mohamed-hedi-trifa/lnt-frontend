@@ -8,7 +8,7 @@ export default function Archipel() {
     <section className="relative px-3 py-20">
       <div className="flex flex-col md:flex-row gap-10 items-center justify-between max-w-7xl mx-auto">
         <article className="max-w-[700px]">
-          <h2 className="text-primary text-lg md:text-2xl font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.33)" }}>
+          <h2 className="text-primary text-2xl font-bold text-center sm:text-start" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.33)" }}>
             Aire Marine et Côtière Protégée des ilots nord de l'archipel de Kerkennah (AMCP)
           </h2>
           <p className="mt-3 text-sm">
@@ -25,7 +25,7 @@ export default function Archipel() {
           </p>
           <LangLink
             to="/aire"
-            className="block mt-4"
+            className="hidden mt-4 justify-center sm:flex"
           >
             <Button variant="primary">
             En savoir plus
@@ -38,6 +38,14 @@ export default function Archipel() {
           </div>
         </article>
       </div>
+      <LangLink
+            to="/aire"
+            className="flex mt-4 justify-center sm:hidden"
+          >
+            <Button variant="primary">
+            En savoir plus
+            </Button>
+          </LangLink>
     </section>
   );
 }

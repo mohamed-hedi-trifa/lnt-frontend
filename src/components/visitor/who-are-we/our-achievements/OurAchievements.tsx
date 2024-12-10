@@ -4,12 +4,13 @@ import Sidebar from '../../../layout/Sidebar'
 import ImageHistoire from '../our-team/ImageHistoire'
 import achievementsHero from "../../../../images/achievements-hero.jpg";
 import AchievementsCards from './AchievementsCards';
+import HeroSection from '../../HeroSection';
 
 export default function OurAchievements() {
 
     return (
         <div className=''>
-            <img className='w-full object-cover h-[80vh]' src={achievementsHero} />
+            <HeroSection imgSrc={achievementsHero} title="Nos Actions, Notre Impact" subTitle={<div><div>Découvrez les projets qui transforment Kerkennah :</div> des initiatives locales qui protègent, valorisent et inspirent</div>} />
             <PageTitle title='Our Achievements' width='w-[160px]' />
             <section>
                 <div className='max-w-6xl mx-auto'>

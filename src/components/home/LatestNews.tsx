@@ -77,7 +77,7 @@ export default function LatestNews() {
   return (
     <section className="relative px-3 py-20">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-center md:text-left text-primary text-lg md:text-2xl font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.33)" }}>
+        <h2 className="text-center md:text-left text-primary text-2xl font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.33)" }}>
           Dernières actualités
         </h2>
         <div className="grid md:grid-cols-3 gap-5 mt-5">
