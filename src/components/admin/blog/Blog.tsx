@@ -74,7 +74,7 @@ export default function Blog() {
                 <div className='rounded-lg shadow-lg'>
                     <div className="flex justify-between items-center bg-gray-100 p-3 rounded-t-lg">
                         <h5 className='mb-3'>Posts ( {itemsList.length} )</h5>
-                        <Link to='/admin/blog/create' className='bg-blue-600 text-white p-2 rounded'>Create Post</Link>
+                        <Link to='/admin/posts/create' className='bg-blue-600 text-white p-2 rounded'>Create Post</Link>
                     </div>
                     <div className="p-5">
 
