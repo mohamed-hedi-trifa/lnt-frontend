@@ -11,6 +11,7 @@ import najahH from "../../../../images/NajahH.png"
 import ImageHistoire from './ImageHistoire'
 import historyHero from "../../../../images/history-hero.jpg";
 import HeroSection from '../../HeroSection'
+import PageParagraph from '../../../PageParagraph'
 
 const IMAGES = [
     ahmedYellow,
@@ -28,21 +29,23 @@ export default function OurTeam() {
         <div className=''>
             <HeroSection imgSrc={historyHero} title="Les Visages de Notre Mission" subTitle="Une équipe dévouée, passionnée par la préservation de Kerkennah et animée par une vision commune" />
             <PageTitle title='Our Team' width='w-[160px]' />
-            <section>
+            <section className='px-4 sm:px-0'>
                 <div className='max-w-6xl mx-auto'>
-                    <section className='w-full flex relative gap-8 py-10'>
+                    <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
                     <Sidebar />
 
-                    <section className='w-fit text-justify text-[22px]'>
-                        <div className='leading-10'>L’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL) est le fruit de la vision et de l'engagement de nombreux passionnés qui, depuis sa création, n'ont cessé de travailler ensemble pour le bien-être et la durabilité de l’archipel de Kerkennah. Notre équipe actuelle rassemble des talents aux parcours variés, tous unis par leur dévouement à la préservation de notre environnement et de notre patrimoine culturel.</div>
-                        <div className='leading-10'>Nous rendons également hommage aux membres fondateurs, dont l’engagement et l’enthousiasme ont jeté les bases de notre association et permis de concrétiser ses premiers projets. Leur contribution continue d’inspirer nos efforts, et nous restons fidèles aux valeurs qu’ils ont incarnées.</div>
+                    <section className='w-fit text-justify text-[22px] flex flex-col gap-8'>
+                        <div>
+                        <PageParagraph>L’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL) est le fruit de la vision et de l'engagement de nombreux passionnés qui, depuis sa création, n'ont cessé de travailler ensemble pour le bien-être et la durabilité de l’archipel de Kerkennah. Notre équipe actuelle rassemble des talents aux parcours variés, tous unis par leur dévouement à la préservation de notre environnement et de notre patrimoine culturel.</PageParagraph>
+                        <PageParagraph>Nous rendons également hommage aux membres fondateurs, dont l’engagement et l’enthousiasme ont jeté les bases de notre association et permis de concrétiser ses premiers projets. Leur contribution continue d’inspirer nos efforts, et nous restons fidèles aux valeurs qu’ils ont incarnées.</PageParagraph>
+                        </div>
                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-10'>
-{IMAGES.map((src)=><img src={src} />)}
+{IMAGES.map((src)=><img src={src} className='w-full' />)}
                     </div>
                     </section>
 
                     </section>
-                <section className='border-t border-[#ADA5A5]'>
+                <section className='border-t border-[#ADA5A5] mt-10'>
                     <ImageHistoire />
                 </section>
                 </div>

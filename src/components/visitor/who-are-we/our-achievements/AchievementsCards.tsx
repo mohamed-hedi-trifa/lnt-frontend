@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ButtonDropdown from '../../../ButtonDropdown'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import DateRangeSelector from './DateRangeSelector'
 import AchievementCard from './AchievementCard'
 import achievementsHero from "../../../../images/achievements-hero.jpg";
+import Pagination from '../../Pagination'
 
 const CATEGORIES = [
     {
@@ -120,6 +121,15 @@ const ACHIEVEMENTS = [
 ]
 
 export default function AchievementsCards() {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const totalPages: number = 5;
+
+  const handlePageChange = (page: number): void => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   return (
     <section className='flex flex-col gap-8 w-full relative z-10 my-10'>
     <div className='flex gap-8 justify-center'>  
@@ -155,9 +165,11 @@ export default function AchievementsCards() {
   </ButtonDropdown> 
    </div>
 
-   <div className='grid grid-cols-3 gap-4'>
+   <div className='grid sm:grid-cols-3 gap-4'>
 {ACHIEVEMENTS.map((achievement:any)=><AchievementCard key={achievement.id} achievement={achievement} />)}
    </div>
+
+<div className='flex justify-center'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>
     </section>
   )
 }
