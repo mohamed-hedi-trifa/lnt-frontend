@@ -24,27 +24,10 @@ export default function SidebarAdmin() {
                     <UsersIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
                     <span>Users</span>
                 </Link>
-
-                <Link to="/admin/users-requests" className="flex flex-row gap-4 p-4 no-underline">
-                    <UserPlusIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
-                    <span>Users Request</span>
-                </Link>
-
-
             </>
                 : <></>}
 
-            <Link to="/admin/services" className="flex flex-row gap-4 p-4 no-underline">
-                <TruckIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
-                <span>Services</span>
-            </Link>
-
             <Link to="/admin/posts" className="flex flex-row gap-4 p-4 no-underline">
-                <PhotoIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
-                <span>Galery</span>
-            </Link>
-
-            <Link to="/admin/blog" className="flex flex-row gap-4 p-4 no-underline">
                 <PhotoIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
                 <span>Blog</span>
             </Link>
