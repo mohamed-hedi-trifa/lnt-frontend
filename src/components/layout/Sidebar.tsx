@@ -33,7 +33,7 @@ const Sidebar = () => {
     const [opened, setOpened] = useState(false);
 
     return (
-        <div className='mx-auto sticky top-[65px] sm:top-[120px] h-[100px] sm:h-fit w-[310px] shrink-0'>
+        <div className='mx-auto sticky top-[65px] sm:top-[120px] h-[100px] sm:h-fit w-[310px] shrink-0 z-20'>
         <div className='h-fit'>
             <div className={`flex flex-col ${opened ? "gap-6" : "gap-0"} sm:gap-8 transition-all duration-300  p-4 sm:p-8 py-2 sm:py-12 rounded-3xl sm:rounded-[20px] text-white`} style={{ background: 'linear-gradient(90deg, #51ADC6 0%, #006E9F 100%)' }}>
                 <section className='flex justify-between w-full items-center'>

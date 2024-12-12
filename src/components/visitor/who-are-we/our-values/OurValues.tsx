@@ -8,10 +8,11 @@ import hakimS from "../../../../images/HakimS.png"
 import jamilK from "../../../../images/JamilK.png"
 import karimB from "../../../../images/KarimB.png"
 import najahH from "../../../../images/NajahH.png"
-import historyHero from "../../../../images/history-hero.jpg";
+import valuesHero from "../../../../images/our-values-hero.jpg";
 import ImageHistoire from '../our-team/ImageHistoire'
 import Value from './Value'
 import ParagraphTitle from './ParagraphTitle'
+import HeroSection from '../../HeroSection'
 
 
 const IMAGES = [
@@ -28,7 +29,7 @@ export default function OurValues() {
 
     return (
         <div className=''>
-            <img className='w-full object-cover h-[50vh] sm:h-[80vh]' src={historyHero} />
+            <HeroSection title='Nos Principes : Notre Boussole' subTitle="Des valeurs fortes guident notre mission : tradition, inclusion, transparence, et collaboration pour un avenir durable" imgSrc={valuesHero} />
             <PageTitle title='Our Values' width='w-[160px]' />
             <section className='px-4 sm:px-0'>
                 <div className='max-w-6xl mx-auto'>
