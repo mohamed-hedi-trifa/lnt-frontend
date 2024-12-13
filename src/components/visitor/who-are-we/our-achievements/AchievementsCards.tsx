@@ -3,8 +3,10 @@ import ButtonDropdown from '../../../ButtonDropdown'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import DateRangeSelector from './DateRangeSelector'
 import AchievementCard from './AchievementCard'
-import achievementsHero from "../../../../images/achievements-hero.jpg";
+import achievementsHero from "../../../../assets/images/achievements-hero.jpg";
 import Pagination from '../../Pagination'
+import ClockIcon from '../../../../assets/icons/ClockIcon'
+import ColorPaletteIcon from '../../../../assets/icons/ColorPaletteIcon'
 
 const CATEGORIES = [
     {
@@ -142,10 +144,11 @@ export default function AchievementsCards() {
     )}
   >
     {(isOpen) => (
-      <button className={`flex items-center gap-2  underline-offset-4 border-black border-2 rounded-full px-6 py-2`}>
+      <div className={`flex items-center gap-2  underline-offset-4 border-black border-2 rounded-[10px] px-6 py-2`}>
+        <ClockIcon />
         Published at
         <ChevronDownIcon className={`w-6 h-6 duration-200 ${isOpen ? "-rotate-180" : ""}`} />
-      </button>
+      </div>
     )}
   </ButtonDropdown> 
   
@@ -157,7 +160,8 @@ export default function AchievementsCards() {
     )}
   >
     {(isOpen) => (
-      <button className={`flex items-center gap-2  underline-offset-4 border-black border-2 rounded-full px-6 py-2`}>
+      <button className={`flex items-center gap-2  underline-offset-4 border-black border-2 rounded-[10px] px-6 py-2`}>
+        <ColorPaletteIcon />
         Theme
         <ChevronDownIcon className={`w-6 h-6 duration-200 ${isOpen ? "-rotate-180" : ""}`} />
       </button>

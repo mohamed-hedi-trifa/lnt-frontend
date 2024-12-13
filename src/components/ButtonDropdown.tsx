@@ -13,22 +13,23 @@ function ButtonDropdown({ children, items = [], item, renderItem = (item) => ite
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
- function handleClick(){
+ function handleClick(e:any){
+  if (e.target.closest(".rdrDateRangePickerWrapper")) {
+    return;
+  }
 setIsOpen(!isOpen)
  }
 
   return (
-    <div className="relative" onClick={handleClick}>
-      <button
+    <button className="relative" onClick={handleClick}>
+      <div
         className={`relative font-open font-normal capitalize transition duration-300 before:w-full before:h-[20px] before:absolute before:top-[95%] ${
           isOpen ? "before:block" : "before:hidden"
         }  `}
         ref={dropdownRef}
       >
         {typeof children === "function" ? children(isOpen) : children}
-        {/* {children}
-        <FontAwesomeIcon icon={faChevronDown} className={`ml-2 text-sm transition duration-300 ${isOpen ? "-rotate-180" : ""}`} /> */}
-      </button>
+      </div>
 
       <Transition
         show={isOpen}
@@ -50,7 +51,7 @@ setIsOpen(!isOpen)
           {item ? item : ""}
         </ul>
       </Transition>
-    </div>
+    </button>
   );
 }
 

@@ -3,7 +3,7 @@ import PageTitle from '../../../PageTitle'
 import Sidebar from '../../../layout/Sidebar'
 import ImageHistoire from '../our-team/ImageHistoire'
 import KeyMoments from './KeyMoments'
-import historyHero from "../../../../images/history-hero.jpg";
+import historyHero from "../../../../assets/images/history-hero.jpg";
 import PageParagraph from '../../../PageParagraph'
 import HeroSection from '../../HeroSection'
 

@@ -1,10 +1,6 @@
 import React, { useState, FormEvent } from "react";
-// import phoneIcon from "../../images/phone-icon.png";
-// import hornIcon from "../../images/horn-icon.png";
-// import locationIcon from "../../images/location-icon.png";
+
 import axios, { AxiosError } from "axios";
-// import { faArrowLeft, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "gatsby";
 import ReactLoading from "react-loading";
 import Swal from "sweetalert2";

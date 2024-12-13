@@ -186,12 +186,12 @@ const items = [
     label: "Air Marine et Côtière Protégée",
     items: [
       {
-        label: "Info",
-        path: "/info",
+        label: "Présentation",
+        path: "/aire-marine/presentation",
       },
       {
         label: "Suivi Scientifique",
-        path: "/scientific-research",
+        path: "/aire-marine/suivie",
       },
       {
         label: "Formation et Campement Scientifique",

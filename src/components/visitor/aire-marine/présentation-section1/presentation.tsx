@@ -1,0 +1,81 @@
+import React from 'react'
+import PageTitle from '../../../PageTitle'
+import Sidebar from '../../../layout/Sidebar'
+import ContainerImageMarine from './CotainerImageMarine'
+import HeroSection from '../../HeroSection'
+import achievementsHero from "../../../../assets/images/amcp-presentation.jpeg";
+
+export default function Presentation() {
+
+    const images = [
+        {
+            title: 'Explorez l’Aire Marine Protégée',
+            description: 'Préservons ensemble les Îlots Nord de Kerkennah',
+            imageUrl: '/images/aire_marines/marine1.jfif'
+        },
+        {
+            title: 'Découvrez nos Partenaires',
+            description: 'Engagés pour la Protection des Îles de Kerkennah',
+            imageUrl: '/images/aire_marines/marine2.jfif'
+        }
+    ]
+
+    return (
+
+        <div className=''>
+            <HeroSection title="Protéger Nos Océans pour Demain" subTitle="Un réseau d’aires marines dédiées à la conservation des écosystèmes et à la préservation des ressources pour les générations futures." imgSrc={achievementsHero} />
+            <PageTitle
+                title="Présentation"
+                width="w-[160px]" />
+
+            <section className='px-4 sm:px-0'>
+                <div className='max-w-6xl mx-auto'>
+                    <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
+                        <Sidebar />
+                        <section className='w-fit text-justify text-[20px] sm:text-[22px] flex flex-col gap-8'>
+
+                            <div className='flex'>
+                            <PageTitle
+                                title="Qu'est ce qu'une AMCP"
+                                width="w-[160px]"
+                                color='text-black'
+                                fontSize='text-2xl sm:text-[40px] leading-[48px]'
+                                spacing="my-0"
+                            />
+                            </div>
+                            <div className='leading-10'>
+                                <div className='text-[22px] md:text[24px] font-medium flex flex-col gap-6'>
+                                    <p className='font-semibold '>Les Aires Marines et Côtière Protégées (ACMP) sont des zones marines et côtières placées sous protection en raison de leur importance écologique.</p>
+                                    <p>Les AMCP sont de plus en plus reconnues dans le monde entier comme l'un des outils les plus efficaces pour la conservation et la protection de l'environnement marin lorsqu'elles sont gérées efficacement et disposent des moyens adaptés aux problèmes locaux de gestion.</p>
+                                    <p>Outre leur rôle dans la conservation de la biodiversité, les AMP ont prouvé leur efficacité dans le rétablissement des espèces, des habitats et des communautés biologiques en déclin et sont également reconnues pour leur rôle dans le renforcement de la résilience des écosystèmes. Elles peuvent contribuer, dans une approche de gestion partagée (cogestion), au développement durable d'activités socio-économiques telles que la pêche artisanale et l'écotourisme.</p>
+                                    <p>Elles représentent l'un des outils de gestion disponibles que le secteur de la pêche commence à utiliser sous forme de réserves de pêche ou d’AMP. Elles contribuent au bien-être des populations et à l'attractivité des territoires et stimulent ainsi le développement durable des économies locales.</p>
+                                    <p>Les bénéfices et les services offerts par la conservation de la biodiversité, les enjeux liés à la gestion des AMP et des ressources naturelles marines (pêche en particulier) permettent aujourd'hui de rassembler les défenseurs de la conservation, ceux du secteur de la pêche et les acteurs de la gouvernance de la biodiversité dans un processus intégré avec les autres politiques sectorielles.</p>
+                                </div>
+                            </div>
+
+
+                            <img src='/images/aire_marines/aire_marine.png' alt="Aire marine" className="w-full  h-auto rounded-lg" />
+                        </section>
+
+
+                    </section>
+                        <hr className='my-6 border-[2px] text-custom-gray' />
+                        <section className='flex items-start justify-center '>
+
+                            <div className='w-full flex items-center justify-center '>
+                                <ContainerImageMarine images={images} />
+                            </div>
+
+                        </section>
+
+                        <div className='mt-20'></div>
+                </div>
+
+
+
+            </section>
+
+
+        </div>
+    )
+}
