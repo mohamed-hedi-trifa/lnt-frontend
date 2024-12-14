@@ -5,6 +5,34 @@ import { Bars3Icon, ChevronDownIcon, GlobeAltIcon, MagnifyingGlassIcon } from "@
 import LangLink from "../LangLink";
 import NavDropdown from "../NavDropdown";
 
+function SubDropdown({ items }: { items: any[] }) {
+  return (
+    <div className="absolute top-0 left-full mt-0 ml-0 pl-3 hidden group-hover:block min-w-[150px]">
+      <ul className="rounded shadow-[1px_1px_5px_rgb(0,0,0,.3)] p-2 bg-white">
+      {items.map((subItem: any, subIndex: number) => (
+        <li key={subIndex} className="relative group">
+          {subItem.path ? (
+            <LangLink
+              to={subItem.path}
+              className="block py-2 px-3 rounded font-normal text-black hover:bg-slate-200 transition duration-300 whitespace-nowrap"
+            >
+              {subItem.label}
+            </LangLink>
+          ) : (
+            <div className="block py-2 px-3 rounded font-normal text-black hover:bg-slate-200 transition duration-300 whitespace-nowrap">
+              {subItem.label}
+            </div>
+          )}
+          
+          {/* If this subItem also has nested items, render another SubDropdown */}
+          {subItem.items && <SubDropdown items={subItem.items} />}
+        </li>
+      ))}
+      </ul>
+    </div>
+  );
+}
+
 interface NavItem {
   name: string;
   path: string;
@@ -36,37 +64,9 @@ const translations = {
 function Navbar({ location }: { location: any }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Extract the language from the URL path (assuming it's the first part of the path, e.g., /en/ or /fr/)
   const lang = location?.pathname.startsWith("/fr/") ? "fr" : "en";
 
-  // Get the appropriate navigation items based on the language
-  const navItems = translations[lang];
-
-  const renderNavItems = () => {
-    return navItems.map((item: NavItem, index) => {
-      if (item.dropdown) {
-        return (
-          <li key={index}>
-            <Dropdown
-              title={item.name}
-              items={item.dropdown}
-              path={item.dropdown[0].path} // Use the first path for active check
-              active={location?.pathname.indexOf(item.dropdown[0].path) === 0}
-            />
-          </li>
-        );
-      } else {
-        return (
-          <li
-            key={index}
-            className={`py-2 font-open font-normal transition duration-500 ${location?.pathname === item.path ? "text-primary" : "hover:text-primary"}`}
-          >
-            <Link to={`/${lang}${item.path}`}>{item.name}</Link> {/* Prepend lang */}
-          </li>
-        );
-      }
-    });
-  };
+  // const navItems = translations[lang];
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -120,10 +120,24 @@ function Navbar({ location }: { location: any }) {
                     items={item.items}
                     position="left"
                     renderItem={(item) => (
-                      <LangLink to={item.path || ""} className="block py-2 px-3 rounded font-normal text-black hover:bg-slate-200 transition duration-300">
-                        {item.label}
-                      </LangLink>
-                    )}
+                      <div className="relative group">
+                        {item.path ? (
+                          <LangLink
+                            to={item.path}
+                            className="block py-2 px-3 rounded font-normal text-black hover:bg-slate-200 transition duration-300"
+                          >
+                            {item.label}
+                          </LangLink>
+                        ) : (
+                          <div className="block py-2 px-3 rounded font-normal text-black hover:bg-slate-200 transition duration-300">
+                            {item.label}
+                          </div>
+                        )}
+                        
+                        {item.items && <SubDropdown items={item.items} />}
+                      </div>
+                    )
+                    }
                   >
                     {(isOpen) => (
                       <button className={`flex items-center gap-2 hover:underline underline-offset-4`}>
@@ -192,6 +206,16 @@ const items = [
       {
         label: "Suivi Scientifique",
         path: "/aire-marine/suivie",
+        items:[
+          {
+            label: "Suivi Marin",
+            path: "/aire-marine/suivie/marin"
+          },
+          {
+            label: "Suivi Terrestre",
+            path: "/aire-marine/suivie/terrestre"
+          }
+        ]
       },
       {
         label: "Formation et Campement Scientifique",

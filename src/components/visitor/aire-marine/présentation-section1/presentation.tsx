@@ -4,6 +4,7 @@ import Sidebar from '../../../layout/Sidebar'
 import ContainerImageMarine from './CotainerImageMarine'
 import HeroSection from '../../HeroSection'
 import achievementsHero from "../../../../assets/images/amcp-presentation.jpeg";
+import AMCPSidebar from '../../../layout/AMCPSidebar'
 
 export default function Presentation() {
 
@@ -31,7 +32,7 @@ export default function Presentation() {
             <section className='px-4 sm:px-0'>
                 <div className='max-w-6xl mx-auto'>
                     <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
-                        <Sidebar />
+                        <AMCPSidebar />
                         <section className='w-fit text-justify text-[20px] sm:text-[22px] flex flex-col gap-8'>
 
                             <div className='flex'>
