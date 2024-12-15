@@ -7,27 +7,31 @@ import NavDropdown from "../NavDropdown";
 
 function SubDropdown({ items }: { items: any[] }) {
   return (
-    <div className="absolute top-0 left-full mt-0 ml-0 pl-3 hidden group-hover:block min-w-[150px]">
-      <ul className="rounded shadow-[1px_1px_5px_rgb(0,0,0,.3)] p-2 bg-white">
-      {items.map((subItem: any, subIndex: number) => (
-        <li key={subIndex} className="relative group">
-          {subItem.path ? (
-            <LangLink
-              to={subItem.path}
-              className="block py-2 px-3 rounded font-normal text-black hover:bg-slate-200 transition duration-300 whitespace-nowrap"
-            >
-              {subItem.label}
-            </LangLink>
-          ) : (
-            <div className="block py-2 px-3 rounded font-normal text-black hover:bg-slate-200 transition duration-300 whitespace-nowrap">
-              {subItem.label}
-            </div>
-          )}
-          
-          {/* If this subItem also has nested items, render another SubDropdown */}
-          {subItem.items && <SubDropdown items={subItem.items} />}
-        </li>
-      ))}
+    <div className="absolute top-0 left-full mt-0 ml-0 pl-1 hidden group-hover:block min-w-[150px]">
+      <ul className="rounded shadow-[1px_1px_5px_rgb(0,0,0,.3)] bg-zinc-100">
+        {items.map((subItem: any, subIndex: number) => (
+          <li key={subIndex} className="relative group">
+            {subItem.path ? (
+              <LangLink
+                to={subItem.path || ""}
+                className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#3344DC] to-[#50ACC6] transition duration-300"
+                style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
+              >
+                {subItem.label}
+              </LangLink>
+            ) : (
+              <div
+                className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#3344DC] to-[#50ACC6] transition duration-300"
+                style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
+              >
+                {subItem.label}
+              </div>
+            )}
+
+            {/* If this subItem also has nested items, render another SubDropdown */}
+            {subItem.items && <SubDropdown items={subItem.items} />}
+          </li>
+        ))}
       </ul>
     </div>
   );
@@ -80,13 +84,14 @@ function Navbar({ location }: { location: any }) {
 
   return (
     <div className="fixed z-30 w-full">
-      <header className={`w-full px-3 py-1.5 bg-slate-900 ${isScrolled ? "" : "bg-opacity-25"} duration-200`}>
+      <header className={`w-full px-3 bg-slate-900 ${isScrolled ? "" : "bg-opacity-25"} duration-200`}>
         <div className="flex items-center justify-between max-w-7xl mx-auto ">
           <LangLink to="/" className="flex gap-1 items-center">
-            <img src="/logo.png" alt="AKDDCL" className="w-11 h-11 shrink-0" />
+            <img src="/logo.png" alt="AKDDCL" className="size-14 shrink-0 object-contain drop-shadow-[0px_4px_2px_rgb(0,0,0,.3)]" />
             <p className="max-w-[200px] text-white text-xs font-bold">
-              <span className="hidden md:inline">Association Kratten du Développement Durable de la Culture et du Loisir</span>
-              <span className="inline md:hidden">AKDDCL</span>
+              {/* <span className="hidden md:inline">Association Kratten du Développement Durable de la Culture et du Loisir</span>
+              <span className="inline md:hidden">AKDDCL</span> */}
+              <span className="italic font-extrabold text-base">AKDDCL</span>
             </p>
           </LangLink>
           <div className="flex gap-3 items-center">
@@ -110,40 +115,51 @@ function Navbar({ location }: { location: any }) {
           </div>
         </div>
       </header>
-      <nav className={`hidden md:block w-full px-3 py-0.5 bg-slate-700 ${isScrolled ? "" : "bg-opacity-50"} duration-200`}>
-        <ul className="flex items-center justify-between w-full max-w-7xl mx-auto text-white text-[10px] lg:text-sm">
+      <nav className={`hidden md:flex items-center w-full h-[50px] px-3 bg-slate-700 ${isScrolled ? "" : "bg-opacity-50"} duration-200`}>
+        <ul className="flex items-center justify-between w-full max-w-7xl mx-auto">
           {items.map((item, index) => {
             if (item.items) {
               return (
                 <li key={index}>
                   <NavDropdown
+                    containerClassName="group/dropdown"
                     items={item.items}
                     position="left"
                     renderItem={(item) => (
                       <div className="relative group">
                         {item.path ? (
                           <LangLink
-                            to={item.path}
-                            className="block py-2 px-3 rounded font-normal text-black hover:bg-slate-200 transition duration-300"
+                            to={item.path || ""}
+                            className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#3344DC] to-[#50ACC6] transition duration-300"
+                            style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
                           >
                             {item.label}
                           </LangLink>
                         ) : (
-                          <div className="block py-2 px-3 rounded font-normal text-black hover:bg-slate-200 transition duration-300">
+                          <div
+                            className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#3344DC] to-[#50ACC6] transition duration-300"
+                            style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
+                          >
                             {item.label}
                           </div>
                         )}
-                        
+
                         {item.items && <SubDropdown items={item.items} />}
                       </div>
-                    )
-                    }
+                    )}
                   >
                     {(isOpen) => (
-                      <button className={`flex items-center gap-2 hover:underline underline-offset-4`}>
-                        {item.label}
-                        <ChevronDownIcon className={`w-6 h-6 duration-200 ${isOpen ? "-rotate-180" : ""}`} />
-                      </button>
+                      <div className={`relative flex items-center gap-2 font-bold text-white text-[10px] lg:text-sm xl:text-base`}>
+                        <span style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}>{item.label}</span>
+                        <div className="mt-[0.5] h-0 bg-black flex items-center">
+                          <ArrowDown className={`size-3.5 duration-[0.4s] ${isOpen ? "-rotate-180" : ""}`} />
+                        </div>
+                        <div
+                          className={`${
+                            item.underlineClassName || "w-[100px]"
+                          } absolute bottom-0 h-[3px] translate-y-1.5 bg-gradient-to-r from-[#3344DC] to-[#50ACC6] opacity-0 group-hover/dropdown:opacity-100 transition-all duration-500`}
+                        ></div>
+                      </div>
                     )}
                   </NavDropdown>
                 </li>
@@ -151,8 +167,13 @@ function Navbar({ location }: { location: any }) {
             } else {
               return (
                 <li key={index} className="">
-                  <LangLink to={item.path} className="block py-2 font-open font-normal transition duration-500 hover:underline underline-offset-4">
-                    {item.label}
+                  <LangLink to={item.path} className="relative flex font-open font-bold group text-white text-[10px] lg:text-sm xl:text-base">
+                    <span style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}>{item.label}</span>
+                    <div
+                      className={`${
+                        item.underlineClassName || "w-[100px]"
+                      } absolute bottom-0 h-[3px] translate-y-1.5 bg-gradient-to-r from-[#3344DC] to-[#50ACC6] opacity-0 group-hover:opacity-100 transition-all duration-500`}
+                    ></div>
                   </LangLink>
                 </li>
               );
@@ -168,7 +189,8 @@ export default Navbar;
 
 const items = [
   {
-    label: "Qui Somme-nous",
+    label: "Qui Sommes-Nous",
+    underlineClassName: "w-[100px]",
     items: [
       {
         label: "Notre Histoire",
@@ -198,6 +220,7 @@ const items = [
   },
   {
     label: "Air Marine et Côtière Protégée",
+    underlineClassName: "w-[150px]",
     items: [
       {
         label: "Présentation",
@@ -206,16 +229,16 @@ const items = [
       {
         label: "Suivi Scientifique",
         path: "/aire-marine/suivie",
-        items:[
+        items: [
           {
             label: "Suivi Marin",
-            path: "/aire-marine/suivie/marin"
+            path: "/aire-marine/suivie/marin",
           },
           {
             label: "Suivi Terrestre",
-            path: "/aire-marine/suivie/terrestre"
-          }
-        ]
+            path: "/aire-marine/suivie/terrestre",
+          },
+        ],
       },
       {
         label: "Formation et Campement Scientifique",
@@ -229,6 +252,7 @@ const items = [
   },
   {
     label: "Notre Festival",
+    underlineClassName: "w-[100px]",
     items: [
       {
         label: "Prochains Festivals",
@@ -243,9 +267,11 @@ const items = [
   {
     label: "Actualités",
     path: "/news",
+    underlineClassName: "w-[70px]",
   },
   {
     label: "Événements",
+    underlineClassName: "w-[100px]",
     items: [
       {
         label: "Ateliers et Formations",
@@ -263,6 +289,7 @@ const items = [
   },
   {
     label: "Opportunités",
+    underlineClassName: "w-[100px]",
     items: [
       {
         label: "Offres d'Emplois",
@@ -281,5 +308,14 @@ const items = [
   {
     label: "Contact",
     path: "/contact",
+    underlineClassName: "w-[55px]",
   },
 ];
+
+function ArrowDown(props: { className?: string }) {
+  return (
+    <svg viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path d="M7 6.75L0.75 0.5H13.25L7 6.75Z" fill="white" />
+    </svg>
+  );
+}
