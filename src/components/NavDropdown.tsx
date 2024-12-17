@@ -6,11 +6,11 @@ type Props = {
   items?: any[];
   renderItem?: (item: any) => React.ReactNode;
   position?: "left" | "right";
+  containerClassName?: string;
 };
 
-function NavDropdown({ children, items = [], renderItem = (item) => item.label, position = "left" }: Props) {
+function NavDropdown({ children, items = [], renderItem = (item) => item.label, position = "left", containerClassName = "" }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
 
   function handleMouseEnter(e: React.FormEvent) {
     setIsOpen(true);
@@ -21,12 +21,17 @@ function NavDropdown({ children, items = [], renderItem = (item) => item.label, 
   }
 
   return (
-    <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onFocus={handleMouseEnter} onBlur={handleMouseLeave}>
+    <div
+      className={`relative ${containerClassName}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onFocus={handleMouseEnter}
+      onBlur={handleMouseLeave}
+    >
       <button
-        className={`relative font-open font-normal capitalize transition duration-300 before:w-full before:h-[20px] before:absolute before:top-[95%] ${
+        className={`relative block font-open font-normal capitalize transition duration-300 before:w-full before:h-[25px] before:absolute before:top-[95%] ${
           isOpen ? "before:block" : "before:hidden"
         }  `}
-        ref={dropdownRef}
       >
         {typeof children === "function" ? children(isOpen) : children}
         {/* {children}
@@ -36,14 +41,14 @@ function NavDropdown({ children, items = [], renderItem = (item) => item.label, 
       <Transition
         show={isOpen}
         enter="transition duration-300"
-        enterFrom="translate-y-[30px] opacity-0"
+        enterFrom="opacity-0"
         enterTo="translate-y-0 opacity-100"
         leave="transition duration-300"
         leaveFrom="translate-y-0 opacity-100"
-        leaveTo="translate-y-[30px] opacity-0"
+        leaveTo="opacity-0"
       >
         <ul
-          className={`w-max max-w-[200px] p-2 rounded shadow-[1px_1px_5px_rgb(0,0,0,.3)] absolute top-full bg-white translate-y-[10px] list-none ${POSITIONS[position]}`}
+          className={`w-max max-w-[500px] rounded shadow-[1px_1px_5px_rgb(0,0,0,.3)] absolute top-full bg-zinc-100 translate-y-[12px] list-none ${POSITIONS[position]}`}
         >
           {items.map((item, index) => (
             <li key={index}>
