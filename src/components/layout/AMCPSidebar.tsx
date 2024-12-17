@@ -1,19 +1,89 @@
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { Bars3Icon } from '@heroicons/react/24/solid';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const Sidebar = () => {
+// Recursive component for each menu item
+function SidebarItem({ item, basePath = "/en", depth = 0 }: { item: any; basePath?: string; depth?: number }) {
+  const [open, setOpen] = useState(false);
+  const hasSubmenu = Array.isArray(item.items) && item.items.length > 0;
+
+  // Determine classes based on depth
+  const circleSize = depth === 0 ? 'h-6 w-6' : 'h-4 w-4';
+  const circleColor = depth === 0 ? 'bg-primary' : 'bg-white';
+  const iconColor = depth === 0 ? 'text-white' : 'text-primary';
+  const iconSize = depth === 0 ? 'h-4 w-4' : 'h-3 w-3';
+  const labelClasses = depth === 0 ? 'sm:text-xl font-semibold' : 'sm:text-lg font-medium';
+  const itemMargin = depth === 0 ? '' : 'ml-[14px]';
+
+  return (
+    <li className="flex flex-col relative">
+      <div
+        className={`flex relative items-center gap-2 cursor-pointer ${itemMargin}`}
+        onClick={() => hasSubmenu && setOpen(!open)}
+      >
+        {/* Horizontal line connecting icon if depth > 0 */}
+        {depth > 0 && (
+          <span className="absolute left-[-0.7rem] top-1/2 -translate-y-1/2 w-4 h-[2px] bg-white"></span>
+        )}
+
+        {/* Circle Icon */}
+        <div className={`${circleSize} rounded-full ${circleColor} flex justify-center items-center shrink-0 transition-transform duration-300`}>
+          <ChevronRightIcon
+            className={`${iconSize} ${iconColor} transform transition-transform duration-300 ${open ? 'rotate-90' : ''}`}
+          />
+        </div>
+
+        <a
+          className={labelClasses}
+          href={item.path ? (basePath + item.path) : '#'}
+        >
+          {item.label}
+        </a>
+      </div>
+
+      {hasSubmenu && (
+        <div
+          className="relative pl-8 mt-2 flex flex-col gap-4 overflow-hidden transition-all duration-300 ease-in-out"
+          style={{
+            display: 'grid',
+            gridTemplateRows: open ? '1fr' : '0fr',
+          }}
+        >
+          <div className="overflow-hidden">
+            <ul className="flex flex-col gap-4">
+              {item.items.map((subItem: any, subIndex: number) => (
+                <SidebarItem
+                  key={subIndex}
+                  item={subItem}
+                  basePath={basePath}
+                  depth={depth + 1} // Increase depth for sub-level
+                />
+              ))}
+            </ul>
+          </div>
+          {hasSubmenu && (
+            <div className='absolute top-0 left-[36px] ml-[-32px] w-[32px] flex justify-end h-full z-50'>
+              <div className='bg-white h-[calc(100%-14px)] w-[2px]'></div>
+            </div>
+          )}
+        </div>
+      )}
+    </li>
+  );
+}
+
+const AMCPSidebar = () => {
   const items = [
     {
       label: "Présentation",
       items: [
         {
           label: "Aire Marine et Côtière Protégée des Îlots Nord de l'archipel de Kerkennah (AMCP)",
-          path: "/who-are-we/presentation/amcp"
+          path: "/protected-air-marine-coastal-areas/presentation/amcp"
         },
         {
           label: "Partenaires AMCP",
-          path: "/who-are-we/presentation/partners"
+          path: "/protected-air-marine-coastal-areas/presentation/partners"
         }
       ]
     },
@@ -22,17 +92,43 @@ const Sidebar = () => {
       items: [
         {
           label: "Suivi Marin",
-          path: "/aire-marine/suivie/marin"
+          path: "/protected-air-marine-coastal-areas/monitoring/marin",
+          items:[
+            {
+              label:"Posidonie",
+              path: "/protected-air-marine-coastal-areas/monitoring/marin/posidonie"
+            },
+            {
+              label:"Grande Nacre",
+              path: "/protected-air-marine-coastal-areas/monitoring/marin/grande-nacre"
+            },
+            {
+              label:"Poulpe",
+              path: "/protected-air-marine-coastal-areas/monitoring/marin/poulpe"
+            },
+            {
+              label:"Eponge Marine",
+              path: "/protected-air-marine-coastal-areas/monitoring/marin/eponge-marine"
+            },
+            {
+              label:"Torture Marine",
+              path: "/protected-air-marine-coastal-areas/monitoring/marin/Tortue-marine"
+            },
+            {
+              label:"Avifaune",
+              path: "/protected-air-marine-coastal-areas/monitoring/marin/avifaune"
+            }
+          ]
         },
         {
           label: "Suivi Terrestre",
-          path: "/aire-marine/suivie/terrestre"
+          path: "/protected-air-marine-coastal-areas/monitoring/terrestre"
         }
       ]
     },
     {
       label: "Formation et Campement Scientifique",
-      path: "/achievements"
+      path: "/formation"
     },
     {
       label: "L’équipe",
@@ -41,61 +137,6 @@ const Sidebar = () => {
   ];  
 
   const [opened, setOpened] = useState(false);
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const submenuRefs = useRef<(HTMLUListElement | null)[]>([]);
-
-  const toggleSubmenu = (index: number) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
-  useEffect(() => {
-    if (activeIndex === null) return; // If none is open, do nothing
-    const ul = submenuRefs.current[activeIndex];
-    if (!ul) return;
-
-    const isOpen = activeIndex !== null;
-    // We'll open/close only the currently active submenu
-
-    // Reset transition
-    ul.style.transition = 'none';
-    ul.style.overflow = 'hidden';
-
-    if (isOpen) {
-      // Opening sequence
-      ul.style.height = '0px';
-      // Force reflow
-      ul.offsetHeight; 
-      ul.style.transition = 'height 300ms ease';
-      requestAnimationFrame(() => {
-        ul.style.height = ul.scrollHeight + 'px';
-      });
-    } else {
-      // Closing sequence (though activeIndex === null means no submenu is active)
-      ul.style.height = ul.scrollHeight + 'px';
-      ul.offsetHeight;
-      ul.style.transition = 'height 300ms ease';
-      requestAnimationFrame(() => {
-        ul.style.height = '0px';
-      });
-    }
-  }, [activeIndex]);
-
-  // Handle closing transition in a separate effect
-  // When activeIndex changes to null, close the previously open submenu
-  useEffect(() => {
-    if (activeIndex !== null) return;
-    // If activeIndex is null, find the previously open submenu and close it
-    submenuRefs.current.forEach((ul) => {
-      if (ul && ul.style.height !== '0px') {
-        ul.style.transition = 'none';
-        ul.offsetHeight;
-        ul.style.transition = 'height 300ms ease';
-        requestAnimationFrame(() => {
-          ul.style.height = '0px';
-        });
-      }
-    });
-  }, [activeIndex]);
 
   return (
     <div className='mx-auto sticky top-[65px] sm:top-[120px] h-[100px] sm:h-fit w-[366px] shrink-0 z-20'>
@@ -117,48 +158,9 @@ const Sidebar = () => {
           </section>
 
           <ul className={`flex flex-col gap-8 overflow-hidden transition-all duration-300 ${opened ? "h-[320px] sm:h-fit" : "h-0 sm:h-fit"}`}>
-            {items.map((item, index) => {
-              const hasSubmenu = !!item.items;
-              const isOpen = activeIndex === index;
-              return (
-                <li key={index} className="flex flex-col">
-                  <div
-                    className="flex items-center gap-2 cursor-pointer"
-                    onClick={() => hasSubmenu && toggleSubmenu(index)}
-                  >
-                    <div className='h-6 w-6 rounded-full bg-primary flex justify-center items-center shrink-0'>
-                      <ChevronRightIcon className={`h-4 w-4 transform transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`} />
-                    </div>
-                    <a className="sm:text-xl font-semibold" href={item.path ? "/en" + item.path : "#"}>{item.label}</a>
-                  </div>
-
-                  {hasSubmenu && (
-                    <ul
-                      ref={el => submenuRefs.current[index] = el}
-                      className="relative pl-8 mt-2 flex flex-col gap-4 overflow-hidden"
-                      style={{ height: '0px' }}
-                    >
-                      {item.items!.map((subItem, subIndex) => (
-                        <li key={subIndex} className="relative flex items-center gap-2 ml-[14px]">
-                          {/* A small horizontal line connecting the icon to the vertical line */}
-                          <span className="absolute left-[-1rem] top-1/2 -translate-y-1/2 w-4 h-[2px] bg-white"></span>
-                          
-                          <div className='h-4 w-4 rounded-full bg-white flex justify-center items-center z-10 shrink-0'>
-                            <ChevronRightIcon className='h-3 w-3 text-primary' />
-                          </div>
-                          <a className="sm:text-lg font-medium" href={"/en" + subItem.path}>{subItem.label}</a>
-                        </li>
-                      ))}
-                      {hasSubmenu && (
-                        <div className='absolute ml-[-32px] w-[32px] flex justify-end h-full'>
-                          <div className='bg-white h-[calc(100%-14px)] w-[2px]'></div>
-                        </div>
-                      )}
-                    </ul>
-                  )}
-                </li>
-              );
-            })}
+            {items.map((item, index) => (
+              <SidebarItem key={index} item={item} basePath="/en" depth={0} />
+            ))}
           </ul>
         </div>
       </div>
@@ -166,4 +168,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default AMCPSidebar;

@@ -1,8 +1,8 @@
 import React from 'react'
 import PageTitle from '../../../PageTitle'
-import Sidebar from '../../../layout/Sidebar'
 import achievementsHero from "../../../../assets/images/achievements-hero.jpg";
-import ContainerImageMarine from '../présentation-section2/CotainerImageMarine';
+import ContainerImageMarine from '../CotainerImageMarine';
+import AMCPSidebar from '../../../layout/AMCPSidebar'
 
 export default function SuiviScientifique() {
 
@@ -34,7 +34,7 @@ export default function SuiviScientifique() {
                 <section className='px-4'>
                     <div className='max-w-7xl mx-auto   '>
                         <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
-                                <Sidebar />
+                                <AMCPSidebar />
 
                                 <section className='w-fit flex flex-col gap-6'>
                                     <div className='text-justify  text-[20px] sm:text-[22px] font-semibold '>

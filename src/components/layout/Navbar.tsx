@@ -201,19 +201,19 @@ const items = [
     items: [
       {
         label: "Présentation",
-        path: "/aire-marine/presentation",
+        path: "/protected-air-marine-coastal-areas/presentation",
       },
       {
         label: "Suivi Scientifique",
-        path: "/aire-marine/suivie",
+        path: "/protected-air-marine-coastal-areas/monitoring",
         items:[
           {
             label: "Suivi Marin",
-            path: "/aire-marine/suivie/marin"
+            path: "/protected-air-marine-coastal-areas/suivie/marin"
           },
           {
             label: "Suivi Terrestre",
-            path: "/aire-marine/suivie/terrestre"
+            path: "/protected-air-marine-coastal-areas/suivie/terrestre"
           }
         ]
       },

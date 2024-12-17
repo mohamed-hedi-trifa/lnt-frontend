@@ -1,8 +1,10 @@
 import React from 'react'
 import PageTitle from '../../../PageTitle'
 import Sidebar from '../../../layout/Sidebar'
-import ContainerImageMarine from '../présentation-section2/CotainerImageMarine'
+import ContainerImageMarine from '../CotainerImageMarine'
 import Partners from '../../who-are-we/partners/Partners'
+import SectionTitle from '../../../SectionTitle'
+import AMCPSidebar from '../../../layout/AMCPSidebar'
 
 export default function PresentationPartenaire() {
 
@@ -31,15 +33,6 @@ export default function PresentationPartenaire() {
                     <PageTitle 
                         title="Présentation"
                         width="w-[160px]"
-                        fontSize="text-[48px] md:text-[64px] text-center sm:text-center "
-                        itemsAlignment="items-start"
-                        marginTop="mt-10"           
-                        marginYaxe=""
-                        alignment="flex gap-2 items-start justify-start"
-                        devider1="w-[19.83px] h-[6px] md:h-[9px] sm:w-[19.83px] bg-primary"
-                        devider2="w-[160.25px] h-[6px] md:h-[9px] md:w-[168.58px] bg-primary"
-                        styleTitle1={'grid grid-cols-[22%_auto_22%] sm:grid-cols-[0_auto_0]'} 
-                        styleTitle2={'grid grid-cols-[22%_auto_22%] sm:grid-cols-[0_auto_0] ml-2'} 
                     />
                 </div>
 
@@ -49,21 +42,12 @@ export default function PresentationPartenaire() {
 
 
             <section className='w-full flex flex-col sm:flex-row relative gap-4 md:gap-8 py: py-2 md:py-10 '>
-                    <Sidebar />
+                    <AMCPSidebar />
                     <section className='w-fit text-justify text-[22px] flex flex-col gap-10 '>
                      
-                        <PageTitle title="Partenaires AMCP "
+                        <SectionTitle 
+                        title="Partenaires AMCP "
                             width='w-[160px]'
-                            color='#000000'
-                            fontSize=' text-[28px] md:text-[40px] text-center sm:text-center'
-                            alignment={'flex gap-2  '}
-                            devider1={'w-[19.83px] h-[6px] md:h-[9px] sm:w-[19.83px] bg-primary'}
-                            devider2={'w-[160.25px] h-[6px] md:h-[9px] md:w-[168.58px] bg-primary '}
-                            itemsAlignment={'items-center sm:items-start'}
-                            marginTop='0px'
-                            marginYaxe='' 
-                            styleTitle1={''} 
-                            styleTitle2={''}     
                         />  
                         <div className='leading-10'>
                             <div className='text-[20px] md:text[22px] font-medium flex flex-col gap-6'>

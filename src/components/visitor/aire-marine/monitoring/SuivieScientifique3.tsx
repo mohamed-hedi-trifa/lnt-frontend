@@ -1,10 +1,10 @@
 import React from 'react'
 import PageTitle from '../../../PageTitle'
-import Sidebar from '../../../layout/Sidebar'
 import achievementsHero from "../../../../assets/images/achievements-hero.jpg";
-import ContainerImageMarine from '../présentation-section2/CotainerImageMarine';
+import AMCPSidebar from '../../../layout/AMCPSidebar'
+import SectionTitle from '../../../SectionTitle';
 
-export default function SuiviScientifique2() {
+export default function SuiviScientifique3() {
 
     const images = [
         {
@@ -19,40 +19,64 @@ export default function SuiviScientifique2() {
         }
     ]
 
+    const slides = [
+        {
+            image : '/images/marine_images/marine7.jpg',
+            title : 'Posidonie'
+        },
+        {
+            image : '/images/marine_images/marine8.jpg',
+            title : 'Grande Nacre'
+        },
+        {
+            image : '/images/marine_images/marine10.jpg',
+            title : 'Eponge Marine'
+        },
+        {
+            image : '/images/marine_images/marine8.jpg',
+            title : 'Avifaune'
+        },
+        {
+            image : '/images/marine_images/marine5.jpg',
+            title : 'Tortue Marine'
+        }
+    ]
+
     return (
-        <div className='p-4'>
+        <div className=''>
             <img className='w-full object-cover h-[80vh]' src={achievementsHero} />
-            <div className="flex justify-center sm:justify-center pb-4 ">
+                    <div className="flex justify-center sm:justify-center pb-4 ">
+                    <div className="flex justify-center sm:justify-center pb-4 ">
                                 <PageTitle 
                                     title="Suivi Scientifique"
                                     width="w-[160px]"
-                                    
-                
                                 />
-                    </div>           
+                    </div> 
+                    </div>            
                 <section>
-                    <div className='max-w-6xl mx-auto'>
-                    <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
-                                <Sidebar />
+                    <div className='max-w-6xl mx-auto '>
+                    <section className='w-ful   l flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
+                                <AMCPSidebar />
 
                                 <section className='w-fit flex flex-col gap-6'>
-
-                                <PageTitle title="Suivi terrestre"
+                                
+                                    <SectionTitle
+                                    title="Suivi Marin"
                                         width='w-[160px]'
-                                        color='#000000'                            
-                                />   
+                                    />   
+
 
                                     <div className=''>
-                                        <div className=''><p className='font-semibold text-[32px] italic'>Protéger et comprendre les écosystèmes terrestres</p></div>
+                                        <div className=''><p className='font-semibold text-[32px] italic'>Une analyse de Nos Ecosystémes Sous-Marins</p></div>
                                     </div>
 
                                     <div className='text-justify  text-[20px] font-semibold'>
-                                        Le suivi terrestre est une composante essentielle de la conservation environnementale.il s'agit d'observer, d'analyser et de protéger les écosystémes terrestres et les espéces qui y vivent afin d'assurer leur durabilité pour les générations futures.
+                                        Le suivi marin joue un role crucial dans la préservation des écosystémes marins uniques des iles de Kerkennah.il permet de surveiller la santé des habitats sous-marins, d'étudier les espéces emblématiques et de comprendre l'impact des activités humaines sur le milieu marin. Ce suivi scientifique guide nos efforts pour assurer une gestion durable et responsable de ces ressssources précieuses.
                                     </div>
 
                                     <div className='flex items-center '>
                                         <div><img src="/images/marine_images/rectangle.png" alt="" /></div>
-                                        <div className='ml-2'><p className='font-bold text-[28px]'>Objectifs du suivi Terrestre</p></div>
+                                        <div className='ml-2'><p className='font-bold text-[28px]'>Objectifs du suivi Marin</p></div>
                                     </div>
 
                                     <div>
@@ -61,7 +85,7 @@ export default function SuiviScientifique2() {
                                                 <span className='px-4 font-bold text-[20px]'>.</span>
                                             </div>
                                             <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'>Surveiller l'état des habitats terrestres(zones littorales, dunes, etc.)</span>
+                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'>Comprendre et documenter l'évolution des habitats marins comme les herbiers de Posidonie.</span>
                                             </div>
                                         </div>
 
@@ -70,7 +94,7 @@ export default function SuiviScientifique2() {
                                                 <span className='px-4 font-bold text-[20px]'>.</span>
                                             </div>
                                             <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'>Etudier les espéces fauniques et floristiques spécifiques aux ilots nord de Kerkennah.</span>
+                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'>Protéger les espéces en danger telles que la Grande Nacre et les Tortues Marines.</span>
                                             </div>
                                         </div>
 
@@ -79,9 +103,19 @@ export default function SuiviScientifique2() {
                                                 <span className='px-4 font-bold text-[20px]'>.</span>
                                             </div>
                                             <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'>Identifier les impacts bdes activités humaines et proposer des solutions pour limiter la dégradation.</span>
+                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'>Evaluer l'impact des pratiques de peche sur les populations marines, notament le Poule.</span>
                                             </div>
                                         </div>
+
+                                        <div className='grid grid-cols-[30px_auto_auto] '>
+                                            <div className=' flex justify-center mt-2'>
+                                                <span className='px-4 font-bold text-[20px]'>.</span>
+                                            </div>
+                                            <div className=' col-span-2 '>
+                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'>EMesurer les effets des changements climatiques sur les écosystémes locaux.</span>
+                                            </div>
+                                        </div>
+
 
 
                                         
@@ -89,7 +123,7 @@ export default function SuiviScientifique2() {
                                         
 
                                     </div>
-                                    <img src='/images/marine_images/marine11.jpg'alt="Aire marine" className="w-full  h-auto rounded-lg" />
+                                    <img src='/images/marine_images/marine5.jpg'alt="Aire marine" className="w-full  h-auto rounded-lg" />
                                     
                                     <div className='flex items-center '>
                                         <div><img src="/images/marine_images/rectangle.png" alt="" /></div>
@@ -108,7 +142,7 @@ export default function SuiviScientifique2() {
                                                 <span className='px-4 font-bold text-[20px]'>.</span>
                                             </div>
                                             <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Observation sur le terrain :</b> Recueil de données grace à des outils comme les dronnes, les GPS, et les piéges photographiques</span>
+                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Plongées scientifiques :</b> Réalisation de relevés sous-marins pour collecter des données sur les espéces et habitats.</span>
                                             </div>
                                         </div>
 
@@ -117,8 +151,8 @@ export default function SuiviScientifique2() {
                                                 <span className='px-4 font-bold text-[20px]'>.</span>
                                             </div>
                                             <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Analyse des échantillons : </b>Etudes de la flore et de la faune pour comprendre l'impact des conditions environnementales</span>
-                                            </div>
+                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Outils technologiques : </b>Utilisation de drones marins et de capteurs pour des analyses approfondies.</span>
+                                             </div>  
                                         </div>
 
                                         <div className='grid grid-cols-[30px_auto_auto] '>
@@ -126,7 +160,7 @@ export default function SuiviScientifique2() {
                                                 <span className='px-4 font-bold text-[20px]'>.</span>
                                             </div>
                                             <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Suivi à long terme :</b> Comparaison des données pour observer les tendances</span>
+                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Collaboration locale :</b> Implication des pecheurs dans la collecte de données pour renforcer l'efficasité du suivi.</span>
                                             </div>
                                         </div>
 
@@ -136,7 +170,7 @@ export default function SuiviScientifique2() {
                                         
 
                                     </div>
-                                    <img src='/images/marine_images/marine12.jpg' alt="" className="w-full  h-auto rounded-lg" />
+                                    <img src='/images/marine_images/marine6.jpg' alt="" className="w-full  h-auto rounded-lg" />
 
                                     <div className='flex items-center '>
                                         <div><img src="/images/marine_images/rectangle.png" alt="" /></div>
@@ -152,7 +186,7 @@ export default function SuiviScientifique2() {
                                                     <span className='px-4 font-bold text-[20px]'>.</span>
                                                 </div>
                                                 <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Cartographie des habitats terrestres : </b>Identification des zones critiques comme les dunes cotiéres ou les habitats d'espéces endémiques</span>
+                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Restauration des habitats marins :</b>Mise en évidence de la santé des herbies de posidonies et de leur role dans la séquestration du carbone.</span>
                                                 </div>
                                             </div>
 
@@ -161,7 +195,7 @@ export default function SuiviScientifique2() {
                                                     <span className='px-4 font-bold text-[20px]'>.</span>
                                                 </div>
                                                 <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Suivi des espéces clés : </b>Analyse des populations d'oiseaux nicheurs et des espéces végétales locales, mettant en évidence leur role écologiques</span>
+                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Etat des populations : </b>Données sur l'abondance et la diversité des esp"ces suivies(grande nacre, poulpes, tortues marins, etc.)</span>
                                                 </div>
                                             </div>
 
@@ -170,7 +204,7 @@ export default function SuiviScientifique2() {
                                                     <span className='px-4 font-bold text-[20px]'>.</span>
                                                 </div>
                                                 <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Données sur l'impact humain : </b> Etudes des pressions liées aux activités humaines, comme l'érosion et l'urbanisation, pour proposer des solutions adaptées</span>
+                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Indicateur d'impact : </b> Identification des impacts des activités humaines sur les écosystémes marins grace à des analyses réguliers.</span>
                                                 </div>
                                             </div>
 
@@ -181,7 +215,7 @@ export default function SuiviScientifique2() {
                                                     <span className='px-4 font-bold text-[20px]'>.</span>
                                                 </div>
                                                 <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Peéservation des habitats terrestres : </b>Les résultats orientent les efforts pour protéger les écosystémes uniques des ilots nord Kerkennah</span>
+                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Gestion durable : </b>Les résultats permettent de mieux orienter les politiques de gestion des ressources naturelles.</span>
                                                 </div>
                                             </div>
 
@@ -190,7 +224,7 @@ export default function SuiviScientifique2() {
                                                     <span className='px-4 font-bold text-[20px]'>.</span>
                                                 </div>
                                                 <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Soutien à la biodiversité : </b>Identification des espéces vulnérables et mis en place de mesures de convention</span>
+                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Préservation de la biodiversité : </b>Le suivi aide à protéger les espéces en danger en proposant des actions ciblées.</span>
                                                 </div>
                                             </div>
 
@@ -199,12 +233,12 @@ export default function SuiviScientifique2() {
                                                     <span className='px-4 font-bold text-[20px]'>.</span>
                                                 </div>
                                                 <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Sensibilisation communautaire : </b>Les données permettent d'informer et de mobiliser les habitats pour aménagement durable</span>
+                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Education et Sensibilisation : </b>Ces résultats servent à informer et mobiliser les communautés locales et les décideurs.</span>
                                                 </div>
                                             </div>
                                        
                                     </div>
-                                    <img src='/images/marine_images/marine13.png' alt="" className="w-full  h-auto rounded-lg" />
+                                    <img src='/images/marine_images/marine7.jpg' alt="" className="w-full  h-auto rounded-lg" />
 
                                 </section>
                                 <hr className='border-2'/>  
@@ -212,16 +246,15 @@ export default function SuiviScientifique2() {
 
                             </section>
                                 <div className='text-justify  text-[18px] sm:text-[22px] font-semibold'>
-                                     <p className='text-center text-[30px] sm:text-[36px]'><span className='text-[#0270A0]'>Explorer</span> Les espéces de Notre Suivi Terrestre </p>
+                                     <p className='text-center text-[30px] sm:text-[36px]'><span className='text-[#0270A0]'>Explorer</span> Les espéces de Notre Suivi Scientifique Marin </p>
                                 </div>
 
                                 <div className='text-justify  text-[18px] sm:text-[22px] font-bold'>
                                      <p className='text-center text-[18px] sm:text-[20px]'>Découvrez les trésors terrestres que nous surveillons pour</p>
-                                     <p className='text-center text-[18px] sm:text-[20px]'>préserver l'équilibre écologique.</p>
                                 </div>
 
-                                <section className='mt-10'>
-                                        <ContainerImageMarine images={images}/>
+                                <section className='mt-10 '>
+
 
                                 </section>
 

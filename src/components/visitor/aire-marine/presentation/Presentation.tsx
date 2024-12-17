@@ -1,10 +1,11 @@
 import React from 'react'
 import PageTitle from '../../../PageTitle'
 import Sidebar from '../../../layout/Sidebar'
-import ContainerImageMarine from './CotainerImageMarine'
+import ContainerImageMarine from '../CotainerImageMarine'
 import HeroSection from '../../HeroSection'
-import achievementsHero from "../../../../assets/images/amcp-presentation.jpeg";
 import AMCPSidebar from '../../../layout/AMCPSidebar'
+import SectionTitle from '../../../SectionTitle'
+import achievementsHero from '../../../../assets/images/achievements-hero.jpg'
 
 export default function Presentation() {
 
@@ -36,11 +37,10 @@ export default function Presentation() {
                         <section className='w-fit text-justify text-[20px] sm:text-[22px] flex flex-col gap-8'>
 
                             <div className='flex'>
-                            <PageTitle
+                            <SectionTitle
                                 title="Qu'est ce qu'une AMCP"
                                 width="w-[160px]"
                                 color='text-black'
-                                fontSize='text-2xl sm:text-[40px] leading-[48px]'
                                 spacing="my-0"
                             />
                             </div>

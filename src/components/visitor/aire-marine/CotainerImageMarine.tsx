@@ -1,5 +1,5 @@
 import React from 'react'
-import ImageAireMarine from './image-aire-marine';
+import ImageAireMarine from './ImageAireMarine';
 
 type NewType = {
     title: string;
@@ -20,7 +20,7 @@ const ContainerImageMarine: React.FC<ContainerImageMarineProps> = ({ images }) =
                     key={index}
                     title={image.title}
                     description={image.description}
-                    imageUrl={image.imageUrl} // Pass the imageUrl prop to the ImageAireMarine component
+                    imageUrl={image.imageUrl}
                 />
             ))}
         </div>

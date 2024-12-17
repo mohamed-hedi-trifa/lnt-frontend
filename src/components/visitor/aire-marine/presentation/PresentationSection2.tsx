@@ -1,9 +1,11 @@
 import React from 'react'
 import PageTitle from '../../../PageTitle'
 import Sidebar from '../../../layout/Sidebar'
-import ContainerImageMarine from './CotainerImageMarine'
-import TitleParagraphPrersentation from './TitleParagraphPresentation'
+import ContainerImageMarine from '../CotainerImageMarine'
+import TitleParagraphPrersentation from '../présentation-section2/TitleParagraphPresentation'
 import { title } from 'process'
+import SectionTitle from '../../../SectionTitle'
+import AMCPSidebar from '../../../layout/AMCPSidebar'
 
 export default function PresentationSection2() {
 
@@ -185,15 +187,6 @@ export default function PresentationSection2() {
                     <PageTitle 
                         title="Présentation"
                         width="w-[160px]"
-                        fontSize="text-[48px] md:text-[64px] text-center sm:text-center "
-                        itemsAlignment="items-start"
-                        marginTop="mt-10"
-                        marginYaxe=""
-                        alignment="flex gap-2 items-start justify-start"
-                        devider1="w-[19.83px] h-[6px] md:h-[9px] sm:w-[19.83px] bg-primary"
-                        devider2="w-[160.25px] h-[6px] md:h-[9px] md:w-[168.58px] bg-primary"
-                        styleTitle1=''
-                        styleTitle2=''
                     />
                 </div>
 
@@ -203,21 +196,11 @@ export default function PresentationSection2() {
 
                 
                 <section className='w-full flex flex-col sm:flex-row relative gap-4 md:gap-8 py: py-2 md:py-10 '>
-                    <Sidebar />
+                    <AMCPSidebar />
                     <section className='w-fit text-justify text-[22px] flex flex-col gap-10'>
                             
-                                <PageTitle title="Aire Marine et Cotiere Protégée des Ilots Nord de L'archipel Kerkennah" 
+                                <SectionTitle title="Aire Marine et Cotiere Protégée des Ilots Nord de L'archipel Kerkennah" 
                                     width='w-[160px]'
-                                    color='#000000'
-                                    fontSize=' text-[28px] lg:text-[40px] text-center sm:text-start '
-                                    alignment={'flex gap-2  '}                
-                                    devider1={'w-[19.83px] h-[6px] md:h-[9px] sm:w-[19.83px] bg-primary'}
-                                    devider2={'w-[160.25px] h-[6px] md:h-[9px] md:w-[168.58px] bg-primary '}
-                                    itemsAlignment={''}
-                                    marginTop='0px'
-                                    marginYaxe=''
-                                    styleTitle1=''
-                                    styleTitle2=''
                                 />  
                        
                         <div className='leading-10 '>
