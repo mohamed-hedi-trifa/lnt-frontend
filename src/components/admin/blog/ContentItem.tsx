@@ -6,9 +6,9 @@ import { toast } from "react-toastify";
 // import { Delete, Photo } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import axios from "axios";
-import Button from "../../Button";
-import Textarea from "../../Textarea";
-import Input from "../../Input";
+import Button from "../../atoms/Button";
+import Textarea from "../../atoms/inputs/Textarea";
+import Input from "../../atoms/inputs/Input";
 import DragHandle from "./DragHandle";
 import { ArrowUpTrayIcon, PhotoIcon, TrashIcon } from "@heroicons/react/24/solid";
 

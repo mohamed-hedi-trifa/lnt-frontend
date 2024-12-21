@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Button from "./Button";
+import Button from "./atoms/Button";
 import axios from "axios";
-import Input from "./Input";
+import Input from "./atoms/inputs/Input";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 
 export default function NewsLetterSub() {

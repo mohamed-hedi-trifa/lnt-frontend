@@ -17,10 +17,10 @@ const ImageAireMarine: React.FC<ImageAireMarineProps> = ({ title, description, i
 
             <div className="text-white flex flex-col md:flex items-start justify-center gap-4 sm:gap-6 px-4 sm:px-6 relative">
                 <div className="transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-5 flex flex-col gap-6">
-                    <p className="font-bold text-[16px] sm:text-[20px] md:text-[25px] lg-[30px] transition-all">
+                    <p className="font-bold text-[20px] sm:text-[30px] transition-all">
                         {title}
                     </p>
-                    <p className="text-sm font-semibold text-[14px] sm:text-[18px] md:text-[22px] lg:text-[28px] leading-[20px] sm:leading-[28px] md:leading-[32px] transition-all">
+                    <p className="text-sm font-semibold text-[18px] sm:text-[28px] leading-[20px] sm:leading-[28px] md:leading-[32px] transition-all">
                         {description}
                     </p>
                 </div>

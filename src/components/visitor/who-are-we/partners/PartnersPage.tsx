@@ -1,5 +1,5 @@
 import React from 'react'
-import PageTitle from '../../../PageTitle'
+import PageTitle from '../../../atoms/titles/PageTitle'
 import Sidebar from '../../../layout/Sidebar'
 import ahmedYellow from "../../../../assets/images/ahmed-yellow.png"
 import fatmaB from "../../../../assets/images/FatmaB.png"
@@ -12,7 +12,7 @@ import partnersHero from "../../../../assets/images/partners-hero.jpg";
 import ImageHistoire from '../our-team/ImageHistoire'
 import Partners from './Partners'
 import HeroSection from '../../HeroSection'
-import PageParagraph from '../../../PageParagraph'
+import PageParagraph from '../../../atoms/PageParagraph'
 
 const IMAGES = [
     ahmedYellow,

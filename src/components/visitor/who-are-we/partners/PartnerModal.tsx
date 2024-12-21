@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import ReactLoading from "react-loading"
 import Modal from '../../../Modal';
-import Title from '../../../Title';
+import Title from '../../../atoms/titles/Title';
 import { Link } from 'gatsby';
 import { FacebookOutlined, LinkedIn } from '@mui/icons-material';
 import { X } from '@mui/icons-material';

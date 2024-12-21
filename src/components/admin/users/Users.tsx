@@ -5,8 +5,8 @@ import Swal from 'sweetalert2';
 import ReactLoading from "react-loading"
 import AddUserModal from './AddUserModal';
 import EditUserModal from './EditUserModal';
-import Card from '../../Card';
-import Table from '../../Table';
+import Card from '../../atoms/Card';
+import Table from '../../atoms/Table';
 
 export default function Users() {
 

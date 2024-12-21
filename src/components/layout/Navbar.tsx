@@ -232,11 +232,11 @@ const items = [
         items:[
           {
             label: "Suivi Marin",
-            path: "/protected-air-marine-coastal-areas/suivie/marin"
+            path: "/protected-air-marine-coastal-areas/monitoring/marin"
           },
           {
             label: "Suivi Terrestre",
-            path: "/protected-air-marine-coastal-areas/suivie/terrestre"
+            path: "/protected-air-marine-coastal-areas/monitoring/terrestre"
           }
         ]
       },

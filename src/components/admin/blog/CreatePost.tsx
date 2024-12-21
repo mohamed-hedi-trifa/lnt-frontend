@@ -4,12 +4,12 @@ import Swal from "sweetalert2";
 import { Link, navigate } from "gatsby";
 import ItemsList from "./ItemsList";
 import { arrayMove } from "react-sortable-hoc";
-import Input from "../../Input";
-import Textarea from "../../Textarea";
-import Button from "../../Button";
+import Input from "../../atoms/inputs/Input";
+import Textarea from "../../atoms/inputs/Textarea";
+import Button from "../../atoms/Button";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
-import Title from "../../Title";
-import Select from "../../Select";
+import Title from "../../atoms/titles/Title";
+import Select from "../../atoms/inputs/Select";
 
 interface FormData {
   title_en: string;

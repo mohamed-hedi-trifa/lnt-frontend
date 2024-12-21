@@ -1,9 +1,9 @@
 import React from 'react'
-import PageTitle from '../../../PageTitle'
+import PageTitle from '../../../atoms/titles/PageTitle'
 import Sidebar from '../../../layout/Sidebar'
 import achievementsHero from "../../../../assets/images/achievements-hero.jpg";
 import ContainerImageMarine from '../CotainerImageMarine';
-import SectionTitle from '../../../SectionTitle';
+import SectionTitle from '../../../atoms/titles/SectionTitle';
 import AMCPSidebar from '../../../layout/AMCPSidebar'
 
 export default function SuiviScientifique2() {
@@ -42,6 +42,7 @@ export default function SuiviScientifique2() {
                                 <SectionTitle 
                                         title="Suivi terrestre"
                                         width='w-[160px]'
+                                        spacing="mt-8 sm:mt-0"
                                 />   
 
                                     <div className=''>
@@ -222,14 +223,11 @@ export default function SuiviScientifique2() {
                                      <p className='text-center text-[18px] sm:text-[20px]'>préserver l'équilibre écologique.</p>
                                 </div>
 
-                                <section className='mt-10'>
+                                <section className='my-10'>
                                         <ContainerImageMarine images={images}/>
-
                                 </section>
 
-                            <section className='border-t border-[#ADA5A5] '>
-                                {/* <ImageHistoire /> */}
-                            </section>
+                            
                     </div>
                 </section>
         </div>

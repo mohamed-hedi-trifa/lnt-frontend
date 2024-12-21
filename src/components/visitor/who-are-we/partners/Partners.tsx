@@ -79,7 +79,7 @@ const Partners: React.FC = () => {
 
     return (
         <Fragment>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 sm:gap-10">
             {PARTNERS.map((partner, index) => (
                 <div onClick={()=>{setToView(partner);setModalShow(true)}} className="border-[#E8E8EA] border-[1.5px] p-4 box-border rounded-[30px] shadow-[0px_4px_4px_0px_#00000040] flex justify-center">
                     <img

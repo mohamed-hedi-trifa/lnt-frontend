@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import Input from '../Input';
-import Button from '../Button';
+import Input from '../atoms/inputs/Input';
+import Button from '../atoms/Button';
 import Posts from './Posts';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 

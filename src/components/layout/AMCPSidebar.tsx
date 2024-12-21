@@ -1,6 +1,8 @@
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { Bars3Icon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react';
+import { useSidebar } from '../../contexts/AMCPSidebarContext';
+import { Link } from 'gatsby';
 
 // Recursive component for each menu item
 function SidebarItem({ item, basePath = "/en", depth = 0 }: { item: any; basePath?: string; depth?: number }) {
@@ -33,12 +35,12 @@ function SidebarItem({ item, basePath = "/en", depth = 0 }: { item: any; basePat
           />
         </div>
 
-        <a
+        <Link
           className={labelClasses}
-          href={item.path ? (basePath + item.path) : '#'}
+          to={item.path ? (basePath + item.path) : '#'}
         >
           {item.label}
-        </a>
+        </Link>
       </div>
 
       {hasSubmenu && (
@@ -63,7 +65,7 @@ function SidebarItem({ item, basePath = "/en", depth = 0 }: { item: any; basePat
           </div>
           {hasSubmenu && (
             <div className='absolute top-0 left-[36px] ml-[-32px] w-[32px] flex justify-end h-full z-50'>
-              <div className='bg-white h-[calc(100%-14px)] w-[2px]'></div>
+              <div className='bg-white h-[calc(100%-11px)] sm:h-[calc(100%-13px)] w-[2px]'></div>
             </div>
           )}
         </div>
@@ -76,6 +78,7 @@ const AMCPSidebar = () => {
   const items = [
     {
       label: "Présentation",
+      path:"/protected-air-marine-coastal-areas/presentation",
       items: [
         {
           label: "Aire Marine et Côtière Protégée des Îlots Nord de l'archipel de Kerkennah (AMCP)",
@@ -89,6 +92,7 @@ const AMCPSidebar = () => {
     },
     {
       label: "Suivi Scientifique",
+      path:"/protected-air-marine-coastal-areas/monitoring",
       items: [
         {
           label: "Suivi Marin",
@@ -136,10 +140,10 @@ const AMCPSidebar = () => {
     }
   ];  
 
-  const [opened, setOpened] = useState(false);
+  const {opened, setOpened} = useSidebar();
 
   return (
-    <div className='mx-auto sticky top-[65px] sm:top-[120px] h-[100px] sm:h-fit w-[366px] shrink-0 z-20'>
+    <div className='mx-auto sticky top-[65px] sm:top-[120px] h-[100px] sm:h-fit w-[296px] sm:w-[366px] shrink-0 z-20'>
       <div className='h-fit'>
         <div
           className={`flex flex-col ${opened ? "gap-6" : "gap-0"} sm:gap-8 transition-all duration-300 p-4 sm:p-8 py-2 sm:py-12 rounded-3xl sm:rounded-[20px] text-white`}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./BlogDetail.css";
-import Title from "../Title";
+import Title from "../atoms/titles/Title";
 import { navigate } from "gatsby";
 
 // Helper function to parse custom markdown-like syntax

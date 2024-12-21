@@ -1,8 +1,11 @@
 import React from 'react'
-import SuiviScientifique2 from '../../../components/visitor/aire-marine/monitoring/SuivieScientifique2'
+import SuiviScientifique3 from '../../../components/visitor/aire-marine/monitoring/SuivieScientifique3'
+import { AMCPSidebarProvider } from '../../../contexts/AMCPSidebarContext'
 
 export default function MarinPage() {
   return (
-    <SuiviScientifique2 />
+    <AMCPSidebarProvider>
+      <SuiviScientifique3 />
+    </AMCPSidebarProvider>
   )
 }

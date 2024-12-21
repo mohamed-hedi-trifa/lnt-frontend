@@ -1,10 +1,10 @@
 import React from 'react'
-import PageTitle from '../../../PageTitle'
+import PageTitle from '../../../atoms/titles/PageTitle'
 import Sidebar from '../../../layout/Sidebar'
 import ImageHistoire from '../our-team/ImageHistoire'
 import KeyMoments from './KeyMoments'
 import historyHero from "../../../../assets/images/history-hero.jpg";
-import PageParagraph from '../../../PageParagraph'
+import PageParagraph from '../../../atoms/PageParagraph'
 import HeroSection from '../../HeroSection'
 
 export default function OurHistory() {

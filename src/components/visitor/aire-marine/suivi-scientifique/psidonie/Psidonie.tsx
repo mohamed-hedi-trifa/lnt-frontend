@@ -1,5 +1,5 @@
 import React from 'react'
-import PageTitle from '../../../../PageTitle';
+import PageTitle from '../../../../atoms/titles/PageTitle';
 import Sidebar from '../../../../layout/Sidebar';
 import achievementsHero from "../../../../../assets/images/achievements-hero.jpg";
 import Etiquette from './Etiquette';

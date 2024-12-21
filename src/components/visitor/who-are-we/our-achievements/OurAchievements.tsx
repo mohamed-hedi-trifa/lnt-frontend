@@ -1,11 +1,11 @@
 import React from 'react'
-import PageTitle from '../../../PageTitle'
+import PageTitle from '../../../atoms/titles/PageTitle'
 import Sidebar from '../../../layout/Sidebar'
 import ImageHistoire from '../our-team/ImageHistoire'
 import achievementsHero from "../../../../assets/images/achievements-hero.jpg";
 import AchievementsCards from './AchievementsCards';
 import HeroSection from '../../HeroSection';
-import PageParagraph from '../../../PageParagraph';
+import PageParagraph from '../../../atoms/PageParagraph';
 
 export default function OurAchievements() {
 

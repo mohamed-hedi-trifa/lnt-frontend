@@ -1,5 +1,5 @@
 import React from 'react'
-import PageTitle from '../../../PageTitle'
+import PageTitle from '../../../atoms/titles/PageTitle'
 import Sidebar from '../../../layout/Sidebar'
 import ahmedYellow from "../../../../assets/images/ahmed-yellow.png"
 import fatmaB from "../../../../assets/images/FatmaB.png"

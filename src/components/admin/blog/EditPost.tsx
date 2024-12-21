@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Input from "../../Input";
-import Textarea from "../../Textarea";
-import Button from "../../Button";
+import Input from "../../atoms/inputs/Input";
+import Textarea from "../../atoms/inputs/Textarea";
+import Button from "../../atoms/Button";
 import Swal from "sweetalert2";
 import { Link, navigate } from "gatsby";
-import Title from "../../Title";
+import Title from "../../atoms/titles/Title";
 import { arrayMove } from "react-sortable-hoc";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
-import Select from "../../Select";
+import Select from "../../atoms/inputs/Select";
 import ItemsList from "./ItemsList";
 
 const EditPost = ({ location, params }: { location: any, params: any }) => {

@@ -1,7 +1,7 @@
 import { Link } from "gatsby";
 import React, { useEffect, useRef, useState } from "react";
 import LangLink from "../LangLink";
-import Button from "../Button";
+import Button from "../atoms/Button";
 
 export default function Archipel() {
   return (

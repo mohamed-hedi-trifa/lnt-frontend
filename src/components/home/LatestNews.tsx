@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import NewsCard from "./NewsCard";
 import { Link } from "gatsby";
 import LangLink from "../LangLink";
-import Button from "../Button";
+import Button from "../atoms/Button";
 
 type News = {
   image?: string;

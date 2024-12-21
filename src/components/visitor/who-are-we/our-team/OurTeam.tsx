@@ -1,5 +1,5 @@
 import React from 'react'
-import PageTitle from '../../../PageTitle'
+import PageTitle from '../../../atoms/titles/PageTitle'
 import Sidebar from '../../../layout/Sidebar'
 import ahmedYellow from "../../../../assets/images/ahmed-yellow.png"
 import fatmaB from "../../../../assets/images/FatmaB.png"
@@ -11,7 +11,7 @@ import najahH from "../../../../assets/images/NajahH.png"
 import ImageHistoire from './ImageHistoire'
 import historyHero from "../../../../assets/images/history-hero.jpg";
 import HeroSection from '../../HeroSection'
-import PageParagraph from '../../../PageParagraph'
+import PageParagraph from '../../../atoms/PageParagraph'
 
 const TEAM = [
     {

@@ -1,268 +1,193 @@
 import React from 'react'
-import PageTitle from '../../../PageTitle'
-import achievementsHero from "../../../../assets/images/achievements-hero.jpg";
+import PageTitle from '../../../atoms/titles/PageTitle'
+import marinHero from "../../../../assets/images/marin-hero.jpg";
 import AMCPSidebar from '../../../layout/AMCPSidebar'
-import SectionTitle from '../../../SectionTitle';
+import SectionTitle from '../../../atoms/titles/SectionTitle';
+import Title from '../../../atoms/titles/Title';
+import HeroSection from '../../HeroSection';
+import PageParagraph from '../../../atoms/PageParagraph';
+import List from '../../../atoms/List';
 
 export default function SuiviScientifique3() {
 
+    const listMethodologie = [
+        {
+            title: 'Plongées scientifiques :',
+            content: 'Réalisation de relevés sous-marins pour collecter des données sur les espèces et habitats.',
+        },
+        {
+            title: 'Outils technologiques :',
+            content: 'Utilisation de drones marins et de capteurs pour des analyses approfondies.',
+        },
+        {
+            title: 'Collaboration locale :',
+            content: "Implication des pêcheurs dans la collecte de données pour renforcer l'efficacité du suivi.",
+        },
+    ];
+
     const images = [
         {
-            title :'Explorez l’Aire Marine Protégée',
-            description : 'Préservons ensemble les Îlots Nord de Kerkennah',
-            imageUrl : '/images/marine_images/marine3.jpg'
+            title: 'Explorez l’Aire Marine Protégée',
+            description: 'Préservons ensemble les Îlots Nord de Kerkennah',
+            imageUrl: '/images/marine_images/marine3.jpg'
         },
-        {   
-            title :'Découvrez nos Partenaires',
-            description : 'Engagés pour la Protection des Îles de Kerkennah',
-            imageUrl : '/images/marine_images/marine4.jpg'
+        {
+            title: 'Découvrez nos Partenaires',
+            description: 'Engagés pour la Protection des Îles de Kerkennah',
+            imageUrl: '/images/marine_images/marine4.jpg'
         }
     ]
 
     const slides = [
         {
-            image : '/images/marine_images/marine7.jpg',
-            title : 'Posidonie'
+            image: '/images/marine_images/marine7.jpg',
+            title: 'Posidonie'
         },
         {
-            image : '/images/marine_images/marine8.jpg',
-            title : 'Grande Nacre'
+            image: '/images/marine_images/marine8.jpg',
+            title: 'Grande Nacre'
         },
         {
-            image : '/images/marine_images/marine10.jpg',
-            title : 'Eponge Marine'
+            image: '/images/marine_images/marine10.jpg',
+            title: 'Eponge Marine'
         },
         {
-            image : '/images/marine_images/marine8.jpg',
-            title : 'Avifaune'
+            image: '/images/marine_images/marine8.jpg',
+            title: 'Avifaune'
         },
         {
-            image : '/images/marine_images/marine5.jpg',
-            title : 'Tortue Marine'
+            image: '/images/marine_images/marine5.jpg',
+            title: 'Tortue Marine'
         }
     ]
 
     return (
         <div className=''>
-            <img className='w-full object-cover h-[80vh]' src={achievementsHero} />
-                    <div className="flex justify-center sm:justify-center pb-4 ">
-                    <div className="flex justify-center sm:justify-center pb-4 ">
-                                <PageTitle 
-                                    title="Suivi Scientifique"
-                                    width="w-[160px]"
-                                />
-                    </div> 
-                    </div>            
-                <section>
-                    <div className='max-w-6xl mx-auto '>
-                    <section className='w-ful   l flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
-                                <AMCPSidebar />
+            <HeroSection title="Protégeons les Trésors des Profondeurs" subTitle="Un engagement pour la biodiversité marine de Kerkennah" imgSrc={marinHero} />
 
-                                <section className='w-fit flex flex-col gap-6'>
-                                
+            <div className="flex justify-center sm:justify-center pb-4 ">
+                <PageTitle
+                    title="Suivi Scientifique"
+                    width="w-[160px]"
+                />
+            </div>
+
+            <section className='px-4 sm:px-0'>
+                <div className='max-w-6xl mx-auto'>
+                    <section className='w-full flex flex-col sm:flex-row relative gap-4 md:gap-8 py-2 md:py-10'>
+                        <AMCPSidebar />
+
+                        <section className='w-fit flex flex-col gap-8'>
+
+                            <article className='flex flex-col gap-5'>
+                                <div className='flex justify-center sm:justify-start'>
                                     <SectionTitle
-                                    title="Suivi Marin"
-                                        width='w-[160px]'
-                                    />   
-
-
-                                    <div className=''>
-                                        <div className=''><p className='font-semibold text-[32px] italic'>Une analyse de Nos Ecosystémes Sous-Marins</p></div>
-                                    </div>
-
-                                    <div className='text-justify  text-[20px] font-semibold'>
-                                        Le suivi marin joue un role crucial dans la préservation des écosystémes marins uniques des iles de Kerkennah.il permet de surveiller la santé des habitats sous-marins, d'étudier les espéces emblématiques et de comprendre l'impact des activités humaines sur le milieu marin. Ce suivi scientifique guide nos efforts pour assurer une gestion durable et responsable de ces ressssources précieuses.
-                                    </div>
-
-                                    <div className='flex items-center '>
-                                        <div><img src="/images/marine_images/rectangle.png" alt="" /></div>
-                                        <div className='ml-2'><p className='font-bold text-[28px]'>Objectifs du suivi Marin</p></div>
-                                    </div>
-
-                                    <div>
-                                        <div className='grid grid-cols-[30px_auto_auto] '>
-                                            <div className=' flex justify-center mt-2'>
-                                                <span className='px-4 font-bold text-[20px]'>.</span>
-                                            </div>
-                                            <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'>Comprendre et documenter l'évolution des habitats marins comme les herbiers de Posidonie.</span>
-                                            </div>
-                                        </div>
-
-                                        <div className='grid grid-cols-[30px_auto_auto] '>
-                                            <div className=' flex justify-center mt-2'>
-                                                <span className='px-4 font-bold text-[20px]'>.</span>
-                                            </div>
-                                            <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'>Protéger les espéces en danger telles que la Grande Nacre et les Tortues Marines.</span>
-                                            </div>
-                                        </div>
-
-                                        <div className='grid grid-cols-[30px_auto_auto] '>
-                                            <div className=' flex justify-center mt-2'>
-                                                <span className='px-4 font-bold text-[20px]'>.</span>
-                                            </div>
-                                            <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'>Evaluer l'impact des pratiques de peche sur les populations marines, notament le Poule.</span>
-                                            </div>
-                                        </div>
-
-                                        <div className='grid grid-cols-[30px_auto_auto] '>
-                                            <div className=' flex justify-center mt-2'>
-                                                <span className='px-4 font-bold text-[20px]'>.</span>
-                                            </div>
-                                            <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'>EMesurer les effets des changements climatiques sur les écosystémes locaux.</span>
-                                            </div>
-                                        </div>
-
-
-
-                                        
-                                        
-                                        
-
-                                    </div>
-                                    <img src='/images/marine_images/marine5.jpg'alt="Aire marine" className="w-full  h-auto rounded-lg" />
-                                    
-                                    <div className='flex items-center '>
-                                        <div><img src="/images/marine_images/rectangle.png" alt="" /></div>
-                                        <div className='ml-2'><p className='font-bold text-[28px]'>Méthodologie Utilisée</p></div>
-                                    </div>
-
- 
-                                     
-
-
-                                    <div>
-
-
-                                        <div className='grid grid-cols-[30px_auto_auto] '>
-                                            <div className=' flex justify-center mt-2'>
-                                                <span className='px-4 font-bold text-[20px]'>.</span>
-                                            </div>
-                                            <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Plongées scientifiques :</b> Réalisation de relevés sous-marins pour collecter des données sur les espéces et habitats.</span>
-                                            </div>
-                                        </div>
-
-                                        <div className='grid grid-cols-[30px_auto_auto] '>
-                                            <div className=' flex justify-center mt-2'>
-                                                <span className='px-4 font-bold text-[20px]'>.</span>
-                                            </div>
-                                            <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Outils technologiques : </b>Utilisation de drones marins et de capteurs pour des analyses approfondies.</span>
-                                             </div>  
-                                        </div>
-
-                                        <div className='grid grid-cols-[30px_auto_auto] '>
-                                            <div className=' flex justify-center mt-2'>
-                                                <span className='px-4 font-bold text-[20px]'>.</span>
-                                            </div>
-                                            <div className=' col-span-2 '>
-                                                <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Collaboration locale :</b> Implication des pecheurs dans la collecte de données pour renforcer l'efficasité du suivi.</span>
-                                            </div>
-                                        </div>
-
-
-                                        
-                                        
-                                        
-
-                                    </div>
-                                    <img src='/images/marine_images/marine6.jpg' alt="" className="w-full  h-auto rounded-lg" />
-
-                                    <div className='flex items-center '>
-                                        <div><img src="/images/marine_images/rectangle.png" alt="" /></div>
-                                        <div className='ml-2'><p className='font-bold text-[28px]'>Résultat et Importance</p></div>
-                                    </div>
-
-                                    <div className='ml-10'>
-                                        <span className='text-[20px] font-bold'>Résultats</span>
-
-                                            
-                                            <div className='grid grid-cols-[30px_auto_auto] '>
-                                                <div className=' flex justify-center mt-2'>
-                                                    <span className='px-4 font-bold text-[20px]'>.</span>
-                                                </div>
-                                                <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Restauration des habitats marins :</b>Mise en évidence de la santé des herbies de posidonies et de leur role dans la séquestration du carbone.</span>
-                                                </div>
-                                            </div>
-
-                                            <div className='grid grid-cols-[30px_auto_auto] '>
-                                                <div className=' flex justify-center mt-2'>
-                                                    <span className='px-4 font-bold text-[20px]'>.</span>
-                                                </div>
-                                                <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Etat des populations : </b>Données sur l'abondance et la diversité des esp"ces suivies(grande nacre, poulpes, tortues marins, etc.)</span>
-                                                </div>
-                                            </div>
-
-                                            <div className='grid grid-cols-[30px_auto_auto] '>
-                                                <div className=' flex justify-center mt-2'>
-                                                    <span className='px-4 font-bold text-[20px]'>.</span>
-                                                </div>
-                                                <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Indicateur d'impact : </b> Identification des impacts des activités humaines sur les écosystémes marins grace à des analyses réguliers.</span>
-                                                </div>
-                                            </div>
-
-                                        <span className='text-[20px] font-bold'>Importance</span>
-
-                                        <div className='grid grid-cols-[30px_auto_auto] '>
-                                                <div className=' flex justify-center mt-2'>
-                                                    <span className='px-4 font-bold text-[20px]'>.</span>
-                                                </div>
-                                                <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Gestion durable : </b>Les résultats permettent de mieux orienter les politiques de gestion des ressources naturelles.</span>
-                                                </div>
-                                            </div>
-
-                                            <div className='grid grid-cols-[30px_auto_auto] '>
-                                                <div className=' flex justify-center mt-2'>
-                                                    <span className='px-4 font-bold text-[20px]'>.</span>
-                                                </div>
-                                                <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Préservation de la biodiversité : </b>Le suivi aide à protéger les espéces en danger en proposant des actions ciblées.</span>
-                                                </div>
-                                            </div>
-
-                                            <div className='grid grid-cols-[30px_auto_auto] '>
-                                                <div className=' flex justify-center mt-2'>
-                                                    <span className='px-4 font-bold text-[20px]'>.</span>
-                                                </div>
-                                                <div className=' col-span-2 '>
-                                                    <span className='text-[18px] sm:text-[20px] leading-[50px]'><b>Education et Sensibilisation : </b>Ces résultats servent à informer et mobiliser les communautés locales et les décideurs.</span>
-                                                </div>
-                                            </div>
-                                       
-                                    </div>
-                                    <img src='/images/marine_images/marine7.jpg' alt="" className="w-full  h-auto rounded-lg" />
-
-                                </section>
-                                <hr className='border-2'/>  
-                             
-
-                            </section>
-                                <div className='text-justify  text-[18px] sm:text-[22px] font-semibold'>
-                                     <p className='text-center text-[30px] sm:text-[36px]'><span className='text-[#0270A0]'>Explorer</span> Les espéces de Notre Suivi Scientifique Marin </p>
+                                        title="Suivi Marin"
+                                        width='w-[100px] sm:w-[160px]'
+                                        spacing="mt-8 sm:mt-0"
+                                        customClassName='!w-auto'
+                                    />
                                 </div>
+                                <div className='font-semibold text-[24px] sm:text-[31px] italic text-center sm:text-start'>Une Analyse de Nos Ecosystémes Sous-Marins</div>
 
-                                <div className='text-justify  text-[18px] sm:text-[22px] font-bold'>
-                                     <p className='text-center text-[18px] sm:text-[20px]'>Découvrez les trésors terrestres que nous surveillons pour</p>
+                                <PageParagraph fontWeight='font-semibold' >
+                                    Le suivi marin joue un role crucial dans la préservation des écosystémes marins uniques des iles de Kerkennah.il permet de surveiller la santé des habitats sous-marins, d'étudier les espéces emblématiques et de comprendre l'impact des activités humaines sur le milieu marin. Ce suivi scientifique guide nos efforts pour assurer une gestion durable et responsable de ces ressssources précieuses.
+                                </PageParagraph>
+                            </article>
+
+                            <article className='flex flex-col gap-5'>
+
+                                <Title size='text-[25px] sm:text-[28px]' variant='pill'>Objectifs du suivi Marin</Title>
+
+                                <List items={[
+                                    {
+                                        title: "Comprendre et documenter :",
+                                        content: "L'évolution des habitats marins comme les herbiers de Posidonie.",
+                                    },
+                                    {
+                                        title: "Protéger les espèces en danger :",
+                                        content: "Telles que la Grande Nacre et les Tortues Marines.",
+                                    },
+                                    {
+                                        title: "Évaluer l'impact des pratiques de pêche :",
+                                        content: "Sur les populations marines, notamment le Poulpe.",
+                                    },
+                                    {
+                                        title: "Mesurer les effets des changements climatiques :",
+                                        content: "Sur les écosystèmes locaux.",
+                                    },
+                                ]} />
+
+                                <img src='/images/marine_images/marine5.jpg' alt="Aire marine" className="w-full  h-auto rounded-lg" />
+                            </article>
+
+                            <article className='flex flex-col gap-5'>
+                                <Title size='text-[25px] sm:text-[28px]' variant='pill'>Méthodologie Utilisée</Title>
+
+
+                                <List items={listMethodologie} />
+
+                                <img src='/images/marine_images/marine6.jpg' alt="" className="w-full  h-auto rounded-lg" />
+                            </article>
+
+                            <article className='flex flex-col gap-5'>
+                                <Title size='text-[25px] sm:text-[28px]' variant='pill'>Résultat et Importance</Title>
+                                <div className='ml-10 flex flex-col gap-5'>
+                                    <Title>Résultats</Title>
+
+
+                                    <List items={[
+                                        {
+                                            title: 'Restauration des habitats marins :',
+                                            content: 'Mise en évidence de la santé des herbiers de posidonies et de leur rôle dans la séquestration du carbone.',
+                                        },
+                                        {
+                                            title: 'État des populations :',
+                                            content: 'Données sur l’abondance et la diversité des espèces suivies (grande nacre, poulpes, tortues marines, etc.).',
+                                        },
+                                        {
+                                            title: "Indicateurs d'impact :",
+                                            content: 'Identification des impacts des activités humaines sur les écosystèmes marins grâce à des analyses régulières.',
+                                        },
+                                    ]} />
+
+                                    <Title >Importance</Title>
+
+                                    <List items={[
+                                        {
+                                            title: 'Gestion durable :',
+                                            content: 'Les résultats permettent de mieux orienter les politiques de gestion des ressources naturelles.',
+                                        },
+                                        {
+                                            title: 'Préservation de la biodiversité :',
+                                            content: 'Le suivi aide à protéger les espèces en danger en proposant des actions ciblées.',
+                                        },
+                                        {
+                                            title: 'Éducation et sensibilisation :',
+                                            content: 'Ces résultats servent à informer et mobiliser les communautés locales et les décideurs.',
+                                        },
+                                    ]} />
+
                                 </div>
+                                <img src='/images/marine_images/marine7.jpg' alt="" className="w-full  h-auto rounded-lg" />
+                            </article>
 
-                                <section className='mt-10 '>
+                        </section>
 
+                    </section>
+                    <hr className='border-2 my-8' />
+                    <section className='flex flex-col gap-4 my-8'>
+                        <div className='text-justify  text-[18px] sm:text-[22px] font-bold'>
+                            <p className='text-center text-[30px] sm:text-[36px]'><span className='text-[#0270A0]'>Explorer</span> Les espéces de Notre Suivi Scientifique Marin </p>
+                        </div>
 
-                                </section>
+                        <div className='text-justify  text-[18px] sm:text-[22px] font-bold'>
+                            <p className='text-center text-[18px] sm:text-[20px]'>Découvrez les trésors terrestres que nous surveillons pour</p>
+                        </div>
+                    </section>
 
-                            <section className='border-t border-[#ADA5A5] '>
-                                {/* <ImageHistoire /> */}
-                            </section>
-                    </div>
-                </section>
+                </div>
+            </section>
         </div>
     )
 }

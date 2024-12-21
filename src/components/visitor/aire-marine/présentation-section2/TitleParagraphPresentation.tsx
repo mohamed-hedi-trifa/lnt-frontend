@@ -21,9 +21,9 @@ const TitleParagraphPrersentation : React.FC<ImageAireMarineProps> = ({ doc }) =
                                 <div><p className='text-[25px] md:text-[28px]'></p>{lineDescription.title}</div>
                             </div>
 
-                            <div className='flex flex-col gap-6 mt-4 ml-4'>
+                            <div className='flex flex-col gap-6 mt-4'>
                             
-                                <p className='text-[18px] md:text-[20px]'>                                    {    
+                                <p className='text-[18px] md:text-[20px] flex flex-col gap-3'>                                    {    
                                         lineDescription.description.map(descriptionParagraph=>(
                                                 descriptionParagraph
                                         )) 
