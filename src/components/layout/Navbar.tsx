@@ -4,6 +4,7 @@ import Dropdown from "../Dropdown";
 import { Bars3Icon, ChevronDownIcon, GlobeAltIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import LangLink from "../LangLink";
 import NavDropdown from "../NavDropdown";
+import MobileNavbar from "./MobileNavbar";
 
 function SubDropdown({ items }: { items: any[] }) {
   return (
@@ -109,9 +110,9 @@ function Navbar({ location }: { location: any }) {
               <GlobeAltIcon className="h-8 w-8 text-white" />
               <p className="text-white font-bold">EN</p>
             </button>
-            <button className="block md:hidden">
-              <Bars3Icon className="h-8 w-8 text-blue-800" />
-            </button>
+            <div className="block md:hidden">
+              <MobileNavbar />
+            </div>
           </div>
         </div>
       </header>
