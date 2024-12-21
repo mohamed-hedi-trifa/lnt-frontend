@@ -188,7 +188,7 @@ function Navbar({ location }: { location: any }) {
 
 export default Navbar;
 
-const items = [
+export const items = [
   {
     label: "Qui Sommes-Nous",
     underlineClassName: "w-[100px]",
@@ -230,16 +230,16 @@ const items = [
       {
         label: "Suivi Scientifique",
         path: "/protected-air-marine-coastal-areas/monitoring",
-        items:[
+        items: [
           {
             label: "Suivi Marin",
-            path: "/protected-air-marine-coastal-areas/monitoring/marin"
+            path: "/protected-air-marine-coastal-areas/monitoring/marin",
           },
           {
             label: "Suivi Terrestre",
-            path: "/protected-air-marine-coastal-areas/monitoring/terrestre"
-          }
-        ]
+            path: "/protected-air-marine-coastal-areas/monitoring/terrestre",
+          },
+        ],
       },
       {
         label: "Formation et Campement Scientifique",

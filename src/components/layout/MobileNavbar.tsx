@@ -2,6 +2,7 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import React from "react";
 import AccordionNav from "../AccordionNav";
+import { items } from "./Navbar";
 
 export default function MobileNavbar() {
   return (
@@ -113,131 +114,6 @@ function Item3({ item, isOpen }: { item: any; isOpen: boolean }) {
     </div>
   );
 }
-
-const items = [
-  {
-    label: "Qui Sommes-Nous",
-    underlineClassName: "w-[100px]",
-    items: [
-      {
-        label: "Notre Histoire",
-        path: "/who-are-we/our-history",
-      },
-      {
-        label: "Principes et Valeurs",
-        path: "/who-are-we/our-values",
-      },
-      {
-        label: "Nos Réalisations",
-        path: "/who-are-we/our-achievements",
-      },
-      {
-        label: "Notre Équipe",
-        path: "/who-are-we/our-team",
-      },
-      {
-        label: "Partenaires",
-        path: "/who-are-we/partners",
-      },
-      {
-        label: "Rapport Financier",
-        path: "/who-are-we/financial-report",
-      },
-    ],
-  },
-  {
-    label: "Air Marine et Côtière Protégée",
-    underlineClassName: "w-[150px]",
-    items: [
-      {
-        label: "Présentation",
-        path: "/aire-marine/presentation",
-      },
-      {
-        label: "Suivi Scientifique",
-        path: "/aire-marine/suivie",
-        items: [
-          {
-            label: "Suivi Marin",
-            path: "/aire-marine/suivie/marin",
-          },
-          {
-            label: "Suivi Terrestre",
-            path: "/aire-marine/suivie/terrestre",
-          },
-        ],
-      },
-      {
-        label: "Formation et Campement Scientifique",
-        path: "/achievements",
-      },
-      {
-        label: "Équipe",
-        path: "/team",
-      },
-    ],
-  },
-  {
-    label: "Notre Festival",
-    underlineClassName: "w-[100px]",
-    items: [
-      {
-        label: "Prochains Festivals",
-        path: "/next-festivals",
-      },
-      {
-        label: "Éditions Précédentes",
-        path: "/previous-editions",
-      },
-    ],
-  },
-  {
-    label: "Actualités",
-    path: "/news",
-    underlineClassName: "w-[70px]",
-  },
-  {
-    label: "Événements",
-    underlineClassName: "w-[100px]",
-    items: [
-      {
-        label: "Ateliers et Formations",
-        path: "/training-sessions",
-      },
-      {
-        label: "Événements Culturels",
-        path: "/culturel-events",
-      },
-      {
-        label: "Activités de Loisirs et Sportives",
-        path: "/sport-events",
-      },
-    ],
-  },
-  {
-    label: "Opportunités",
-    underlineClassName: "w-[100px]",
-    items: [
-      {
-        label: "Offres d'Emplois",
-        path: "/job-offers",
-      },
-      {
-        label: "Appels d'Offres",
-        path: "/tenders",
-      },
-      {
-        label: "Stages",
-        path: "/internships",
-      },
-    ],
-  },
-  {
-    label: "Contact",
-    path: "/contact",
-    underlineClassName: "w-[55px]",
-  },
-];
 
 function ArrowDown(props: { className?: string }) {
   return (
