@@ -4,6 +4,7 @@ import PageTitle from "@/components/atoms/titles/PageTitle";
 import SectionTitle from "@/components/atoms/titles/SectionTitle";
 import AMCPSidebar from "@/components/layout/AMCPSidebar";
 import ContainerImageMarine from "@/components/visitor/aire-marine/CotainerImageMarine";
+import ExplorezSuiviTerrestre from "@/components/visitor/aire-marine/monitoring/terrestre/ExplorezSuiviTerrestre";
 
 export default function SuiviScientifique2() {
   const images = [
@@ -218,22 +219,23 @@ export default function SuiviScientifique2() {
               </div>
               <img src="/images/marine_images/marine13.png" alt="" className="w-full  h-auto rounded-lg" />
             </section>
-            <hr className="border-2" />
           </section>
-          <div className="text-justify  text-[18px] sm:text-[22px] font-semibold">
+          <hr className="border-2 my-8" />
+          {/* <div className="text-justify  text-[18px] sm:text-[22px] font-semibold">
             <p className="text-center text-[30px] sm:text-[36px]">
               <span className="text-[#0270A0]">Explorer</span> Les espéces de Notre Suivi Terrestre{" "}
             </p>
-          </div>
+          </div> */}
 
-          <div className="text-justify  text-[18px] sm:text-[22px] font-bold">
+          {/* <div className="text-justify  text-[18px] sm:text-[22px] font-bold">
             <p className="text-center text-[18px] sm:text-[20px]">Découvrez les trésors terrestres que nous surveillons pour</p>
             <p className="text-center text-[18px] sm:text-[20px]">préserver l'équilibre écologique.</p>
           </div>
 
           <section className="my-10">
             <ContainerImageMarine images={images} />
-          </section>
+          </section> */}
+          <ExplorezSuiviTerrestre />
         </div>
       </section>
     </div>
