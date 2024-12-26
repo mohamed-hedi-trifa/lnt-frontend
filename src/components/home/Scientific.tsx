@@ -1,49 +1,53 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SwiperRef } from "swiper/react";
-import { Swiper, SwiperOptions } from "swiper/types";
+import { ArrowLeftCircleIcon, ArrowRightCircleIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { SwiperOptions } from "swiper/types";
+import { Link } from "gatsby";
+import LangLink from "@/components/LangLink";
 
-type Kebab<T extends string, A extends string = ""> = T extends `${infer F}${infer R}`
-  ? Kebab<R, `${A}${F extends Lowercase<F> ? "" : "-"}${Lowercase<F>}`>
-  : A;
+// type Kebab<T extends string, A extends string = ""> = T extends `${infer F}${infer R}`
+//   ? Kebab<R, `${A}${F extends Lowercase<F> ? "" : "-"}${Lowercase<F>}`>
+//   : A;
 
-/**
- * Helper for converting object keys to kebab case because Swiper web components parameters are available as kebab-case attributes.
- * @link https://swiperjs.com/element#parameters-as-attributes
- */
-type KebabObjectKeys<T> = {
-  [key in keyof T as Kebab<key & string>]: T[key] extends Object ? KebabObjectKeys<T[key]> : T[key];
-};
+// /**
+//  * Helper for converting object keys to kebab case because Swiper web components parameters are available as kebab-case attributes.
+//  * @link https://swiperjs.com/element#parameters-as-attributes
+//  */
+// type KebabObjectKeys<T> = {
+//   [key in keyof T as Kebab<key & string>]: T[key] extends Object ? KebabObjectKeys<T[key]> : T[key];
+// };
 
-/**
- * Swiper 9 doesn't support Typescript yet, we are watching the following issue:
- * @link https://github.com/nolimits4web/swiper/issues/6466
- *
- * All parameters can be found on the following page:
- * @link https://swiperjs.com/swiper-api#parameters
- */
-type SwiperRef = HTMLElement & { swiper: Swiper; initialize: () => void };
+// /**
+//  * Swiper 9 doesn't support Typescript yet, we are watching the following issue:
+//  * @link https://github.com/nolimits4web/swiper/issues/6466
+//  *
+//  * All parameters can be found on the following page:
+//  * @link https://swiperjs.com/swiper-api#parameters
+//  */
+// type SwiperRef = HTMLElement & { swiper: Swiper; initialize: () => void };
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "swiper-container": SwiperContainerAttributes;
-      "swiper-slide": SwiperSlideAttributes;
-    }
+// declare global {
+//   namespace JSX {
+//     interface IntrinsicElements {
+//       "swiper-container": SwiperContainerAttributes;
+//       "swiper-slide": SwiperSlideAttributes;
+//     }
 
-    interface SwiperContainerAttributes extends KebabObjectKeys<SwiperOptions> {
-      ref?: RefObject<SwiperRef>;
-      children?: React.ReactNode;
-    }
-    interface SwiperSlideAttributes extends KebabObjectKeys<SwiperSlideProps> {}
-  }
-}
+//     interface SwiperContainerAttributes extends KebabObjectKeys<SwiperOptions> {
+//       ref?: RefObject<SwiperRef>;
+//       children?: React.ReactNode;
+//     }
+//     interface SwiperSlideAttributes extends KebabObjectKeys<SwiperSlideProps> {}
+//   }
+// }
 
 type Research = {
   image?: string;
   title?: string;
   description?: string;
   importance?: string;
-  color?: string;
+  color1?: string;
+  color2?: string;
+  path?: string;
 };
 
 const defaultResearches: Research[] = [
@@ -53,14 +57,18 @@ const defaultResearches: Research[] = [
     description:
       "La posidonie est une plante sous-marine essentielle à l'écosystème méditerranéen. Elle forme des herbiers marins qui abritent une grande diversité d'espèces.",
     importance: "Ces herbiers jouent un rôle crucial dans la protection des côtes en réduisant l'érosion et en absorbant le carbone.",
-    color: "#44D091",
+    color1: "#007C48",
+    color2: "#44D091",
+    path: "/protected-air-marine-coastal-areas/monitoring/marin/posidonie",
   },
   {
     image: "/grande_nacre.jpg",
     title: "Grande Nacre",
     description: "La grande nacre est un mollusque bivalve géant, emblématique de la Méditerranée, qui peut atteindre jusqu'à 1 mètre de long.",
     importance: "Elle filtre l'eau de mer, contribuant à la pureté des écosystèmes marins et servant d'indicateur de la qualité de l'eau.",
-    color: "#50ACC6",
+    color1: "#3344DC",
+    color2: "#50ACC6",
+    path: "/protected-air-marine-coastal-areas/monitoring/marin/grande-nacre",
   },
   {
     image: "/poulpe.jpg",
@@ -68,7 +76,9 @@ const defaultResearches: Research[] = [
     description: "LLe poulpe est une espèce clé pour la pêche locale et joue un rôle important dans l'économie de Kerkennah.",
     importance:
       "Prédateur et proie, le poulpe occupe une place centrale dans la chaîne alimentaire marine, régulant les populations de petits poissons et invertébrés.",
-    color: "#C69AFF",
+    color1: "#7B16FE",
+    color2: "#C69AFF",
+    path: "/protected-air-marine-coastal-areas/monitoring/marin/poulpe",
   },
   {
     image: "/tortue_marine.jpg",
@@ -77,7 +87,9 @@ const defaultResearches: Research[] = [
       "La tortue caouanne est une espèce de tortue marine largement répandue dans le bassin méditerranéen. Elle se distingue par sa carapace dure et sa capacité à parcourir de longues distances en mer.",
     importance:
       "En tant que prédateur et mangeur d'herbes marines, elle aide à maintenir l’équilibre des écosystèmes marins, contribuant à la régénération des prairies sous-marines et à la santé des récifs coralliens.",
-    color: "#50ACC6",
+    color1: "#00E676",
+    color2: "#50ACC6",
+    path: "/protected-air-marine-coastal-areas/monitoring/marin/tortue-marine",
   },
   {
     image: "/eponge_marine.jpg",
@@ -86,7 +98,9 @@ const defaultResearches: Research[] = [
       "Les éponges sont des organismes marins primitifs dotés d'une structure poreuse. Elles se fixent aux fonds marins et se nourrissent en filtrant l'eau pour capturer les particules alimentaires.",
     importance:
       "Les éponges filtrent l'eau, améliorant ainsi la qualité de l'écosystème marin. Elles offrent aussi un habitat pour d'autres espèces marines, favorisant ainsi la biodiversité.",
-    color: "#FFCA28",
+    color1: "#F57C00",
+    color2: "#FFCA28",
+    path: "/protected-air-marine-coastal-areas/monitoring/marin/eponge-marine",
   },
   {
     image: "/avifaunes.jpg",
@@ -95,20 +109,26 @@ const defaultResearches: Research[] = [
       "Les avifaunes incluent une variété d’oiseaux marins, tels que les goélands et les puffins, présents autour de l’archipel de Kerkennah. Ces oiseaux migrateurs nichent sur les îles et se nourrissent des ressources marines.",
     importance:
       "Les oiseaux marins jouent un rôle crucial dans la chaîne alimentaire, régulant les populations de poissons et de crustacés. Ils sont aussi des bioindicateurs, révélant la santé globale des écosystèmes marins et côtiers.",
-    color: "#51ADC6",
+    color1: "#006E9F",
+    color2: "#51ADC6",
+    path: "/protected-air-marine-coastal-areas/monitoring/marin/avifaune",
   },
 ];
 
 export default function Scientific() {
   const [researches, setResearches] = useState(defaultResearches);
   const [activeIndex, setActiveIndex] = useState(0);
-  const swiperRef = useRef<SwiperRef>(null);
+  const swiperRef = useRef<any>(null);
 
   const activeResearch = researches[activeIndex];
 
   useEffect(() => {
     const swiperParams: SwiperOptions = {
       effect: "fade",
+      // navigation: {
+      //   nextEl: "#research-next",
+      //   prevEl: "#research-prev",
+      // },
     };
 
     Object.assign(swiperRef.current, swiperParams);
@@ -122,6 +142,14 @@ export default function Scientific() {
 
   return (
     <section className="relative px-3 py-10 bg-cover">
+      <style>
+        {`
+            :root{
+              --active-research-color-1: ${activeResearch.color1};
+              --active-research-color-2: ${activeResearch.color2};
+            }
+        `}
+      </style>
       <div className="z-[-1] absolute inset-0">
         <swiper-container ref={swiperRef} class="w-full h-full mx-auto" init="false">
           {researches.map((research, index) => (
@@ -131,36 +159,59 @@ export default function Scientific() {
           ))}
         </swiper-container>
       </div>
-      <div className="max-w-7xl mx-auto">
-        <h3 className="text-white text-xl font-bold text-center mb-8">Suivi Scientifique</h3>
-        <div className="w-fit border-l-4 pl-3 pr-6 py-3 bg-black/50" style={{ borderColor: activeResearch.color }}>
+      <div className="max-w-7xl mx-auto text-shadow">
+        <h3 className="text-white text-xl font-bold text-center mb-8">Suivi Marin</h3>
+        <div className="relative w-fit ml-1 pl-3 pr-6 py-3 bg-black/50 after:absolute after:right-full after:top-0 after:bottom-0 after:w-1 after:bg-gradient-to-b after:from-[var(--active-research-color-1)] after:to-[var(--active-research-color-2)]">
           <h3 className="font-bold text-xl text-white">{activeResearch.title}</h3>
         </div>
-        <div className="min-h-[250px]">
-          <div className="w-fit max-w-[500px] mt-6 pl-3 pr-6 py-3 border-l-4 bg-black/50" style={{ borderColor: activeResearch.color }}>
-            <h4 className="font-bold" style={{ color: activeResearch.color }}>
+        <div className="min-h-[350px] md:min-h-[250px]">
+          <div className="w-fit max-w-[500px] mt-6 pl-3 pr-6 py-3 bg-black/50">
+            <h4 className="font-bold" style={{ color: activeResearch.color1 }}>
               Description:
             </h4>
             <p className="font-bold text-white text-sm">{activeResearch.description}</p>
-            <h4 className="mt-4 font-bold capitalize" style={{ color: activeResearch.color }}>
+            <h4 className="mt-4 font-bold capitalize" style={{ color: activeResearch.color1 }}>
               Importance écologique:
             </h4>
             <p className="font-bold text-white text-sm">{activeResearch.importance}</p>
           </div>
         </div>
-        <div className="mt-6 grid grid-cols-[repeat(2,minmax(auto,300px))] md:grid-cols-[repeat(3,minmax(auto,300px))] gap-3 justify-between">
+        <div className="mt-6 hidden md:grid grid-cols-[repeat(2,minmax(auto,300px))] md:grid-cols-[repeat(3,minmax(auto,300px))] gap-3 justify-between">
           {researches.map((research, index) => (
-            <div
+            <LangLink
+              to={research.path!}
               onMouseEnter={() => {
                 setActiveIndex(index);
               }}
               key={index}
-              className={`${activeIndex === index ? "bg-black/50" : ""} w-full pl-3 pr-6 py-7 border-l-4 border-b-4`}
-              style={{ borderColor: activeIndex === index ? activeResearch.color : "transparent" }}
+              className={`${
+                activeIndex === index ? "bg-black/50" : ""
+              } relative w-full max-w-[250px] pl-3 pr-6 py-7 ml-1 mb-1 after:absolute after:right-full after:top-2 after:-bottom-1 after:w-1 after:bg-gradient-to-b before:absolute before:top-full before:right-2 before:-left-1 before:h-1 before:bg-gradient-to-l ${
+                activeIndex === index
+                  ? "after:from-[var(--active-research-color-1)] after:to-[var(--active-research-color-2)] before:from-[var(--active-research-color-1)] before:to-[var(--active-research-color-2)]"
+                  : ""
+              }`}
             >
               <h3 className="font-bold text-xl text-white text-center">{research.title}</h3>
-            </div>
+            </LangLink>
           ))}
+        </div>
+        <div className="md:hidden relative z-10 flex justify-between gap-4 mx-auto mt-6 px-3">
+          <button onClick={() => setActiveIndex((prev) => (prev - 1 + researches.length) % researches.length)}>
+            <div className="flex items-center justify-center size-10 rounded-lg border border-white bg-black/50">
+              <ChevronLeftIcon className="w-6 h-6 text-white" />
+            </div>
+          </button>
+          <div
+            className={`relative w-full max-w-[250px] pl-3 pr-6 py-7 bg-black/50 after:absolute after:right-full after:top-2 after:-bottom-1 after:w-1 after:bg-gradient-to-b before:absolute before:top-full before:right-2 before:-left-1 before:h-1 before:bg-gradient-to-l after:from-[var(--active-research-color-1)] after:to-[var(--active-research-color-2)] before:from-[var(--active-research-color-1)] before:to-[var(--active-research-color-2)]`}
+          >
+            <h3 className="font-bold text-xl text-white text-center">{activeResearch.title}</h3>
+          </div>
+          <button onClick={() => setActiveIndex((prev) => (prev + 1) % researches.length)}>
+            <div className="flex items-center justify-center size-10 rounded-lg border border-white bg-black/50">
+              <ChevronRightIcon className="w-6 h-6 text-white" />
+            </div>
+          </button>
         </div>
       </div>
     </section>
