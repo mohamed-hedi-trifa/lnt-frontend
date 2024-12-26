@@ -15,7 +15,7 @@ export default function AccordionNav({ items, level = 1, renderItem = (item) => 
 
         if (hasSubmenu) {
           return (
-            <div>
+            <div key={index}>
               <Accordion open={isOpen}>
                 <AccordionTitle className="cursor-pointer" onClick={() => setActiveIndex(index === activeIndex ? -1 : index)}>
                   {renderItem(item, level, isOpen)}
@@ -28,7 +28,11 @@ export default function AccordionNav({ items, level = 1, renderItem = (item) => 
           );
         }
 
-        return <LangLink to={item.path}>{renderItem(item, level, isOpen)}</LangLink>;
+        return (
+          <LangLink key={index} to={item.path}>
+            {renderItem(item, level, isOpen)}
+          </LangLink>
+        );
       })}
     </div>
   );
