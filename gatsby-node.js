@@ -7,3 +7,15 @@
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
  */
+
+const path = require("path");
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "src"),
+      },
+    },
+  });
+};
