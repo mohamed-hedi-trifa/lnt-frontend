@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { SwiperOptions } from "swiper/types";
 
 type Partner = {
   image?: string;
@@ -20,10 +21,41 @@ const defaultPartners: Partner[] = [
   {
     image: "/apal.png",
   },
+  // THESE ONES ARE FOR TESTING PURPOSES
+  {
+    image: "/the_med_fund.png",
+  },
+  {
+    image: "/gef.png",
+  },
+  {
+    image: "/kantara_sea.png",
+  },
+  {
+    image: "/snorkeling_kerkennah.png",
+  },
+  {
+    image: "/apal.png",
+  },
 ];
 
 export default function Partners() {
   const [partners, setPartners] = useState(defaultPartners);
+  const swiperRef = useRef<any>(null);
+
+  useEffect(() => {
+    const swiperParams: SwiperOptions = {
+      spaceBetween: 40,
+      slidesPerView: 5,
+      autoplay: {
+        delay: 3000,
+      },
+    };
+
+    Object.assign(swiperRef.current, swiperParams);
+
+    swiperRef.current?.initialize();
+  }, []);
 
   return (
     <section className="relative px-3 py-20 bg-slate-900 overflow-hidden">
@@ -41,13 +73,20 @@ export default function Partners() {
           événements culturels et préservons le patrimoine de la région de Kerkennah, notamment à travers l'aire marine protégée. Cette collaboration renforce
           notre impact et aide à protéger notre environnement marin tout en enrichissant notre communauté.
         </p>
-        <div className="mt-8 grid grid-cols-3 md:grid-cols-5 gap-10 place-items-center">
+        {/* <div className="mt-8 grid grid-cols-3 md:grid-cols-5 gap-10 place-items-center">
           {partners.map((partner, index) => (
             <div key={index} className="h-20">
               <img src={partner.image} alt="" className="h-full object-contain" />
             </div>
           ))}
-        </div>
+        </div> */}
+        <swiper-container ref={swiperRef} class="w-full mt-8" init="false">
+          {partners?.map((partner, index) => (
+            <swiper-slide key={index} class="relative h-20">
+              <img src={partner.image} alt="" className="mx-auto h-full object-contain" />
+            </swiper-slide>
+          ))}
+        </swiper-container>
       </div>
     </section>
   );
