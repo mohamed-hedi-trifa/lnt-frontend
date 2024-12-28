@@ -11,18 +11,18 @@ function SubDropdown({ items }: { items: any[] }) {
     <div className="absolute top-0 left-full mt-0 ml-0 pl-1 hidden group-hover:block min-w-[150px]">
       <ul className="rounded shadow-[1px_1px_5px_rgb(0,0,0,.3)] bg-zinc-100">
         {items.map((subItem: any, subIndex: number) => (
-          <li key={subIndex} className="relative group">
+          <li key={subIndex} className="relative group [&:first-child_.nav-dropdown-item]:rounded-t [&:last-child_.nav-dropdown-item]:rounded-b">
             {subItem.path ? (
               <LangLink
                 to={subItem.path || ""}
-                className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#3344DC] to-[#50ACC6] transition duration-300"
+                className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
                 style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
               >
                 {subItem.label}
               </LangLink>
             ) : (
               <div
-                className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#3344DC] to-[#50ACC6] transition duration-300"
+                className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
                 style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
               >
                 {subItem.label}
@@ -123,7 +123,7 @@ function Navbar({ location }: { location: any }) {
               return (
                 <li key={index}>
                   <NavDropdown
-                    containerClassName="group/dropdown"
+                    containerClassName="group/dropdown [&_li:first-child_.nav-dropdown-item]:rounded-t [&_li:last-child_.nav-dropdown-item]:rounded-b"
                     items={item.items}
                     position="left"
                     renderItem={(item) => (
@@ -131,14 +131,15 @@ function Navbar({ location }: { location: any }) {
                         {item.path ? (
                           <LangLink
                             to={item.path || ""}
-                            className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#3344DC] to-[#50ACC6] transition duration-300"
+                            className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
                             style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
+                            // The nav-dropdown-item class is used to round the corners of the first and last items of the dropdown
                           >
                             {item.label}
                           </LangLink>
                         ) : (
                           <div
-                            className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#3344DC] to-[#50ACC6] transition duration-300"
+                            className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
                             style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
                           >
                             {item.label}
