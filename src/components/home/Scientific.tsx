@@ -119,16 +119,18 @@ export default function Scientific() {
   const [researches, setResearches] = useState(defaultResearches);
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<any>(null);
+  const swiperThumbsRef = useRef<any>(null);
 
   const activeResearch = researches[activeIndex];
 
   useEffect(() => {
     const swiperParams: SwiperOptions = {
       effect: "fade",
-      // navigation: {
-      //   nextEl: "#research-next",
-      //   prevEl: "#research-prev",
-      // },
+      on: {
+        slideChange: (swiper) => {
+          setActiveIndex(swiper.activeIndex);
+        },
+      },
     };
 
     Object.assign(swiperRef.current, swiperParams);
@@ -137,7 +139,34 @@ export default function Scientific() {
   }, []);
 
   useEffect(() => {
-    swiperRef.current?.swiper.slideTo?.(activeIndex);
+    if (!swiperThumbsRef.current) return;
+
+    const swiperParams: SwiperOptions = {
+      effect: "coverflow",
+      spaceBetween: 20,
+      centeredSlides: true,
+      slidesPerView: 2,
+      grabCursor: true,
+      coverflowEffect: {
+        rotate: 10,
+        stretch: 0,
+        depth: 100,
+        modifier: 2,
+        slideShadows: true,
+      },
+      thumbs: {
+        swiper: swiperRef.current,
+      },
+    };
+
+    Object.assign(swiperThumbsRef.current, swiperParams);
+
+    swiperThumbsRef.current?.initialize();
+  }, []);
+
+  useEffect(() => {
+    // swiperRef.current?.swiper.slideTo?.(activeIndex);
+    // swiperThumbsRef.current?.swiper.slideTo?.(activeIndex);
   }, [activeIndex]);
 
   return (
@@ -196,22 +225,20 @@ export default function Scientific() {
             </LangLink>
           ))}
         </div>
-        <div className="md:hidden relative z-10 flex justify-between gap-4 mx-auto mt-6 px-3">
-          <button onClick={() => setActiveIndex((prev) => (prev - 1 + researches.length) % researches.length)}>
-            <div className="flex items-center justify-center size-10 rounded-lg border border-white bg-black/50">
-              <ChevronLeftIcon className="w-6 h-6 text-white" />
-            </div>
-          </button>
-          <div
-            className={`relative w-full max-w-[250px] pl-3 pr-6 py-7 bg-black/50 after:absolute after:right-full after:top-2 after:-bottom-1 after:w-1 after:bg-gradient-to-b before:absolute before:top-full before:right-2 before:-left-1 before:h-1 before:bg-gradient-to-l after:from-[var(--active-research-color-1)] after:to-[var(--active-research-color-2)] before:from-[var(--active-research-color-1)] before:to-[var(--active-research-color-2)]`}
-          >
-            <h3 className="font-bold text-xl text-white text-center">{activeResearch.title}</h3>
-          </div>
-          <button onClick={() => setActiveIndex((prev) => (prev + 1) % researches.length)}>
-            <div className="flex items-center justify-center size-10 rounded-lg border border-white bg-black/50">
-              <ChevronRightIcon className="w-6 h-6 text-white" />
-            </div>
-          </button>
+        <div className="md:hidden relative z-10 flex justify-between gap-4 mx-auto mt-6 px-">
+          <swiper-container ref={swiperThumbsRef} class="w-full h-full mx-auto" init="false">
+            {researches.map((research, index) => (
+              <swiper-slide key={research.title} class={`h-auto py-1 ${activeIndex === index ? "" : "opacity-75"}`}>
+                {/* <img src={research.image} className="w-full h-full object-cover" /> */}
+                <div
+                  onClick={() => swiperThumbsRef.current?.swiper.slideTo(index)}
+                  className={`relative flex items-center justify-center w-full h-full max-w-[250px] pl-3 pr-6 py-7 bg-black/50 after:absolute after:right-full after:top-2 after:-bottom-1 after:w-1 after:bg-gradient-to-b before:absolute before:top-full before:right-2 before:-left-1 before:h-1 before:bg-gradient-to-l after:from-[var(--active-research-color-1)] after:to-[var(--active-research-color-2)] before:from-[var(--active-research-color-1)] before:to-[var(--active-research-color-2)]`}
+                >
+                  <h3 className="font-bold text-lg text-white text-center">{research.title}</h3>
+                </div>
+              </swiper-slide>
+            ))}
+          </swiper-container>
         </div>
       </div>
     </section>

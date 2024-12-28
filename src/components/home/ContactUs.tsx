@@ -182,10 +182,10 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
       />
       <defs>
         <linearGradient id="paint0_linear_356_4182" x1="7.30477" y1="42.1841" x2="41.9804" y2="6.80258" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#FAAD4F" />
-          <stop offset="0.35" stop-color="#DD2A7B" />
-          <stop offset="0.62" stop-color="#9537B0" />
-          <stop offset="1" stop-color="#515BD4" />
+          <stop stopColor="#FAAD4F" />
+          <stop offset="0.35" stopColor="#DD2A7B" />
+          <stop offset="0.62" stopColor="#9537B0" />
+          <stop offset="1" stopColor="#515BD4" />
         </linearGradient>
       </defs>
     </svg>
