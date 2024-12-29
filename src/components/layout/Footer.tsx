@@ -9,8 +9,9 @@ export default function Footer() {
   return (
     <footer className="px-5 sm:px-3 py-20 mt-[150px] sm:mt-0 bg-gradient-to-r from-[#51ADC6] to-[#006E9F]">
       <div className="max-w-7xl mx-auto text-white mt-[-150px] sm:mt-0">
-        <section className="divide-y sm:divide-y-0 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="order-2 sm:order-1 text-justify">
+        {/* <section className="divide-y sm:divide-y-0 grid gap-8 sm:grid-cols-2 lg:grid-cols-4"> */}
+        <section className="divide-y sm:divide-y-0 grid gap-8 sm:justify-around lg:justify-normal sm:grid-cols-[minmax(auto,500px),auto] lg:grid-cols-[minmax(250px,1fr)_minmax(150px,auto)_minmax(150px,auto)_minmax(250px,1fr)]">
+          <div className="order-1 text-justify">
             <div className="flex gap-1 items-center">
               <img src="/logo.png" alt="AKDDCL" className="w-11 h-11 shrink-0" />
               <p className="max-w-[200px] text-white text-xl font-bold">
@@ -22,22 +23,22 @@ export default function Footer() {
               du patrimoine culturel de Kerkennah, en soutenant le développement durable et la biodiversité marine.
             </p>
           </div>
-          <div className="order-3">
+          <div className="order-2">
             <h3 className="pb-4 font-bold text-lg mt-2">Liens rapides</h3>
             <ul className="space-y-2 text-sm">
               {links.map((element) => (
-                <li key={element.text} className="hover:text-sky-900 duration-200">
+                <li key={element.text} className="hover:text-sky-900 duration-200  ">
                   <LangLink to={element.path}>{element.text}</LangLink>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="order-4">
+          <div className="order-3">
             <h3 className="pb-4 font-bold text-lg mt-2">Contact</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <p className="font-bold">Email:</p>
-                <a href="mailto:akddcl.kerkennah@gmail.com" className="hover:text-sky-900 duration-200">
+                <a href="mailto:akddcl.kerkennah@gmail.com" className="hover:text-sky-900 duration-200 break-words">
                   akddcl.kerkennah@gmail.com
                 </a>
               </li>
@@ -94,7 +95,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div className="order-1 sm:order-4">
+          <div className="order-[-1] sm:order-2 lg:order-4">
             <NewsLetterSub />
           </div>
         </section>
