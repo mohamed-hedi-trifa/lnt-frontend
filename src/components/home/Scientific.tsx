@@ -166,7 +166,7 @@ export default function Scientific() {
 
   useEffect(() => {
     // swiperRef.current?.swiper.slideTo?.(activeIndex);
-    // swiperThumbsRef.current?.swiper.slideTo?.(activeIndex);
+    if (swiperThumbsRef.current.activeIndex !== activeIndex) swiperThumbsRef.current?.swiper.slideTo?.(activeIndex);
   }, [activeIndex]);
 
   return (
