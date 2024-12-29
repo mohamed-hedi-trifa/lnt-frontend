@@ -5,6 +5,7 @@ import { Bars3Icon, ChevronDownIcon, GlobeAltIcon, MagnifyingGlassIcon } from "@
 import LangLink from "../LangLink";
 import NavDropdown from "../NavDropdown";
 import MobileNavbar from "./MobileNavbar";
+import NavbarSearch from "@/components/layout/NavbarSearch";
 
 function SubDropdown({ items }: { items: any[] }) {
   return (
@@ -95,10 +96,11 @@ function Navbar({ location }: { location: any }) {
               <span className="italic font-extrabold text-base">AKDDCL</span>
             </p>
           </LangLink>
-          <div className="flex gap-3 items-center">
-            <button className="hidden md:block">
+          <div className="grow flex gap-3 items-center justify-end">
+            {/* <button className="hidden md:block">
               <MagnifyingGlassIcon className="h-8 w-8 text-white -scale-x-100" />
-            </button>
+            </button> */}
+            <NavbarSearch />
             <div className="hidden md:inline h-8 w-px bg-white"></div>
             <LangLink
               to="/benevole"
