@@ -70,7 +70,7 @@ export default function SuiviScientifique3() {
       </div>
 
       <section className="px-4 sm:px-0">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <section className="w-full flex flex-col sm:flex-row relative gap-4 md:gap-8 py-2 md:py-10">
             <AMCPSidebar />
 
