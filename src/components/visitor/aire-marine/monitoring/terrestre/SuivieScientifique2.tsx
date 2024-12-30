@@ -27,7 +27,7 @@ export default function SuiviScientifique2() {
         <PageTitle title="Suivi Scientifique" width="w-[160px]" />
       </div>
       <section>
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <section className="w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10">
             <AMCPSidebar />
 
