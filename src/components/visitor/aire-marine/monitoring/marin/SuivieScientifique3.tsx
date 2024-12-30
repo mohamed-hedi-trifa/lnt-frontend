@@ -174,7 +174,7 @@ export default function SuiviScientifique3() {
               </article>
             </section>
           </section>
-          <hr className="border-1 my-8" />
+          <hr className="border-1 border-gray-500 my-8" />
           {/* <section className="flex flex-col gap-4 my-8">
             <div className="text-justify  text-[18px] sm:text-[22px] font-bold">
               <p className="text-center text-[30px] sm:text-[36px]">
