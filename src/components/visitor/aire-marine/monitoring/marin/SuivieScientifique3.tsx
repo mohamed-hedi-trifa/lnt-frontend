@@ -70,7 +70,7 @@ export default function SuiviScientifique3() {
       </div>
 
       <section className="px-4 sm:px-0">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <section className="w-full flex flex-col sm:flex-row relative gap-4 md:gap-8 py-2 md:py-10">
             <AMCPSidebar />
 
@@ -114,7 +114,7 @@ export default function SuiviScientifique3() {
                   ]}
                 />
 
-                <img src="/images/marine_images/marine5.jpg" alt="Aire marine" className="w-full  h-auto rounded-lg" />
+                <img src="/images/marine_images/marine5.jpg" alt="Aire marine" className="w-full max-w-[600px] mx-auto h-auto rounded-lg" />
               </article>
 
               <article className="flex flex-col gap-5">
@@ -124,7 +124,7 @@ export default function SuiviScientifique3() {
 
                 <List items={listMethodologie} />
 
-                <img src="/images/marine_images/marine6.jpg" alt="" className="w-full  h-auto rounded-lg" />
+                <img src="/images/marine_images/marine6.jpg" alt="" className="w-full max-w  h-auto rounded-lg" />
               </article>
 
               <article className="flex flex-col gap-5">
@@ -174,7 +174,7 @@ export default function SuiviScientifique3() {
               </article>
             </section>
           </section>
-          <hr className="border-2 my-8" />
+          <hr className="border-1 my-8" />
           {/* <section className="flex flex-col gap-4 my-8">
             <div className="text-justify  text-[18px] sm:text-[22px] font-bold">
               <p className="text-center text-[30px] sm:text-[36px]">
