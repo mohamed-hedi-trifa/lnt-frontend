@@ -88,7 +88,7 @@ const ContentItem = SortableElement(({ items, setItems, handleItemContentChange,
       </div>
       {item.type === "title" ? (
         <div className="col-span-10 p-2 font-bold">
-          <Input value={item.content} onChange={(e) => handleItemContentChange(idx, e)} />
+          <Input value={item.content || ""} onChange={(e) => handleItemContentChange(idx, e)} />
         </div>
       ) : (item.type === "image" || item.type === "pdf") ? (
         <div className="col-span-10 flex gap-2 p-2">
@@ -113,7 +113,7 @@ const ContentItem = SortableElement(({ items, setItems, handleItemContentChange,
         </div>
       ) : (
         <div className="col-span-10 p-2">
-          <Textarea value={item.content} onChange={(e) => handleItemContentChange(idx, e)} />
+          <Textarea value={item.content || ""} onChange={(e) => handleItemContentChange(idx, e)} />
         </div>)}
       <div className="col-span-1 flex justify-end">
         <Button type="button" onClick={() => deleteItem(item, idx)} customClassnames="delete bg-white hover:bg-white">

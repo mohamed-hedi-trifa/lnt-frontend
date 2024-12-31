@@ -16,6 +16,8 @@ import AdminPrivateRoute from "./src/components/auth/AdminPrivateRoute";
 import AuthProvider from "./src/contexts/AuthProvider";
 import { register } from "swiper/element/bundle";
 import "swiper/css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 register();
 export function onClientEntry() {
@@ -34,6 +36,7 @@ export function wrapPageElement({ element, props }) {
   // including location, data, etc - you don't need to pass it
   return (
     <AuthProvider>
+      <ToastContainer autoClose={2000} position="bottom-right" closeOnClick={true} />
       {props.location.pathname.indexOf("/admin") === 0 ? (
         <AdminPrivateRoute>
           <AdminLayout>{element}</AdminLayout>

@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Link, navigate } from "gatsby";
 import ItemsList from "./ItemsList";
@@ -10,6 +10,9 @@ import Button from "../../atoms/Button";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Title from "../../atoms/titles/Title";
 import Select from "../../atoms/inputs/Select";
+import ReactLoading from "react-loading";
+import { toast } from "react-toastify";
+import useLocalStorage from "@/lib/useLocalStorage";
 
 interface FormData {
   title_en: string;
@@ -20,20 +23,46 @@ interface FormData {
 
 const CreatePost: React.FC = () => {
   const [language, setLanguage] = useState<string>("en");
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useLocalStorage("blog-info", {
     title_en: "",
     title_fr: "",
     summary_en: "",
     summary_fr: "",
   });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Separate state for different language content items
   const [englishItems, setEnglishItems] = useState<any[]>([]);
   const [frenchItems, setFrenchItems] = useState<any[]>([]);
   const [image, setImage] = useState<File | null>(null); // Separate state for the main image
 
-  const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setLanguage(e.target.value);
+  const handleLanguageChange = async (e: ChangeEvent<HTMLSelectElement>) => {
+    const lang = e.target.value;
+    if (
+      (lang === "en" && (formData.title_fr || formData.summary_fr || frenchItems.length > 0)) ||
+      (lang === "fr" && (formData.title_en || formData.summary_en || englishItems.length > 0))
+    ) {
+      const result = await Swal.fire({
+        title: "You have unsaved changes",
+        text: `Do you want to save changes before switching language?`,
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        cancelButtonText: `Cancel`,
+        denyButtonText: "Continute without saving",
+      });
+
+      if (result.isConfirmed) {
+        const created = await createPost();
+
+        if (created) navigate(`/admin/posts/${created.slug}?lang=${lang}`);
+      } else if (result.isDenied) {
+        setLanguage(lang);
+      }
+    } else {
+      setLanguage(e.target.value);
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -76,8 +105,39 @@ const CreatePost: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (language === "en") {
+      if (!formData.title_en) {
+        newErrors.title_en = "Title is required.";
+      }
+      if (!formData.summary_en) {
+        newErrors.summary_en = "Summary is required.";
+      }
+      if (englishItems.length === 0) {
+        newErrors.items = "At least one content item is required.";
+      }
+    } else {
+      if (!formData.title_fr) {
+        newErrors.title_fr = "Title is required.";
+      }
+      if (!formData.summary_fr) {
+        newErrors.summary_fr = "Summary is required.";
+      }
+      if (frenchItems.length === 0) {
+        newErrors.items = "At least one content item is required.";
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  async function createPost(): Promise<{ slug: string } | null> {
+    if (!validateForm()) {
+      return null;
+    }
 
     const formDataToSend = new FormData();
 
@@ -104,19 +164,46 @@ const CreatePost: React.FC = () => {
       }
     });
 
+    setIsLoading(true);
     try {
       const response = await axios.post("/api/posts", formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      if (response.status === 201) {
-        Swal.fire("Success", "Post created successfully", "success");
-        navigate("/admin/blog");
-      }
+
+      // Swal.fire("Success", "Post created successfully", "success");
+      setFormData({
+        title_en: "",
+        title_fr: "",
+        summary_en: "",
+        summary_fr: "",
+      });
+      setErrors({}); // Clear any previous errors
+      toast.success("Post created successfully");
+      return response.data;
     } catch (error) {
-      console.error("Error creating blog:", error);
+      let msg = "An error occurred while creating the post. Please try again.";
+      if (error instanceof AxiosError){
+        msg = error?.response?.data?.message
+      }
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        apiError: msg,
+      })); // Set API error message
+    } finally {
+      setIsLoading(false);
     }
+
+    return null;
+  }
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const created = await createPost();
+
+    if (created) navigate("/admin/posts");
   };
 
   const addNewItem = (type: string) => {
@@ -152,56 +239,40 @@ const CreatePost: React.FC = () => {
           </Link>
           <Title>Create New Post</Title>
         </div>
-        <Select
-          divClassNames="!flex-row items-center gap-2"
-          label="Language:"
-          name="language"
-          value={language}
-          onChange={handleLanguageChange}
-        >
+        <Select divClassNames="!flex-row items-center gap-2" label="Language:" name="language" value={language} onChange={handleLanguageChange}>
           <option value="en">English</option>
           <option value="fr">French</option>
         </Select>
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col grow">
         {language === "en" && (
-          <Input
-            label="Title"
-            type="text"
-            name="title_en"
-            value={formData.title_en}
-            onChange={handleChange}
-          />
+          <>
+            <Input label="Title" type="text" name="title_en" value={formData.title_en} onChange={handleChange} />
+            {errors.title_en && <div className="text-red-500 text-sm">{errors.title_en}</div>}
+          </>
         )}
         {language === "fr" && (
-          <Input
-            label="Title"
-            type="text"
-            name="title_fr"
-            value={formData.title_fr}
-            onChange={handleChange}
-          />
+          <>
+            <Input label="Title" type="text" name="title_fr" value={formData.title_fr} onChange={handleChange} />
+            {errors.title_fr && <div className="text-red-500 text-sm">{errors.title_fr}</div>}
+          </>
         )}
         {language === "en" && (
-          <Textarea
-            label="Summary"
-            name="summary_en"
-            value={formData.summary_en}
-            onChange={handleChange}
-          />
+          <>
+            <Textarea label="Summary" name="summary_en" value={formData.summary_en} onChange={handleChange} />
+            {errors.summary_en && <div className="text-red-500 text-sm">{errors.summary_en}</div>}
+          </>
         )}
         {language === "fr" && (
-          <Textarea
-            label="Summary"
-            name="summary_fr"
-            value={formData.summary_fr}
-            onChange={handleChange}
-          />
+          <>
+            <Textarea label="Summary" name="summary_fr" value={formData.summary_fr} onChange={handleChange} />
+            {errors.summary_fr && <div className="text-red-500 text-sm">{errors.summary_fr}</div>}
+          </>
         )}
 
         <div className="text-slate-500 text-sm font-medium mb-2">Content</div>
 
-        {((language === "en" && englishItems.length) || (language === "fr" && frenchItems.length)) ? (
+        {(language === "en" && englishItems.length) || (language === "fr" && frenchItems.length) ? (
           <ItemsList
             useDragHandle
             onSortEnd={onItemsSortEnd}
@@ -212,49 +283,34 @@ const CreatePost: React.FC = () => {
             key={language}
           />
         ) : (
-          <div className="shadow p-4">
-            There is no content currently, add new content by clicking one of the buttons below
-          </div>
+          <div className="shadow p-4">There is no content currently, add new content by clicking one of the buttons below</div>
         )}
+
+        {errors.items && <div className="text-red-500 text-sm">{errors.items}</div>}
+        {errors.apiError && <div className="text-red-500 text-sm">{errors.apiError}</div>}
 
         <div className="mt-4 px-8 flex justify-between">
           <section className="flex gap-2">
             <div className="mb-1">
-              <Button
-                type="button"
-                customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center"
-                onClick={() => addNewItem("title")}
-              >
+              <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("title")}>
                 <PlusIcon className="h-4 w-4" />
                 Title
               </Button>
             </div>
             <div className="mb-1">
-              <Button
-                type="button"
-                customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center"
-                onClick={() => addNewItem("text")}
-              >
+              <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("text")}>
                 <PlusIcon className="h-4 w-4" />
                 Text
               </Button>
             </div>
             <div className="mb-1">
-              <Button
-                type="button"
-                customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center"
-                onClick={() => addNewItem("image")}
-              >
+              <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("image")}>
                 <PlusIcon className="h-4 w-4" />
                 Image
               </Button>
             </div>
             <div className="mb-1">
-              <Button
-                type="button"
-                customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center"
-                onClick={() => addNewItem("pdf")}
-              >
+              <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("pdf")}>
                 <PlusIcon className="h-4 w-4" />
                 PDF
               </Button>
@@ -263,7 +319,15 @@ const CreatePost: React.FC = () => {
         </div>
 
         <Input label="Image" type="file" name="image" onChange={handleImageChange} />
-        <Button type="submit">Create Blog</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? (
+            <div className="w-fit mx-auto">
+              <ReactLoading type="spinningBubbles" color="white" height={25} width={25} />
+            </div>
+          ) : (
+            "Create Blog"
+          )}
+        </Button>
       </form>
     </div>
   );
