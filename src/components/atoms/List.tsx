@@ -5,11 +5,12 @@ type ListItemProps = {
     title: string;
     content: string;
   }[];
+  spacing?:string;
 };
 
-const List: React.FC<ListItemProps> = ({ items }) => {
+const List: React.FC<ListItemProps> = ({ items, spacing }) => {
   return (
-    <ul className="flex flex-col gap-4">
+    <ul className={`flex flex-col gap-2 text-justify pl-4 ${spacing}`}>
       {items.map((item, index) => (
         <li key={index} className="flex items-start text-lg sm:text-xl">
           <span className="mr-2 text-lg font-semibold">•</span>
