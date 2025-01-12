@@ -1,8 +1,9 @@
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { Bars3Icon } from "@heroicons/react/24/solid";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSidebar } from "../../contexts/AMCPSidebarContext";
 import { Link } from "gatsby";
+import axios from "axios";
 
 type SidebarItemProps = { item: any; basePath?: string; depth?: number };
 
@@ -67,72 +68,47 @@ function SidebarItem({ item, basePath = "/en", depth = 0 }: SidebarItemProps) {
 }
 
 const AMCPSidebar = () => {
-  const items = [
-    {
-      label: "Présentation",
-      path: "/protected-air-marine-coastal-areas/presentation",
-      items: [
-        {
-          label: "Aire Marine et Côtière Protégée des Îlots Nord de l'archipel de Kerkennah (AMCP)",
-          path: "/protected-air-marine-coastal-areas/presentation/amcp",
-        },
-        {
-          label: "Partenaires AMCP",
-          path: "/protected-air-marine-coastal-areas/presentation/partners",
-        },
-      ],
-    },
-    {
-      label: "Suivi Scientifique",
-      path: "/protected-air-marine-coastal-areas/monitoring",
-      items: [
-        {
-          label: "Suivi Marin",
-          path: "/protected-air-marine-coastal-areas/monitoring/marin",
-          items: [
-            {
-              label: "Posidonie",
-              path: "/protected-air-marine-coastal-areas/monitoring/marin/posidonie",
-            },
-            {
-              label: "Grande Nacre",
-              path: "/protected-air-marine-coastal-areas/monitoring/marin/grande-nacre",
-            },
-            {
-              label: "Poulpe",
-              path: "/protected-air-marine-coastal-areas/monitoring/marin/poulpe",
-            },
-            {
-              label: "Eponge Marine",
-              path: "/protected-air-marine-coastal-areas/monitoring/marin/eponge-marine",
-            },
-            {
-              label: "Torture Marine",
-              path: "/protected-air-marine-coastal-areas/monitoring/marin/Tortue-marine",
-            },
-            {
-              label: "Avifaune",
-              path: "/protected-air-marine-coastal-areas/monitoring/marin/avifaune",
-            },
-          ],
-        },
-        {
-          label: "Suivi Terrestre",
-          path: "/protected-air-marine-coastal-areas/monitoring/terrestre",
-        },
-      ],
-    },
-    {
-      label: "Formation et Campement Scientifique",
-      path: "/formation",
-    },
-    {
-      label: "L’équipe",
-      path: "/team",
-    },
-  ];
-
   const { opened, setOpened } = useSidebar();
+
+  const [researches, setResearches] = useState<{ marin: any; terrestre: any }>({ marin: [], terrestre: [] });
+
+  async function fetchResearches() {
+    try {
+      const res = await axios.get("/api/posts");
+
+      console.log("-------------------- res.data --------------------");
+      console.log(res.data);
+
+      setResearches({
+        marin: res.data,
+        terrestre: [],
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    fetchResearches();
+  }, []);
+
+  const items = useMemo<any>(() => {
+    const arr = defaultItems;
+    const marin = researches.marin?.map((el: any) => ({
+      label: el.title_en || el.title_fr,
+      path: "/protected-air-marine-coastal-areas/monitoring/marin/" + el.slug,
+    }));
+    const terrestre = researches.terrestre?.map((el: any) => ({
+      label: el.title_en || el.title_fr,
+      path: "",
+    }));
+    arr[1].items![0].items = marin;
+    arr[1].items![1].items = terrestre;
+
+    return arr;
+  }, [researches]);
+
+  console.log(items);
 
   return (
     <div className="mx-auto sticky top-[65px] sm:top-[120px] h-[100px] sm:h-fit w-[296px] sm:w-[366px] shrink-0 z-20">
@@ -156,7 +132,7 @@ const AMCPSidebar = () => {
           </section>
 
           <ul className={`flex flex-col gap-8 overflow-hidden transition-all duration-300 ${opened ? "h-[320px] sm:h-fit" : "h-0 sm:h-fit"}`}>
-            {items.map((item, index) => (
+            {items.map((item: any, index: number) => (
               <SidebarItem key={index} item={item} basePath="/en" depth={0} />
             ))}
           </ul>
@@ -167,3 +143,69 @@ const AMCPSidebar = () => {
 };
 
 export default AMCPSidebar;
+
+const defaultItems = [
+  {
+    label: "Présentation",
+    path: "/protected-air-marine-coastal-areas/presentation",
+    items: [
+      {
+        label: "Aire Marine et Côtière Protégée des Îlots Nord de l'archipel de Kerkennah (AMCP)",
+        path: "/protected-air-marine-coastal-areas/presentation/amcp",
+      },
+      {
+        label: "Partenaires AMCP",
+        path: "/protected-air-marine-coastal-areas/presentation/partners",
+      },
+    ],
+  },
+  {
+    label: "Suivi Scientifique",
+    path: "/protected-air-marine-coastal-areas/monitoring",
+    items: [
+      {
+        label: "Suivi Marin",
+        path: "/protected-air-marine-coastal-areas/monitoring/marin",
+        items: [
+          // {
+          //   label: "Posidonie",
+          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/posidonie",
+          // },
+          // {
+          //   label: "Grande Nacre",
+          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/grande-nacre",
+          // },
+          // {
+          //   label: "Poulpe",
+          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/poulpe",
+          // },
+          // {
+          //   label: "Eponge Marine",
+          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/eponge-marine",
+          // },
+          // {
+          //   label: "Torture Marine",
+          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/Tortue-marine",
+          // },
+          // {
+          //   label: "Avifaune",
+          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/avifaune",
+          // },
+        ],
+      },
+      {
+        label: "Suivi Terrestre",
+        path: "/protected-air-marine-coastal-areas/monitoring/terrestre",
+        items: [],
+      },
+    ],
+  },
+  {
+    label: "Formation et Campement Scientifique",
+    path: "/formation",
+  },
+  {
+    label: "L’équipe",
+    path: "/team",
+  },
+];
