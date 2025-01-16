@@ -31,7 +31,7 @@ function SidebarItem({ item, basePath = "/en", depth = 0 }: SidebarItemProps) {
           <ChevronRightIcon className={`${iconSize} ${iconColor} transform transition-transform duration-300 ${open ? "rotate-90" : ""}`} />
         </div>
 
-        <Link className={labelClasses} to={item.path ? basePath + item.path : "#"}>
+        <Link className={labelClasses} to={item.path && depth === 2 ? item.path : item.path ? basePath + item.path : "#"}>
           {item.label}
         </Link>
       </div>
@@ -102,8 +102,11 @@ const AMCPSidebar = () => {
       label: el.title_en || el.title_fr,
       path: "",
     }));
-    arr[1].items![0].items = marin;
-    arr[1].items![1].items = terrestre;
+    // arr[1].items![0].items = marin;
+    // arr[1].items![1].items = terrestre;
+
+    arr[1].items![0] = { ...arr[1].items![0], items: marin };
+    arr[1].items![1] = { ...arr[1].items![1], items: terrestre };
 
     return arr;
   }, [researches]);

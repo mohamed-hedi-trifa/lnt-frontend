@@ -184,8 +184,8 @@ const CreatePost: React.FC = () => {
       return response.data;
     } catch (error) {
       let msg = "An error occurred while creating the post. Please try again.";
-      if (error instanceof AxiosError){
-        msg = error?.response?.data?.message
+      if (error instanceof AxiosError) {
+        msg = error?.response?.data?.message;
       }
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -209,7 +209,7 @@ const CreatePost: React.FC = () => {
   const addNewItem = (type: string) => {
     const newItem = {
       order: language === "en" ? englishItems.length : frenchItems.length,
-      content: "",
+      content: type === "list" ? [] : "",
       type,
       language: language,
     };
@@ -301,6 +301,12 @@ const CreatePost: React.FC = () => {
               <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("text")}>
                 <PlusIcon className="h-4 w-4" />
                 Text
+              </Button>
+            </div>
+            <div className="mb-1">
+              <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("list")}>
+                <PlusIcon className="h-4 w-4" />
+                List
               </Button>
             </div>
             <div className="mb-1">
