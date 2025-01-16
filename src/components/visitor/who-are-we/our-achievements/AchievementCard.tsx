@@ -8,7 +8,7 @@ function formatDate(date:Date) {
 
 export default function AchievementCard({achievement}:{achievement:any}) {
   return (
-    <div className='shadow-[0px_4px_4px_0px_#00000040] p-4 flex flex-col gap-4 rounded-xl'>
+    <div className='bg-white shadow-[0px_4px_4px_0px_#00000040] p-4 flex flex-col gap-4 rounded-xl'>
         <img src={achievement.img} alt="" />
         <div className='flex gap-4'>
             {achievement.categories.map((category:any)=><div className='bg-[#4B6BFB0D] text-[#006E9F] font-medium py-1 px-3 rounded-md w-fit'>

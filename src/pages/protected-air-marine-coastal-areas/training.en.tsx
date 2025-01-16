@@ -1,11 +1,11 @@
-import AmcpTeam from '@/components/visitor/aire-marine/amcp-team/AmcpTeam'
+import Training from '@/components/visitor/aire-marine/training/Training'
 import { AMCPSidebarProvider } from '@/contexts/AMCPSidebarContext'
 import React from 'react'
 
-export default function AMCPTeam() {
+export default function AMCPFormation() {
   return (
     <AMCPSidebarProvider>
-      <AmcpTeam />
+      <Training />
     </AMCPSidebarProvider>
   )
 }

@@ -246,11 +246,11 @@ export const items = [
       },
       {
         label: "Formation et Campement Scientifique",
-        path: "/achievements",
+        path: "/protected-air-marine-coastal-areas/training",
       },
       {
         label: "Équipe",
-        path: "/team",
+        path: "/protected-air-marine-coastal-areas/team",
       },
     ],
   },
