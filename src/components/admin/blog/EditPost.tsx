@@ -22,6 +22,7 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
     title_fr: "",
     summary_en: "",
     summary_fr: "",
+    type: "marin",
   });
   const [englishItems, setEnglishItems] = useState<any[]>([]);
   const [frenshItems, setFrenshItems] = useState<any[]>([]);
@@ -44,6 +45,7 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
           title_fr: blogPost.title_fr,
           summary_en: blogPost.summary_en,
           summary_fr: blogPost.summary_fr,
+          type: blogPost.type || "marin",
         });
 
         const parsedContentItems = blogPost.content_items.map((item: any) => {
@@ -213,6 +215,44 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
             <Textarea label="summary" name="summary_fr" value={formData.summary_fr || ""} onChange={handleChange} />
           </>
         )}
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-slate-500">Type</label>
+          <div className="mt-2 flex space-x-4">
+            <label
+              className={`flex items-center p-2 border rounded focus-within:ring-1 ring-sky-500 cursor-pointer duration-200 ${
+                formData.type === "marin" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
+              }`}
+            >
+              <input
+                id="marin"
+                name="type"
+                type="radio"
+                value="marin"
+                checked={formData.type === "marin"}
+                onChange={handleChange}
+                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 outline-none"
+              />
+              <p className="ml-3 block text-sm font-medium text-gray-700">Marin</p>
+            </label>
+            <label
+              className={`flex items-center p-2 border rounded focus-within:ring-1 ring-sky-500 cursor-pointer duration-200 ${
+                formData.type === "terrestre" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
+              }`}
+            >
+              <input
+                id="terrestre"
+                name="type"
+                type="radio"
+                value="terrestre"
+                checked={formData.type === "terrestre"}
+                onChange={handleChange}
+                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 outline-none"
+              />
+              <p className="ml-3 block text-sm font-medium text-gray-700">Terrestre</p>
+            </label>
+          </div>
+        </div>
 
         <div className="text-sm text-slate-500 font-medium mb-2">Content</div>
         {(language == "en" && englishItems.length) || (language == "fr" && frenshItems.length) ? (

@@ -19,9 +19,6 @@ export default function Blog({ location, params }: { location: any; params: any 
   useEffect(() => {
     const slug = params.slug;
 
-    console.log("-------------------- slug --------------------");
-    console.log(slug);
-
     if (slug) {
       axios
         .get(`/api/posts/${slug}`)
