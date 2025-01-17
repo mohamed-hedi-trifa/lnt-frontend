@@ -10,6 +10,7 @@ import Title from "@/components/atoms/titles/Title";
 import PageParagraph from "@/components/atoms/PageParagraph";
 import axios from "axios";
 import { navigate } from "gatsby";
+import BlogList from "./BlogList";
 
 export default function Blog({ location, params }: { location: any; params: any }) {
   const [blogPost, setBlogPost] = useState<any>(null);
@@ -18,13 +19,16 @@ export default function Blog({ location, params }: { location: any; params: any 
   useEffect(() => {
     const slug = params.slug;
 
-    console.log("-------------------- slug --------------------");
-    console.log(slug);
-
     if (slug) {
       axios
         .get(`/api/posts/${slug}`)
         .then((res) => {
+          res.data.content_items.forEach((item: any) => {
+            if (item.type === "list") {
+              item.content = JSON.parse(item.content);
+            }
+          });
+
           setBlogPost(res.data);
 
           // Extract language from URL query
@@ -100,6 +104,19 @@ export default function Blog({ location, params }: { location: any; params: any 
             <AMCPSidebar />
 
             <section className="grow w-fit flex flex-col">
+              <div className="flex gap-2 items-center justify-end">
+                <span className="semi-bold font-semibold"> Language:</span>
+                {blogPost.title_en && (
+                  <button className="bg-gray-100 p-1" onClick={() => setLanguage("en")}>
+                    EN
+                  </button>
+                )}
+                {blogPost.title_fr && (
+                  <button className="bg-gray-100 p-1" onClick={() => setLanguage("fr")}>
+                    FR
+                  </button>
+                )}
+              </div>
               <SectionTitle
                 title={blogPost ? blogPost[`title_${language}`] : ""}
                 width="w-[160px]"
@@ -113,7 +130,9 @@ export default function Blog({ location, params }: { location: any; params: any 
                   .map((item: any) => (
                     <div key={item.id}>
                       {item.language === language ? (
-                        item.type === "title" ? (
+                        item.type === "list" ? (
+                          <BlogList content={item.content} />
+                        ) : item.type === "title" ? (
                           <Title customClassName="mb-2">{item.content}</Title>
                         ) : item.type === "text" ? (
                           // Apply the markdown parser to the text content

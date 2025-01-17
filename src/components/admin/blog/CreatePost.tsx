@@ -19,6 +19,7 @@ interface FormData {
   title_fr: string;
   summary_en: string;
   summary_fr: string;
+  type: string;
 }
 
 const CreatePost: React.FC = () => {
@@ -28,6 +29,7 @@ const CreatePost: React.FC = () => {
     title_fr: "",
     summary_en: "",
     summary_fr: "",
+    type: "marin",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -65,7 +67,7 @@ const CreatePost: React.FC = () => {
     }
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -154,9 +156,19 @@ const CreatePost: React.FC = () => {
 
     selectedItems.forEach((item, index) => {
       formDataToSend.append(`items[${index}][type]`, item.type);
-      formDataToSend.append(`items[${index}][content]`, item.content);
       formDataToSend.append(`items[${index}][language]`, item.language);
       formDataToSend.append(`items[${index}][order]`, item.order);
+
+      if (item.type === "list") {
+        item.content.forEach((listItem: any, listIndex: number) => {
+          formDataToSend.append(`items[${index}][content][${listIndex}][text]`, listItem.text);
+          if (listItem.imageFile) {
+            formDataToSend.append(`items[${index}][content][${listIndex}][imageFile]`, listItem.imageFile);
+          }
+        });
+      } else {
+        formDataToSend.append(`items[${index}][content]`, item.content);
+      }
 
       // Append the file if it's an image or PDF
       if (item.file) {
@@ -178,6 +190,7 @@ const CreatePost: React.FC = () => {
         title_fr: "",
         summary_en: "",
         summary_fr: "",
+        type: "marin",
       });
       setErrors({}); // Clear any previous errors
       toast.success("Post created successfully");
@@ -209,7 +222,7 @@ const CreatePost: React.FC = () => {
   const addNewItem = (type: string) => {
     const newItem = {
       order: language === "en" ? englishItems.length : frenchItems.length,
-      content: type === "list" ? [] : "",
+      content: type === "list" ? [{ text: "", image: "" }] : "",
       type,
       language: language,
     };
@@ -269,6 +282,44 @@ const CreatePost: React.FC = () => {
             {errors.summary_fr && <div className="text-red-500 text-sm">{errors.summary_fr}</div>}
           </>
         )}
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-slate-500">Type</label>
+          <div className="mt-2 flex space-x-4">
+            <label
+              className={`flex items-center p-2 border rounded focus-within:ring-1 ring-sky-500 cursor-pointer duration-200 ${
+                formData.type === "marin" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
+              }`}
+            >
+              <input
+                id="marin"
+                name="type"
+                type="radio"
+                value="marin"
+                checked={formData.type === "marin"}
+                onChange={handleChange}
+                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 outline-none"
+              />
+              <p className="ml-3 block text-sm font-medium text-gray-700">Marin</p>
+            </label>
+            <label
+              className={`flex items-center p-2 border rounded focus-within:ring-1 ring-sky-500 cursor-pointer duration-200 ${
+                formData.type === "terrestre" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
+              }`}
+            >
+              <input
+                id="terrestre"
+                name="type"
+                type="radio"
+                value="terrestre"
+                checked={formData.type === "terrestre"}
+                onChange={handleChange}
+                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 outline-none"
+              />
+              <p className="ml-3 block text-sm font-medium text-gray-700">Terrestre</p>
+            </label>
+          </div>
+        </div>
 
         <div className="text-slate-500 text-sm font-medium mb-2">Content</div>
 

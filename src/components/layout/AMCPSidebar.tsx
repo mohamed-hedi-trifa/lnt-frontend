@@ -76,13 +76,19 @@ const AMCPSidebar = () => {
     try {
       const res = await axios.get("/api/posts");
 
-      console.log("-------------------- res.data --------------------");
-      console.log(res.data);
+      const obj = res.data.reduce(
+        (acc: any, el: any) => {
+          acc[el.type].push(el);
 
-      setResearches({
-        marin: res.data,
-        terrestre: [],
-      });
+          return acc;
+        },
+        {
+          marin: [],
+          terrestre: [],
+        }
+      );
+
+      setResearches(obj);
     } catch (err) {
       console.log(err);
     }
@@ -100,7 +106,7 @@ const AMCPSidebar = () => {
     }));
     const terrestre = researches.terrestre?.map((el: any) => ({
       label: el.title_en || el.title_fr,
-      path: "",
+      path: "/protected-air-marine-coastal-areas/monitoring/terrestre/" + el.slug,
     }));
     // arr[1].items![0].items = marin;
     // arr[1].items![1].items = terrestre;
