@@ -46,8 +46,15 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
           summary_fr: blogPost.summary_fr,
         });
 
-        setEnglishItems([...blogPost.content_items].filter((item) => item.language === "en"));
-        setFrenshItems([...blogPost.content_items].filter((item) => item.language === "fr"));
+        const parsedContentItems = blogPost.content_items.map((item: any) => {
+          if (item.type === "list") {
+            return { ...item, content: JSON.parse(item.content) };
+          }
+          return item;
+        });
+
+        setEnglishItems([...parsedContentItems].filter((item) => item.language === "en"));
+        setFrenshItems([...parsedContentItems].filter((item) => item.language === "fr"));
         if (!["en", "fr"].includes(paramLang || "")) setLanguage(blogPost.title_en ? "en" : "fr");
       } catch (error) {
         console.error("Error fetching blog post:", error);
@@ -114,30 +121,33 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
       formDataToSend.append("image", image); // Append the image file if it exists
     }
 
-    language == "en"
-      ? englishItems.forEach((item, index) => {
-          formDataToSend.append(`items[${index}][id]`, item.id ? item.id : "");
-          formDataToSend.append(`items[${index}][type]`, item.type);
-          formDataToSend.append(`items[${index}][content]`, item.content);
-          formDataToSend.append(`items[${index}][language]`, item.language);
-          formDataToSend.append(`items[${index}][order]`, item.order);
+    const selectedItems = language === "en" ? englishItems : frenshItems;
 
-          // Append the file if it's an image or PDF
-          if (item.file) {
-            formDataToSend.append(`items[${index}][file]`, item.file); // Dynamic field name for file
+    selectedItems.forEach((item, index) => {
+      formDataToSend.append(`items[${index}][id]`, item.id ? item.id : "");
+      formDataToSend.append(`items[${index}][type]`, item.type);
+      formDataToSend.append(`items[${index}][language]`, item.language);
+      formDataToSend.append(`items[${index}][order]`, item.order);
+
+      if (item.type === "list") {
+        item.content.forEach((listItem: any, listIndex: number) => {
+          formDataToSend.append(`items[${index}][content][${listIndex}][text]`, listItem.text);
+          if (listItem.image) {
+            formDataToSend.append(`items[${index}][content][${listIndex}][image]`, listItem.image);
           }
-        })
-      : frenshItems.forEach((item, index) => {
-          formDataToSend.append(`items[${index}][id]`, item.id ? item.id : "");
-          formDataToSend.append(`items[${index}][type]`, item.type);
-          formDataToSend.append(`items[${index}][content]`, item.content);
-          formDataToSend.append(`items[${index}][language]`, item.language);
-          formDataToSend.append(`items[${index}][order]`, item.order);
-          // Append the file if it's an image or PDF
-          if (item.file) {
-            formDataToSend.append(`items[${index}][file]`, item.file); // Dynamic field name for file
+          if (listItem.imageFile) {
+            formDataToSend.append(`items[${index}][content][${listIndex}][imageFile]`, listItem.imageFile);
           }
         });
+      } else {
+        formDataToSend.append(`items[${index}][content]`, item.content);
+      }
+
+      // Append the file if it's an image or PDF
+      if (item.file) {
+        formDataToSend.append(`items[${index}][file]`, item.file); // Dynamic field name for file
+      }
+    });
 
     console.log(formDataToSend);
     try {
@@ -156,7 +166,12 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
   };
 
   const addNewItem = (type: string) => {
-    const newItem = { order: language == "en" ? englishItems.length : frenshItems.length, content: "", type, language: language };
+    const newItem = {
+      order: language == "en" ? englishItems.length : frenshItems.length,
+      content: type === "list" ? [{ text: "", image: "" }] : "",
+      type,
+      language: language,
+    };
     const updatedItems = language == "en" ? [...englishItems] : [...frenshItems];
     updatedItems.push(newItem);
 
@@ -226,6 +241,12 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
               <Button type="button" customClassnames=" !py-1 !px-3 !text-xs !flex justify-center items-center " onClick={() => addNewItem("text")}>
                 <PlusIcon className="h-4 w-4" />
                 Text
+              </Button>
+            </div>
+            <div className=" mb-1 ">
+              <Button type="button" customClassnames="bg-primary !py-1 !px-3 !text-xs !flex justify-center items-center " onClick={() => addNewItem("list")}>
+                <PlusIcon className="h-4 w-4" />
+                List
               </Button>
             </div>
             <div className=" mb-1 ">

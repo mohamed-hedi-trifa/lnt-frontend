@@ -154,9 +154,19 @@ const CreatePost: React.FC = () => {
 
     selectedItems.forEach((item, index) => {
       formDataToSend.append(`items[${index}][type]`, item.type);
-      formDataToSend.append(`items[${index}][content]`, item.content);
       formDataToSend.append(`items[${index}][language]`, item.language);
       formDataToSend.append(`items[${index}][order]`, item.order);
+
+      if (item.type === "list") {
+        item.content.forEach((listItem: any, listIndex: number) => {
+          formDataToSend.append(`items[${index}][content][${listIndex}][text]`, listItem.text);
+          if (listItem.imageFile) {
+            formDataToSend.append(`items[${index}][content][${listIndex}][imageFile]`, listItem.imageFile);
+          }
+        });
+      } else {
+        formDataToSend.append(`items[${index}][content]`, item.content);
+      }
 
       // Append the file if it's an image or PDF
       if (item.file) {
@@ -209,7 +219,7 @@ const CreatePost: React.FC = () => {
   const addNewItem = (type: string) => {
     const newItem = {
       order: language === "en" ? englishItems.length : frenchItems.length,
-      content: type === "list" ? [] : "",
+      content: type === "list" ? [{ text: "", image: "" }] : "",
       type,
       language: language,
     };
