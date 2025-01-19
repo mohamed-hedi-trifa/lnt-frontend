@@ -22,6 +22,7 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
     title_fr: "",
     summary_en: "",
     summary_fr: "",
+    type: "marin",
   });
   const [englishItems, setEnglishItems] = useState<any[]>([]);
   const [frenshItems, setFrenshItems] = useState<any[]>([]);
@@ -44,10 +45,18 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
           title_fr: blogPost.title_fr,
           summary_en: blogPost.summary_en,
           summary_fr: blogPost.summary_fr,
+          type: blogPost.type || "marin",
         });
 
-        setEnglishItems([...blogPost.content_items].filter((item) => item.language === "en"));
-        setFrenshItems([...blogPost.content_items].filter((item) => item.language === "fr"));
+        const parsedContentItems = blogPost.content_items.map((item: any) => {
+          if (item.type === "list") {
+            return { ...item, content: JSON.parse(item.content) };
+          }
+          return item;
+        });
+
+        setEnglishItems([...parsedContentItems].filter((item) => item.language === "en"));
+        setFrenshItems([...parsedContentItems].filter((item) => item.language === "fr"));
         if (!["en", "fr"].includes(paramLang || "")) setLanguage(blogPost.title_en ? "en" : "fr");
       } catch (error) {
         console.error("Error fetching blog post:", error);
@@ -114,30 +123,33 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
       formDataToSend.append("image", image); // Append the image file if it exists
     }
 
-    language == "en"
-      ? englishItems.forEach((item, index) => {
-          formDataToSend.append(`items[${index}][id]`, item.id ? item.id : "");
-          formDataToSend.append(`items[${index}][type]`, item.type);
-          formDataToSend.append(`items[${index}][content]`, item.content);
-          formDataToSend.append(`items[${index}][language]`, item.language);
-          formDataToSend.append(`items[${index}][order]`, item.order);
+    const selectedItems = language === "en" ? englishItems : frenshItems;
 
-          // Append the file if it's an image or PDF
-          if (item.file) {
-            formDataToSend.append(`items[${index}][file]`, item.file); // Dynamic field name for file
+    selectedItems.forEach((item, index) => {
+      formDataToSend.append(`items[${index}][id]`, item.id ? item.id : "");
+      formDataToSend.append(`items[${index}][type]`, item.type);
+      formDataToSend.append(`items[${index}][language]`, item.language);
+      formDataToSend.append(`items[${index}][order]`, item.order);
+
+      if (item.type === "list") {
+        item.content.forEach((listItem: any, listIndex: number) => {
+          formDataToSend.append(`items[${index}][content][${listIndex}][text]`, listItem.text);
+          if (listItem.image) {
+            formDataToSend.append(`items[${index}][content][${listIndex}][image]`, listItem.image);
           }
-        })
-      : frenshItems.forEach((item, index) => {
-          formDataToSend.append(`items[${index}][id]`, item.id ? item.id : "");
-          formDataToSend.append(`items[${index}][type]`, item.type);
-          formDataToSend.append(`items[${index}][content]`, item.content);
-          formDataToSend.append(`items[${index}][language]`, item.language);
-          formDataToSend.append(`items[${index}][order]`, item.order);
-          // Append the file if it's an image or PDF
-          if (item.file) {
-            formDataToSend.append(`items[${index}][file]`, item.file); // Dynamic field name for file
+          if (listItem.imageFile) {
+            formDataToSend.append(`items[${index}][content][${listIndex}][imageFile]`, listItem.imageFile);
           }
         });
+      } else {
+        formDataToSend.append(`items[${index}][content]`, item.content);
+      }
+
+      // Append the file if it's an image or PDF
+      if (item.file) {
+        formDataToSend.append(`items[${index}][file]`, item.file); // Dynamic field name for file
+      }
+    });
 
     console.log(formDataToSend);
     try {
@@ -156,7 +168,12 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
   };
 
   const addNewItem = (type: string) => {
-    const newItem = { order: language == "en" ? englishItems.length : frenshItems.length, content: "", type, language: language };
+    const newItem = {
+      order: language == "en" ? englishItems.length : frenshItems.length,
+      content: type === "list" ? [{ text: "", image: "" }] : "",
+      type,
+      language: language,
+    };
     const updatedItems = language == "en" ? [...englishItems] : [...frenshItems];
     updatedItems.push(newItem);
 
@@ -199,6 +216,44 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
           </>
         )}
 
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-slate-500">Type</label>
+          <div className="mt-2 flex space-x-4">
+            <label
+              className={`flex items-center p-2 border rounded focus-within:ring-1 ring-sky-500 cursor-pointer duration-200 ${
+                formData.type === "marin" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
+              }`}
+            >
+              <input
+                id="marin"
+                name="type"
+                type="radio"
+                value="marin"
+                checked={formData.type === "marin"}
+                onChange={handleChange}
+                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 outline-none"
+              />
+              <p className="ml-3 block text-sm font-medium text-gray-700">Marin</p>
+            </label>
+            <label
+              className={`flex items-center p-2 border rounded focus-within:ring-1 ring-sky-500 cursor-pointer duration-200 ${
+                formData.type === "terrestre" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
+              }`}
+            >
+              <input
+                id="terrestre"
+                name="type"
+                type="radio"
+                value="terrestre"
+                checked={formData.type === "terrestre"}
+                onChange={handleChange}
+                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 outline-none"
+              />
+              <p className="ml-3 block text-sm font-medium text-gray-700">Terrestre</p>
+            </label>
+          </div>
+        </div>
+
         <div className="text-sm text-slate-500 font-medium mb-2">Content</div>
         {(language == "en" && englishItems.length) || (language == "fr" && frenshItems.length) ? (
           <ItemsList
@@ -226,6 +281,12 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
               <Button type="button" customClassnames=" !py-1 !px-3 !text-xs !flex justify-center items-center " onClick={() => addNewItem("text")}>
                 <PlusIcon className="h-4 w-4" />
                 Text
+              </Button>
+            </div>
+            <div className=" mb-1 ">
+              <Button type="button" customClassnames="bg-primary !py-1 !px-3 !text-xs !flex justify-center items-center " onClick={() => addNewItem("list")}>
+                <PlusIcon className="h-4 w-4" />
+                List
               </Button>
             </div>
             <div className=" mb-1 ">
