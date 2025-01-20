@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
-import { SortableElement } from "react-sortable-hoc";
 import { toast } from "react-toastify";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faUpload } from "@fortawesome/free-solid-svg-icons";
-// import { Delete, Photo } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import axios from "axios";
 import Button from "../../atoms/Button";
@@ -11,26 +7,44 @@ import Textarea from "../../atoms/inputs/Textarea";
 import Input from "../../atoms/inputs/Input";
 import DragHandle from "./DragHandle";
 import { ArrowUpTrayIcon, PhotoIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities"; 
 
-const ContentItem = SortableElement(
-  ({
-    items,
-    setItems,
-    handleItemContentChange,
-    item,
-    idx,
+const ContentItem = ({
+    id,
+  items,
+  setItems,
+  handleItemContentChange,
+  item,
+  idx,
   }: {
+    id:string;
     idx: number;
     item: any;
     handleItemContentChange: (idx: number, e: any) => void;
     items: any[];
     setItems: (items: any[]) => void;
   }) => {
-    const deleteItem = (item: any, index: number) => {
-      if (item.id)
+
+    const {
+      attributes,   // for accessibility
+      listeners,    // event handlers (onPointerDown, etc.)
+      setNodeRef,   // ref to the sortable element
+      transform,
+      transition,
+    } = useSortable({ id });
+
+      // Apply transform/transition to style so items move smoothly
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+    const deleteItem = (currItem:any, index:any) => {
+      if (currItem.id) {
         Swal.fire({
           title: "delete item",
-          text: `are you sure to delete this item ?`,
+          text: "are you sure to delete this item ?",
           showDenyButton: true,
           confirmButtonText: "Confirm",
           denyButtonText: "Cancel",
@@ -39,23 +53,20 @@ const ContentItem = SortableElement(
         }).then((result) => {
           if (result.isConfirmed) {
             axios
-              .delete(`/api/content-items/${item.id}`)
+              .delete(`/api/content-items/${currItem.id}`)
               .then(() => {
-                const newItems = items.filter((item: any) => items.indexOf(item) != index);
-
-                const updatedContent = newItems;
-
-                setItems(updatedContent);
-                toast.success("Item deleted", {
-                  position: "bottom-right",
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light",
-                });
+                const newItems = items.filter((_item, i) => i !== index);
+                setItems(newItems);
+                toast.success("Item deleted",  {
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
               })
               .catch((err) => {
                 if (err.response.data.status === 404) {
@@ -82,13 +93,11 @@ const ContentItem = SortableElement(
                   });
                 }
               });
-          } else if (result.isDenied) {
           }
         });
-      else {
-        const updatedContent = items.filter((item: any) => items.indexOf(item) != index);
-
-        setItems([...updatedContent]);
+      } else {
+        const updated = items.filter((_item, i) => i !== index);
+        setItems(updated);
       }
     };
 
@@ -119,11 +128,16 @@ const ContentItem = SortableElement(
     };
 
     return (
-      <div className="grid grid-cols-12 w-full pl-4">
-        <div className="col-span-1 flex items-center gap-3">
-          <DragHandle />
-          <span>{idx + 1}</span>
-        </div>
+      <div
+      ref={setNodeRef}   // reference for drag
+      style={style}      // apply dnd-kit transform & transition
+      className="grid grid-cols-12 w-full pl-4"
+    >
+         <div {...listeners} {...attributes} className="col-span-1 flex items-center gap-3">
+        <DragHandle />
+        <span>{idx + 1}</span>
+      </div>
+
         {item.type === "title" ? (
           <div className="col-span-10 p-2 font-bold">
             <Input value={item.content || ""} onChange={(e) => handleItemContentChange(idx, e)} />
@@ -202,6 +216,6 @@ const ContentItem = SortableElement(
       </div>
     );
   }
-);
+
 
 export default ContentItem;

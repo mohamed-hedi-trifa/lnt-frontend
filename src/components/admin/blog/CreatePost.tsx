@@ -1,9 +1,8 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Link, navigate } from "gatsby";
 import ItemsList from "./ItemsList";
-import { arrayMove } from "react-sortable-hoc";
 import Input from "../../atoms/inputs/Input";
 import Textarea from "../../atoms/inputs/Textarea";
 import Button from "../../atoms/Button";
@@ -13,6 +12,7 @@ import Select from "../../atoms/inputs/Select";
 import ReactLoading from "react-loading";
 import { toast } from "react-toastify";
 import useLocalStorage from "@/lib/useLocalStorage";
+import { v4 as uuidv4 } from "uuid";
 
 interface FormData {
   title_en: string;
@@ -219,28 +219,19 @@ const CreatePost: React.FC = () => {
     if (created) navigate("/admin/posts");
   };
 
+
   const addNewItem = (type: string) => {
     const newItem = {
+      id: uuidv4(), // 👈 Must generate a unique id
       order: language === "en" ? englishItems.length : frenchItems.length,
       content: type === "list" ? [{ text: "", image: "" }] : "",
       type,
       language: language,
     };
-
+  
     const updatedItems = language === "en" ? [...englishItems] : [...frenchItems];
     updatedItems.push(newItem);
-
-    language === "en" ? setEnglishItems([...updatedItems]) : setFrenchItems([...updatedItems]);
-  };
-
-  const onItemsSortEnd = ({ oldIndex, newIndex }: { oldIndex: number; newIndex: number }) => {
-    const updatedItems = language === "en" ? [...englishItems] : [...frenchItems];
-
-    const sortedItems = arrayMove(updatedItems, oldIndex, newIndex).map((item, idx) => {
-      return { ...item, order: idx };
-    });
-
-    language === "en" ? setEnglishItems([...sortedItems]) : setFrenchItems([...sortedItems]);
+    language === "en" ? setEnglishItems(updatedItems) : setFrenchItems(updatedItems);
   };
 
   return (
@@ -325,8 +316,6 @@ const CreatePost: React.FC = () => {
 
         {(language === "en" && englishItems.length) || (language === "fr" && frenchItems.length) ? (
           <ItemsList
-            useDragHandle
-            onSortEnd={onItemsSortEnd}
             handleItemContentChange={handleItemContentChange}
             items={language === "en" ? englishItems : frenchItems}
             setItems={language === "en" ? setEnglishItems : setFrenchItems}
