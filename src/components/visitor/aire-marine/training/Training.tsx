@@ -2,16 +2,13 @@ import React from 'react'
 import HeroSection from '../../HeroSection'
 import PageTitle from '@/components/atoms/titles/PageTitle'
 import PageBody from '@/components/PageBody'
-import achievementsHero from '../../../../assets/images/achievements-hero.jpg'
+import formationHero from '../../../../assets/images/formation-hero.jpeg'
 import AMCPSidebar from '@/components/layout/AMCPSidebar'
-import SectionTitle from '@/components/atoms/titles/SectionTitle'
 import PageParagraph from '@/components/atoms/PageParagraph'
 import ContainerImageMarine from '../CotainerImageMarine'
 import ButtonDropdown from '@/components/ButtonDropdown'
 import DateRangeSelector from '../../who-are-we/our-achievements/DateRangeSelector'
-import ClockIcon from '@/assets/icons/ClockIcon'
-import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
-import ColorPaletteIcon from '@/assets/icons/ColorPaletteIcon'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import Checkbox from '../../posts/Checkbox'
 import FilterTitle from '../../posts/FilterTitle'
 import ArrowDownIcon from '@/assets/icons/ArrowDownIcon'
@@ -22,7 +19,6 @@ import XIcon from '@/assets/icons/XIcon'
 import InstagramIcon from '@/assets/icons/InstagramIcon'
 import YoutubeIcon from '@/assets/icons/YoutubeIcon'
 import LinkedinIcon from '@/assets/icons/LinkedinIcon'
-import EnveloppeIcon from '@/assets/icons/EnveloppeIcon'
 import Button from '@/components/atoms/Button'
 import TrainingCards from './TrainingCards'
 import NewsLetterSub2 from '@/components/NewsLetterSub2'
@@ -77,16 +73,16 @@ export default function Training() {
 
         éducatives et scientifiques uniques pour
         
-        préserver notre environnement marin " imgSrc={achievementsHero} />
+        préserver notre environnement marin " imgSrc={formationHero} />
       <PageTitle
         title="Formations et Campements Scientifiques"
-        width="w-[160px]" />
+        />
       <PageBody >
         <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
           <AMCPSidebar />
-          <section className='w-fit text-justify text-[20px] sm:text-[22px] flex flex-col gap-8'>
-            <PageParagraph>Dans le cadre de sa mission de préservation et de valorisation des écosystèmes marins, notre association organise des formations et des campements scientifiques qui offrent des expériences éducatives enrichissantes. Ces initiatives visent à transmettre des connaissances scientifiques, sensibiliser à l’importance de la biodiversité, et impliquer divers publics dans des actions concrètes en faveur de l’environnement. Les participants, qu’ils soient étudiants, chercheurs ou amateurs passionnés, ont l’opportunité de contribuer activement à des projets de recherche tout en développant leurs compétences. Qu’il s’agisse d’une formation spécialisée ou d’un campement scientifique immersif, chaque activité est conçue pour allier théorie et pratique, dans un cadre exceptionnel : les îles de Kerkennah.</PageParagraph>
-
+          <section className='w-fit text-justify text-[20px] sm:text-[22px] flex flex-col gap-5 py-10 sm:py-0'>
+            <PageParagraph>Dans le cadre de sa mission de préservation et de valorisation des écosystèmes marins, notre association organise des formations et des campements scientifiques qui offrent des expériences éducatives enrichissantes. Ces initiatives visent à transmettre des connaissances scientifiques, sensibiliser à l’importance de la biodiversité, et impliquer divers publics dans des actions concrètes en faveur de l’environnement. Les participants, qu’ils soient étudiants, chercheurs ou amateurs passionnés, ont l’opportunité de contribuer activement à des projets de recherche tout en développant leurs compétences.</PageParagraph>
+            <PageParagraph>Qu’il s’agisse d’une formation spécialisée ou d’un campement scientifique immersif, chaque activité est conçue pour allier théorie et pratique, dans un cadre exceptionnel : les îles de Kerkennah.</PageParagraph>
           </section>
         </section>
       </PageBody>
