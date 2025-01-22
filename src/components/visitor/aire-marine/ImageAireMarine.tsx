@@ -9,7 +9,7 @@ interface ImageAireMarineProps {
 const ImageAireMarine: React.FC<ImageAireMarineProps> = ({ title, description, imageUrl }) => {
     return (
         <div
-            className=" w-full max-w-[550px] h-[227px] md:h-[297px] relative bg-cover rounded-[15px] flex items-center justify-center transition-all duration-500 group"
+            className=" w-full max-w-[616px] h-[320px] md:h-[297px] relative bg-cover rounded-[15px] flex items-center justify-center transition-all duration-500 group"
             style={{ backgroundImage: `url(${imageUrl})` }}
         >
             

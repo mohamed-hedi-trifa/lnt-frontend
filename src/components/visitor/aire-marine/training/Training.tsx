@@ -2,7 +2,7 @@ import React from 'react'
 import HeroSection from '../../HeroSection'
 import PageTitle from '@/components/atoms/titles/PageTitle'
 import PageBody from '@/components/PageBody'
-import achievementsHero from '../../../../assets/images/training.jpeg'
+import achievementsHero from '../../../../assets/images/achievements-hero.jpg'
 import AMCPSidebar from '@/components/layout/AMCPSidebar'
 import SectionTitle from '@/components/atoms/titles/SectionTitle'
 import PageParagraph from '@/components/atoms/PageParagraph'
@@ -10,117 +10,233 @@ import ContainerImageMarine from '../CotainerImageMarine'
 import ButtonDropdown from '@/components/ButtonDropdown'
 import DateRangeSelector from '../../who-are-we/our-achievements/DateRangeSelector'
 import ClockIcon from '@/assets/icons/ClockIcon'
-import { ChevronDownIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import ColorPaletteIcon from '@/assets/icons/ColorPaletteIcon'
+import Checkbox from '../../posts/Checkbox'
+import FilterTitle from '../../posts/FilterTitle'
+import ArrowDownIcon from '@/assets/icons/ArrowDownIcon'
+import SortIcon from '@/assets/icons/SortIcon'
+import FacebookIcon from '@/assets/icons/FacebookIcon'
+import { Link } from 'gatsby'
+import XIcon from '@/assets/icons/XIcon'
+import InstagramIcon from '@/assets/icons/InstagramIcon'
+import YoutubeIcon from '@/assets/icons/YoutubeIcon'
+import LinkedinIcon from '@/assets/icons/LinkedinIcon'
+import EnveloppeIcon from '@/assets/icons/EnveloppeIcon'
+import Button from '@/components/atoms/Button'
+import TrainingCards from './TrainingCards'
+import NewsLetterSub2 from '@/components/NewsLetterSub2'
+import Line from '@/components/atoms/Line'
 
 const CATEGORIES = [
   {
-      id:1,
-      name: "All themes"
+    id: 1,
+    name: "All themes"
   },
   {
-      id:2,
-      name: "Conservation Marine"
+    id: 2,
+    name: "Conservation Marine"
   },
   {
-      id:3,
-      name: "Tourisme Responsable"
+    id: 3,
+    name: "Tourisme Responsable"
   },
   {
-      id:4,
-      name: "Peche Durable"
+    id: 4,
+    name: "Peche Durable"
   },
   {
-      id:5,
-      name: "Ecologie et Environmenet"
+    id: 5,
+    name: "Ecologie et Environmenet"
   },
   {
-      id:6,
-      name: "Education et Formation"
+    id: 6,
+    name: "Education et Formation"
   }
 ]
 
 const images = [
-    {
-        title: 'Explorez l’Aire Marine Protégée',
-        description: 'Préservons ensemble les Îlots Nord de Kerkennah',
-        imageUrl: '/images/aire_marines/marine1.jfif'
-    },
-    {
-        title: 'Découvrez nos Partenaires',
-        description: 'Engagés pour la Protection des Îles de Kerkennah',
-        imageUrl: '/images/aire_marines/marine2.jfif'
-    }
+  {
+    title: 'Explorez l’Aire Marine Protégée',
+    description: 'Préservons ensemble les Îlots Nord de Kerkennah',
+    imageUrl: '/images/aire_marines/marine1.jfif'
+  },
+  {
+    title: 'Découvrez nos Partenaires',
+    description: 'Engagés pour la Protection des Îles de Kerkennah',
+    imageUrl: '/images/aire_marines/marine2.jfif'
+  }
 ]
 
 export default function Training() {
   return (
     <main>
-        <HeroSection title="Formation et Campement Scientifiques :" subTitle="Connaitre et Agir
+      <HeroSection title="Formation et Campement Scientifiques :" subTitle="Connaitre et Agir
 
-Plonger dans des expériences
+        Plonger dans des expériences
 
-éducatives et scientifiques uniques pour
+        éducatives et scientifiques uniques pour
+        
+        préserver notre environnement marin " imgSrc={achievementsHero} />
+      <PageTitle
+        title="Formations et Campements Scientifiques"
+        width="w-[160px]" />
+      <PageBody >
+        <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
+          <AMCPSidebar />
+          <section className='w-fit text-justify text-[20px] sm:text-[22px] flex flex-col gap-8'>
+            <PageParagraph>Dans le cadre de sa mission de préservation et de valorisation des écosystèmes marins, notre association organise des formations et des campements scientifiques qui offrent des expériences éducatives enrichissantes. Ces initiatives visent à transmettre des connaissances scientifiques, sensibiliser à l’importance de la biodiversité, et impliquer divers publics dans des actions concrètes en faveur de l’environnement. Les participants, qu’ils soient étudiants, chercheurs ou amateurs passionnés, ont l’opportunité de contribuer activement à des projets de recherche tout en développant leurs compétences. Qu’il s’agisse d’une formation spécialisée ou d’un campement scientifique immersif, chaque activité est conçue pour allier théorie et pratique, dans un cadre exceptionnel : les îles de Kerkennah.</PageParagraph>
 
-préserver notre environnement marin " imgSrc={achievementsHero} />
-                    <PageTitle
-                        title="Formations et Campements
-Scientifiques"
-                        width="w-[160px]" />
-                        <PageBody>
-                        <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
-                        <AMCPSidebar />
-                        <section className='w-fit text-justify text-[20px] sm:text-[22px] flex flex-col gap-8'>
-                            <PageParagraph>Dans le cadre de sa mission de préservation et de valorisation des écosystèmes marins, notre association organise des formations et des campements scientifiques qui offrent des expériences éducatives enrichissantes. Ces initiatives visent à transmettre des connaissances scientifiques, sensibiliser à l’importance de la biodiversité, et impliquer divers publics dans des actions concrètes en faveur de l’environnement. Les participants, qu’ils soient étudiants, chercheurs ou amateurs passionnés, ont l’opportunité de contribuer activement à des projets de recherche tout en développant leurs compétences. Qu’il s’agisse d’une formation spécialisée ou d’un campement scientifique immersif, chaque activité est conçue pour allier théorie et pratique, dans un cadre exceptionnel : les îles de Kerkennah.</PageParagraph>
+          </section>
+        </section>
+      </PageBody>
+      <section className='max-w-[1400px] mx-auto'>
+        <hr className='my-6  border-black' />
 
-                        </section>
-                    </section>
-                        <div className='flex gap-8 justify-center'>  
+        <section className="flex gap-5">
+          {/* Sidebar */}
+          <aside className="bg-white flex flex-col p-[10px] gap-10 w-[320px] rounded-xl shadow-xl h-fit sticky top-[116px]">
+            {/* Search */}
+            <div className="border rounded-lg border-black flex gap-4 p-2">
+              <MagnifyingGlassIcon className="size-5" />
+              <input type="text" placeholder="Recherche" />
+            </div>
 
-<ButtonDropdown
-  item={<DateRangeSelector />}
-  position="left"
-  renderItem={(item) => (
-      <div className='py-1'>{item.name}</div>
-  )}
->
-  {(isOpen) => (
-    <div className={`flex items-center gap-2  underline-offset-4 border-black border-2 rounded-[10px] px-6 py-2`}>
-      <ClockIcon />
-      Published at
-      <ChevronDownIcon className={`w-6 h-6 duration-200 ${isOpen ? "-rotate-180" : ""}`} />
-    </div>
-  )}
-</ButtonDropdown> 
+            {/* Type d'activité */}
+            <div className="flex flex-col gap-5">
+              <FilterTitle title="Type d'activité" />
+              <div className="flex flex-col gap-3">
+                <Checkbox label="Tous les types" nb="10" />
+                <Checkbox label="Formation" />
+                <Checkbox label="Campement Scientifique" />
+              </div>
+            </div>
 
-  <ButtonDropdown
-  items={CATEGORIES}
-  position="left"
-  renderItem={(item) => (
-      <div className='py-1 px-4'> {item.name}</div>
-  )}
->
-  {(isOpen) => (
-    <button className={`flex items-center gap-2  underline-offset-4 border-black border-2 rounded-[10px] px-6 py-2`}>
-      <ColorPaletteIcon />
-      Theme
-      <ChevronDownIcon className={`w-6 h-6 duration-200 ${isOpen ? "-rotate-180" : ""}`} />
-    </button>
-  )}
-</ButtonDropdown> 
- </div>
+            {/* Thèmes */}
+            <div className="flex flex-col gap-5">
+              <FilterTitle title="Thèmes" />
+              <div className="flex flex-col gap-3">
+                <Checkbox label="Tous les Thèmes" nb="120" />
+                <Checkbox label="Initiative scientifique" nb="35" />
+                <Checkbox label="Suivi scientifique" nb="28" />
+                <Checkbox label="Formation" nb="30" />
+                <Checkbox label="Événement culturel" nb="18" />
+                <Checkbox label="Activités sportives" nb="21" />
+                <button className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium">
+                  + Afficher 10 de plus
+                </button>
+              </div>
+            </div>
 
-                    <hr className='my-6 border-[2px] text-custom-gray' />
-                    <section className='flex items-start justify-center '>
+            {/* Date */}
+            <div className="flex flex-col gap-5 relative z-50">
+              <FilterTitle title="Date" />
+              <div className="flex flex-col gap-3">
+                <Checkbox label="Aujourd'hui" />
+                <Checkbox label="Cette Semaine" />
+                <Checkbox label="Ce Mois" />
+                <Checkbox label="Cette Année" />
+                <ButtonDropdown
+    item={<DateRangeSelector />}
+    position="left"
+    renderItem={(item) => (
+        <div className='py-1'>{item.name}</div>
+    )}
+  >
+    {(isOpen) => (
+      <Checkbox label="Configurer" />
+    )}
+  </ButtonDropdown> 
+              </div>
+            </div>
 
-                        <div className='w-full flex items-center justify-center '>
-                            <ContainerImageMarine images={images} />
-                        </div>
+            {/* Actions */}
+            <div className="flex justify-between">
+              <button className="bg-primary text-sm text-white px-[10px] py-2 rounded-xl font-semibold">
+                Appliquer les Filtres
+              </button>
+              <button className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]">
+                Réinitialiser
+              </button>
+            </div>
+          </aside>
 
-                    </section>
+          {/* Main content area (example placeholder) */}
+          <section className="flex-1">
+            <div className='flex justify-between  relative z-20'>
+            <ButtonDropdown
+    items={CATEGORIES}
+    position="left"
+    renderItem={(item) => (
+        <div className='py-1 px-4'> {item.name}</div>
+    )}
+  >
+    {(isOpen) => (
+       <button className="h-12 rounded-[10px] border-2 border-black justify-center items-center flex w-fit">
+       <div className="px-2 py-1.5 justify-center items-center gap-2 flex">
+         <SortIcon />
+         <div className="text-center text-black text-xl font-medium font-['Montserrat'] leading-tight tracking-tight">Trier</div>
+         <div className={`w-6 h-6 relative transition duration-200 ${isOpen ? "-rotate-180" : ""}`}><ArrowDownIcon /></div>
+       </div>
+     </button>
+    )}
+  </ButtonDropdown> 
 
-                    <div className='mt-20'></div>
-                        </PageBody>
+              <div className="text-center text-black text-xl font-semibold font-['Montserrat'] leading-tight tracking-tight mt-[2px]">1 - 12 de 150 Publication </div>
+            </div>
+            <TrainingCards />
+          </section>
+
+          <aside className='flex flex-col gap-6 sticky top-[116px] h-fit'>
+            <div className="text-[#183354] text-xl font-bold font-['Montserrat'] capitalize leading-relaxed">Suivez-nous</div>
+            <Line />
+
+            <div className='grid grid-cols-2 gap-1'>
+              <Link to='#' className="w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+                <div className='text-black'><FacebookIcon /></div>
+                <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">facebook</div>
+              </Link>
+              <Link to='#' className="w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+                <div className='text-black'><XIcon /></div>
+                <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">X</div>
+              </Link>
+              <Link to='#' className="w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+                <div className='text-black'><InstagramIcon /></div>
+                <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Instagram</div>
+              </Link>
+              <Link to='#' className="w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+                <div className='text-black'><YoutubeIcon /></div>
+                <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Youtube</div>
+              </Link>
+              <Link to='#' className="w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+                <div className='text-black'><LinkedinIcon /></div>
+                <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Linkedin</div>
+              </Link>
+            </div>
+
+           <NewsLetterSub2 />
+            <div className="h-[279.40px] flex-col justify-center gap-[25px] flex">
+                <div className="self-stretch h-[26.40px] text-[#183354] text-xl font-bold font-['Montserrat'] capitalize leading-relaxed">Une Question ?</div>
+                <Line />
+              <div className="w-[300px] text-black text-[15px] font-bold font-['Montserrat'] capitalize leading-normal">Besoin de plus d'informations ? N'hésitez pas à nous contacter. Cliquez sur le Bouton ci-dessous pour accéder à notre page de contact et poser vos questions</div>
+              <Button variant='primary' customClassnames='mx-auto'>
+                <div className="text-white text-xl font-bold font-['Montserrat'] leading-tight">Contactez-Nous</div>
+              </Button>
+            </div>
+          </aside>
+        </section>
+
+      </section>
+      <section className='max-w-6xl mx-auto my-10'>
+        <hr className='border-black'></hr>
+        <section className='flex items-start justify-center mb-20 mt-10'>
+
+          <div className='w-full flex items-center justify-center '>
+            <ContainerImageMarine images={images} />
+          </div>
+
+        </section>
+      </section>
     </main>
   )
 }
