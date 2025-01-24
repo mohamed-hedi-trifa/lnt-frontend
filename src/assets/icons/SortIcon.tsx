@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function SortIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-<rect width="24" height="24" fill="url(#pattern0_3424_11976)"/>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+<rect width="24" height="24" fill="none"/>
 <defs>
 <pattern id="pattern0_3424_11976" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlinkHref="#image0_3424_11976" transform="scale(0.00195312)"/>

@@ -36,7 +36,7 @@ toast.success(`${email} subscribed to news letter successfully !`,  {
       });
   }
   return (
-    <form onSubmit={subscribe} className="w-[300px] h-[412px] px-[35px] py-7 bg-gradient-to-r from-[#51adc6] to-[#006e9f] rounded-xl shadow-xl justify-center items-center gap-2.5 inline-flex">
+    <form onSubmit={subscribe} className="w-full sm:w-[300px] h-[412px] px-[35px] py-7 bg-gradient-to-r from-[#51adc6] to-[#006e9f] rounded-xl shadow-xl justify-center items-center gap-2.5 inline-flex">
          
               <div className="w-[259.95px] flex-col justify-start items-center gap-[25px] inline-flex">
                 <div className="flex-col justify-start items-center gap-px flex">

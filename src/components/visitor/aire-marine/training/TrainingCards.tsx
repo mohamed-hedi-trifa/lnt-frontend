@@ -133,13 +133,13 @@ export default function TrainingCards() {
   };
 
   return (
-    <section className='flex flex-col gap-8 w-full relative z-10 my-10'>
+    <section className='flex flex-col gap-8 w-full relative z-10 my-5 sm:my-10 col-span-1'>
 
-   <div className='grid sm:grid-cols-2 gap-4'>
+   <div className='grid sm:grid-cols-2 gap-4 px-4 sm:px-10'>
 {ACHIEVEMENTS.map((achievement:any)=><PostCard key={achievement.id} achievement={achievement} />)}
    </div>
 
-<div className='flex justify-center'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>
+<div className='flex justify-center px-4 sm:px-10'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>
     </section>
   )
 }
