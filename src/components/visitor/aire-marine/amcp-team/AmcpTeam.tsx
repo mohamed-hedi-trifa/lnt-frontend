@@ -4,40 +4,60 @@ import PageTitle from '@/components/atoms/titles/PageTitle'
 import PageBody from '@/components/PageBody'
 import achievementsHero from '../../../../assets/images/training.jpeg'
 import AMCPSidebar from '@/components/layout/AMCPSidebar'
-import SectionTitle from '@/components/atoms/titles/SectionTitle'
 import PageParagraph from '@/components/atoms/PageParagraph'
 import ContainerImageMarine from '../CotainerImageMarine'
-import ButtonDropdown from '@/components/ButtonDropdown'
-import DateRangeSelector from '../../who-are-we/our-achievements/DateRangeSelector'
-import ClockIcon from '@/assets/icons/ClockIcon'
-import { ChevronDownIcon } from '@heroicons/react/24/outline'
-import ColorPaletteIcon from '@/assets/icons/ColorPaletteIcon'
+import fatmaB from "../../../../assets/images/FatmaB.png"
+import habibK from "../../../../assets/images/HabibK.png"
+import hakimS from "../../../../assets/images/HakimS.png"
+import jamilK from "../../../../assets/images/JamilK.png"
+import karimB from "../../../../assets/images/KarimB.png"
+import najahH from "../../../../assets/images/NajahH.png"
+import ahmedYellow from "../../../../assets/images/ahmed-yellow.png"
+import TeamCard from '../../TeamCard'
 
-const CATEGORIES = [
-  {
-      id:1,
-      name: "All themes"
-  },
-  {
-      id:2,
-      name: "Conservation Marine"
-  },
-  {
-      id:3,
-      name: "Tourisme Responsable"
-  },
-  {
-      id:4,
-      name: "Peche Durable"
-  },
-  {
-      id:5,
-      name: "Ecologie et Environmenet"
-  },
-  {
-      id:6,
-      name: "Education et Formation"
-  }
+const TEAM = [
+    {
+        name: "Ahmed SOUISSI",
+        position: "Président ",
+        job: "“Administrateur de la sécuritésociale”",
+        img: ahmedYellow
+    },
+    {
+        name: "Kareem BEN CHEIKHA",
+        position: "Vice-président",
+        job: "“Artiste plasticien”",
+        img: karimB
+    },
+    {
+        name: "Jamil KHCHAREM",
+        position: "Trésorier",
+        job: "“Administrateur postal”",
+        img: jamilK
+    },
+    {
+        name: "Hakim SOUISSI",
+        position: "Trésorier adjoint",
+        job: "“Chauffeur de taxi”",
+        img: hakimS
+    },
+    {
+        name: "Habib KHCHAREM",
+        position: "Secrétaire général",
+        job: "“Enseignant”",
+        img: habibK
+    },
+    {
+        name: "Fatma BEN CHEIKHA",
+        position: "Secrétaire générale adjointe",
+        job: "“Professeure de jeunesse”",
+        img: fatmaB
+    },
+    {
+        name: "Najah HDIDAR ",
+        position: "Membre chargé du secteur de la pêche traditionnelle",
+        job: "“pêcheur”",
+        img: najahH
+    },
 ]
 
 const images = [
@@ -54,33 +74,38 @@ const images = [
 ]
 
 export default function AmcpTeam() {
-  return (
-    <main>
-        <HeroSection title="Les Gardiens de Nos Écosystèmes Marins" subTitle="Découvrez l’équipe dédiée à la protection et à la gestion durable de l’Aire Marine et Côtière Protégée de Kerkennah" imgSrc={achievementsHero} />
-                    <PageTitle
-                        title="L’équipe"
-                        width="w-[160px]" />
-                        <PageBody>
-                        <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
-                        <AMCPSidebar />
-                        <section className='w-fit text-justify text-[20px] sm:text-[22px] flex flex-col gap-8'>
-                            <PageParagraph>Derrière chaque initiative de l’Aire Marine et Côtière Protégée de Kerkennah se trouve une équipe passionnée, unie par un engagement commun : préserver les trésors écologiques de l’archipel et soutenir les communautés locales qui en dépendent. Ce collectif rassemble des experts dans divers domaines — biologie marine, gestion environnementale, éducation et sensibilisation — ainsi que des bénévoles animés par la volonté de faire une différence.</PageParagraph>
-                            <PageParagraph>Leur travail ne se limite pas à la recherche scientifique : ils collaborent étroitement avec les pêcheurs, les associations locales et les institutions nationales et internationales pour créer un modèle de gestion durable. Ensemble, ils relèvent des défis tels que la protection des espèces menacées, la lutte contre la pêche illégale et l’éducation des générations futures.</PageParagraph>
-                        </section>
-                    </section>
-                       
-
-                    <hr className='my-6 border-[2px] text-custom-gray' />
-                    <section className='flex items-start justify-center '>
-
-                        <div className='w-full flex items-center justify-center '>
-                            <ContainerImageMarine images={images} />
-                        </div>
+    return (
+        <main>
+            <HeroSection title="Les Gardiens de Nos Écosystèmes Marins" subTitle="Découvrez l’équipe dédiée à la protection et à la gestion durable de l’Aire Marine et Côtière Protégée de Kerkennah" imgSrc={achievementsHero} />
+            <PageTitle
+                title="L’équipe"
+            />
+            <PageBody>
+                <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
+                    <AMCPSidebar />
+                    <section className='w-fit flex flex-col gap-8 mt-5 sm:mt-0'>
+                        <PageParagraph>Derrière chaque initiative de l’Aire Marine et Côtière Protégée de Kerkennah se trouve une équipe passionnée, unie par un engagement commun : préserver les trésors écologiques de l’archipel et soutenir les communautés locales qui en dépendent. Ce collectif rassemble des experts dans divers domaines — biologie marine, gestion environnementale, éducation et sensibilisation — ainsi que des bénévoles animés par la volonté de faire une différence.</PageParagraph>
+                        <PageParagraph>Leur travail ne se limite pas à la recherche scientifique : ils collaborent étroitement avec les pêcheurs, les associations locales et les institutions nationales et internationales pour créer un modèle de gestion durable. Ensemble, ils relèvent des défis tels que la protection des espèces menacées, la lutte contre la pêche illégale et l’éducation des générations futures.</PageParagraph>
+                        <div className='grid grid-cols-1 sm:grid-cols-3 gap-6'>
+                                {TEAM.map((member) =>
+                                    <TeamCard member={member} />
+                                )}
+                            </div>
 
                     </section>
+                </section>
 
-                    <div className='mt-20'></div>
-                        </PageBody>
-    </main>
-  )
+                <hr className='my-6 border-[2px] text-custom-gray' />
+                <section className='flex items-start justify-center '>
+
+                    <div className='w-full flex items-center justify-center '>
+                        <ContainerImageMarine images={images} />
+                    </div>
+
+                </section>
+
+                <div className='mt-20'></div>
+            </PageBody>
+        </main>
+    )
 }
