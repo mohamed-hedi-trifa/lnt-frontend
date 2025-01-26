@@ -1,6 +1,5 @@
 import { Link } from 'gatsby';
 import React from 'react';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
 function formatDate(date: Date) {
   const options: Intl.DateTimeFormatOptions = { 
@@ -11,11 +10,11 @@ function formatDate(date: Date) {
   return new Date(date).toLocaleDateString("en", options);
 }
 
-export default function PostCard({ post }:{post:any}) {
+export default function TrainingCard({ post }:{post:any}) {
     const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
     
     return (
-        <Link to={`/blog/${post.slug}?lang=${lang}`} key={post.id} className='bg-white shadow-[0px_4px_4px_0px_#00000040] p-4 flex flex-col gap-4 rounded-xl hover:shadow-lg transition duration-300'>
+        <Link to={`/protected-air-marine-coastal-areas/training/${post.slug}?lang=${lang}`} key={post.id} className='bg-white shadow-[0px_4px_4px_0px_#00000040] p-4 flex flex-col gap-4 rounded-xl hover:shadow-lg transition duration-300'>
             {post?.image && <img src={`${process.env.GATSBY_API_URL}${post.image}`} alt={post.title_en || post.title_fr} className='w-full h-36 object-cover rounded-md' />}
             
             <div className='flex gap-4'>

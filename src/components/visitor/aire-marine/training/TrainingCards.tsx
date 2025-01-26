@@ -1,145 +1,56 @@
-import React, { useState } from 'react'
-import ButtonDropdown from '../../../ButtonDropdown'
-import { ChevronDownIcon } from '@heroicons/react/24/outline'
-import achievementsHero from "../../../../assets/images/achievements-hero.jpg";
+import React, { useEffect, useState } from 'react'
 import Pagination from '../../Pagination'
-import ClockIcon from '../../../../assets/icons/ClockIcon'
-import ColorPaletteIcon from '../../../../assets/icons/ColorPaletteIcon'
-import DateRangeSelector from '../../who-are-we/our-achievements/DateRangeSelector';
-import PostCard from '../../posts/PostCard';
-
-const CATEGORIES = [
-    {
-        id:1,
-        name: "All themes"
-    },
-    {
-        id:2,
-        name: "Conservation Marine"
-    },
-    {
-        id:3,
-        name: "Tourisme Responsable"
-    },
-    {
-        id:4,
-        name: "Peche Durable"
-    },
-    {
-        id:5,
-        name: "Ecologie et Environmenet"
-    },
-    {
-        id:6,
-        name: "Education et Formation"
-    }
-]
-
-const ACHIEVEMENTS = [
-  {
-    id:1,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-  {
-    id:2,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-  {
-    id:3,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-  {
-    id:4,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-  {
-    id:5,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-  {
-    id:6,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-  {
-    id:7,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-  {
-    id:8,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-  {
-    id:9,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-  {
-    id:10,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-  {
-    id:11,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-  {
-    id:12,
-    categories: ["Art et Patrimoine", "Formation"],
-    title:"Kerkennah: Une Jeunesse Qui Reve et Cree le Changement",
-    img: achievementsHero,
-    date: new Date()
-  },
-]
+import axios from "axios"
+import TrainingCard from './TrainingCard';
 
 export default function TrainingCards() {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const totalPages: number = 5;
+      const [searchQuery, setSearchQuery] = useState('');
+      const [currentPage, setCurrentPage] = useState(1);
+      const [totalPages, setTotalPages] = useState(1);
+      const [limit, setLimit] = useState(10); // Set the limit of posts per page
+  
+      const handleSearchChange = (e: any) => {
+          setSearchQuery(e.target.value);
+          setCurrentPage(1); // Reset to first page on search
+      };
+  
+      const handlePageChange = (newPage: number) => {
+          if (newPage > 0 && newPage <= totalPages) {
+              setCurrentPage(newPage);
+          }
+      };
+  const [loading, setLoading] = useState(true);
+  const [itemsList, setItemsList] = useState([]);
 
-  const handlePageChange = (page: number): void => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+  function getPosts(query: any, page = currentPage) {
+      setLoading(true);
+      axios.get(`/api/get-active-posts/${limit ? limit : ""}`, {
+          params: { query, page }
+      }).then(res => {
+          setItemsList(res.data.data);
+          console.log(res.data.data)
+          setTotalPages(res.data.last_page); // Get total pages from response
+          setLoading(false);
+      }).catch(err => {
+          // Swal.fire('Error', err?.response?.data?.message, "error");
+          setLoading(false);
+      });
+  }
+
+  useEffect(() => {
+      getPosts(searchQuery, currentPage);
+  }, [searchQuery, currentPage]);
+
+  if(loading) return "Loading..."
 
   return (
     <section className='flex flex-col gap-8 w-full relative z-10 my-5 sm:my-10 col-span-1'>
 
-   <div className='grid sm:grid-cols-2 gap-4 px-4 sm:px-10'>
-{ACHIEVEMENTS.map((achievement:any)=><PostCard key={achievement.id} achievement={achievement} />)}
+   <div className='grid sm:grid-cols-2 gap-4 px-4 sm:px-0'>
+{itemsList.map((achievement:any)=><TrainingCard key={achievement.id} post={achievement} />)}
    </div>
 
-<div className='flex justify-center px-4 sm:px-10'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>
+<div className='flex justify-center px-4 sm:px-0'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>
     </section>
   )
 }

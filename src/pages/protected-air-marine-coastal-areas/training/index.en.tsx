@@ -1,3 +1,4 @@
+
 import Training from '@/components/visitor/aire-marine/training/Training'
 import { AMCPSidebarProvider } from '@/contexts/AMCPSidebarContext'
 import React from 'react'

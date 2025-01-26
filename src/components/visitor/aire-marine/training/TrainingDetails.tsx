@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./BlogDetail.css";
-import Title from "../atoms/titles/Title";
 import { navigate } from "gatsby";
+import Title from "@/components/atoms/titles/Title";
 
 // Helper function to parse custom markdown-like syntax
 const parseContent = (content: any) => {
@@ -26,7 +25,7 @@ function formatDate(dateString: string) {
   return date.toLocaleDateString("en-US", options);
 }
 
-export default function BlogDetail({ location, params }: { location: any; params: any }) {
+export default function TrainingDetails({ location, params }: { location: any; params: any }) {
   const [blogPost, setBlogPost] = useState<any>(null);
   const [slug, setSlug] = useState<string | null>(null);
   const [language, setLanguage] = useState<string>("en");
