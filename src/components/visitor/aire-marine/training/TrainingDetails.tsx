@@ -1,31 +1,50 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { navigate } from "gatsby";
+import { Link, navigate } from "gatsby";
 import Title from "@/components/atoms/titles/Title";
+import Breadcrumbs from "@/components/Breadcumbs";
+import Line from "@/components/atoms/Line";
+import FacebookIcon from "@/assets/icons/FacebookIcon";
+import XIcon from "@/assets/icons/XIcon";
+import InstagramIcon from "@/assets/icons/InstagramIcon";
+import YoutubeIcon from "@/assets/icons/YoutubeIcon";
+import LinkedinIcon from "@/assets/icons/LinkedinIcon";
+import NewsLetterSub2 from "@/components/NewsLetterSub2";
+import Button from "@/components/atoms/Button";
+import PageParagraph from "@/components/atoms/PageParagraph";
+import parseContent from "@/lib/parseContent";
+import formatDate from "@/lib/formatDate";
+import ImageGallery from "../../ImageGallery";
 
-// Helper function to parse custom markdown-like syntax
-const parseContent = (content: any) => {
-  if (!content) return "";
+const CATEGORIES = [
+  {
+    name: "Art et Patrimoine"
+  },
+  {
+    name: "Art et Patrimoine"
+  },
+  {
+    name: "Art et Patrimoine"
+  },
+]
 
-  // Replace **bold** with <strong>bold</strong>
-  const boldParsed = content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+const Category = ({ category }: { category: any }) => <div className="py-[6px] px-3 bg-[#0270A0] text-white font-medium text-sm leading-[20px] rounded-md">{category.name}</div>;
 
-  // Detect URLs and convert them to clickable links
-  const linkParsed = boldParsed.replace(
-    /(https?:\/\/[^\s]+)/g,
-    '<a href="$1" class="markdown-link" target="_blank" rel="noopener noreferrer">$1</a>'
-  );
-
-  return linkParsed;
-};
-
-function formatDate(dateString: string) {
-  const date = new Date(dateString);
-  const options: any = { year: "numeric", month: "long", day: "numeric" };
-  return date.toLocaleDateString("en-US", options);
-}
+const Article = ({ article, lang }: { article: any, lang: string }) => <article className="flex flex-col gap-[15px] py-[25px] w-full">
+  <div className="w-full lg:w-[330px] lg:h-[226px] overflow-hidden">
+    <img src={`${process.env.GATSBY_API_URL}${article.image}`} className="rounded-xl shadow-[0px_4px_4px_0px_#00000040] object-cover" />
+  </div>
+  <Title
+    size="text-[20px] font-semibold leading-[32px] capitalize"
+    customClassName=""
+  >
+    {article[`title_${lang}`]}
+  </Title>
+  <div className="text-sm text-gray-500">{formatDate(article.created_at)}</div>
+</article>
 
 export default function TrainingDetails({ location, params }: { location: any; params: any }) {
+  const [media, setMedia] = useState<"photos" | "videos">("photos");
   const [blogPost, setBlogPost] = useState<any>(null);
   const [slug, setSlug] = useState<string | null>(null);
   const [language, setLanguage] = useState<string>("en");
@@ -62,95 +81,177 @@ export default function TrainingDetails({ location, params }: { location: any; p
     }
   }, [slug, location.search]);
 
-  const handleLanguageChange = (selectedLanguage: string) => {
-    setLanguage(selectedLanguage);
-  };
+  const [posts, setPosts] = useState<any[]>();
+
+  function getPosts() {
+
+    axios.get(`/api/get-active-posts`).then(res => {
+      setPosts(res.data.data);
+    }).catch(err => {
+      // Swal.fire('Error', err?.response?.data?.message, "error");
+    });
+  }
+  useEffect(() => {
+    getPosts();
+  }, [])
+
+  const RightSidebar = () => <aside className={`flex flex-col gap-6 sm:sticky top-[116px] h-fit w-full lg:w-[330px] shrink-0`}>
+    <div className="text-[#183354] text-xl font-bold font-['Montserrat'] capitalize leading-relaxed">Suivez-nous</div>
+    <Line />
+
+    <div className='grid grid-cols-2 gap-1'>
+      <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+        <div className='text-black'><FacebookIcon /></div>
+        <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">facebook</div>
+      </Link>
+      <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+        <div className='text-black'><XIcon /></div>
+        <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">X</div>
+      </Link>
+      <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+        <div className='text-black'><InstagramIcon /></div>
+        <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Instagram</div>
+      </Link>
+      <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+        <div className='text-black'><YoutubeIcon /></div>
+        <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Youtube</div>
+      </Link>
+      <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+        <div className='text-black'><LinkedinIcon /></div>
+        <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Linkedin</div>
+      </Link>
+    </div>
+
+    <NewsLetterSub2 />
+    <div className="h-[279.40px] flex-col justify-center gap-[25px] flex">
+      <div className="self-stretch h-[26.40px] text-[#183354] text-xl font-bold font-['Montserrat'] capitalize leading-relaxed">Une Question ?</div>
+      <div><Line /></div>
+      <div className="lg:w-[300px] text-black text-lg lg:text-[15px] font-bold font-['Montserrat'] capitalize leading-normal">Besoin de plus d'informations ? <span className="block lg:inline">N'hésitez pas à nous contacter.</span> Cliquez sur le Bouton ci-dessous pour accéder à notre page de contact et poser vos questions</div>
+      <Button variant='primary' customClassnames='mx-auto'>
+        <div className="text-white text-xl font-bold font-['Montserrat'] leading-tight">Contactez-Nous</div>
+      </Button>
+    </div>
+
+    <div>
+      <div className="flex flex-col gap-[25px]">
+        <div className="self-stretch h-[26.40px] text-[#183354] text-xl font-bold font-['Montserrat'] capitalize leading-relaxed">Initiatives similaires</div>
+        <Line />
+      </div>
+      <div className="divide-y divide-black divide w-full">
+        {
+          posts?.map((post) => <Article article={post} lang={language} />)
+        }
+      </div>
+    </div>
+
+  </aside>;
 
   if (!blogPost) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="w-full">
-      <div className="w-full px-8 py-10 pt-[136px] max-w-3xl mx-auto" dir={language === "ar" ? "rtl" : "ltr"}>
-        {blogPost.image && (
-          <img
-            src={`${process.env.GATSBY_API_URL}${blogPost.image}`}
-            alt={blogPost.title}
-            className="mb-8"
-          />
-        )}
-        <div className="flex justify-between items-start border-b pb-4">
-          <div className="flex flex-col gap-1">
-            <Title
-              size="text-3xl scr800:text-4xl"
-              customClassName="font-poppins !text-teal-500 capitalize transition-all duration-1000"
-            >
-              {blogPost[`title_${language}`]}
-            </Title>
-            <p className="text-sm text-gray-500">{formatDate(blogPost.created_at)}</p>
-          </div>
-          <div className="flex gap-2 items-center justify-end">
-            <span className="semi-bold font-semibold">
-              {language === "ar" ? "اللغة: " : "Language: "}
-            </span>
-            {blogPost.title_en && (
-              <button
-                className="bg-gray-100 p-1"
-                onClick={() => handleLanguageChange("en")}
-              >
-                EN
-              </button>
-            )}
-            {blogPost.title_fr && (
-              <button
-                className="bg-gray-100 p-1"
-                onClick={() => handleLanguageChange("fr")}
-              >
-                FR
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className="mt-4 flex flex-col">
-          {blogPost?.content_items
-            ?.sort((a: any, b: any) => a.order - b.order)
-            .map((item: any) => (
-              <div key={item.id}>
-                {item.language === language ? (
-                  item.type === "title" ? (
-                    <Title customClassName="mb-2">{item.content}</Title>
-                  ) : item.type === "text" ? (
-                    // Apply the markdown parser to the text content
-                    <div
-                      className="mb-4"
-                      dangerouslySetInnerHTML={{
-                        __html: parseContent(item.content),
-                      }}
-                    />
-                  ) : item.type === "image" ? (
-                    <div className="mb-2">
-                      <img
-                        src={`${process.env.GATSBY_API_URL}${item.file_path}`}
-                        alt=""
-                      />
-                    </div>
-                  ) : item.type === "pdf" ? (
-                    <div>
-                      <a
-                        download
-                        href={`${process.env.GATSBY_API_URL}${item.file_path}`}
-                      >
-                        Download Pdf
-                      </a>
-                    </div>
-                  ) : null
-                ) : null}
-              </div>
-            ))}
-        </div>
+    <div className="w-full pt-[56px] lg:pt-[106px] px-[17.5px] lg:px-0">
+      <div className="max-w-[1223px] mx-auto mt-3 lg:mt-6">
+        <Breadcrumbs />
       </div>
+      <section className='max-w-[1223px] mx-auto mt-[40px] lg:mt-[80px]'>
+
+        <section className="flex flex-col sm:flex-row gap-[55px]">
+
+          <div className="w-full flex-1 flex flex-col gap-8" dir={language === "ar" ? "rtl" : "ltr"}>
+            <div>
+              <Title
+                size="text-[30px] lg:text-[36px] font-semibold leading-[44px] capitalize"
+                customClassName=""
+              >
+                {blogPost[`title_${language}`]}
+              </Title>
+              <div className="flex flex-wrap gap-[8px] mt-4">
+                {CATEGORIES.map((category: any) => <Category category={category} />)}
+              </div>
+              <div className="mt-5">
+                <p className="text-sm text-gray-500">{formatDate(blogPost.created_at)}</p>
+              </div>
+            </div>
+            <div>
+              {blogPost.image && (
+                <img
+                  src={`${process.env.GATSBY_API_URL}${blogPost.image}`}
+                  alt={blogPost.title}
+                  className="rounded-xl"
+                />
+              )}
+            </div>
+
+            <div className="flex flex-col">
+              {blogPost?.content_items
+                ?.sort((a: any, b: any) => a.order - b.order)
+                .map((item: any) => (
+                  <div key={item.id}>
+                    {item.language === language ? (
+                      item.type === "title" ? (
+                        <Title customClassName="mb-2">{item.content}</Title>
+                      ) : item.type === "text" ? (
+                        // Apply the markdown parser to the text content
+                        <PageParagraph>
+                          <div
+                            className="mb-4"
+                            dangerouslySetInnerHTML={{
+                              __html: parseContent(item.content),
+                            }}
+                          />
+                        </PageParagraph>
+                      ) : item.type === "image" ? (
+                        <div className="mb-2">
+                          <img
+                            src={`${process.env.GATSBY_API_URL}${item.file_path}`}
+                            alt=""
+                          />
+                        </div>
+                      ) : item.type === "pdf" ? (
+                        <div>
+                          <a
+                            download
+                            href={`${process.env.GATSBY_API_URL}${item.file_path}`}
+                          >
+                            Download Pdf
+                          </a>
+                        </div>
+                      ) : null
+                    ) : null}
+                  </div>
+                ))}
+            </div>
+            <hr className="border-black mx-7 mt-[32px]" />
+            <div className="flex items-center flex-col gap-[30px]">
+              <Title customClassName="!font-bold hidden lg:block" size="!text-[32px]">
+                <span className="text-primary">Souvenirs</span> en Photos et Vidéos
+              </Title>
+              <Title customClassName="!font-bold block lg:hidden" size="!text-[28px]">
+                <div className="flex flex-col">
+               <div className="flex gap-2"><span className="text-primary">Souvenirs</span> en Photos et</div> 
+                 <div className="flex justify-center">Vidéos</div>
+                </div>
+              </Title>
+              <div className="flex text-[24px] font-bold">
+                <div className={`rounded-l-[12px] py-4 px-10 leading-[20px] cursor-pointer transition-all  gradient-transition ${media == "photos" ? "gradient-active text-white" : " "}`} onClick={() => setMedia("photos")}>Photos</div>
+                <div className={`rounded-r-[12px] bg-[#EBEBEB] py-4 px-10 leading-[20px] transition-all  cursor-pointer gradient-transition ${media == "videos" ? "gradient-active text-white" : ""}`} onClick={() => setMedia("videos")}>Vidéos</div>
+              </div>
+            </div>
+
+            {media == "photos" ? <div className="">
+              <ImageGallery />
+            </div> :
+              <div>
+                video
+              </div>}
+          </div>
+
+          <RightSidebar />
+        </section>
+      </section>
+
     </div>
   );
 }
