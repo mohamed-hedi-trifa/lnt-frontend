@@ -1,7 +1,6 @@
 import { Link } from "gatsby";
 import React, { useEffect, useState } from "react";
-import Dropdown from "../Dropdown";
-import { Bars3Icon, ChevronDownIcon, GlobeAltIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { GlobeAltIcon} from "@heroicons/react/24/outline";
 import LangLink from "../LangLink";
 import NavDropdown from "../NavDropdown";
 import MobileNavbar from "./MobileNavbar";
@@ -135,7 +134,6 @@ function Navbar({ location }: { location: any }) {
                             to={item.path || ""}
                             className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
                             style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
-                            // The nav-dropdown-item class is used to round the corners of the first and last items of the dropdown
                           >
                             {item.label}
                           </LangLink>
@@ -153,7 +151,7 @@ function Navbar({ location }: { location: any }) {
                     )}
                   >
                     {(isOpen) => (
-                      <div className={`relative flex items-center gap-2 font-bold text-white text-[10px] lg:text-sm xl:text-base`}>
+                      <Link to={item.path||"#"} className={`relative flex items-center gap-2 font-bold text-white text-[10px] lg:text-sm xl:text-base`}>
                         <span style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}>{item.label}</span>
                         <div className="mt-[0.5] h-0 bg-black flex items-center">
                           <ArrowDown className={`size-3.5 duration-[0.4s] ${isOpen ? "-rotate-180" : ""}`} />
@@ -163,7 +161,7 @@ function Navbar({ location }: { location: any }) {
                             item.underlineClassName || "w-[100px]"
                           } absolute bottom-0 h-[3px] translate-y-1.5 bg-gradient-to-r from-[#3344DC] to-[#50ACC6] opacity-0 group-hover/dropdown:opacity-100 transition-all duration-500`}
                         ></div>
-                      </div>
+                      </Link>
                     )}
                   </NavDropdown>
                 </li>
@@ -256,6 +254,7 @@ export const items = [
   },
   {
     label: "Notre Festival",
+    path:"/our-festival",
     underlineClassName: "w-[100px]",
     items: [
       {

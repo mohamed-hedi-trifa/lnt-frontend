@@ -7,7 +7,7 @@ export default function Footer() {
   const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
 
   return (
-    <footer className="px-5 sm:px-3 py-10 lg:py-[65px] sm:mt-0 bg-gradient-to-r from-[#51ADC6] to-[#006E9F]">
+    <footer className="px-5 sm:px-3 py-10 lg:py-[65px] sm:mt-0 bg-gradient-to-r from-[#51ADC6] to-[#006E9F] relative z-50">
       <div className="max-w-7xl mx-auto text-white  sm:mt-0">
         {/* <section className="divide-y sm:divide-y-0 grid gap-8 sm:grid-cols-2 lg:grid-cols-4"> */}
         <section className="divide-y sm:divide-y-0 grid gap-8 sm:justify-around lg:justify-normal sm:grid-cols-[minmax(auto,500px),auto] lg:grid-cols-[minmax(250px,1fr)_minmax(150px,auto)_minmax(150px,auto)_minmax(250px,1fr)]">
