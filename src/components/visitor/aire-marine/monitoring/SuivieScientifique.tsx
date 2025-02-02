@@ -1,7 +1,7 @@
 import React from 'react'
 import PageTitle from '../../../atoms/titles/PageTitle'
 import achievementsHero from "../../../../assets/images/achievements-hero.jpg";
-import ContainerImageMarine from '../CotainerImageMarine';
+import ContainerImageMarine from '../ContainerImageMarine';
 import AMCPSidebar from '../../../layout/AMCPSidebar'
 import Title from '../../../atoms/titles/Title';
 

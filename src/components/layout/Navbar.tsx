@@ -259,11 +259,11 @@ export const items = [
     items: [
       {
         label: "Prochains Festivals",
-        path: "/next-festivals",
+        path: "/our-festival/upcoming",
       },
       {
         label: "Éditions Précédentes",
-        path: "/previous-editions",
+        path: "/our-festival/past",
       },
     ],
   },

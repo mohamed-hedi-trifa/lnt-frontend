@@ -4,8 +4,7 @@ import festivalHero from '@/assets/images/festival-hero.jpeg'
 import PageParagraph from '@/components/atoms/PageParagraph'
 import works from "@/assets/images/works.png";
 import Title from '@/components/atoms/titles/Title';
-import ImageHistoire from '@/components/visitor/who-are-we/our-team/ImageHistoire';
-import ContainerImageMarine from '@/components/visitor/aire-marine/CotainerImageMarine';
+import ContainerImageMarine from '@/components/visitor/aire-marine/ContainerImageMarine';
 
 const images = [
     {

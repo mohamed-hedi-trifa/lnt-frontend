@@ -5,7 +5,7 @@ import PageBody from '@/components/PageBody'
 import achievementsHero from '../../../../assets/images/training.jpeg'
 import AMCPSidebar from '@/components/layout/AMCPSidebar'
 import PageParagraph from '@/components/atoms/PageParagraph'
-import ContainerImageMarine from '../CotainerImageMarine'
+import ContainerImageMarine from '../ContainerImageMarine'
 import fatmaB from "../../../../assets/images/FatmaB.png"
 import habibK from "../../../../assets/images/HabibK.png"
 import hakimS from "../../../../assets/images/HakimS.png"

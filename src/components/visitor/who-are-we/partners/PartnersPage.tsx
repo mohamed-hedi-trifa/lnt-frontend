@@ -29,7 +29,7 @@ export default function PartnersPage() {
     return (
         <div className=''>
             <HeroSection imgSrc={partnersHero} title="Des Alliances pour un Futur Meilleur" subTitle="Nos partenaires locaux et internationaux sont au cœur de nos succès : ensemble, nous façonnons un avenir durable" />
-            <PageTitle title='Partners' width='w-[160px]' />
+            <PageTitle title='Partners' />
             <section className='max-w-6xl mx-auto flex flex-col gap-12'>
                     <section className='w-full flex relative gap-8 py-10'>
                     <Sidebar />

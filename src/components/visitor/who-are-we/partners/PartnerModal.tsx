@@ -10,14 +10,12 @@ import { X } from '@mui/icons-material';
 
 export default function PartnerModal({ toview, show, hide }: { toview: any, show: boolean, hide: () => void }) {
     const [partner, setPartner] = useState<any>({
-        logo: '',
+        image: '',
         description: '',
-        links: {
             website:"",
             facebook:"",
             x:"",
             linkedin:""
-        }
     });
 
     const [loading, setLoading] = useState(true);
@@ -25,9 +23,12 @@ export default function PartnerModal({ toview, show, hide }: { toview: any, show
     useEffect(() => {
         if (toview) {
             setPartner({
-                logo: toview.logo,
+                image: toview.image,
                 description: toview.description,
-                links: toview.links,
+                websiteLink: toview.websiteLink,
+                facebookLink: toview.facebookLink,
+                xLink: toview.xLink,
+                instagramLink: toview.instagramLink,
             });
             setLoading(false);
         }
@@ -45,12 +46,12 @@ export default function PartnerModal({ toview, show, hide }: { toview: any, show
                 <div className='flex flex-col gap-[30px] w-full'>
                     <div className='flex justify-center'> <img
                         className="h-[150px] object-contain"
-                        src={`/images/partener_images/${partner.logo}`}
+                        src={`${process.env.GATSBY_API_URL}storage/${partner.image}`}
                         alt={`Partner`}
                     /></div>
                    <div>{partner.description}</div>
-                   <div className='flex gap-2 items-center'><Title>Site Web:</Title> <Link to={partner.links.website} >{partner.links.website}</Link></div>
-                   <div className='flex gap-4 items-center'> <Link to={partner.links.facebook} className='text-[48px] flex items-center'><FacebookOutlined fontSize='inherit' className='text-blue-500' /></Link> <Link className='bg-black h-[40px] w-[40px] flex justify-center items-center rounded-full' to={partner.links.x}><X fontSize='medium' className='text-white' /></Link> <Link to={partner.links.linkedin} className='flex items-center text-[48px]'><LinkedIn className='text-[#007EBB]' fontSize='inherit' /></Link> </div>
+                   <div className='flex gap-2 items-center'><Title>Site Web:</Title> <Link to={partner.websiteLink} >{partner.websiteLink}</Link></div>
+                   <div className='flex gap-4 items-center'> <Link to={partner.facebookLink} className='text-[48px] flex items-center'><FacebookOutlined fontSize='inherit' className='text-blue-500' /></Link> <Link className='bg-black h-[40px] w-[40px] flex justify-center items-center rounded-full' to={partner.xLink}><X fontSize='medium' className='text-white' /></Link> <Link to={partner.linkedinLink} className='flex items-center text-[48px]'><LinkedIn className='text-[#007EBB]' fontSize='inherit' /></Link> </div>
                 </div>
             </div>
         </Modal>

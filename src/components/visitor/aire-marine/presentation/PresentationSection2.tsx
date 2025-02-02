@@ -1,7 +1,7 @@
 import React from 'react'
 import PageTitle from '../../../atoms/titles/PageTitle'
 import Sidebar from '../../../layout/Sidebar'
-import ContainerImageMarine from '../CotainerImageMarine'
+import ContainerImageMarine from '../ContainerImageMarine'
 import TitleParagraphPrersentation from '../présentation-section2/TitleParagraphPresentation'
 import { title } from 'process'
 import SectionTitle from '../../../atoms/titles/SectionTitle'

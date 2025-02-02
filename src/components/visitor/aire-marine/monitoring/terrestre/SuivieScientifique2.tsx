@@ -3,7 +3,7 @@ import achievementsHero from "@/assets/images/achievements-hero.jpg";
 import PageTitle from "@/components/atoms/titles/PageTitle";
 import SectionTitle from "@/components/atoms/titles/SectionTitle";
 import AMCPSidebar from "@/components/layout/AMCPSidebar";
-import ContainerImageMarine from "@/components/visitor/aire-marine/CotainerImageMarine";
+import ContainerImageMarine from "@/components/visitor/aire-marine/ContainerImageMarine";
 import ExplorezSuiviTerrestre from "@/components/visitor/aire-marine/monitoring/terrestre/ExplorezSuiviTerrestre";
 
 export default function SuiviScientifique2() {
