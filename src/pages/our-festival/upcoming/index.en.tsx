@@ -7,6 +7,7 @@ import HeroSection from '@/components/visitor/HeroSection';
 import PageTitle from '@/components/atoms/titles/PageTitle';
 import Title from '@/components/atoms/titles/Title';
 import Partners from '@/components/visitor/who-are-we/partners/Partners';
+import PinnedImageSwap from '@/components/visitor/our-festival/upcoming/SwappingImagesOnScroll';
 
 
 const cardData = [
@@ -264,14 +265,15 @@ export default function FestivalVenir() {
                                 <p className='text-[24px] sm:text-[32px] text-[#0270A0] text-center font-semibold my-4'>Tournoi du regretté Farid Khcharem</p>
                               
 
-                              <CardIntroduction 
+                              {/* <CardIntroduction 
                                     lieu={'teKraten, Kerkennahst'}
                                     date={"Du 01 au 06 août 2024"}
                                     description={"Le Festival de la Culture Des iles Méditérraéees Revient Bietot Avec Ue ouvelle Edition Pleiene de découverte, De célébratios Et D'émotions.Chaque Année Cet Evenement emblématique Réunnit Les amoureux de la culture  de la nature et des traditions offrant un espace unique pour partager apprendre et célébrer.Alors que nous finalisons les détails du prochains festival,rester connnectés pour etre les premiers A Découvrir les programmes et les surprises qui vous attendent.Préparer vous à vivre une expérience Inoubliable au coeur de l'Archipel de Kerkennah, Ou chaque Instant Célébre l'authenticité et la beauté des iles."}
                                     titre={"Rejoigez-Nous Pour une Editio Inoubliable, Célébrat La Culture, La Nature Et Les Traditios de Kerkennah"}
-                              />  
+                              />   */}
 
-                              <hr className='border-2 my-[48px]' />                        
+                              <PinnedImageSwap />
+
                               <div className='flex justify-center flex-col items-center'>
                               <Title size='text-[36px]'><span className='text-primary'>Programme</span> du Festival</Title>
                               <div className='font-semibold'>Explorez les moments forts et les activités qui rythmeront cette édition unique du festival</div>
