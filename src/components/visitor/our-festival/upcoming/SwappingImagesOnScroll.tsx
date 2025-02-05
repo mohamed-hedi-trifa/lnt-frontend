@@ -35,7 +35,7 @@ export default function PinnedImageSwap() {
   const handleY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, trackHeight - handleHeight] // i.e. 0 → 285
+    [0, trackHeight - handleHeight]
   );
 
   return (

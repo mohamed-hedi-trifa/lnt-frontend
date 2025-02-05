@@ -11,7 +11,7 @@ interface CardProps {
     const  FestivalCardCarousel: React.FC<CardProps> = ({  titre,description,lieu,date }) => {
     return(
         <section >
-            <div className=" mx-auto mt-12  bg-white rounded-xl shadow-xl relative p-4  ">
+            <div className=" mx-auto  bg-white rounded-xl shadow-xl relative p-4  ">
                     <div className={`flex flex-col sm:flex-row `}>
                         <div className="w-full bg-cover bg-center" style={{backgroundImage:'festivales_images/img.jpg'}} >
                             <img src='/festivales_images/img.jpg' alt="Festival Image" className="rounded-lg shadow-lg w-full h-full "/>

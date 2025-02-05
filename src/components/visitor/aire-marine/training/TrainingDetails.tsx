@@ -15,6 +15,7 @@ import PageParagraph from "@/components/atoms/PageParagraph";
 import parseContent from "@/lib/parseContent";
 import formatDate from "@/lib/formatDate";
 import ImageGallery from "../../ImageGallery";
+import Media from "../../Media";
 
 const CATEGORIES = [
   {
@@ -44,7 +45,6 @@ const Article = ({ article, lang }: { article: any, lang: string }) => <article 
 </article>
 
 export default function TrainingDetails({ location, params }: { location: any; params: any }) {
-  const [media, setMedia] = useState<"photos" | "videos">("photos");
   const [blogPost, setBlogPost] = useState<any>(null);
   const [slug, setSlug] = useState<string | null>(null);
   const [language, setLanguage] = useState<string>("en");
@@ -224,28 +224,16 @@ export default function TrainingDetails({ location, params }: { location: any; p
                 ))}
             </div>
             <hr className="border-black mx-7 mt-[32px]" />
-            <div className="flex items-center flex-col gap-[30px]">
-              <Title customClassName="!font-bold hidden lg:block" size="!text-[32px]">
-                <span className="text-primary">Souvenirs</span> en Photos et Vidéos
-              </Title>
-              <Title customClassName="!font-bold block lg:hidden" size="!text-[28px]">
-                <div className="flex flex-col">
-               <div className="flex gap-2"><span className="text-primary">Souvenirs</span> en Photos et</div> 
-                 <div className="flex justify-center">Vidéos</div>
-                </div>
-              </Title>
-              <div className="flex text-[24px] font-bold">
-                <div className={`rounded-l-[12px] py-4 px-10 leading-[20px] cursor-pointer transition-all  gradient-transition ${media == "photos" ? "gradient-active text-white" : " "}`} onClick={() => setMedia("photos")}>Photos</div>
-                <div className={`rounded-r-[12px] bg-[#EBEBEB] py-4 px-10 leading-[20px] transition-all  cursor-pointer gradient-transition ${media == "videos" ? "gradient-active text-white" : ""}`} onClick={() => setMedia("videos")}>Vidéos</div>
-              </div>
-            </div>
-
-            {media == "photos" ? <div className="">
-              <ImageGallery />
-            </div> :
-              <div>
-                video
-              </div>}
+                 <Title customClassName="!font-bold hidden lg:block" size="!text-[32px]">
+                      <span className="text-primary">Souvenirs</span> en Photos et Vidéos
+                    </Title>
+                    <Title customClassName="!font-bold block lg:hidden" size="!text-[28px]">
+                      <div className="flex flex-col">
+                     <div className="flex gap-2"><span className="text-primary">Souvenirs</span> en Photos et</div> 
+                       <div className="flex justify-center">Vidéos</div>
+                      </div>
+                    </Title>
+            <Media />
           </div>
 
           <RightSidebar />
