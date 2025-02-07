@@ -44,27 +44,27 @@ interface NavItem {
   dropdown?: any;
 }
 
-// Translation object for the navbar
-const translations = {
-  en: [
-    { name: "Home", path: "/" },
-    { name: "About us", path: "/about/" },
-    { name: "Activities", path: "/activities/" },
-    { name: "Protected armarine", path: "/protected-armarine/" },
-    { name: "Festivals", path: "/festivals/" },
-    { name: "Contact", path: "/contact/" },
-    { name: "Blog", path: "/blog/" },
-  ],
-  fr: [
-    { name: "Accueil", path: "/" },
-    { name: "À propos", path: "/about/" },
-    { name: "Activities", path: "/activities/" },
-    { name: "Protégé armarine", path: "/protected-armarine/" },
-    { name: "Festivals", path: "/festivals/" },
-    { name: "Contact", path: "/contact/" },
-    { name: "Blog", path: "/blog/" },
-  ],
-};
+// // Translation object for the navbar
+// const translations = {
+//   en: [
+//     { name: "Home", path: "/" },
+//     { name: "About us", path: "/about/" },
+//     { name: "Activities", path: "/activities/" },
+//     { name: "Protected armarine", path: "/protected-armarine/" },
+//     { name: "Festivals", path: "/festivals/" },
+//     { name: "Contact", path: "/contact/" },
+//     { name: "Blog", path: "/blog/" },
+//   ],
+//   fr: [
+//     { name: "Accueil", path: "/" },
+//     { name: "À propos", path: "/about/" },
+//     { name: "Activities", path: "/activities/" },
+//     { name: "Protégé armarine", path: "/protected-armarine/" },
+//     { name: "Festivals", path: "/festivals/" },
+//     { name: "Contact", path: "/contact/" },
+//     { name: "Blog", path: "/blog/" },
+//   ],
+// };
 
 function Navbar({ location }: { location: any }) {
   const [isScrolled, setIsScrolled] = useState(false);

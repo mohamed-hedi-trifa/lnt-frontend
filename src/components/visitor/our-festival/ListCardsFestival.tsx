@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import CardFestival from "./FestivalCard";
+
 import axios from "axios";
+import FestivalCard from "./FestivalCard";
 
 interface CardProps {
   cards: {
@@ -109,20 +110,12 @@ useEffect(() => {
   };
 
   return (
-    <div>
+    <div className="max-w-[1074px] mx-auto">
       <div className={`mt-12 ${gridSystem}`}>
         {itemsList.map((card, index) => (
-          <CardFestival
+          <FestivalCard
             key={index}
-            date={"date"}
-            description={card.summary_fr || card.summary_en}
-            titre={card.title_en || card.title_fr}
-            lieu={"Lieu"}
-            properties={`${properties}`}
-            buttonsTitles={`${buttonsTitles}`}
-            buttonPosition={`${buttonPosition}`}
-            imageUrl={card.image} 
-            lien={card.lien}      
+            post={card}  
 
             />
         ))}

@@ -1,12 +1,9 @@
 import React from 'react'
 
-import ContainerImageMarine from '../aire-marine/CotainerImageMarine';
-import GallerySection from '../../components/visitor/our-festival/GallerySection';
 import SearchBar from '../../SearchBar';
 import ButtonDropdown from '../../ButtonDropdown';
 import DateRangeSelector from '../who-are-we/our-achievements/DateRangeSelector';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
-import CardFestival from '../../components/visitor/our-festival/FestivalCard';
 import ListCardFestivales from './ListCardsFestival';
 import ImageFestival from '../../components/visitor/our-festival/ImageFestival';
 

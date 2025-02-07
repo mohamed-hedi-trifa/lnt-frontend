@@ -8,6 +8,7 @@ import Partners from '@/components/visitor/who-are-we/partners/Partners';
 import PinnedImageSwap from '@/components/visitor/our-festival/upcoming/SwappingImagesOnScroll';
 import ImageGallery from '@/components/visitor/ImageGallery';
 import Media from '@/components/visitor/Media';
+import PastEditionsCarousel from '@/components/visitor/our-festival/PastEditionsCarousel';
 
 
 const cardData = [
@@ -321,10 +322,10 @@ export default function FestivalVenir() {
           </div>
 
           <div className='text-center text-[18px] sm:text-[20px] font-semibold leading-[30px] mt-5 mb-10 max-w-[876px] mx-auto'>
-            <p>Plongez dans l'histoire et les moments marquants des festivales passés qui ont marqué Kerkenah </p>
+            <p>Plongez dans l'histoire et les moments marquants des festivales passés qui ont marqué Kerkenah</p>
           </div>
 
-          <CarouselCard cards={cardCarousel} />
+          <PastEditionsCarousel editions={cardCarousel} />
 
         </section>
 
