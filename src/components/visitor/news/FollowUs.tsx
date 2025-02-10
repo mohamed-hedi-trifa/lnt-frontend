@@ -1,68 +1,40 @@
 import React from 'react'
 import HeaderSection from './HeaderSection'
-
+import { Link } from 'gatsby'
+import NewsLetterSub2 from '@/components/NewsLetterSub2';
 export default function FollowUs() {
   return (
-    <div className=''>
+    <div className='sm:w-[300px] float-end'>
       <HeaderSection headerName="Suivez-nous" />
-      <div className="grid grid-cols-2 gap-2 mt-10">
-        <button className="flex items-center gap-2 bg-gray-200 text-blue-800 px-4 py-2 rounded-md font-semibold hover:bg-gray-700 transition">
-          <FacebookIcon />
-          <span>Facebook</span>
-        </button>
 
-        <button className="flex items-center gap-2 bg-gray-200 text-blue-800 px-4 py-2 rounded-md font-semibold hover:bg-gray-700 transition">
-          <XIcon />
-          <span>X</span>
-        </button>
+      <div className={`flex flex-col gap-6 sm:sticky top-[116px] h-fit   mt-8`}>
 
 
-        <button className="flex items-center gap-2 bg-gray-200 text-blue-800 px-4 py-2 rounded-md font-semibold hover:bg-gray-700 transition">
-          <InstagramIcon />
-          <span>Instagram</span>
-        </button>
-
-        <button className="flex items-center gap-2 bg-gray-200 text-blue-800 px-4 py-2 rounded-md font-semibold hover:bg-gray-700 transition">
-          <YouTubeIcon />
-          <span>Youtube</span>
-        </button>
-
-        <button className="flex items-center gap-2 bg-gray-200 text-blue-800 px-4 py-2 rounded-md font-semibold hover:bg-gray-700 transition">
-          <LinkedInIcon />
-          <span>Linkdin</span>
-        </button>
-
+        <div className='grid grid-cols-2 gap-1 sm:w-[300px]'>
+          <Link to='#' className="w-full  h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+            <div className='text-black'><FacebookIcon /></div>
+            <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">facebook</div>
+          </Link>
+          <Link to='#' className="w-full  h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+            <div className='text-black'><XIcon /></div>
+            <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">X</div>
+          </Link>
+          <Link to='#' className="w-full  h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+            <div className='text-black'><InstagramIcon /></div>
+            <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Instagram</div>
+          </Link>
+          <Link to='#' className="w-full  h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+            <div className='text-black'><YouTubeIcon /></div>
+            <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Youtube</div>
+          </Link>
+          <Link to='#' className="w-full  h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+            <div className='text-black'><LinkedInIcon /></div>
+            <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Linkedin</div>
+          </Link>
+        </div>
+        
+        <NewsLetterSub2 title="Ne manquez rien !" paragraph="Inscrivez-vous à notre Newsletter pour recevoir toutes les actualités"/>
       </div>
-
-
-      <div className="relative flex flex-col items-center py-12 px-8 text-white w-full h-96 mt-10 rounded-xl bg-gradient-to-r from-[#51ADC6] to-[#006E9F] overflow-hidden">
-  
-  
-  <div className="absolute top-6 left-1/2 transform -translate-x-1/2 opacity-20">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="90" height="90">
-      <path d="M2 4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H2zm0 2h20v3.72L12 13 2 9.72V6zm0 5.28L7.88 12 2 14.72V11.28zm22 0v3.44L16.12 12 24 9.72V11.28zM12 14l10-4.28V18H2v-8.28L12 14z" />
-    </svg>
-  </div>
-
-
-  <div className="relative flex flex-col items-center gap-5 z-10 text-center">
-    <h1 className="font-bold text-3xl">Ne Manquez Rien !</h1>
-    <p className="text-lg px-6 font-medium">
-      Inscrivez-vous à notre Newsletter pour recevoir toutes les actualités
-    </p>
-    <input
-      type="email"
-      placeholder="E-mail"
-      className="px-4 py-4 text-black rounded-md w-full max-w-md text-center text-lg outline-none focus:ring-2 focus:ring-white"
-    />
-    <button className="text-white font-semibold px-6 rounded-md bg-gradient-to-r from-[#006E9F] to-[#51ADC6] w-full max-w-md py-4 hover:opacity-90 transition">
-      S'ABONNER
-    </button>
-  </div>
-
-</div>
-
-
 
 
     </div>

@@ -122,7 +122,8 @@ export default function TrainingDetails({ location, params }: { location: any; p
       </Link>
     </div>
 
-    <NewsLetterSub2 />
+     <NewsLetterSub2 title="Restez Connectés !" paragraph="Inscrivez-vous à notre newsletter pour Recevez les infos sur nos prochaines formations et campements"/>
+
     <div className="h-[279.40px] flex-col justify-center gap-[25px] flex">
       <div className="self-stretch h-[26.40px] text-[#183354] text-xl font-bold font-['Montserrat'] capitalize leading-relaxed">Une Question ?</div>
       <div><Line /></div>

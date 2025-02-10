@@ -4,7 +4,7 @@ import recentArticle1 from '../../../assets/images/recentArticle2.jpg'
 
 export default function PopularCategory() {
     return (
-        <div className='mt-10'>
+        <div className=''>
             <HeaderSection headerName="Catégories Populaires" />
             <div className="flex w-full flex-col mt-8 gap-2">
                 <div className="relative flex w-full h-[70px]">
