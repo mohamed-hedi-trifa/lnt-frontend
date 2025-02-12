@@ -5,7 +5,7 @@ export default function HeaderSection({ headerName }: { headerName: string}) {
         <div className='flex items-center w-full '>
 
             <div className="rounded-sm bg-sky-700 text-white font-bold transform py-2 w-fit px-2 -skew-x-12 whitespace-nowrap">
-            {headerName}
+                {headerName}
             </div>
 
             <div className="flex flex-col items-center gap-1 w-full">

@@ -3,7 +3,7 @@ import HeaderSection from './HeaderSection'
 
 export default function Question() {
     return (
-        <div className='mt-10'>
+        <div className='sm:w-[300px] float-end '>
             <HeaderSection headerName="Question" />
             <p className='text-start mt-8 font-bold text-lg'>
                 Besoin de plus d'informations ? N'hésitez pas à nous contacter. Cliquez sur le Bouton ci-dessous pour accéder à notre page de contact et poser vos questions
