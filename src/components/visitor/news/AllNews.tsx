@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import HeaderSection from './HeaderSection'
 import LeftSidebar from './LeftSidebar'
 import ButtonDropdown from '@/components/ButtonDropdown'
 import sortIcon from "@/assets/icons/sort-icon.png"
 import FilterIcon from '@/assets/icons/FilterIcon'
 import ArrowDownIcon from '@/assets/icons/ArrowDownIcon'
-import NewCards from './NewsCards'
+import NewsCards from './NewsCards'
 
 export default function AllNews() {
+
+
+
+
+    const [isOpened, setIsOpened] = useState(false);
+  
+    useEffect(() => {
+      if (isOpened) {
+        document.querySelector("body")!.style.overflow = "hidden";
+      } else {
+        document.querySelector("body")!.style.overflow = "visible";
+      }
+    })
+
+
   const CATEGORIES = [
     {
       id: 1,
@@ -36,10 +51,13 @@ export default function AllNews() {
   ]
   return (
     <div className='mt-10 w-full '>
-      <HeaderSection headerName="Toutes les Actualités" />
+      <div className='px-5'>
+        <HeaderSection headerName="Toutes les Actualités" />
+      </div>
+ 
 
       <div className='flex justify-between gap-5 mt-10'>
-        <LeftSidebar />
+        <LeftSidebar isOpened={isOpened} setIsOpened={setIsOpened} />
 
         <section className="flex-1">
           <div className='hidden sm:flex justify-between relative z-20'>
@@ -61,10 +79,10 @@ export default function AllNews() {
               )}
             </ButtonDropdown>
 
-            <div className="text-center text-black text-xl font-semibold font-['Montserrat'] leading-tight tracking-tight mt-[2px]">1 - 12 de 150 Publication</div>
+            <div className=" text-black text-xl font-semibold font-['Montserrat'] leading-tight tracking-tight mt-[2px]">1 - 12 de 150 Publication</div>
           </div>
           <div className='sm:hidden flex justify-between pr-5 relative z-20'>
-            <button type='button' className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl justify-start items-center gap-2.5 inline-flex">
+            <button type='button' onClick={() => setIsOpened(true)} className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl justify-start items-center gap-2.5 inline-flex">
               <FilterIcon />
               <div className="text-center text-white text-sm font-bold font-['Montserrat']">Filtres</div>
             </button>
@@ -86,8 +104,8 @@ export default function AllNews() {
               )}
             </ButtonDropdown>
           </div>
-          <div className='sm:hidden px-5 font-semibold leading-[20px] pt-5'>1 - 12 de 150 Publication</div>
-          <NewCards />
+          <div className='sm:hidden px-5 font-semibold leading-[20px] pt-5 text-start'>1 - 12 de 150 Publication</div>
+          <NewsCards />
         </section>
       </div>
 
