@@ -26,10 +26,10 @@ export default function NewsCard({ image, slug, category, title, date }: { image
             </div>
        
             {/* Larger Screens */}
-            <div className='hidden sm:flex flex-col bg-white shadow-xl px-5 py-5 gap-4 items-start'>
+            <div className='hidden sm:flex flex-col bg-white shadow-xl px-5 py-5 gap-4 items-start h-[448px] justify-between'>
                 <div className='flex flex-col justify-start items-start gap-3'>
                     <img className="w-full h-[250px] object-cover rounded-xl" src={image} alt={title} />
-                    <button className="rounded-lg bg-blue-700/20 text-blue-700 font-light py-1 px-2 text-xs w-fit">
+                    <button className="rounded-lg bg-[#F6F8FF] text-[#006E9F] font-normal py-1 px-2 text-xs w-fit">
                         {category}
                     </button>
                     <div className="text-sm leading-6 font-bold drop-shadow-md text-start">

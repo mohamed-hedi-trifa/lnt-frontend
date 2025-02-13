@@ -274,6 +274,7 @@ export const items = [
   },
   {
     label: "Événements",
+    path:"/en/event",
     underlineClassName: "w-[100px]",
     items: [
       {

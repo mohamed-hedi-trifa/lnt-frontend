@@ -1,11 +1,14 @@
-import TrainingSessions from '@/components/visitor/Event/training-sessions/TrainingSessions'
+
+
+
+import Events from '@/components/visitor/Event/Events'
 import { AMCPSidebarProvider } from '@/contexts/AMCPSidebarContext'
 import React from 'react'
 
-export default function newPage() {
+export default function noEventPage() {
   return (
     <AMCPSidebarProvider>
-      <TrainingSessions/>
+        No event
     </AMCPSidebarProvider>
   )
 }

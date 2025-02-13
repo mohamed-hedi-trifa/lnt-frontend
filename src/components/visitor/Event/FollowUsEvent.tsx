@@ -2,13 +2,13 @@ import React from 'react'
 
 import { Link } from 'gatsby'
 import NewsLetterSub2 from '@/components/NewsLetterSub2';
-import TitleSectionTrainingSession from './TitleSectionTrainingSession';
+import TitleSectionEvent from './TitleSectionEvent';
 
-export default function FollowUsTrainingSession() {
+export default function FollowUsEvent() {
   return (
     <div className='sm:w-[300px] float-end'>
       {/* <HeaderSection headerName="Suivez-nous" /> */}
-                <TitleSectionTrainingSession headerName="Suivez-nous"  showButton={false}/>
+                <TitleSectionEvent headerName="Suivez-nous"  showButton={false}/>
 
       <div className={`flex flex-col gap-6 sm:sticky top-[116px] h-fit   mt-8`}>
 

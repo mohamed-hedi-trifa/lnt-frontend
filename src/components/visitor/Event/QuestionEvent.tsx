@@ -1,11 +1,11 @@
 import React from 'react'
-import TitleSectionTrainingSession from './TitleSectionTrainingSession'
+import TitleSectionEvent from './TitleSectionEvent'
 
 
-export default function QuestionTrainingSession() {
+export default function QuestionEvent() {
     return (
         <div className='sm:w-[300px] float-end '>
-                       <TitleSectionTrainingSession headerName="Question"  showButton={false}/>
+                       <TitleSectionEvent headerName="Question"  showButton={false}/>
             <p className='text-start mt-8 font-bold text-lg'>
                 Besoin de plus d'informations ? N'hésitez pas à nous contacter. Cliquez sur le Bouton ci-dessous pour accéder à notre page de contact et poser vos questions
             </p>

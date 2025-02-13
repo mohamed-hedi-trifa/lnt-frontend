@@ -1,7 +1,7 @@
 import Line from '@/components/atoms/Line'
 import React from 'react'
 
-export default function TitleSectionTrainingSession({ headerName, showButton = true }: { headerName: string, showButton: boolean }) {
+export default function TitleSectionEvent({ headerName, showButton = true }: { headerName: string, showButton: boolean }) {
     return (
         <div className='flex  flex-col justify-start items-start w-full '>
 

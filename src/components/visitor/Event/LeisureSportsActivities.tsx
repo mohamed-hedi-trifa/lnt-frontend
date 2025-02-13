@@ -1,10 +1,11 @@
 import React from 'react'
-import TitleSectionTrainingSession from './TitleSectionTrainingSession'
+
 import eventImage2 from '../../../assets/images/eventImage2.jpg'
 import eventImage3 from '../../../assets/images/eventImage3.jpg'
 import eventImage4 from '../../../assets/images/eventImage4.jpg'
 import { CalendarIcon } from '@heroicons/react/24/outline'
 import LocationIcon from '@/assets/icons/LocationIcon'
+import TitleSectionEvent from './TitleSectionEvent'
 
 export default function LeisureSportsActivities() {
     const newsData = [
@@ -15,7 +16,7 @@ export default function LeisureSportsActivities() {
     ];
     return (
         <div className="my-5 py-10  text-center max-w-7xl w-full mx-auto justify-between mt-20 px-5  h-fit">
-            <TitleSectionTrainingSession headerName="Activités de loisirs et sportives" showButton={true}/>
+            <TitleSectionEvent headerName="Activités de loisirs et sportives" showButton={true}/>
 
             <div className="flex justify-between sm:flex-row flex-col sm:gap-5 gap-2 mt-10 sm:px-0 px-12">
                 {newsData.map((news, index) => (

@@ -5,10 +5,10 @@ import eventImage3 from '../../../assets/images/eventImage3.jpg'
 import eventImage4 from '../../../assets/images/eventImage4.jpg'
 
 
-import HeaderSection from '../news/HeaderSection'
-import Line from '@/components/atoms/Line'
-import TitleSectionTrainingSession from './TitleSectionTrainingSession'
+
+
 import LocationIcon from '@/assets/icons/LocationIcon'
+import TitleSectionEvent from './TitleSectionEvent'
 export default function WorkshopsAndTraining() {
 
     const eventsData = [
@@ -37,7 +37,7 @@ export default function WorkshopsAndTraining() {
 
     return (
         <div className='w-full'>
-            <TitleSectionTrainingSession headerName="Articles Récents" showButton={true} />
+            <TitleSectionEvent headerName="Articles Récents" showButton={true} />
 
             <div className="flex justify-between flex-col sm:flex-row w-full h-fit mt-10  font-['Montserrat']">
 

@@ -12,12 +12,13 @@ import recentArticle2 from '../../../assets/images/recentArticle2.jpg';
 import recentArticle3 from '../../../assets/images/eventImage3.jpg';
 import recentArticle4 from '../../../assets/images/eventImage4.jpg';
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import CulturalEventsCard from './CulturalEventsCard';
-import TitleSectionTrainingSession from './TitleSectionTrainingSession';
 
-import "./CulturalEvents.css"
+
+
 import PreviousIcon from '@/assets/icons/PreviousIcon';
 import NextIcon from '@/assets/icons/NextIcon';
+import TitleSectionEvent from './TitleSectionEvent';
+import CulturalEventsCard from './CulturalEventsCard';
 
 export default function CulturalEvents() {
   const newsData = [
@@ -42,7 +43,7 @@ export default function CulturalEvents() {
   };
   return (
     <div className='mt-10'>
-      <TitleSectionTrainingSession headerName="Événements culturels" showButton={true} />
+      <TitleSectionEvent headerName="Événements culturels" showButton={true} />
       <div className=' flex-col mt-10 gap-4 hidden sm:flex'>
         <div className="grid grid-cols-3 gap-2 h-[250px]">
           {newsData.slice(2).map((news, index) => (

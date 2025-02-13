@@ -1,13 +1,15 @@
 import React from 'react'
-import EventImage from './EventImage'
+
 import PageTitle from '@/components/atoms/titles/PageTitle'
 import PageParagraph from '@/components/atoms/PageParagraph'
+import EventImage from './EventImage'
 import WorkshopsAndTraining from './WorkshopsAndTraining'
 import CulturalEvents from './CulturalEvents'
+import FollowUsEvent from './FollowUsEvent'
+import QuestionEvent from './QuestionEvent'
 import LeisureSportsActivities from './LeisureSportsActivities'
-import FollowUsTrainingSession from './FollowUsTrainingSession'
-import QuestionTrainingSession from './QuestionTrainingSession'
-export default function TrainingSessions() {
+
+export default function Events() {
   return (
     <main className={`relative`}>
       <EventImage />
@@ -27,8 +29,8 @@ export default function TrainingSessions() {
         </div>
 
         <div className='flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10  sm:w-[300px]'>
-          <FollowUsTrainingSession />
-          <QuestionTrainingSession />
+          <FollowUsEvent />
+          <QuestionEvent />
 
         </div>
 
