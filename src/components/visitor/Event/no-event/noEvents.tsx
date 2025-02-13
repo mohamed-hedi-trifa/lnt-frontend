@@ -38,6 +38,7 @@ export default function NoEvents() {
 
       </section>
 
+
       <section className='rounded-xl shadow-lg mb-10'
 
         style={{
