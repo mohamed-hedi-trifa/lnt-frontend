@@ -289,6 +289,10 @@ export const items = [
         label: "Activités de Loisirs et Sportives",
         path: "/sport-events",
       },
+      {
+        label: "No event",
+        path: "/event/no-event",
+      },
     ],
   },
   {
