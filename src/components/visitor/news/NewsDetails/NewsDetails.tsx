@@ -7,7 +7,6 @@ import FollowUs from '../FollowUs';
 import Question from '../Question';
 import RelatedNews from './RelatedNews';
 
-
 export default function NewsDetails() {
     const [isOpened, setIsOpened] = useState(false);
     return (

@@ -38,7 +38,7 @@ export default function News() {
                                            
             </section>
 
-            <section className='grid grid-cols-3 gap-5 my-5 text-center max-w-7xl mx-auto w-full  mt-20 px-10 h-fit '>
+            <section className='flex gap-20 flex-col sm:flex-row   my-5 text-center max-w-7xl w-full mx-auto   mt-20 px-5 h-fit  '>
 
                 <div className='h-full   '>
                     <RecentArticle/>
