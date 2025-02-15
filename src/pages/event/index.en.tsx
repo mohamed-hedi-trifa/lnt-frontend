@@ -1,12 +1,14 @@
 
-import News from '@/components/visitor/news/News'
+
+
+import Events from '@/components/visitor/Event/Events'
 import { AMCPSidebarProvider } from '@/contexts/AMCPSidebarContext'
 import React from 'react'
 
-export default function newPage() {
+export default function eventPage() {
   return (
     <AMCPSidebarProvider>
-      <News />
+        <Events/>
     </AMCPSidebarProvider>
   )
 }
