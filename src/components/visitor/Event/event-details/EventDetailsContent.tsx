@@ -1,11 +1,5 @@
 import React from 'react'
-import BlueCalendar from "@/assets/icons/BlueCalendar.png"
-import NewsDeteailsImage1 from '../../../../assets/images/newsDeteailsImage1.jpg'
-import NewsDeteailsImage2 from '../../../../assets/images/newsDeteailsImage2.jpg'
-import Title from '@/components/atoms/titles/Title'
-import Media from '../../Media'
-import FacebookIcon from '@/assets/icons/FacebookIcon'
-import InstagramIcon from '@/assets/icons/InstagramIcon'
+
 
 
 export default function EventDetailsContent() {
