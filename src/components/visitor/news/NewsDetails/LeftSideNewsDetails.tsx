@@ -7,6 +7,10 @@ import Media from '../../Media'
 import FacebookIcon from '@/assets/icons/FacebookIcon'
 import InstagramIcon from '@/assets/icons/InstagramIcon'
 import { LinkedInIcon, XIcon } from '../FollowUs'
+import XIconType2 from '@/assets/icons/XIconType2'
+import LinkdinType2 from '@/assets/icons/LinkdinType2'
+import InstagramIconType2 from '@/assets/icons/InstagramIconType2'
+import FacebookIconType2 from '@/assets/icons/FacebookIconType2'
 
 export default function LeftSideNewsDetails() {
     return (
@@ -16,12 +20,12 @@ export default function LeftSideNewsDetails() {
             </div>
             <div className="flex flex-wrap gap-2 mt-5">
                 <button type="submit" className="rounded-lg bg-[#0270A0]  text-white font-normal py-1 px-3 text-sm w-fit">
-                Initiative scientifique
+                    Initiative scientifique
                 </button>
                 <button type="submit" className="rounded-lg bg-[#0270A0]  text-white font-normal py-1 px-3 text-sm w-fit">
-                Initiative scientifique
+                    Initiative scientifique
                 </button>                <button type="submit" className="rounded-lg bg-[#0270A0]  text-white font-normal py-1 px-3 text-sm w-fit">
-                Initiative scientifique
+                    Initiative scientifique
                 </button>
             </div>
 
@@ -99,11 +103,11 @@ export default function LeftSideNewsDetails() {
 
             <div className="flex mt-20 items-center  gap-4">
                 <div className="font-semibold  ">Partager : </div>
-                <div className="flex items-center  gap-6">
-                    <FacebookIcon />
-                    <InstagramIcon />
-                    <LinkedInIcon />
-                    <XIcon />
+                <div className="flex items-center  gap-3">
+                    <FacebookIconType2 />
+                    <InstagramIconType2 />
+                    <LinkdinType2 />
+                    <XIconType2 />
                 </div>
 
             </div>

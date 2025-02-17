@@ -86,7 +86,7 @@ const Contact: React.FC = () => {
                     <div className="shadow-xl grid grid-cols-12 p-10 bg-white gap-4 rounded-xl">
                         <div className="col-span-12 xl:col-span-5">
                             <div className="w-full">
-                                <iframe
+                            <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3192.76092339878!2d10.195379876595958!3d36.84820142223363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1simmeuble%20new%20Tower%20-%20centre%20urbain%20nord%20%E2%80%93%20Tunis!5e0!3m2!1sen!2stn!4v1689236728352!5m2!1sen!2stn"
                                     width="100%" height="636px" frameBorder="0" style={{ border: 0 }}
                                     allowFullScreen></iframe>
