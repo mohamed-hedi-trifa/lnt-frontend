@@ -54,21 +54,21 @@ export default function EventsCards() {
             <div className='grid sm:grid-cols-2 gap-4 px-4 sm:px-0'>
                 {/* {itemsList.map((achievement:any)=><NewCard key={achievement.id} post={achievement} />)} */}
 
-                <Link to={`/news/category1?lang=${lang}`} >
-                    <EventsCard image={recentArticle1} slug="category1" category="Formation" title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" date="Le 4 octobre 2024" />
+                <Link to={`/event/category1?lang=${lang}`} >
+                    <EventsCard image={recentArticle1} custunCss="px-3"  title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" />
                 </Link>
 
-                <Link to={`/news/category2?lang=${lang}`} >
-                    <EventsCard image={recentArticle2} slug="category2" category="Initiative scientifique" title="Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" date="Le 4 octobre 2024" />
+                <Link to={`/event/category2?lang=${lang}`} >
+                    <EventsCard image={recentArticle2} custunCss="px-3"  title="Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" />
                 </Link>
-                <Link to={`/news/category3?lang=${lang}`} >
+                <Link to={`/event/category3?lang=${lang}`} >
 
 
-                    <EventsCard image={recentArticle1} slug="category3" category="Formation" title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" date="Le 4 octobre 2024" />
+                    <EventsCard image={recentArticle1} custunCss="px-3"  title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" />
 
                 </Link>
-                <Link to={`/news/${"category4"}?lang=${lang}`} >
-                    <EventsCard image={recentArticle2} slug="category4" category="Initiative scientifique" title="Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" date="Le 4 octobre 2024" />
+                <Link to={`/event/${"category4"}?lang=${lang}`} >
+                    <EventsCard image={recentArticle2} custunCss="px-3"  title="Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" />
                 </Link>
             </div>
 
