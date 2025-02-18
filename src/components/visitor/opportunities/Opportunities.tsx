@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import opportunityImage from '../../../assets/images/opportunityImage.jpg'
-import FollowUs from '../news/FollowUs';
-import Question from '../news/Question';
 import OpportunityImage from './OpportunityImage';
 import DisplayOpportinitiesList from './DisplayOpportinitiesList';
 import PageTitle from '@/components/atoms/titles/PageTitle';
 import JoinUs from './JoinUs';
+import FollowUsEvent from '../Event/FollowUsEvent';
+import QuestionEvent from '../Event/QuestionEvent';
+import FollowUsOpportunity from './FollowUsOpportunity';
 
 
 
@@ -32,8 +33,8 @@ export default function Opportunities() {
                     </div>
 
                     <div className='flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10  sm:w-[300px] mb-6'>
-                        <FollowUs />
-                        <Question />
+          <FollowUsOpportunity />
+          <QuestionEvent />
 
                     </div>
 

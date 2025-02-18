@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./VounteeringStyle.css"
-export default function DateTimeVolunteering() {
+import "./BenevoleStyle.css"
+export default function DateTimeBenevole() {
   const [time, setTime] = useState("00:00");
 
   return (
