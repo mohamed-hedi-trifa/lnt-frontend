@@ -298,6 +298,7 @@ export const items = [
   {
     label: "Opportunités",
     underlineClassName: "w-[100px]",
+    path:"/en/opportunities",
     items: [
       {
         label: "Offres d'Emplois",

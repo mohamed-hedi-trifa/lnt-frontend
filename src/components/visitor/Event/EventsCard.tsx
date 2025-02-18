@@ -1,14 +1,14 @@
 import React from 'react';
 
 
-export default function CulturelEventsCard({ image, slug, category, title, date }: { image: string, slug: string, category: string, title: string, date: string }) {
+export default function CulturelEventsCard({ image, title  ,custunCss} : { image: string,  title: string, custunCss: string }) {
 
     return (
         <>
             {/* Mobile View */}
 
 
-            <div className='flex sm:hidden flex-col bg-white shadow-xl gap-4 items-start rounded-2xl sm:min-h-[432px] sm:pb-0 pb-5'>
+            <div className='flex sm:hidden flex-col bg-white shadow-xl gap-4 items-start rounded-2xl sm:min-h-[432px] sm:pb-0 pb-5 '>
                 <img className="w-full h-[170px] object-cover rounded-t-md" src={image} alt={title} />
                 <div className='sm:py-5 sm:px-4 pt-3 sm:pt-0  px-6 text-start w-full sm:w-fit'>
                     <h3 className='font-bold sm:text-sm text-lg'>
@@ -36,11 +36,12 @@ export default function CulturelEventsCard({ image, slug, category, title, date 
             </div>
 
             {/* Larger Screens */}
-            <div className='hidden sm:flex flex-col bg-white rounded-md shadow-xl  pb-4 items-start h-fit '>
+            <div className='hidden sm:flex flex-col bg-white rounded-md shadow-xl  pb-4 items-start h-fit w-fit '>
 
                 <img className="w-full h-[122px] object-cover rounded-t-md" src={image} alt={title} />
 
-                <div className='py-5 px-4 text-start'>
+                <div className={`py-5 text-start ${custunCss}`}>
+
                     <h3 className='font-bold text-sm '>
                         Atelier de Pêche Durable
                     </h3>

@@ -8,6 +8,7 @@ import CulturalEvents from './CulturalEvents'
 import FollowUsEvent from './FollowUsEvent'
 import QuestionEvent from './QuestionEvent'
 import LeisureSportsActivities from './LeisureSportsActivities'
+import LocationIcon from '@/assets/icons/LocationIcon'
 
 export default function Events() {
   return (
@@ -41,7 +42,8 @@ export default function Events() {
         style={{
           backgroundImage: "linear-gradient(30deg, rgba(135, 208, 228, 1) 0%, rgba(135, 208, 228, 1) 15%, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 1) 65%, rgba(135, 208, 228, 1) 100%)"
         }}
-      >
+      >                                    
+
         <LeisureSportsActivities />
       </section>
     </main>
