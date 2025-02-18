@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
 import UploadIcon from "@/assets/icons/UploadIcon";
-import InputFieldVolunteering from "./InputFieldVolunteering";
-import SelectFieldVolunteering from "./SelectFieldVolunteering";
-import DateTimeVolunteering from "./DateTimeVolunteering";
+import InputFieldBenevole from "./InputFieldBenevole";
+import SelectFieldBenevole from "./SelectFieldBenevole";
+import DateTimeBenevole from "./DateTimeBenevole";
 
 
-export default function VolunteeringForm() {
+export default function BenevoleForm() {
 
 
     const [isFormFilled, setisFormFilled] = useState(false);
@@ -32,8 +32,8 @@ export default function VolunteeringForm() {
 
                         <div className="flex gap-6 sm:flex-row flex-col">
 
-                            <InputFieldVolunteering label="Nom" id="firstName" name="firstName" required width="200px" />
-                            <InputFieldVolunteering label="Prénom" id="secondName" name="secondName" required width="200px" />
+                            <InputFieldBenevole label="Nom" id="firstName" name="firstName" required width="200px" />
+                            <InputFieldBenevole label="Prénom" id="secondName" name="secondName" required width="200px" />
                         </div>
 
                         <div className="flex flex-col items-start gap-1">
@@ -43,7 +43,7 @@ export default function VolunteeringForm() {
                             <div className="flex gap-6 flex-wrap">
                                 {/* Day Select */}
                                 <div className="w-[103px]">
-                                    <SelectFieldVolunteering
+                                    <SelectFieldBenevole
                                         id="day"
                                         name="day"
                                         required
@@ -55,7 +55,7 @@ export default function VolunteeringForm() {
                                 </div>
                                 {/* Month Select */}
                                 <div className="w-[103px]">
-                                    <SelectFieldVolunteering
+                                    <SelectFieldBenevole
                                         id="month"
                                         name="month"
                                         required
@@ -68,7 +68,7 @@ export default function VolunteeringForm() {
                                     />
                                 </div>
                                 <div className="w-[110px]">
-                                    <SelectFieldVolunteering
+                                    <SelectFieldBenevole
                                         id="year"
                                         name="year"
                                         required
@@ -82,24 +82,24 @@ export default function VolunteeringForm() {
 
                         <div className="flex gap-6 sm:w-[500px] w-full">
 
-                            <InputFieldVolunteering label="Adresse e-mail" id="email" name="email" type="email" required />
+                            <InputFieldBenevole label="Adresse e-mail" id="email" name="email" type="email" required />
                         </div>
 
                         <div className="flex gap-6  sm:w-[500px] w-full">
 
-                            <InputFieldVolunteering label="Numéro de téléphone" id="phone" name="phone" type="tel" required />
+                            <InputFieldBenevole label="Numéro de téléphone" id="phone" name="phone" type="tel" required />
                         </div>
 
                         <div className="flex gap-6  sm:w-[500px] w-full">
 
-                            <InputFieldVolunteering label="Adresse" id="address" name="address" />
+                            <InputFieldBenevole label="Adresse" id="address" name="address" />
                         </div>
 
                         <div className="flex gap-2 flex-col items-start sm:w-[300px] w-full">
                             <label className="font-semibold text-sm">
                                 Votre situation professionnelle <span className="text-[#FF0000]">*</span>
                             </label>
-                            <SelectFieldVolunteering
+                            <SelectFieldBenevole
                                 id="ProfessionalSituation situation"
                                 name="ProfessionalSituation"
                                 required
@@ -111,7 +111,7 @@ export default function VolunteeringForm() {
                         </div>
                         <div className="flex gap-6">
 
-                            <InputFieldVolunteering label="Si vous êtes en activité, veuillez indiquer votre secteur professionnel" required id="address" name="address" width="501px" />
+                            <InputFieldBenevole label="Si vous êtes en activité, veuillez indiquer votre secteur professionnel" required id="address" name="address" width="501px" />
                         </div>
                        
 
@@ -157,9 +157,9 @@ export default function VolunteeringForm() {
                             </label>
                             <div className="flex sm:gap-5 gap-3 flex-wrap">
 
-                                <DateTimeVolunteering />
+                                <DateTimeBenevole />
                                 <div className="w-[90px]">
-                                    <SelectFieldVolunteering
+                                    <SelectFieldBenevole
                                         id="day"
                                         name="day"
                                         required
@@ -172,7 +172,7 @@ export default function VolunteeringForm() {
 
 
                                 <div className="w-[90px]">
-                                    <SelectFieldVolunteering
+                                    <SelectFieldBenevole
                                         id="month"
                                         name="month"
                                         required

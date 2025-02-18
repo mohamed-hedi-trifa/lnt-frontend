@@ -10,7 +10,7 @@ interface SelectFieldProps {
   height?: string; 
 }
 
-const SelectFieldVolunteering: React.FC<SelectFieldProps> = ({
+const SelectFieldBenevole: React.FC<SelectFieldProps> = ({
   id,
   name,
   required = false,
@@ -42,4 +42,4 @@ const SelectFieldVolunteering: React.FC<SelectFieldProps> = ({
   );
 };
 
-export default SelectFieldVolunteering;
+export default SelectFieldBenevole;

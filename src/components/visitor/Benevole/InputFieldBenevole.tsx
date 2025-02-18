@@ -10,7 +10,7 @@ interface InputFieldProps {
   width?: string; // Allows dynamic width
 }
 
-const InputFieldVolunteering: React.FC<InputFieldProps> = ({
+const InputFieldBenevole: React.FC<InputFieldProps> = ({
   label,
   id,
   name,
@@ -35,4 +35,4 @@ const InputFieldVolunteering: React.FC<InputFieldProps> = ({
   );
 };
 
-export default InputFieldVolunteering;
+export default InputFieldBenevole;
