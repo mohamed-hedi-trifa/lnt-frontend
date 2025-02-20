@@ -9,7 +9,7 @@ import {
 
 import ContentItem from "./ContentItem";
 
-const ItemsList = ({ handleItemContentChange, items, setItems, language }:{handleItemContentChange:(idx: number, e: any) => void, items:any[], setItems:(items:any[])=>void, language:string}) => {
+const ItemsList = ({ handleItemContentChange, items, setItems, language, route }:{handleItemContentChange:(idx: number, e: any) => void, items:any[], setItems:(items:any[])=>void, language:string, route:string}) => {
   // This function replaces onSortEnd from react-sortable-hoc
 // ItemsList.tsx
 const handleDragEnd = (event:any) => {
@@ -55,6 +55,7 @@ const handleDragEnd = (event:any) => {
               items={items}
               setItems={setItems}
               handleItemContentChange={handleItemContentChange}
+              route= {route}
             />
           ))}
         </ul>
