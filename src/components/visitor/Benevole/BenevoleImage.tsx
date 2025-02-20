@@ -10,7 +10,7 @@ export default function BenevoleImage({ imgSrc }: { imgSrc: string }) {
                 Rejoignez Notre Équipe de Bénévoles
                 </div>
                 <div className='sm:text-2xl text-base sm:leading-9 font-medium  sm:w-[68%] drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'>
-                Participez à la préservation de l’environnement et à la valorisation de la culture locale
+                Participez à la préservation de l'environnement et à la valorisation de la culture locale
                 </div>
             </div>
         </div>

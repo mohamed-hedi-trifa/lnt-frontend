@@ -32,6 +32,16 @@ export default function SidebarAdmin() {
                 <span>Blog</span>
             </Link>
 
+            <Link to="/admin/key-moment" className="flex flex-row gap-4 p-4 no-underline">
+                <PhotoIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
+                <span>key moment</span>
+            </Link>
+
+            <Link to="/admin/team-members" className="flex flex-row gap-4 p-4 no-underline">
+                <PhotoIcon className="block h-6 w-6 flex-start" aria-hidden="true" />
+                <span>Team Members</span>
+            </Link>
+
         </div>
 
     )
