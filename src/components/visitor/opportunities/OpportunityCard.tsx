@@ -11,7 +11,12 @@ export default function OpportunityCard({ opportunity }: { opportunity: any }) {
 
 
             {/* Larger Screens */}
-            <div className=' sm:flex flex-col  bg-white rounded-xl shadow-2xl    items-start  w-fit sm:h-[402px] h-fit '>
+            <div 
+    className="sm:flex flex-col bg-white rounded-xl items-start w-fit sm:h-[402px] h-fit" 
+    style={{
+        boxShadow: "0px -8px 80px 0px rgba(0, 0, 0, 0.07), 0px -2.92px 29.2px 0px rgba(0, 0, 0, 0.05), 0px -1.42px 14.18px 0px rgba(0, 0, 0, 0.04), 0px -0.69px 6.95px 0px rgba(0, 0, 0, 0.03), 0px -0.27px 2.75px 0px rgba(0, 0, 0, 0.02)"
+    }}
+>
                 <div className="flex w-full justify-between px-4 sm:py-2 py-3 items-center">
                     <h4 className='font-bold sm:text-xs '>{opportunity.type}</h4>
                     <span className={`sm:w-2 sm:h-2 w-3 h-3 rounded-[50%] ${opportunity.status === "active" ? "bg-[#29F11B]" : "bg-[#FF0000]"}`}></span>
