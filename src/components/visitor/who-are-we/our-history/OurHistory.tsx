@@ -12,7 +12,7 @@ export default function OurHistory() {
     return (
         <div className=''>
             <HeroSection imgSrc={historyHero} title="Une Décennie d'Engagement Durable" subTitle="Depuis 2014, L'Association Kratten écrit une histoire de préservation environnementale, de valorisation culturelle, et de développement durable à Kerkennah" />
-            <PageTitle title='Our History' width='w-[160px]' />
+            <PageTitle title='Our History' />
             <section className='px-4 sm:px-0'>
                 <div className='max-w-6xl mx-auto'>
                     <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
@@ -25,7 +25,7 @@ export default function OurHistory() {
                         </section>
 
                     </section>
-                    <section className='border-t border-[#ADA5A5]'>
+                    <section className='border-t border-[#ADA5A5] mb-[100px]'>
                         <ImageHistoire />
                     </section>
                 </div>
