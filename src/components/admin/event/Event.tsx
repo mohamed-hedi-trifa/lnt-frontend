@@ -1,9 +1,10 @@
-import { InboxIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { InboxIcon, MagnifyingGlassIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import ReactLoading from "react-loading";
 import { Link } from "gatsby";
+import { EyeIcon } from "@heroicons/react/24/solid";
 
 export default function Event() {
   const [loading, setLoading] = useState(true);
@@ -110,6 +111,10 @@ export default function Event() {
 
                       {/* Actions - Ensures Icons Stay Inline */}
                       <div className="hidden sm:flex col-span-1 justify-end sm:justify-center gap-3">
+                        <Link to={`/admin/events/event-details/${item.slug}`}>
+                          <MagnifyingGlassIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
+                        </Link>
+
                         <Link to={`/admin/events/${item.slug}`}>
                           <PencilSquareIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
                         </Link>
