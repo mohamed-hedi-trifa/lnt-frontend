@@ -15,16 +15,16 @@ interface TabeFinancement {
 
 const TabeFinancement: React.FC<TabeFinancement> = ({ data }) => {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto bg-white">
       <table className="min-w-full border-collapse ">
         <thead className="hidden sm:table-header-group">
           {/* Header is hidden on smaller screens */}
           <tr className="bg-[#0270A0] text-white">
-            <th className="border border-gray-300 px-4 py-2 text-left font-bold sm:text-[32px] text-[20px]">Période</th>
-            <th className="border border-gray-300 px-4 py-2 text-left font-bold sm:text-[32px] text-[20px]">Source</th>
-            <th className="border border-gray-300 px-4 py-2 text-left font-bold sm:text-[32px] text-[20px]">Titre du Projet</th>
-            <th className="border border-gray-300 px-4 py-2 text-left font-bold sm:text-[32px] text-[20px]">Description</th>
-            <th className="border border-gray-300 px-4 py-2 text-left font-bold sm:text-[32px] text-[20px]">Montant</th>
+            <th className="border border-gray-300 px-4 py-2 text-center font-bold sm:text-2xl text-[20px]">Période</th>
+            <th className="border border-gray-300 px-4 py-2 text-center font-bold sm:text-2xl text-[20px]">Source</th>
+            <th className="border border-gray-300 px-4 py-2 text-center font-bold sm:text-2xl text-[20px] min-w-max">Titre du Projet</th>
+            <th className="border border-gray-300 px-4 py-2 text-center font-bold sm:text-2xl text-[20px]">Description</th>
+            <th className="border border-gray-300 px-4 py-2 text-center font-bold sm:text-2xl text-[20px]">Montant</th>
           </tr>
         </thead>
         <tbody>
@@ -32,11 +32,11 @@ const TabeFinancement: React.FC<TabeFinancement> = ({ data }) => {
             <React.Fragment key={index}>
               {/* Row format for larger screens */}
               <tr className="hidden sm:table-row hover:bg-gray-100">
-                <td className="border border-gray-300 px-4 py-2 sm:text-[20px] text-[14px]">{item.periode}</td>
-                <td className="border border-gray-300 px-4 py-2 sm:text-[20px] text-[14px]">{item.source}</td>
-                <td className="border border-gray-300 px-4 py-2 sm:text-[20px] text-[14px]">{item.titreDuProjet}</td>
-                <td className="border border-gray-300 px-4 py-2 sm:text-[20px] text-[14px]">{item.description}</td>
-                <td className="border border-gray-300 px-4 py-2 sm:text-[20px] text-[14px]">{item.montant}</td>
+                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.periode}</td>
+                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.source}</td>
+                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.titreDuProjet}</td>
+                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.description}</td>
+                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.montant}</td>
               </tr>
 
               {/* Stacked format for smaller screens */}

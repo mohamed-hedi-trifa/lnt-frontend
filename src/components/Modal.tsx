@@ -2,7 +2,7 @@ import React, { Fragment, ReactNode, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
-export default function Modal({ title, show, hide, children }: { title: string, show: boolean, hide: () => void, children: ReactNode }) {
+export default function Modal({ title, show, hide, children, customClassName, contentClassName }: {contentClassName?:string, customClassName?:string, title?: string, show: boolean, hide: () => void, children: ReactNode }) {
 
     const cancelButtonRef = useRef(null)
 
@@ -32,14 +32,14 @@ export default function Modal({ title, show, hide, children }: { title: string, 
                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
-                            <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                <div className="flex justify-between bg-gray-50 px-4 py-3 sm:px-6">
+                            <Dialog.Panel className={`relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg ${customClassName}`}>
+                                {title&&<div className={`flex justify-between bg-gray-50 px-4 py-3 sm:px-6`}>
                                     <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                                         {title}
                                     </Dialog.Title>
                                     <button type='button' onClick={() => { hide() }}><XMarkIcon className="block h-8 w-8" aria-hidden="true" /> </button>
-                                </div>
-                                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                </div>}
+                                <div className={`bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 ${contentClassName}`}>
 
                                     <div className=" overflow-auto">
                                         {children}

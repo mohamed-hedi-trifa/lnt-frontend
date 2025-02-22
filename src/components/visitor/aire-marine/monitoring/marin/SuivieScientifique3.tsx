@@ -66,7 +66,7 @@ export default function SuiviScientifique3() {
       <HeroSection title="Protégeons les Trésors des Profondeurs" subTitle="Un engagement pour la biodiversité marine de Kerkennah" imgSrc={marinHero} />
 
       <div className="flex justify-center sm:justify-center pb-4 ">
-        <PageTitle title="Suivi Scientifique" width="w-[160px]" />
+        <PageTitle title="Suivi Scientifique"  />
       </div>
 
       <section className="px-4 sm:px-0">
@@ -124,7 +124,7 @@ export default function SuiviScientifique3() {
 
                 <List items={listMethodologie} />
 
-                <img src="/images/marine_images/marine6.jpg" alt="" className="w-full max-w  h-auto rounded-lg" />
+                <img src="/images/marine_images/marine6.jpg" alt="" className="w-full max-w-[600px] mx-auto h-auto rounded-lg" />
               </article>
 
               <article className="flex flex-col gap-5">
@@ -170,7 +170,7 @@ export default function SuiviScientifique3() {
                     ]}
                   />
                 </div>
-                <img src="/images/marine_images/marine7.jpg" alt="" className="w-full  h-auto rounded-lg" />
+                <img src="/images/marine_images/marine7.jpg" alt="" className="w-full max-w-[600px] mx-auto h-auto rounded-lg" />
               </article>
             </section>
           </section>

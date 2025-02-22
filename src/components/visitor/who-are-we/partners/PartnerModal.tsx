@@ -41,7 +41,7 @@ export default function PartnerModal({ toview, show, hide }: { toview: any, show
     }
 
     return (
-        <Modal title="Partner Details" show={show} hide={hide}>
+        <Modal  customClassName='!bg-gradient !p-1.5 rounded-xl' contentClassName='rounded-xl' show={show} hide={hide}>
             <div className='max-w-xl mx-auto h-100 flex justify-center items-center'>
                 <div className='flex flex-col gap-[30px] w-full'>
                     <div className='flex justify-center'> <img

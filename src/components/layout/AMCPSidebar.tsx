@@ -130,7 +130,7 @@ const AMCPSidebar = () => {
         >
           <section className="flex justify-between w-full items-center">
             <div className="flex flex-col sm:gap-8">
-              <h2 className="text-[20px] sm:text-2xl font-bold">Air Marine et Côtière Protégée</h2>
+              <h2 className="text-[20px] sm:text-2xl font-bold text-center">Air Marine et Côtière Protégée</h2>
               <div className="font-medium sm:hidden">Menu de section</div>
             </div>
             <div className="sm:hidden">

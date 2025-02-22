@@ -2,13 +2,6 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import PageTitle from '../../../atoms/titles/PageTitle'
 import Sidebar from '../../../layout/Sidebar'
-import ahmedYellow from "../../../../assets/images/ahmed-yellow.png"
-import fatmaB from "../../../../assets/images/FatmaB.png"
-import habibK from "../../../../assets/images/HabibK.png"
-import hakimS from "../../../../assets/images/HakimS.png"
-import jamilK from "../../../../assets/images/JamilK.png"
-import karimB from "../../../../assets/images/KarimB.png"
-import najahH from "../../../../assets/images/NajahH.png"
 import ImageHistoire from './ImageHistoire'
 import historyHero from "../../../../assets/images/history-hero.jpg";
 import HeroSection from '../../HeroSection'
@@ -18,7 +11,7 @@ import PageParagraph from '../../../atoms/PageParagraph'
 
 export default function OurTeam() {
     const [teamMembers, setTeamMembers] = useState([]);
-    const [loading, setLoading] = useState(true); // Define loading state
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
@@ -27,7 +20,7 @@ export default function OurTeam() {
                 setTeamMembers(res.data);
 
                 console.log(teamMembers.length)
-                setLoading(false); // Set loading to false after fetching
+                setLoading(false);
             })
             .catch(err => {
                 console.error("Error fetching team members:", err);
@@ -37,7 +30,7 @@ export default function OurTeam() {
     return (
         <div className=''>
             <HeroSection imgSrc={historyHero} title="Les Visages de Notre Mission" subTitle="Une équipe dévouée, passionnée par la préservation de Kerkennah et animée par une vision commune" />
-            <PageTitle title='Our Team' width='w-[160px]' />
+            <PageTitle title='Our Team' />
             <section className='px-4 sm:px-0'>
                 <div className='max-w-6xl mx-auto'>
                     <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
@@ -69,7 +62,7 @@ export default function OurTeam() {
                         </section>
 
                     </section>
-                    <section className='border-t border-[#ADA5A5] mt-10'>
+                    <section className='border-t border-[#ADA5A5] mt-10 mb-[100px]'>
                         <ImageHistoire />
                     </section>
                 </div>

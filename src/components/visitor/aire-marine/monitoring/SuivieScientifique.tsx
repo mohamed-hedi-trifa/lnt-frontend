@@ -1,9 +1,11 @@
 import React from 'react'
 import PageTitle from '../../../atoms/titles/PageTitle'
-import achievementsHero from "../../../../assets/images/achievements-hero.jpg";
+import achievementsHero from "../../../../assets/images/suivi-hero.jpeg";
 import ContainerImageMarine from '../ContainerImageMarine';
 import AMCPSidebar from '../../../layout/AMCPSidebar'
 import Title from '../../../atoms/titles/Title';
+import HeroSection from '../../HeroSection';
+import Image from '@/components/atoms/Image';
 
 export default function SuiviScientifique() {
 
@@ -22,18 +24,18 @@ export default function SuiviScientifique() {
 
     return (
         <div className=''>
-            <img className='w-full object-cover h-[80vh]' src={achievementsHero} />
+           <HeroSection imgSrc={achievementsHero} title="Suivi Scientifique : L'Engagement pour la Conservation de Kerkennah" subTitle="Des études approfondies pour une gestion durable des ressources marines et terrestres" />
 
                     <div className="flex justify-center sm:justify-center pb-4 ">
                                 <PageTitle 
                                     title="Suivi Scientifique"
-                                    width="w-[160px]"
+                                    
                 
                                 />
                     </div>    
 
                 <section className='px-4'>
-                    <div className='max-w-6xl mx-auto'>
+                    <div className='max-w-[1252px] mx-auto'>
                         <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
                                 <AMCPSidebar />
 
@@ -51,7 +53,7 @@ export default function SuiviScientifique() {
                                         <p className='text-[20px]'>Le suivi scientifique est un outil essentiel pour évaluer la santé des écosystémes marins et terrestres de Kerkennah.Grace à des recherches rigoureuses,nous collectons des données précieuses qui guident nos actions de conservation. Cette démarche nous permet de protéger les ressources naturelles et de proumevoir un développement durable au bénéfice de la communauté locale.</p>
                                     </div>
 
-                                    <img src='/images/marine_images/marine1.jpg'alt="Aire marine" className="w-full  h-auto rounded-lg mb-10" />
+                                    <img src='/images/marine_images/marine1.jpg'alt="Aire marine" className="w-full max-w-[600px] mx-auto h-auto rounded-lg" />
                                 
                                     <Title size='text-[25px] sm:text-[28px]' variant='pill'>Pourquoi le Suivi Scientifique est-il Crucial ?</Title>
 
@@ -65,7 +67,7 @@ export default function SuiviScientifique() {
                                         <p><span className='px-4 font-bold text-[20px]'>.</span><span className='text-[18px] sm:text-[20px] leading-[50px]'>Priserver la biodiversité pour les générations futures.</span></p>
                                     </div>
 
-                                    <img src='/images/marine_images/marine2.jpg' alt="" className="w-full  h-auto rounded-lg" />
+                                    <Image src='/images/marine_images/marine2.jpg' />
 
                                 </section>
 

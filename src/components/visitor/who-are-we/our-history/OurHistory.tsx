@@ -14,7 +14,7 @@ export default function OurHistory() {
             <HeroSection imgSrc={historyHero} title="Une Décennie d'Engagement Durable" subTitle="Depuis 2014, L'Association Kratten écrit une histoire de préservation environnementale, de valorisation culturelle, et de développement durable à Kerkennah" />
             <PageTitle title='Our History' />
             <section className='px-4 sm:px-0'>
-                <div className='max-w-6xl mx-auto'>
+                <div className='max-w-[1134px] mx-auto'>
                     <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
                         <Sidebar />
 
