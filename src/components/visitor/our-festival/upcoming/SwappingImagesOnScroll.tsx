@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-export default function PinnedImageSwap() {
+export default function PinnedImageSwap({ edition }: { edition: any }) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // 1) Scroll progress for this section
@@ -38,6 +38,23 @@ export default function PinnedImageSwap() {
     [0, trackHeight - handleHeight]
   );
 
+
+  const formatDateRange = (startDate, endDate) => {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+  
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+  
+    const isSameMonth = start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear();
+    
+    if (isSameMonth) {
+      return `Du ${start.getDate()} au ${end.toLocaleDateString("fr-FR", options)}`;
+    } else {
+      return `Du ${start.toLocaleDateString("fr-FR", options)} au ${end.toLocaleDateString("fr-FR", options)}`;
+    }
+  };
+
+  
   return (
     <section
       ref={sectionRef}
@@ -61,7 +78,7 @@ export default function PinnedImageSwap() {
         <div style={{ position: "relative", height: "100%" }} className="shrink-0 w-[525px]">
           {/* SECOND IMAGE (BEHIND) */}
           <motion.img
-            src="/eponge_marine.jpg"
+                     src={`${process.env.GATSBY_API_URL}${edition?.image_affiche2}`}
             alt="Second"
             style={{
               position: "absolute",
@@ -75,7 +92,7 @@ export default function PinnedImageSwap() {
           />
           {/* FIRST IMAGE (ON TOP) */}
           <motion.img
-            src="/avifaunes.jpg"
+            src={`${process.env.GATSBY_API_URL}${edition?.image_affiche1}`}
             alt="First"
             style={{
               position: "absolute",
@@ -110,13 +127,13 @@ export default function PinnedImageSwap() {
           >
             <div>
               <h1 style={{ margin: "1rem 0 0 0", fontSize: "2rem", fontWeight: "bold" }}>
-                Une Nouvelle Édition Du Festival Vous Attend (Partie 1)
+                {edition.titre_affiche1_en || edition.titre_affiche1_fr }
               </h1>
               <p style={{ marginTop: "1rem" }}>
-                Cette Année Encore, Le Festival Célèbre L’authenticité De Kerkennah...
+              {edition.desciption_affich1_en || edition.desciption_affich1_fr }
               </p>
               <p style={{ marginTop: "1rem", fontWeight: "bold" }}>
-                Date: Du 1er au 6 août 2024
+                Date:  {formatDateRange(edition.start_date, edition.end_date)}
               </p>
             </div>
           </motion.div>
@@ -132,13 +149,13 @@ export default function PinnedImageSwap() {
           >
             <div>
               <h1 style={{ margin: "1rem 0 0 0", fontSize: "2rem", fontWeight: "bold" }}>
-                Une Nouvelle Édition Du Festival Vous Attend (Partie 2)
+              {edition.titre_affiche2_en || edition.titre_affiche2_fr }
               </h1>
               <p style={{ marginTop: "1rem" }}>
-                Maintenant, découvrez la deuxième phase du Festival...
+              {edition.desciption_affich2_en || edition.desciption_affich2_fr }
               </p>
               <p style={{ marginTop: "1rem", fontWeight: "bold" }}>
-                Date: Du 1er au 6 août 2025
+                Date: {formatDateRange(edition.start_date, edition.end_date)}
               </p>
             </div>
           </motion.div>
