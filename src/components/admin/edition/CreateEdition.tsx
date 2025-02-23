@@ -273,7 +273,7 @@ const CreateEdition: React.FC = () => {
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col grow space-y-4">
                 {/* Year */}
-                <Input label="Year" type="text" name="year" value={formData.year} onChange={handleChange} />
+                <Input label="Year" type="number" name="year" value={formData.year} onChange={handleChange} />
                 {errors.year && <div className="text-red-500 text-sm">{errors.year}</div>}
 
                 {/* Language-Specific Inputs */}

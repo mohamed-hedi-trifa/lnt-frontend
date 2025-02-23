@@ -93,7 +93,10 @@ export default function Partners() {
                                                 <div className="pt-3 text-start col-span-5 sm:col-span-3">
                                                     <div className="font-bold">
 
-                                                        {item.isAmcp === 1 ? "AMCP" : "general"}
+                                                        {item.isAmcp == '1' ? "AMCP" : ""} 
+                                                        {item.isGeneral === '1' && item.isAmcp == '1'  ? "-" : ""} 
+                                                        {item.isGeneral == '1' ? "General" : ""} 
+                                                        {item.isGeneral === '0' && item.isAmcp == '0'  ? "-" : ""} 
                                                     </div>{" "}
                                                 </div>
 

@@ -47,7 +47,7 @@ const EditPartner = ({ location, params }: { location: any; params: any }) => {
                 const response = await axios.get(`/api/partner/${slug}`);
                 const partner: any = response.data;
                 // Sort content items by order
-       
+
 
                 // Set form data
                 setFormData({
@@ -60,17 +60,17 @@ const EditPartner = ({ location, params }: { location: any; params: any }) => {
                     websiteLink: partner.websiteLink ?? "",
                     linkedInLink: partner.linkedInLink ?? "",
                     instagramLink: partner.instagramLink ?? "",
-    
+
 
                 });
 
 
 
-         
 
 
-           
-        
+
+
+
             } catch (error) {
                 console.error("Error fetching Partner:", error);
             }
@@ -96,7 +96,7 @@ const EditPartner = ({ location, params }: { location: any; params: any }) => {
         }
     };
 
- 
+
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -114,7 +114,7 @@ const EditPartner = ({ location, params }: { location: any; params: any }) => {
             formDataToSend.append("image", image);
         }
 
-  
+
 
         try {
             const response = await axios.post(`/api/update-partner/${slug}`, formDataToSend, {
@@ -130,16 +130,18 @@ const EditPartner = ({ location, params }: { location: any; params: any }) => {
         }
     };
 
-        const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: string) => {
-            // Get the current value of the checkbox (true/false)
-            const value = e.target.checked ? 1 : 0;
-        
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: string) => {
+
+        const value = e.target.checked ? '1' : '0';
+   
+
+        setFormData((prevFormData: any) => ({
+            ...prevFormData,
+            [fieldName]: value,
+        }));
+    };
     
-            setFormData((prevFormData: any) => ({
-                ...prevFormData,
-                [fieldName]: value,
-            }));
-        };
+
     return (
         <div className="h-[calc(100vh-80px)] flex flex-col p-4">
             <div className="flex justify-between">
@@ -162,12 +164,12 @@ const EditPartner = ({ location, params }: { location: any; params: any }) => {
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col grow">
-      
 
 
 
 
-            {language === "en" && (
+
+                {language === "en" && (
                     <>
                         <Input label="Name" type="text" name="name" value={formData.name} onChange={handleChange} />
 
@@ -205,7 +207,7 @@ const EditPartner = ({ location, params }: { location: any; params: any }) => {
                         <input
                             type="checkbox"
                             name="isAmcp"
-                            checked={formData.isAmcp === "1"}
+                            checked={formData.isAmcp == "1"}
                             onChange={(e) => handleCheckboxChange(e, "isAmcp")}
                             className="mr-2"
                         />
@@ -215,7 +217,7 @@ const EditPartner = ({ location, params }: { location: any; params: any }) => {
                         <input
                             type="checkbox"
                             name="isGeneral"
-                            checked={formData.isGeneral === "1"}
+                            checked={formData.isGeneral == "1"}
                             onChange={(e) => handleCheckboxChange(e, "isGeneral")}
                             className="mr-2"
                         />

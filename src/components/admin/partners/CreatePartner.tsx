@@ -191,7 +191,7 @@ const CreatePartner: React.FC = () => {
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: string) => {
         // Get the current value of the checkbox (true/false)
         const value = e.target.checked ? 1 : 0;
-    
+        console.log(value)
 
         setFormData((prevFormData: any) => ({
             ...prevFormData,

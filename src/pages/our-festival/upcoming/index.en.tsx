@@ -313,7 +313,7 @@ export default function FestivalVenir() {
           </div>
 
           <div className='mt-12'>
-            <Partners />
+            <Partners partners={edition.partners}/>
           </div>
 
           <div className=' text-center my-10'>
@@ -327,7 +327,7 @@ export default function FestivalVenir() {
             <p>sélection captivante de photos et vidéos </p>
           </div>
 
-          <Media />
+          <Media edition={edition} />
 
           <hr className='mb-[50px] mt-[80px] border-black' />
 

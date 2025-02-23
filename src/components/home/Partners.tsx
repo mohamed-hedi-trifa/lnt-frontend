@@ -1,27 +1,45 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SwiperOptions } from "swiper/types";
-import "./Partners.css"
+import Carousel from "./Carousel";
+
 type Partner = {
   image?: string;
 };
 
 const defaultPartners: Partner[] = [
-  { image: "/the_med_fund.png" },
-  { image: "/gef.png" },
-  { image: "/kantara_sea.png" },
-  { image: "/snorkeling_kerkennah.png" },
-  { image: "/apal.png" },
+  {
+    image: "/the_med_fund.png",
+  },
+  {
+    image: "/gef.png",
+  },
+  {
+    image: "/kantara_sea.png",
+  },
+  {
+    image: "/snorkeling_kerkennah.png",
+  },
+  {
+    image: "/apal.png",
+  },
   // THESE ONES ARE FOR TESTING PURPOSES
-  { image: "/the_med_fund.png" },
-  { image: "/gef.png" },
-  { image: "/kantara_sea.png" },
-  { image: "/snorkeling_kerkennah.png" },
-  { image: "/apal.png" },
+  {
+    image: "/the_med_fund.png",
+  },
+  {
+    image: "/gef.png",
+  },
+  {
+    image: "/kantara_sea.png",
+  },
+  {
+    image: "/snorkeling_kerkennah.png",
+  },
+  {
+    image: "/apal.png",
+  },
 ];
 
 export default function Partners() {
-  const [partners] = useState(defaultPartners);
-
 
   return (
     <section className="relative px-3 py-20 bg-slate-900 overflow-hidden">
@@ -32,33 +50,17 @@ export default function Partners() {
         <img src="/spot.png" alt="" className="w-full h-full object-contain" />
       </div>
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-white text-center font-bold text-3xl">
-          Avec qui nous sommes engagés...
-        </h2>
+        <h2 className="text-white text-center font-bold text-3xl">Avec qui nous sommes engagés...</h2>
         <p className="mt-4 text-white text-center md:text-base leading-7">
-          L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL)
-          s'associe à des partenaires locaux et internationaux qui partagent notre engagement
-          pour la durabilité et le bien-être communautaire. Ensemble, nous soutenons les pêcheurs
-          dans des pratiques durables, organisons des événements culturels et préservons le patrimoine
-          de la région de Kerkennah, notamment à travers l'aire marine protégée. Cette collaboration
-          renforce notre impact et aide à protéger notre environnement marin tout en enrichissant
-          notre communauté.
+          L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL) s'associe à des partenaires locaux et internationaux qui partagent
+          notre engagement pour la durabilité et le bien-être communautaire. Ensemble, nous soutenons les pêcheurs dans des pratiques durables, organisons des
+          événements culturels et préservons le patrimoine de la région de Kerkennah, notamment à travers l'aire marine protégée. Cette collaboration renforce
+          notre impact et aide à protéger notre environnement marin tout en enrichissant notre communauté.
         </p>
-        
-        <div className="slider mt-10">
-	<div className="slide-track">
-  {partners.map((partner, index) => (
-            <div key={index} className="slide">
-              <img
-                src={partner.image}
-                alt=""
-                className="mx-auto h-full object-contain"
-              />
-            </div>
-          ))}
-		
-	</div>
-</div>
+
+        <div className="mt-10">
+        <Carousel slides={defaultPartners} />
+        </div>
       </div>
     </section>
   );
