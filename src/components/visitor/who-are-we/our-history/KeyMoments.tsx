@@ -25,7 +25,7 @@ const KeyMoments = () => {
 
   return (
     <div className="px-2 my-7">
-      <h3 className="text-primary font-bold text-4xl leading-10 flex justify-center">
+      <h3 className="text-primary font-bold text-4xl leading-10 flex justify-start">
         Moments Clés :
       </h3>
       <br />

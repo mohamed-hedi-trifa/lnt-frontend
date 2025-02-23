@@ -147,7 +147,7 @@ export default function PresentationSection2() {
                        
                         <PageParagraph>L'Aire Marine et Côtière Protégée des Îlots Nord de l'Archipel de Kerkennah (AMCP) a été créée dans le but de préserver les écosystèmes marins fragiles de la région. Située au large des côtes tunisiennes, cette zone protégée vise à protéger la biodiversité unique des îlots de Kerkennah tout en soutenant les communautés locales. La mission de l'AMCP est de garantir la conservation des ressources marines, de promouvoir une pêche durable, et de sensibiliser à l'importance de la protection des écosystèmes marins. En collaborant avec les pêcheurs, les chercheurs, et les institutions, l'AMCP œuvre pour un développement équilibré entre la protection de l'environnement et les besoins socio-économiques de la région.</PageParagraph>
                         
-                        <img src='/images/aire_marines/presentation/img1.jpg'alt="Aire marine" className="w-full max-w-[600px] mx-auto h-auto rounded-lg" />
+                        <img src='/images/aire_marines/presentation/img1.jpg'alt="Aire marine" className="w-full max-w-[600px] mx-auto h-auto rounded-lg shadow-lg" />
                         
                         <TitleParagraphPrersentation doc={tab} />
 

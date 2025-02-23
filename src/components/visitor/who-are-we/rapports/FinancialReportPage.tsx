@@ -5,6 +5,8 @@ import reportHero from "../../../../assets/images/report-hero.jpg";
 import ImageHistoire from '../our-team/ImageHistoire'
 import Table from './Table';
 import TabeFinancement from './TableFinancement';
+import PageParagraph from '../../../atoms/PageParagraph';
+
 
 export default function FinancialReportPage() {
 
@@ -75,7 +77,7 @@ export default function FinancialReportPage() {
             <Sidebar />
 
             <section className='w-fit text-justify text-[22px] flex flex-col gap-10'>
-              <div className='leading-10'>Notre association, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), est profondément enracinée dans la préservation du patrimoine unique de Kerkennah et engagée dans le développement durable. Nos principes et valeurs guident chaque initiative, de la protection de l’environnement à l’inclusion sociale, et reflètent notre vision d’une communauté prospère et autonome.</div>
+              <PageParagraph fontWeight="medium" spacing="normal">Notre association, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), est profondément enracinée dans la préservation du patrimoine unique de Kerkennah et engagée dans le développement durable. Nos principes et valeurs guident chaque initiative, de la protection de l’environnement à l’inclusion sociale, et reflètent notre vision d’une communauté prospère et autonome.</PageParagraph>
               <Table data={dataTable} />
             </section>
           </section>
@@ -83,8 +85,11 @@ export default function FinancialReportPage() {
           <section className='border-t border-black flex flex-col gap-10 pb-10'>
             <div className='flex flex-col gap-'>
             <PageTitle title={<div><span className='text-primary'>Sources</span> de financement</div>} color='text-black' />
-
-            <div className='text-xl font-medium text-center max-w-[850px] mx-auto'>Découvrez les différentes contributions et partenariats financiers qui permettent de concrétiser nos projets et de soutenir nos actions en faveur du développement durable et culturel</div>
+            <div className="text-xl font-medium text-center max-w-[850px] mx-auto">
+              <PageParagraph fontWeight="medium" spacing="normal">
+                <div className='text-xl font-medium text-center max-w-[850px] mx-auto'>Découvrez les différentes contributions et partenariats financiers qui permettent de concrétiser nos projets et de soutenir nos actions en faveur du développement durable et culturel</div>     
+              </PageParagraph>
+            </div>
             </div>
 
             <TabeFinancement data={data} />

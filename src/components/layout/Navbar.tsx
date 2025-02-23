@@ -298,21 +298,7 @@ export const items = [
   {
     label: "Opportunités",
     underlineClassName: "w-[100px]",
-    path:"/en/opportunities",
-    items: [
-      {
-        label: "Offres d'Emplois",
-        path: "/job-offers",
-      },
-      {
-        label: "Appels d'Offres",
-        path: "/tenders",
-      },
-      {
-        label: "Stages",
-        path: "/internships",
-      },
-    ],
+    path:"/opportunities",
   },
   {
     label: "Contact",

@@ -13,6 +13,7 @@ import ImageHistoire from '../our-team/ImageHistoire'
 import Value from './Value'
 import ParagraphTitle from './ParagraphTitle'
 import HeroSection from '../../HeroSection'
+import PageParagraph from '../../../atoms/PageParagraph'
 
 
 const IMAGES = [
@@ -37,16 +38,16 @@ export default function OurValues() {
                     <Sidebar />
 
                     <section className='w-fit text-justify  flex flex-col gap-10 '>
-                        <div className='leading-7'>Notre association, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), est profondément enracinée dans la préservation du patrimoine unique de Kerkennah et engagée dans le développement durable. Nos principes et valeurs guident chaque initiative, de la protection de l’environnement à l’inclusion sociale, et reflètent notre vision d’une communauté prospère et autonome.</div>
+                        <PageParagraph fontWeight="normal" spacing="normal"> Notre association, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), est profondément enracinée dans la préservation du patrimoine unique de Kerkennah et engagée dans le développement durable. Nos principes et valeurs guident chaque initiative, de la protection de l’environnement à l’inclusion sociale, et reflètent notre vision d’une communauté prospère et autonome.</PageParagraph>
                         <img src='/images/principe1.png'alt="Kerkennah Archipelago" className="w-full  h-auto rounded-lg" />
                     
                         <ParagraphTitle title={'Nos principes : '}/>
                             
                             <Value
                                 title={"Durabilité"}
-                                imageUrl={"/images/principes/principe1.png"} titlesrc={"/images/principes/principe3.svg"} 
+                                imageUrl={"/images/principes/principe1.png" } titlesrc={"/images/principes/principe3.svg"} 
                                 description={"Nous sommes déterminés à garantir que toutes nos actions respectent et préservent les ressources naturelles de Kerkennah, afin de transmettre ce patrimoine écologique aux générations futures. En soutenant des pratiques écologiques, nous nous assurons que l’île conserve sa biodiversité et sa beauté pour les années à venir.                    "}/>
-
+                                
                             <Value
                                 title={"Autonomisation de la Communauté"}
                                 imageUrl={"/images/principes/principe2.png"}
@@ -59,7 +60,9 @@ export default function OurValues() {
                                 titlesrc={"/images/principes/principe5.svg"} 
                                 description={"Notre engagement envers la transparence est fondamental pour instaurer une relation de confiance avec la communauté. Nous communiquons de manière claire et honnête sur nos projets et initiatives, garantissant ainsi une gestion éthique et responsable."}   
                             />
-                                <hr className="border-1 w-[272px] sm:w-[650px]" />
+                            <div className="flex justify-items-center mt-4 mb-4" >
+                                <hr className=" border-1 border-[#000000] w-[700px]  mx-auto" />
+                            </div>
                           <ParagraphTitle title={'Valeurs fendamentales : '}/>
                             <Value
                                 title={"Respect des Traditions"}
@@ -79,7 +82,7 @@ export default function OurValues() {
                                 description={"L’AKDDCL favorise un environnement inclusif où chacun, indépendamment de son parcours ou de son origine, trouve sa place. En valorisant la diversité, nous enrichissons notre communauté et construisons un avenir où chacun peut s’épanouir."}     />
                     </section>
                     </section>
-                <section className='border-t border-[#ADA5A5] mb-[100px]'>
+                <section className='border-t border-[#000000] mb-[100px]'>
                     <ImageHistoire />
                 </section>
                 </div>

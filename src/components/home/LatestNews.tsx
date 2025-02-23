@@ -92,7 +92,7 @@ export default function LatestNews() {
         </div>
         <LangLink
           to="/news"
-          className="mt-4 flex justify-center w-full"
+          className="mt-4 flex justify-center w-full pt-10"
         >
           <Button variant="primary">
           Voir tous les actualités

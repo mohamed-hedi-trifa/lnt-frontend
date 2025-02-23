@@ -1,3 +1,4 @@
+import PageParagraph from "@/components/atoms/PageParagraph";
 import React from "react";
 
 // Define the props interface for the Principe component
@@ -20,13 +21,14 @@ const Value: React.FC<ValueProps> = ({ title, description, imageUrl,titlesrc }) 
                 <span className="text-[24px] sm:text-[30px] font-bold">{title}</span>
             </div>
           
-            <div className=" md:text-left  ">
-            <p className=" text-justify leading-7">
-            {description}
-            </p>
+            <div className=" md:text-left mb-6 ">
+          
+              <PageParagraph fontWeight="normal" spacing="normal"> 
+                 {description}
+              </PageParagraph>
         </div>
           <div className="flex justify-start items-center">
-          <img src={imageUrl} alt={title} className=" rounded-lg mt-4 w-full"/>
+          <img src={imageUrl} alt={title} className="w-full max-w-[600px] mx-auto h-auto shadow- rounded-[20px]"/>
           </div>
         </div>
       </div>
