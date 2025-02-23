@@ -10,20 +10,12 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useMediaQuery } from "react-responsive";
 import "./ImageGallery.css";
 
-const ImageGallery = () => {
+const ImageGallery = ({ images = []}: { images: any }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   // Tailwind's "lg" breakpoint starts at 1024px.
   const isDesktop = useMediaQuery({ query: "(min-width: 1024px)" });
 
-  const images = [
-    "/images/formation.png",
-    "/images/definition.png",
-    "/images/groupe.png",
-    "/images/team.png",
-    "/images/formation.png",
-    "/images/definition.png",
-    "/images/team.png",
-  ];
+
 
   return (
     <div className="w-full max-w-[800px] mx-auto">
@@ -40,15 +32,19 @@ const ImageGallery = () => {
         thumbs={{ swiper: thumbsSwiper }}
         className="rounded-xl shadow-lg"
       >
-        {images.map((src, index) => (
-          <SwiperSlide key={index}>
-            <img
-              src={src}
-              alt={`Slide ${index + 1}`}
-              className="w-full h-[400px] object-cover rounded-xl"
-            />
-          </SwiperSlide>
-        ))}
+        {images.length > 0 && (
+          <div>
+            {images.map((item) => (
+              <SwiperSlide key={item.id}>
+                <img
+                  src={`${process.env.GATSBY_API_URL}${item.media_url}`}
+                  alt="evenement"
+                  className="w-full h-[400px] object-cover rounded-xl shadow-helmi"
+                />
+              </SwiperSlide>
+            ))}
+          </div>
+        )}
         <div className="w-full h-full top-0 z-10 absolute flex items-center justify-between">
           <div className="swiper-prev ml-2.5">
             <ChevronLeftIcon className="text-[#3E3232]" />
@@ -74,15 +70,19 @@ const ImageGallery = () => {
             watchSlidesProgress={true}
             className="mt-4"
           >
-            {images.map((src, index) => (
-              <SwiperSlide key={index} className="cursor-pointer">
+       {images.length > 0 && (
+              <div>
+                {images.map((item) => (
+              <SwiperSlide key={item.id} className="cursor-pointer">
                 <img
-                  src={src}
-                  alt={`Thumbnail ${index + 1}`}
+                  src={`${process.env.GATSBY_API_URL}${item.media_url}`}
+                  alt="evenement"
                   className="w-full h-[100px] object-cover rounded-xl"
                 />
               </SwiperSlide>
-            ))}
+                ))}
+                </div>
+              )}
           </Swiper>
           <div className="w-full h-full top-0 left-0 z-50 absolute flex items-center justify-between pointer-events-none">
             <div className="thumb-prev relative z-50 pointer-events-auto">
@@ -107,15 +107,19 @@ const ImageGallery = () => {
             watchSlidesProgress={true}
             className="mt-4"
           >
-            {images.map((src, index) => (
-              <SwiperSlide key={index} className="cursor-pointer">
-                <img
-                  src={src}
-                  alt={`Thumbnail ${index + 1}`}
-                  className="w-full h-[50px] object-cover rounded-xl"
-                />
-              </SwiperSlide>
-            ))}
+            {images.length > 0 && (
+              <div>
+                {images.map((item) => (
+                  <SwiperSlide key={item.id} className="cursor-pointer">
+                    <img
+                      src={`${process.env.GATSBY_API_URL}${item.media_url}`}
+                      alt=""
+                      className="w-full h-[50px] object-cover rounded-xl"
+                    />
+                  </SwiperSlide>
+                ))}
+              </div>
+            )}
           </Swiper>
           <div className="w-full h-full top-0 left-0 z-50 absolute flex items-center justify-between">
             <div className="thumb-prev relative z-50">

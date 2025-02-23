@@ -154,7 +154,6 @@ export default function EventDetails({ params }: { params: any }) {
                         )}
                     </div>
 
-                    {/* Formulaire d'ajout d'event */}
                     <div>
                         <h2 className="text-2xl font-semibold mb-4">Add Partner</h2>
                         <form onSubmit={handleAddEvent} className="flex flex-col sm:flex-row items-center gap-4">
@@ -164,7 +163,7 @@ export default function EventDetails({ params }: { params: any }) {
                                 className="w-full sm:w-1/2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 required
                             >
-                                <option value="">Select an event</option>
+                                <option value="">Select a partner</option>
                                 {event.partnersnotselect.map((partner: any) => (
                                     <option key={partner.id} value={partner.id}>
                                         {partner.name}
