@@ -85,7 +85,9 @@ function Navbar({ location }: { location: any }) {
 
   return (
     <div className="fixed z-30 w-full">
+
       <header className={`w-full px-3  ${isScrolled ? "bg-[linear-gradient(90deg,#51ADC6_0%,_#006E9F_100%)]" : "bg-[linear-gradient(90deg,rgba(81,173,198,0.25)_0%,rgba(0,110,159,0.25)_100%)]"} duration-200`}>
+
         <div className="flex items-center justify-between max-w-7xl mx-auto ">
           <LangLink to="/" className="flex gap-1 items-center">
             <img src="/logo.png" alt="AKDDCL" className="size-14 shrink-0 object-contain drop-shadow-[0px_4px_2px_rgb(0,0,0,.3)]" />
@@ -117,6 +119,7 @@ function Navbar({ location }: { location: any }) {
           </div>
         </div>
       </header>
+
       <nav className={`hidden md:flex items-center w-full h-[50px] px-3 ${isScrolled ? "bg-[rgba(0,0,0,0.7)]" : "bg-[rgba(0,0,0,0.25)]"} duration-200`}>
         <ul className="flex items-center justify-between w-full max-w-7xl mx-auto">
           {items.map((item, index) => {
@@ -263,7 +266,7 @@ export const items = [
       },
       {
         label: "Éditions Précédentes",
-        path: "/our-festival/past",
+        path: "/our-festival/previous",
       },
     ],
   },
@@ -299,6 +302,7 @@ export const items = [
     label: "Opportunités",
     underlineClassName: "w-[100px]",
     path:"/en/opportunities",
+
     items: [
       {
         label: "Offres d'Emplois",

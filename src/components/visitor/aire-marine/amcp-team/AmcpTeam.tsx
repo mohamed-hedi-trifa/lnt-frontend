@@ -1,5 +1,7 @@
+
 import React, { useEffect, useState } from 'react'
 import axios from "axios"
+
 import HeroSection from '../../HeroSection'
 import PageTitle from '@/components/atoms/titles/PageTitle'
 import PageBody from '@/components/PageBody'
@@ -15,7 +17,6 @@ import karimB from "../../../../assets/images/KarimB.png"
 import najahH from "../../../../assets/images/NajahH.png"
 import ahmedYellow from "../../../../assets/images/ahmed-yellow.png"
 import TeamCard from '../../TeamCard'
-
 
 
 const images = [

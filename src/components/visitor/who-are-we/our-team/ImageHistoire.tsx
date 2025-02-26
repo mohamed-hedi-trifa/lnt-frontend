@@ -43,6 +43,7 @@ const ImageHistoire = () => {
     { src: '/images/images_histoire/img2.png' },
     { src: '/images/images_histoire/img3.png' },
     { src: '/images/images_histoire/img4.png' },
+
   ];
 
   const data = [
@@ -55,6 +56,7 @@ const ImageHistoire = () => {
 
   return (
     <div className='images flex justify-center items-center flex-col mt-10'>
+      
       {/* Grid Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 w-full gap-[34px]">
         {images.map((image, index) => (
@@ -77,6 +79,7 @@ const ImageHistoire = () => {
           path={data[4]?.path}
         />
       </div>
+
     </div>
   );
 };

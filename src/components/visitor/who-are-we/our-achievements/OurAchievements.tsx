@@ -12,7 +12,7 @@ export default function OurAchievements() {
     return (
         <div className=''>
             <HeroSection imgSrc={achievementsHero} title="Nos Actions, Notre Impact" subTitle={<div><div>Découvrez les projets qui transforment Kerkennah :</div> des initiatives locales qui protègent, valorisent et inspirent</div>} />
-            <PageTitle title='Our Achievements' width='w-[160px]' />
+            <PageTitle title='Our Achievements' />
             <section className='px-4 sm:px-0'>
                 <div className='max-w-6xl mx-auto'>
                     <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
@@ -27,7 +27,7 @@ export default function OurAchievements() {
                         <AchievementsCards />
                     </section>
 
-                    <section className='border-t border-[#ADA5A5]'>
+                    <section className='border-t border-[#ADA5A5] mb-[100px]'>
                         <ImageHistoire />
                     </section>
                 </div>

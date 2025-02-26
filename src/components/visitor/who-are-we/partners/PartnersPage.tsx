@@ -42,7 +42,7 @@ export default function PartnersPage() {
                     <section>
                     <Partners />
                     </section>
-                    <section className='border-t border-[#ADA5A5]'>
+                    <section className='border-t border-[#ADA5A5] mb-[100px]'>
                         <ImageHistoire />
                     </section>
             </section>

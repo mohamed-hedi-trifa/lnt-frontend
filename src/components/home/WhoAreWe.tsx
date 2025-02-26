@@ -20,7 +20,9 @@ export default function WhoAreWe() {
           </div>
         </article>
         <article className="">
+
           <h2 className="text-primary text-3xl font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
+
             Qui Somme-Nous
           </h2>
           <p className="mt-3 text-2xl md:text-3xl font-bold">Association Kratten du Développement Durable de la Culture et du Loisir</p>
