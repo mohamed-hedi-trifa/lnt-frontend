@@ -41,18 +41,22 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
 
   const formatDateRange = (startDate, endDate) => {
     const options = { day: "numeric", month: "long", year: "numeric" };
-  
+
     const start = new Date(startDate);
     const end = new Date(endDate);
-  
-    const isSameMonth = start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear();
-    
+
+    const isSameYear = start.getFullYear() === end.getFullYear();
+    const isSameMonth = start.getMonth() === end.getMonth() && isSameYear;
+
     if (isSameMonth) {
-      return `Du ${start.getDate()} au ${end.toLocaleDateString("fr-FR", options)}`;
+        return `Du ${start.getDate()} au ${end.toLocaleDateString("fr-FR", options)}`;
+    } else if (isSameYear) {
+        return `Du ${start.getDate()} ${start.toLocaleDateString("fr-FR", { month: "long" })} au ${end.toLocaleDateString("fr-FR", options)}`;
     } else {
-      return `Du ${start.toLocaleDateString("fr-FR", options)} au ${end.toLocaleDateString("fr-FR", options)}`;
+        return `Du ${start.toLocaleDateString("fr-FR", options)} au ${end.toLocaleDateString("fr-FR", options)}`;
     }
-  };
+};
+
 
   
   return (
@@ -67,8 +71,8 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
       <motion.div
         style={{
           position: "sticky",
-          top: 106,                   // pinned from 106px offset
-          height: "calc(100vh - 106px)", // pinned container height
+          top: 106,                 
+          height: "calc(100vh - 106px)", 
           display: "flex",
           overflow: "hidden",
         }}

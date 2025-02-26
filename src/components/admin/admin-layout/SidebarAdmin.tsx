@@ -41,12 +41,15 @@ export default function SidebarAdmin() {
                                     <Link to="/admin/users" className="block p-4 text-gray-300 hover:bg-gray-700">Manage Users</Link>
                                     <Link to="/admin/key-moment" className="block p-4 text-gray-300 hover:bg-gray-700">Key Moments</Link>
                                     <Link to="/admin/team-members" className="block p-4 text-gray-300 hover:bg-gray-700">Team Members</Link>  
+                                    
                                 </>
                             )}
                             {section === 'Notre Festival' && (
                                 <>
                                     <Link to="/admin/edition" className="block p-4 text-gray-300 hover:bg-gray-700">Edition</Link>
                                     <Link to="/admin/events" className="block p-4 text-gray-300 hover:bg-gray-700">Events</Link>
+                                    <Link to="/admin/previous-editions" className="block p-4 text-gray-300 hover:bg-gray-700">Previous Edition</Link>
+                                    <Link to="/admin/previous-event" className="block p-4 text-gray-300 hover:bg-gray-700">Previous Event</Link>
                                 </>
                             )}
                             {section === 'Événements' && (

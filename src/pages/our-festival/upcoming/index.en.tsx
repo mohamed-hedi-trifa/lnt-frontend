@@ -14,189 +14,9 @@ import PastEditionsCarousel from '@/components/visitor/our-festival/PastEditions
 import EventsEditionCards from "@/components/visitor/our-festival/upcoming/EventsEditionCards";
 
 
-const cardData = [
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "Uen soiree musicalen envoutate avec le célébre groupe Seven Skies Band,Offrant une expérience unique melatn rythmes moderens et mélodies envoutates.",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    imageUrl: '/team/Image.png',
-    lien: '/events/event-details/'
-
-
-  },
-];
-
-const cardCarousel = [
-  {
-    date: "Du 01 au 06 août 2024",
-    lieu: 'teKraten, Kerkennahst',
-    description: "Cette édition spéciale a rendu hommage au regretté Farid Khcharem à travers un tournoi qui a célébré la richesse culturelle et les traditions authentiques de Kerkennah. Entre compétitions sportives, rencontres conviviales et moments de partage, cet événement a marqué les esprits en honorant la mémoire d'un grand contributeur au patrimoine local",
-    titre: "Festival de la Culture des Îles Méditerranéennes de Kerkennah( Tournoi du Regretté Farid Khcharem )",
-    properties: 'flex flex-col sm:flex-row',
-    buttonsTitles: 'Explorer',
-    buttonPosition: 'items-end justify-end'
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "ggggggggggggggggggggggggggg",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    properties: 'flex flex-col sm:flex-row',
-    buttonsTitles: 'Explorer',
-    buttonPosition: 'items-end justify-end',
 
 
 
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    properties: 'flex flex-col sm:flex-row',
-    buttonsTitles: 'Explorer',
-    buttonPosition: 'items-end justify-end',
-
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    properties: 'flex flex-col sm:flex-row',
-    buttonsTitles: 'Explorer',
-    buttonPosition: 'items-end justify-end'
-
-
-  },
-  {
-    lieu: 'teKraten, Kerkennahst',
-    date: "Du 01 au 06 août 2024",
-    description: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-    titre: "Spectacle musicale avec Seven Skies Badn ",
-    properties: 'flex flex-col sm:flex-row',
-    buttonsTitles: 'Explorer',
-    buttonPosition: 'items-end justify-end'
-
-
-  },
-
-
-
-
-];
 
 
 const gallery = [
@@ -216,48 +36,29 @@ const gallery = [
 
 ]
 
-const images = [
-  '/festivales_images/img1.jpg',
-  '/festivales_images/img2.jpg',
-  '/festivales_images/img3.jpg',
-  '/festivales_images/img4.jpg',
-  '/festivales_images/img5.jpg',
-  '/festivales_images/img6.jpg',
-  '/festivales_images/img7.jpg',
-  '/festivales_images/img8.jpg',
-  '/festivales_images/img9.jpg',
-  '/festivales_images/img10.jpg',
-  '/festivales_images/img.jpg',
-
-  // "/carousel_images/c1.png",
-  // "/carousel_images/c2.png",
-  // "/carousel_images/c4.png",
-  // "/carousel_images/c5.png",
-  // "/carousel_images/c6.png",
-  // "/carousel_images/c7.png",
-  // "/carousel_images/c8.png",
-  // "/carousel_images/c9.png",
-  // "/carousel_images/c10.png",
-  // "/carousel_images/c11.png",
 
 
-]
 
-const videos = [
-  "/images/images_histoire/img1.png",
-  "/images/images_histoire/img2.png",
-  "/images/images_histoire/img3.png",
-  "/images/images_histoire/img4.png",
-
-]
 
 export default function FestivalVenir() {
   const [edition, setEdition] = useState([]);
+  const [prevEditions, setprevEditions] = useState([]);
+
   const getEdition = async () => {
     try {
       const res = await axios.get("/api/get-current-edition");
       setEdition(res.data);
-      console.log(edition)
+
+    } catch (err) {
+      Swal.fire("Error", err.response?.data?.message || "Failed to fetch Edition", "error");
+    }
+  };
+
+  const getprevEditions = async () => {
+    try {
+      const res = await axios.get("/api/previous-editions");
+      setprevEditions(res.data);
+   
     } catch (err) {
       Swal.fire("Error", err.response?.data?.message || "Failed to fetch Edition", "error");
     }
@@ -266,6 +67,7 @@ export default function FestivalVenir() {
 
   useEffect(() => {
     getEdition();
+    getprevEditions();
   }, []);
   return (
     <div className=''>
@@ -341,7 +143,8 @@ export default function FestivalVenir() {
             <p>Plongez dans l'histoire et les moments marquants des festivales passés qui ont marqué Kerkenah</p>
           </div>
 
-          <PastEditionsCarousel editions={cardCarousel} />
+          <PastEditionsCarousel prevEditions={prevEditions} />
+
 
         </section>
 

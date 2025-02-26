@@ -5,8 +5,10 @@ import ReactLoading from "react-loading"
 import Modal from '../../../Modal';
 import Title from '../../../atoms/titles/Title';
 import { Link } from 'gatsby';
-import { FacebookOutlined, LinkedIn } from '@mui/icons-material';
+import { FacebookOutlined, Instagram, LinkedIn } from '@mui/icons-material';
 import { X } from '@mui/icons-material';
+import InstagramIcon from '@/assets/icons/InstagramIcon';
+import InstagramIconStyle2 from '@/assets/icons/InstagramIconStyle2';
 
 export default function PartnerModal({ partner, toview, show, hide }: { partner: any, toview: any, show: boolean, hide: () => void }) {
 
@@ -22,30 +24,36 @@ export default function PartnerModal({ partner, toview, show, hide }: { partner:
                         src={`${process.env.GATSBY_API_URL}${partner.image}`}
                         alt={`Partner`}
                     /></div>
-                    <div>{partner.description}</div>
+                    <div>{partner.description_en || partner.description_fr}</div>
                     <div className='flex gap-2 items-center'>
                         <Title>Site Web:</Title>
                         <Link to={partner.websiteLink} >
-                        <h1 className='text'>
-                        {partner.websiteLink}
-                        </h1>
-                      </Link>
+                            <h1 className='text'>
+                                {partner.websiteLink}
+                            </h1>
+                        </Link>
                     </div>
                     <div className='flex gap-4 items-center'>
                         {partner.facebookLink && (
-                            <Link to={partner.facebookLink} className='text-[48px] flex items-center'>
-                                <FacebookOutlined fontSize='inherit' className='text-blue-500' />
+                            <Link to={partner.facebookLink} className='text-[48px] flex items-center '>
+                                <FacebookOutlined fontSize='inherit' className='text-blue-500 w-full' />
+                            </Link>
+                        )}
+
+                        {partner.instagramLink && (
+                            <Link to={partner.instagramLink} className='text-[48px] flex items-center '>
+                                <InstagramIconStyle2 />
                             </Link>
                         )}
 
                         {partner.xLink && (
-                            <Link className='bg-black h-[40px] w-[40px] flex justify-center items-center rounded-full' to={partner.xLink}>
+                            <Link className='bg-black h-[40px] w-[40px] flex justify-center items-center ' to={partner.xLink}>
                                 <X fontSize='medium' className='text-white' />
                             </Link>
                         )}
 
                         {partner.linkedinLink && (
-                            <Link to={partner.linkedinLink} className='flex items-center text-[48px]'>
+                            <Link to={partner.linkedinLink} className='flex items-center text-[48px] '>
                                 <LinkedIn className='text-[#007EBB]' fontSize='inherit' />
                             </Link>
                         )}

@@ -263,7 +263,7 @@ export const items = [
       },
       {
         label: "Éditions Précédentes",
-        path: "/our-festival/past",
+        path: "/our-festival/previous",
       },
     ],
   },
