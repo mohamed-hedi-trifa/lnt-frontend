@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+@layer components {
+  .text-shadow {
+    text-shadow: 0px 3px 3px rgb(0, 0, 0, 0.3);
+  }
+}
+
+.markdown-link {
+  @apply text-primary;
+}
+
+@property --color1 {
+  syntax: '<color>';
+  initial-value: #EBEBEB;
+  inherits: false;
+}
+
+@property --color2 {
+  syntax: '<color>';
+  initial-value: #D0D0D0;
+  inherits: false;
+}
+
+@property --color3 {
+  syntax: '<color>';
+  initial-value: #51ADC6;
+  inherits: false;
+}
+
+@property --color4 {
+  syntax: '<color>';
+  initial-value: #006E9F;
+  inherits: false;
+}
+
+.gradient-transition {
+  background: linear-gradient(90deg, var(--color1) 0%, var(--color2) 100%);
+  transition: --color1 0.3s ease-in-out, --color2 0.3s ease-in-out;
+}
+
+.gradient-active {
+  --color1: #51ADC6;
+  --color2: #006E9F;
+}
