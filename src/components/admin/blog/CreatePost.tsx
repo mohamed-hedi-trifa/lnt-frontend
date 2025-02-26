@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Link, navigate } from "gatsby";
-import ItemsList from "./ItemsList";
+import ItemsList from "../ItemsList";
 import Input from "../../atoms/inputs/Input";
 import Textarea from "../../atoms/inputs/Textarea";
 import Button from "../../atoms/Button";
@@ -321,6 +321,10 @@ const CreatePost: React.FC = () => {
             setItems={language === "en" ? setEnglishItems : setFrenchItems}
             language={language}
             key={language}
+<<<<<<< HEAD
+=======
+            route = "/api/content-items"
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
           />
         ) : (
           <div className="shadow p-4">There is no content currently, add new content by clicking one of the buttons below</div>

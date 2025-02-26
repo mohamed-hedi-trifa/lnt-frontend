@@ -30,7 +30,7 @@ export default function OurValues() {
     return (
         <div className=''>
             <HeroSection title='Nos Principes : Notre Boussole' subTitle="Des valeurs fortes guident notre mission : tradition, inclusion, transparence, et collaboration pour un avenir durable" imgSrc={valuesHero} />
-            <PageTitle title='Our Values' width='w-[160px]' />
+            <PageTitle title='Our Values' />
             <section className='px-4 sm:px-0'>
                 <div className='max-w-6xl mx-auto'>
                     <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
@@ -79,7 +79,7 @@ export default function OurValues() {
                                 description={"L’AKDDCL favorise un environnement inclusif où chacun, indépendamment de son parcours ou de son origine, trouve sa place. En valorisant la diversité, nous enrichissons notre communauté et construisons un avenir où chacun peut s’épanouir."}     />
                     </section>
                     </section>
-                <section className='border-t border-[#ADA5A5]'>
+                <section className='border-t border-[#ADA5A5] mb-[100px]'>
                     <ImageHistoire />
                 </section>
                 </div>

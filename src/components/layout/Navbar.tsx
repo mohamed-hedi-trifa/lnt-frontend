@@ -44,27 +44,27 @@ interface NavItem {
   dropdown?: any;
 }
 
-// Translation object for the navbar
-const translations = {
-  en: [
-    { name: "Home", path: "/" },
-    { name: "About us", path: "/about/" },
-    { name: "Activities", path: "/activities/" },
-    { name: "Protected armarine", path: "/protected-armarine/" },
-    { name: "Festivals", path: "/festivals/" },
-    { name: "Contact", path: "/contact/" },
-    { name: "Blog", path: "/blog/" },
-  ],
-  fr: [
-    { name: "Accueil", path: "/" },
-    { name: "À propos", path: "/about/" },
-    { name: "Activities", path: "/activities/" },
-    { name: "Protégé armarine", path: "/protected-armarine/" },
-    { name: "Festivals", path: "/festivals/" },
-    { name: "Contact", path: "/contact/" },
-    { name: "Blog", path: "/blog/" },
-  ],
-};
+// // Translation object for the navbar
+// const translations = {
+//   en: [
+//     { name: "Home", path: "/" },
+//     { name: "About us", path: "/about/" },
+//     { name: "Activities", path: "/activities/" },
+//     { name: "Protected armarine", path: "/protected-armarine/" },
+//     { name: "Festivals", path: "/festivals/" },
+//     { name: "Contact", path: "/contact/" },
+//     { name: "Blog", path: "/blog/" },
+//   ],
+//   fr: [
+//     { name: "Accueil", path: "/" },
+//     { name: "À propos", path: "/about/" },
+//     { name: "Activities", path: "/activities/" },
+//     { name: "Protégé armarine", path: "/protected-armarine/" },
+//     { name: "Festivals", path: "/festivals/" },
+//     { name: "Contact", path: "/contact/" },
+//     { name: "Blog", path: "/blog/" },
+//   ],
+// };
 
 function Navbar({ location }: { location: any }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -85,7 +85,11 @@ function Navbar({ location }: { location: any }) {
 
   return (
     <div className="fixed z-30 w-full">
+<<<<<<< HEAD
       <header className={`w-full px-3 bg-slate-900 ${isScrolled ? "" : "bg-opacity-25"} duration-200`}>
+=======
+      <header className={`w-full px-3  ${isScrolled ? "bg-[linear-gradient(90deg,#51ADC6_0%,_#006E9F_100%)]" : "bg-[linear-gradient(90deg,rgba(81,173,198,0.25)_0%,rgba(0,110,159,0.25)_100%)]"} duration-200`}>
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
         <div className="flex items-center justify-between max-w-7xl mx-auto ">
           <LangLink to="/" className="flex gap-1 items-center">
             <img src="/logo.png" alt="AKDDCL" className="size-14 shrink-0 object-contain drop-shadow-[0px_4px_2px_rgb(0,0,0,.3)]" />
@@ -117,7 +121,11 @@ function Navbar({ location }: { location: any }) {
           </div>
         </div>
       </header>
+<<<<<<< HEAD
       <nav className={`hidden md:flex items-center w-full h-[50px] px-3 bg-slate-700 ${isScrolled ? "" : "bg-opacity-50"} duration-200`}>
+=======
+      <nav className={`hidden md:flex items-center w-full h-[50px] px-3 ${isScrolled ? "bg-[rgba(0,0,0,0.7)]" : "bg-[rgba(0,0,0,0.25)]"} duration-200`}>
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
         <ul className="flex items-center justify-between w-full max-w-7xl mx-auto">
           {items.map((item, index) => {
             if (item.items) {
@@ -263,7 +271,11 @@ export const items = [
       },
       {
         label: "Éditions Précédentes",
+<<<<<<< HEAD
         path: "/our-festival/past",
+=======
+        path: "/our-festival/previous",
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
       },
     ],
   },
@@ -298,6 +310,10 @@ export const items = [
   {
     label: "Opportunités",
     underlineClassName: "w-[100px]",
+<<<<<<< HEAD
+=======
+    path:"/en/opportunities",
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
     items: [
       {
         label: "Offres d'Emplois",

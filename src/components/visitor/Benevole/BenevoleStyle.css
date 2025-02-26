@@ -1,0 +1,14 @@
+.custom-time-input::-webkit-calendar-picker-indicator {
+    display: none !important;
+    -webkit-appearance: none;
+  }
+  
+  .custom-time-input::-webkit-inner-spin-button,
+  .custom-time-input::-webkit-clear-button {
+    display: none !important;
+  }
+  
+  .custom-time-input::-moz-focus-inner {
+    border: 0;
+  }
+  

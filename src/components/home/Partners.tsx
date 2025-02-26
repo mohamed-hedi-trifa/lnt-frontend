@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
+<<<<<<< HEAD
 import { SwiperOptions } from "swiper/types";
+=======
+import Carousel from "./Carousel";
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
 
 type Partner = {
   image?: string;
@@ -40,6 +44,7 @@ const defaultPartners: Partner[] = [
 ];
 
 export default function Partners() {
+<<<<<<< HEAD
   const [partners, setPartners] = useState(defaultPartners);
   const swiperRef = useRef<any>(null);
 
@@ -56,6 +61,8 @@ export default function Partners() {
 
     swiperRef.current?.initialize();
   }, []);
+=======
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
 
   return (
     <section className="relative px-3 py-20 bg-slate-900 overflow-hidden">
@@ -65,7 +72,11 @@ export default function Partners() {
       <div className="absolute right-0 translate-x-1/3 top-1/2 -translate-y-1/2 w-[400px] aspect-square opacity-60">
         <img src="/spot.png" alt="" className="w-full h-full object-contain" />
       </div>
+<<<<<<< HEAD
       <div className="max-w-4xl mx-auto">
+=======
+      <div className="max-w-5xl mx-auto">
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
         <h2 className="text-white text-center font-bold text-3xl">Avec qui nous sommes engagés...</h2>
         <p className="mt-4 text-white text-center md:text-base leading-7">
           L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL) s'associe à des partenaires locaux et internationaux qui partagent
@@ -73,6 +84,7 @@ export default function Partners() {
           événements culturels et préservons le patrimoine de la région de Kerkennah, notamment à travers l'aire marine protégée. Cette collaboration renforce
           notre impact et aide à protéger notre environnement marin tout en enrichissant notre communauté.
         </p>
+<<<<<<< HEAD
         {/* <div className="mt-8 grid grid-cols-3 md:grid-cols-5 gap-10 place-items-center">
           {partners.map((partner, index) => (
             <div key={index} className="h-20">
@@ -87,6 +99,12 @@ export default function Partners() {
             </swiper-slide>
           ))}
         </swiper-container>
+=======
+
+        <div className="mt-10">
+        <Carousel slides={defaultPartners} />
+        </div>
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
       </div>
     </section>
   );

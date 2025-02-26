@@ -29,7 +29,7 @@ export default function Presentation() {
             <HeroSection title="Protéger Nos Océans pour Demain" subTitle="Un réseau d’aires marines dédiées à la conservation des écosystèmes et à la préservation des ressources pour les générations futures." imgSrc={achievementsHero} />
             <PageTitle
                 title="Présentation"
-                width="w-[160px]" />
+                 />
 
             <section className='px-4 sm:px-0'>
                 <div className='max-w-6xl mx-auto'>

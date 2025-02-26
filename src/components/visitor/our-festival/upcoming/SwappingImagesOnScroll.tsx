@@ -1,7 +1,11 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+<<<<<<< HEAD
 export default function PinnedImageSwap() {
+=======
+export default function PinnedImageSwap({ edition }: { edition: any }) {
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // 1) Scroll progress for this section
@@ -38,6 +42,30 @@ export default function PinnedImageSwap() {
     [0, trackHeight - handleHeight]
   );
 
+<<<<<<< HEAD
+=======
+
+  const formatDateRange = (startDate, endDate) => {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const isSameYear = start.getFullYear() === end.getFullYear();
+    const isSameMonth = start.getMonth() === end.getMonth() && isSameYear;
+
+    if (isSameMonth) {
+        return `Du ${start.getDate()} au ${end.toLocaleDateString("fr-FR", options)}`;
+    } else if (isSameYear) {
+        return `Du ${start.getDate()} ${start.toLocaleDateString("fr-FR", { month: "long" })} au ${end.toLocaleDateString("fr-FR", options)}`;
+    } else {
+        return `Du ${start.toLocaleDateString("fr-FR", options)} au ${end.toLocaleDateString("fr-FR", options)}`;
+    }
+};
+
+
+  
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
   return (
     <section
       ref={sectionRef}
@@ -50,8 +78,13 @@ export default function PinnedImageSwap() {
       <motion.div
         style={{
           position: "sticky",
+<<<<<<< HEAD
           top: 106,                   // pinned from 106px offset
           height: "calc(100vh - 106px)", // pinned container height
+=======
+          top: 106,                 
+          height: "calc(100vh - 106px)", 
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
           display: "flex",
           overflow: "hidden",
         }}
@@ -61,7 +94,11 @@ export default function PinnedImageSwap() {
         <div style={{ position: "relative", height: "100%" }} className="shrink-0 w-[525px]">
           {/* SECOND IMAGE (BEHIND) */}
           <motion.img
+<<<<<<< HEAD
             src="/eponge_marine.jpg"
+=======
+                     src={`${process.env.GATSBY_API_URL}${edition?.image_affiche2}`}
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
             alt="Second"
             style={{
               position: "absolute",
@@ -75,7 +112,11 @@ export default function PinnedImageSwap() {
           />
           {/* FIRST IMAGE (ON TOP) */}
           <motion.img
+<<<<<<< HEAD
             src="/avifaunes.jpg"
+=======
+            src={`${process.env.GATSBY_API_URL}${edition?.image_affiche1}`}
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
             alt="First"
             style={{
               position: "absolute",
@@ -110,6 +151,7 @@ export default function PinnedImageSwap() {
           >
             <div>
               <h1 style={{ margin: "1rem 0 0 0", fontSize: "2rem", fontWeight: "bold" }}>
+<<<<<<< HEAD
                 Une Nouvelle Édition Du Festival Vous Attend (Partie 1)
               </h1>
               <p style={{ marginTop: "1rem" }}>
@@ -117,6 +159,15 @@ export default function PinnedImageSwap() {
               </p>
               <p style={{ marginTop: "1rem", fontWeight: "bold" }}>
                 Date: Du 1er au 6 août 2024
+=======
+                {edition.titre_affiche1_en || edition.titre_affiche1_fr }
+              </h1>
+              <p style={{ marginTop: "1rem" }}>
+              {edition.desciption_affich1_en || edition.desciption_affich1_fr }
+              </p>
+              <p style={{ marginTop: "1rem", fontWeight: "bold" }}>
+                Date:  {formatDateRange(edition.start_date, edition.end_date)}
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
               </p>
             </div>
           </motion.div>
@@ -132,6 +183,7 @@ export default function PinnedImageSwap() {
           >
             <div>
               <h1 style={{ margin: "1rem 0 0 0", fontSize: "2rem", fontWeight: "bold" }}>
+<<<<<<< HEAD
                 Une Nouvelle Édition Du Festival Vous Attend (Partie 2)
               </h1>
               <p style={{ marginTop: "1rem" }}>
@@ -139,6 +191,15 @@ export default function PinnedImageSwap() {
               </p>
               <p style={{ marginTop: "1rem", fontWeight: "bold" }}>
                 Date: Du 1er au 6 août 2025
+=======
+              {edition.titre_affiche2_en || edition.titre_affiche2_fr }
+              </h1>
+              <p style={{ marginTop: "1rem" }}>
+              {edition.desciption_affich2_en || edition.desciption_affich2_fr }
+              </p>
+              <p style={{ marginTop: "1rem", fontWeight: "bold" }}>
+                Date: {formatDateRange(edition.start_date, edition.end_date)}
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
               </p>
             </div>
           </motion.div>

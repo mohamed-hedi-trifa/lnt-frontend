@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 import React, { useState } from 'react'
+=======
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
 import CarouselCard from '@/components/visitor/our-festival/CarouselCard';
 import ListCardFestivales from '@/components/visitor/our-festival/ListCardsFestival';
 import HeroSection from '@/components/visitor/HeroSection';
@@ -8,6 +14,7 @@ import Partners from '@/components/visitor/who-are-we/partners/Partners';
 import PinnedImageSwap from '@/components/visitor/our-festival/upcoming/SwappingImagesOnScroll';
 import ImageGallery from '@/components/visitor/ImageGallery';
 import Media from '@/components/visitor/Media';
+<<<<<<< HEAD
 
 
 const cardData = [
@@ -188,11 +195,19 @@ const cardCarousel = [
 
 
   },
+=======
+import PastEditionsCarousel from '@/components/visitor/our-festival/PastEditionsCarousel';
+import EventsEditionCards from "@/components/visitor/our-festival/upcoming/EventsEditionCards";
+
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
 
 
 
 
+<<<<<<< HEAD
 ];
+=======
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
 
 
 const gallery = [
@@ -212,6 +227,7 @@ const gallery = [
 
 ]
 
+<<<<<<< HEAD
 const images = [
   '/festivales_images/img1.jpg',
   '/festivales_images/img2.jpg',
@@ -249,6 +265,41 @@ const videos = [
 
 export default function FestivalVenir() {
 
+=======
+
+
+
+
+export default function FestivalVenir() {
+  const [edition, setEdition] = useState([]);
+  const [prevEditions, setprevEditions] = useState([]);
+
+  const getEdition = async () => {
+    try {
+      const res = await axios.get("/api/get-current-edition");
+      setEdition(res.data);
+
+    } catch (err) {
+      Swal.fire("Error", err.response?.data?.message || "Failed to fetch Edition", "error");
+    }
+  };
+
+  const getprevEditions = async () => {
+    try {
+      const res = await axios.get("/api/previous-editions");
+      setprevEditions(res.data);
+   
+    } catch (err) {
+      Swal.fire("Error", err.response?.data?.message || "Failed to fetch Edition", "error");
+    }
+  };
+
+
+  useEffect(() => {
+    getEdition();
+    getprevEditions();
+  }, []);
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
   return (
     <div className=''>
 
@@ -261,16 +312,24 @@ export default function FestivalVenir() {
       <div className='w-full  flex items-center  justify-center  p-4'>
         <section className='max-w-7xl'>
           <div style={{ display: "" }}></div>
+<<<<<<< HEAD
           <PageTitle title={<div className=''><span className='block leading-[55px]'>Festival de La Culture des iles Méditerranéees</span> <span className='block leading-[55px]'>(Edition 2025)</span></div>} />
           <p className='text-[24px] sm:text-[32px] text-[#0270A0] text-center font-semibold my-4'>Tournoi du regretté Farid Khcharem</p>
 
           <PinnedImageSwap />
+=======
+          <PageTitle title={<div className=''><span className='block leading-[55px]'>Festival de La Culture des iles Méditerranéees</span> <span className='block leading-[55px]'>(Edition {edition.year})</span></div>} />
+          <p className='text-[24px] sm:text-[32px] text-[#0270A0] text-center font-semibold my-4'>{edition.name_en || edition.name_fr}</p>
+
+          <PinnedImageSwap edition={edition} />
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
 
           <div className='flex justify-center flex-col items-center'>
             <Title size='text-[36px]'><span className='text-primary'>Programme</span> du Festival</Title>
             <div className='font-semibold'>Explorez les moments forts et les activités qui rythmeront cette édition unique du festival</div>
           </div>
 
+<<<<<<< HEAD
           <ListCardFestivales
             cards={cardData}
             hiddenPagiation='block'
@@ -280,6 +339,16 @@ export default function FestivalVenir() {
             properties={''}
             buttonPosition={''}
           />
+=======
+          <div className="grid sm:grid-cols-3 items-center justify-center px-4 sm:px-0 mt-5">
+            {edition?.events?.map((event, index) => (
+              <EventsEditionCards key={index} event={event} />
+            ))}
+          </div>
+
+
+
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
 
           <hr className='border-2 my-20 border-[#ADA5A5]' />
 
@@ -296,7 +365,11 @@ export default function FestivalVenir() {
           </div>
 
           <div className='mt-12'>
+<<<<<<< HEAD
             <Partners />
+=======
+            <Partners partners={edition.partners}/>
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
           </div>
 
           <div className=' text-center my-10'>
@@ -310,7 +383,11 @@ export default function FestivalVenir() {
             <p>sélection captivante de photos et vidéos </p>
           </div>
 
+<<<<<<< HEAD
           <Media />
+=======
+          <Media edition={edition} />
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
 
           <hr className='mb-[50px] mt-[80px] border-black' />
 
@@ -321,10 +398,18 @@ export default function FestivalVenir() {
           </div>
 
           <div className='text-center text-[18px] sm:text-[20px] font-semibold leading-[30px] mt-5 mb-10 max-w-[876px] mx-auto'>
+<<<<<<< HEAD
             <p>Plongez dans l'histoire et les moments marquants des festivales passés qui ont marqué Kerkenah </p>
           </div>
 
           <CarouselCard cards={cardCarousel} />
+=======
+            <p>Plongez dans l'histoire et les moments marquants des festivales passés qui ont marqué Kerkenah</p>
+          </div>
+
+          <PastEditionsCarousel prevEditions={prevEditions} />
+
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
 
         </section>
 

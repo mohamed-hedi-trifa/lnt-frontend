@@ -9,7 +9,7 @@ import Title from "../../atoms/titles/Title";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Select from "../../atoms/inputs/Select";
 // ✅ Use your dnd-kit ItemsList
-import ItemsList from "./ItemsList";
+import ItemsList from "../ItemsList";
 // ...
 import { v4 as uuidv4 } from "uuid";
 
@@ -320,7 +320,13 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
             handleItemContentChange={handleItemContentChange}
             items={language === "en" ? englishItems : frenshItems}
             setItems={language === "en" ? setEnglishItems : setFrenshItems} language={language}
+<<<<<<< HEAD
             key={language}         />
+=======
+            key={language} 
+            route = "/api/content-items"
+                    />
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
         ) : (
           <div className="shadow p-4">
             There is no content currently, add new content by clicking one of the buttons below

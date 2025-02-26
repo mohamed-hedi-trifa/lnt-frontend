@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import React from 'react'
+=======
+import React, { useEffect, useState } from 'react'
+import axios from "axios"
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
 import HeroSection from '../../HeroSection'
 import PageTitle from '@/components/atoms/titles/PageTitle'
 import PageBody from '@/components/PageBody'
@@ -15,50 +20,6 @@ import najahH from "../../../../assets/images/NajahH.png"
 import ahmedYellow from "../../../../assets/images/ahmed-yellow.png"
 import TeamCard from '../../TeamCard'
 
-const TEAM = [
-    {
-        name: "Ahmed SOUISSI",
-        position: "Président ",
-        job: "“Administrateur de la sécuritésociale”",
-        img: ahmedYellow
-    },
-    {
-        name: "Kareem BEN CHEIKHA",
-        position: "Vice-président",
-        job: "“Artiste plasticien”",
-        img: karimB
-    },
-    {
-        name: "Jamil KHCHAREM",
-        position: "Trésorier",
-        job: "“Administrateur postal”",
-        img: jamilK
-    },
-    {
-        name: "Hakim SOUISSI",
-        position: "Trésorier adjoint",
-        job: "“Chauffeur de taxi”",
-        img: hakimS
-    },
-    {
-        name: "Habib KHCHAREM",
-        position: "Secrétaire général",
-        job: "“Enseignant”",
-        img: habibK
-    },
-    {
-        name: "Fatma BEN CHEIKHA",
-        position: "Secrétaire générale adjointe",
-        job: "“Professeure de jeunesse”",
-        img: fatmaB
-    },
-    {
-        name: "Najah HDIDAR ",
-        position: "Membre chargé du secteur de la pêche traditionnelle",
-        job: "“pêcheur”",
-        img: najahH
-    },
-]
 
 const images = [
     {
@@ -74,6 +35,23 @@ const images = [
 ]
 
 export default function AmcpTeam() {
+    const [teamMembers, setTeamMembers] = useState([]);
+    const [loading, setLoading] = useState(true); // Define loading state
+
+
+    useEffect(() => {
+        axios.get("/api/team-members/")
+            .then(res => {
+                setTeamMembers(res.data);
+
+                console.log(teamMembers.length)
+                setLoading(false); // Set loading to false after fetching
+            })
+            .catch(err => {
+                console.error("Error fetching team members:", err);
+                setLoading(false);
+            });
+    }, []);
     return (
         <main>
             <HeroSection title="Les Gardiens de Nos Écosystèmes Marins" subTitle="Découvrez l’équipe dédiée à la protection et à la gestion durable de l’Aire Marine et Côtière Protégée de Kerkennah" imgSrc={achievementsHero} />
@@ -87,10 +65,20 @@ export default function AmcpTeam() {
                         <PageParagraph>Derrière chaque initiative de l’Aire Marine et Côtière Protégée de Kerkennah se trouve une équipe passionnée, unie par un engagement commun : préserver les trésors écologiques de l’archipel et soutenir les communautés locales qui en dépendent. Ce collectif rassemble des experts dans divers domaines — biologie marine, gestion environnementale, éducation et sensibilisation — ainsi que des bénévoles animés par la volonté de faire une différence.</PageParagraph>
                         <PageParagraph>Leur travail ne se limite pas à la recherche scientifique : ils collaborent étroitement avec les pêcheurs, les associations locales et les institutions nationales et internationales pour créer un modèle de gestion durable. Ensemble, ils relèvent des défis tels que la protection des espèces menacées, la lutte contre la pêche illégale et l’éducation des générations futures.</PageParagraph>
                         <div className='grid grid-cols-1 sm:grid-cols-3 gap-6'>
-                                {TEAM.map((member) =>
-                                    <TeamCard member={member} />
+                            <>
+                                {/* Show loading state if data is still being fetched */}
+                                {loading ? (
+                                    <p>Loading...</p>
+                                ) : (
+                                    <>
+
+                                  
+                                        {/* Display fetched team members */}
+                                        {teamMembers.map((member) => <TeamCard  member={member} />)}
+                                    </>
                                 )}
-                            </div>
+                            </>
+                        </div>
 
                     </section>
                 </section>
