@@ -26,17 +26,17 @@ const FestivalCardCarousel: React.FC<CardProps> = ({ titre, description, lieu, d
 
                 <hr className='' />
                 <div className="flex justify-between">
-                    <div className="flex flex-col gap-2.5">
+                    <div className="flex flex-col gap-2.5 text-start ">
                         <div className=" text-[14px] sm:text-[16px]">
-                            <span className=" font-bold text-[#0270A0] ">Lieu:</span> {lieu}
+                            <span className=" font-bold text-[#0270A0]  ">Lieu:</span> {lieu}
                         </div>
                         <div className=" text-[14px] sm:text-[16px]">
                             <span className=" font-bold text-[#0270A0]">Date:</span> {date}
                         </div>
                     </div>
-                    <Link to={`our-festival/previous/${slug}`}>
+                    <Link to={`/our-festival/previous/${slug}`}>
                         <button className="px-8 py-3 my-4 bg-gradient-to-r from-[#51ADC6] to-[#006E9F] cursor-pointer text-white font-bold rounded-full hover:shadow-lg transition duration-300 ">
-                            Explorer {slug}
+                            Explorer 
                         </button>
                     </Link>
                 </div>

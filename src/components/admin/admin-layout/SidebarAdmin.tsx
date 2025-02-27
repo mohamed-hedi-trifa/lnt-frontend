@@ -24,14 +24,14 @@ export default function SidebarAdmin() {
             </Link>
 
             {user?.role == 1 && (
-                ['Prtners','Qi Sommesu-Nous', 'Air Marine et Côtière Protégée', 'Notre Festival', 'Actualités', 'Événements', 'Opportunités'].map((section, index) => (
+                ['Prtners', 'Qi Sommesu-Nous', 'Air Marine et Côtière Protégée', 'Notre Festival', 'Actualités', 'Événements', 'Opportunités'].map((section, index) => (
                     <Accordion key={index} open={openSection === section}>
                         <AccordionHeader onClick={() => toggleSection(section)} className="p-4 text-white bg-gray-700 flex items-center">
                             <PhotoIcon className="h-6 w-6" aria-hidden="true" />
                             <span className="ml-2">{section}</span>
                         </AccordionHeader>
                         <AccordionBody className="bg-gray-900">
-                        {section === 'Prtners' && (
+                            {section === 'Prtners' && (
                                 <>
                                     <Link to="/admin/partners" className="block p-4 text-gray-300 hover:bg-gray-700">Partners</Link>
                                 </>
@@ -40,12 +40,13 @@ export default function SidebarAdmin() {
                                 <>
                                     <Link to="/admin/users" className="block p-4 text-gray-300 hover:bg-gray-700">Manage Users</Link>
                                     <Link to="/admin/key-moment" className="block p-4 text-gray-300 hover:bg-gray-700">Key Moments</Link>
-                                    <Link to="/admin/team-members" className="block p-4 text-gray-300 hover:bg-gray-700">Team Members</Link>  
-                                    
+                                    <Link to="/admin/team-members" className="block p-4 text-gray-300 hover:bg-gray-700">Team Members</Link>
+
                                 </>
                             )}
                             {section === 'Notre Festival' && (
                                 <>
+
                                     <Link to="/admin/edition" className="block p-4 text-gray-300 hover:bg-gray-700">Edition</Link>
                                     <Link to="/admin/events" className="block p-4 text-gray-300 hover:bg-gray-700">Events</Link>
                                     <Link to="/admin/previous-editions" className="block p-4 text-gray-300 hover:bg-gray-700">Previous Edition</Link>
@@ -54,6 +55,8 @@ export default function SidebarAdmin() {
                             )}
                             {section === 'Événements' && (
                                 <>
+
+                                    <Link to="/admin/event-type" className="block p-4 text-gray-300 hover:bg-gray-700">Events Types</Link>
                                     <Link to="/admin/events" className="block p-4 text-gray-300 hover:bg-gray-700">Events</Link>
                                 </>
                             )}
