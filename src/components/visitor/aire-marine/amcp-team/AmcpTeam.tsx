@@ -73,7 +73,7 @@ export default function AmcpTeam() {
                     </section>
                 </section>
 
-                <section className='border-t border-black sm:pb-10 pb-10 '/>
+                <section className='border-t border-black pb-10 '/>
                 <section className='flex items-start justify-center '>
 
                     <div className='w-full flex items-center justify-center mb-20 '>

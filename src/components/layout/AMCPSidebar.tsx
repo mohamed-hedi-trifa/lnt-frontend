@@ -211,10 +211,10 @@ const defaultItems = [
   },
   {
     label: "Formation et Campement Scientifique",
-    path: "/formation",
+    path: "/protected-air-marine-coastal-areas/training",
   },
   {
     label: "L’équipe",
-    path: "/team",
+    path: "/protected-air-marine-coastal-areas/team",
   },
 ];
