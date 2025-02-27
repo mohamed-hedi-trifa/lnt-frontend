@@ -16,10 +16,10 @@ export default function Media({edition} : {edition: any}) {
       </div>
 
       {media == "photos" ? <div className="">
-        <ImageGallery images={edition.images} />
+        <ImageGallery images={edition?.images} />
       </div> :
         <div>
-        <VideoGallery videos={edition.videos}/>
+        <VideoGallery videos={edition?.videos}/>
         </div>}
     </div>
   )

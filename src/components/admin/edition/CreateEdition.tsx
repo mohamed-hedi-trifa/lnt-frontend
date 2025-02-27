@@ -12,7 +12,6 @@ import Select from "../../atoms/inputs/Select";
 import ReactLoading from "react-loading";
 import { toast } from "react-toastify";
 import useLocalStorage from "@/lib/useLocalStorage";
-import { v4 as uuidv4 } from "uuid";
 
 interface FormData {
     year: string;

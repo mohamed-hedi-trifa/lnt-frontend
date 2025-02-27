@@ -128,7 +128,7 @@ export default function Partners() {
                         ) : (
                             <div className="flex flex-col gap-4 items-center justify-center text-center h-[25vh]">
                                 <InboxIcon className="block h-20 w-20" aria-hidden="true" />
-                                <h3 className="text-2xl font-bold">Theres no Key moments</h3>
+                                <h3 className="text-2xl font-bold">Theres no Partner</h3>
                             </div>
                         )}
                     </div>

@@ -321,7 +321,9 @@ const CreatePost: React.FC = () => {
             setItems={language === "en" ? setEnglishItems : setFrenchItems}
             language={language}
             key={language}
+
             route = "/api/content-items"
+
           />
         ) : (
           <div className="shadow p-4">There is no content currently, add new content by clicking one of the buttons below</div>

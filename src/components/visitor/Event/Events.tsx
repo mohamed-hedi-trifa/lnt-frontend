@@ -18,7 +18,7 @@ export default function Events() {
       <section className="my-5 text-center max-w-7xl mx-auto w-full  mt-20 px-5 ">
         <PageTitle title='Événements' />
         <PageParagraph fontWeight="font-semibold" spacing="leading-[1.4]">
-          Bienvenue dans notre espace dédié aux événements qui rythment la vie culturelle, éducative et sportive de l’archipel de Kerkennah. Qu’il s’agisse d’ateliers inspirants, de festivals mémorables ou d’activités sportives, chaque événement est une opportunité de célébrer la diversité et la richesse de notre communauté.</PageParagraph>
+          Bienvenue dans notre espace dédié aux événements qui rythment la vie culturelle, éducative et sportive de l'archipel de Kerkennah. Qu’il s’agisse d’ateliers inspirants, de festivals mémorables ou d’activités sportives, chaque événement est une opportunité de célébrer la diversité et la richesse de notre communauté.</PageParagraph>
 
       </section>
 
@@ -42,7 +42,8 @@ export default function Events() {
         style={{
           backgroundImage: "linear-gradient(30deg, rgba(135, 208, 228, 1) 0%, rgba(135, 208, 228, 1) 15%, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 1) 65%, rgba(135, 208, 228, 1) 100%)"
         }}
-      >                                    
+
+      >                                                                     
 
         <LeisureSportsActivities />
       </section>
