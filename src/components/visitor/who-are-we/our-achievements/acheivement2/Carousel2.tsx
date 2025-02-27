@@ -80,7 +80,7 @@ const Carousel2: React.FC<Props> = ({ switcher }) => {
             <img
               src={switcher[activeIndex % switcher.length]}
               alt="Main Image"
-              className="w-[280px] h-[144px] sm:w-[900px] sm:h-[462px] rounded-[20px]"
+              className="w-[280px] h-[144px] sm:w-[900px] sm:h-[462px] rounded-lg"
             />
           ) : (
             <p className="text-center text-gray-500">No media to display</p>

@@ -71,12 +71,12 @@ export default function FinancialReportPage() {
     <div className=''>
       <img className='w-full object-cover h-[80vh]' src={reportHero} />
       <PageTitle title='Financial Report' />
-      <section>
+      <section className='px-4 sm:px-0'>
         <div className='max-w-[1206px] mx-auto flex flex-col gap-10'>
-          <section className='w-full flex relative gap-8 py-10'>
+          <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
             <Sidebar />
 
-            <section className='w-fit text-justify text-[22px] flex flex-col gap-10'>
+            <section className='w-fit text-justify text-[22px] flex flex-col gap-12'>
               <PageParagraph fontWeight="medium" spacing="normal">Notre association, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), est profondément enracinée dans la préservation du patrimoine unique de Kerkennah et engagée dans le développement durable. Nos principes et valeurs guident chaque initiative, de la protection de l’environnement à l’inclusion sociale, et reflètent notre vision d’une communauté prospère et autonome.</PageParagraph>
               <Table data={dataTable} />
             </section>
@@ -96,7 +96,7 @@ export default function FinancialReportPage() {
 
           </section>
 
-          <section className='border-t border-black mb-[100px]'>
+          <section className='border-t border-black sm:pb-20 pb-20'>
             <ImageHistoire />
           </section>
         </div>

@@ -28,7 +28,7 @@ const Value: React.FC<ValueProps> = ({ title, description, imageUrl,titlesrc }) 
               </PageParagraph>
         </div>
           <div className="flex justify-start items-center">
-          <img src={imageUrl} alt={title} className="w-full max-w-[600px] mx-auto h-auto shadow- rounded-[20px]"/>
+          <img src={imageUrl} alt={title} className="w-full max-w-[600px] mx-auto h-auto shadow-lg rounded-lg"/>
           </div>
         </div>
       </div>

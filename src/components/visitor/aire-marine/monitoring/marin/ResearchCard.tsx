@@ -9,7 +9,7 @@ export default function ResearchCard({ image, title }: Research) {
   return (
     <div>
       <div className="w-full aspect-square max-w-[150px] md:max-w-[225px] mx-auto">
-        <img className="w-full h-full rounded-full shadow-[0px_3px_4px_rgb(0,0,0,.3)] object-cover" src={image} alt={title} />
+        <img className="w-full h-full rounded-full shadow-helmi object-cover" src={image} alt={title} />
       </div>
       <div className="relative mt-4">
         <h3 className="mx-auto bg-gradient-to-r from-[#51ADC6] to-[#006E9F] text-xl md:text-3xl font-bold text-transparent bg-clip-text text-center">

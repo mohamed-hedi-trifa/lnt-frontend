@@ -21,13 +21,14 @@ const Carousel = ({ slides }: { slides: any[] }) => {
             disableOnInteraction: false,
           }}
           loop={true}
-          freeMode={true}
+          freeMode={false}
           freeModeMomentum={false}
-          allowTouchMove={false}
+          allowTouchMove={true}
           loopAdditionalSlides={slides.length}
           slidesPerView={1}
           breakpoints={{
-            640: { slidesPerView: 2 },
+            375: { slidesPerView: 2 },
+            640: { slidesPerView: 3 },
             768: { slidesPerView: 3 },
             1024: { slidesPerView: 5 },
           }}

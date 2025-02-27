@@ -27,7 +27,7 @@ export default function OurAchievements() {
                         <AchievementsCards />
                     </section>
 
-                    <section className='border-t border-[#ADA5A5]'>
+                    <section className='border-t border-[#000000] sm:pb-20 pb-20'>
                         <ImageHistoire />
                     </section>
                 </div>

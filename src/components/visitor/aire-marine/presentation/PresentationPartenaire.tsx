@@ -37,7 +37,7 @@ export default function PresentationPartenaire() {
             <section className='px-4 sm:px-0'>
                 <div className='max-w-6xl mx-auto'>
 
-                    <section className='w-full flex flex-col sm:flex-row relative gap-4 md:gap-8 py-2 md:py-10'>
+                    <section className='w-full flex flex-col sm:flex-row relative gap-4 md:gap-8 md:py-10 py-4'>
                         <AMCPSidebar />
                         <section className='w-fit flex flex-col gap-8 '>
                             <div className='flex justify-center sm:justify-start'>
@@ -48,25 +48,18 @@ export default function PresentationPartenaire() {
                                     customClassName='!w-auto'
                                 />
                             </div>
-
-
                             <PageParagraph>L'Aire Marine et Côtière Protégée des îlots nord de l'archipel de Kerkennah repose sur un réseau solide de partenaires engagés. Grâce à leur soutien, nous œuvrons ensemble pour protéger les richesses marines et côtières tout en assurant le développement durable des communautés locales. Nos collaborations s'appuient sur une vision commune : préserver l'écosystème unique de Kerkennah, renforcer la résilience face aux défis environnementaux, et promouvoir des pratiques de pêche durables. Découvrez comment chaque partenaire contribue à la réussite de notre mission et à la préservation de cet espace naturel exceptionnel.</PageParagraph>
-
                             <Partners />
                         </section>
                     </section>
-
-                    <hr className='my-6 border-[2px] text-custom-gray' />
-
+                    <section className='border-t border-[#000000] mb-10 '/>
                     <section className='flex items-start justify-center '>
-
-                        <div className='w-full flex items-center justify-center '>
+                        <div className='w-full flex items-center justify-center mb-20'> 
                             <ContainerImageMarine images={images} />
                         </div>
                     </section>
-
-                    <div className='mt-20'></div>
                 </div>
+
             </section>
         </div>
     )

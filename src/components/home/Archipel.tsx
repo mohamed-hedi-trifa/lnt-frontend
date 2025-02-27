@@ -39,7 +39,7 @@ export default function Archipel() {
           </LangLink>
         </article>
         <article className="shrink-0 w-full md:w-5/12 max-w-[400px]">
-          <div className="rounded-lg w-fit mx-auto overflow-hidden">
+          <div className="rounded-lg w-fit mx-auto overflow-hidden shadow-lg">
             <img src="/archipel.png" alt="" className="w-full" />
           </div>
         </article>

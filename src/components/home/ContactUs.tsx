@@ -93,19 +93,19 @@ export default function ContactUs() {
             ></iframe>
           </div>
           <div className="flex md:flex-col gap-12 justify-center items-center flex-wrap">
-            <a href="#" className="shrink-0 flex items-center justify-center size-12 bg-[#0866ff] rounded-full">
+            <a href="https://www.facebook.com/AKDDCL" className="shrink-0 flex items-center justify-center size-12 bg-[#0866ff] rounded-full">
               <FacebookIcon />
             </a>
-            <a href="#" className="shrink-0 flex items-center justify-center size-12 bg-[#DD2A7B] rounded-full">
+            <a href="https://www.instagram.com/akddcl.kerkennah/" className="shrink-0 flex items-center justify-center size-12 bg-[#DD2A7B] rounded-full">
               <InstagramIcon />
             </a>
-            <a href="#" className="shrink-0 flex items-center justify-center size-12 bg-sky-600 rounded-full">
+            <a href="https://www.linkedin.com/company/association-kratten-du-d%C3%A9veloppement-%C3%A9veloppement-durable-de-la-culture-et-du-loisir/?viewAsMember=true" className="shrink-0 flex items-center justify-center size-12 bg-sky-600 rounded-full">
               <LinkedinIcon />
             </a>
             <a href="#" className="shrink-0 flex items-center justify-center size-12 bg-black rounded-full">
               <XIcon />
             </a>
-            <a href="#" className="shrink-0 flex items-center justify-center size-12 bg-red-500 rounded-full">
+            <a href="https://www.youtube.com/@AKDDCL-Kerkennah" className="shrink-0 flex items-center justify-center size-12 bg-red-500 rounded-full">
               <YoutubeIcon />
             </a>
           </div>

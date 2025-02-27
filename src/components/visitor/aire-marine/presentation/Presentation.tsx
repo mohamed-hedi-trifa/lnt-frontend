@@ -27,13 +27,11 @@ export default function Presentation() {
 
         <div className=''>
             <HeroSection title="Protéger Nos Océans pour Demain" subTitle="Un réseau d’aires marines dédiées à la conservation des écosystèmes et à la préservation des ressources pour les générations futures." imgSrc={achievementsHero} />
-            <PageTitle
-                title="Présentation"
-                 />
+            <PageTitle title="Présentation"/>
 
             <section className='px-4 sm:px-0'>
                 <div className='max-w-6xl mx-auto'>
-                    <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
+                    <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10 pb-10'>
                         <AMCPSidebar />
                         <section className='w-fit text-justify text-[20px] sm:text-[22px] flex flex-col gap-8'>
                             <div className='flex justify-center sm:justify-start'>
@@ -54,21 +52,19 @@ export default function Presentation() {
 
 
 
-                            <img src='/images/aire_marines/aire_marine.png' alt="Aire marine" className="w-full  h-auto rounded-lg" />
+                            <img src='/images/aire_marines/aire_marine.png' alt="Aire marine" className="w-full  h-auto rounded-lg shadow-lg" />
                         </section>
 
 
                     </section>
-                    <hr className='my-6 border-[2px] text-custom-gray' />
+                    <section className='border-t border-[#000000] mb-10'/>
                     <section className='flex items-start justify-center '>
 
-                        <div className='w-full flex items-center justify-center '>
+                        <div className='w-full flex items-center justify-center mb-20 '>
                             <ContainerImageMarine images={images} />
                         </div>
 
                     </section>
-
-                    <div className='mt-20'></div>
                 </div>
 
 

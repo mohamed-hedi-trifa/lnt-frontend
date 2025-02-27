@@ -5,10 +5,10 @@ import { Link } from "gatsby";
 
 const HistoryCard = ({ image, title, description, path }:{path:string, image:string, title:string, description:string}) => {
   return (
-    <div className="w-full rounded-[10px] relative group">
+    <div className="w-full rounded-[12px] relative group ">
       <img
         src={image}
-        className="object-cover rounded-[10px] w-full h-[297px]"
+        className="object-cover rounded-[12px] w-full h-[297px] shadow-lg"
         alt={title}
       />
       

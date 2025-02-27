@@ -28,7 +28,7 @@ export default function OurFestivalPage() {
                 <div className='bg-[#0270A0] absolute top-0 left-0 h-full w-[40vw] z-0 hidden lg:block'></div>
                 <div className='flex flex-col lg:flex-row max-w-7xl mx-auto w-full gap-[65px] relatiev z-10'>
                     <div className='lg:w-[55%] flex items-center justify-center lg:justify-end '>
-                        <div className='bg-white p-[21px] w-[320px] h-[402px] lg:w-full lg:h-full max-h-[832px] max-w-[661px]'>
+                        <div className='bg-white p-[21px] w-[320px] h-[402px] lg:w-full lg:h-full max-h-[832px] max-w-[661px] shadow-helmi'>
                             <img src={works} />
                         </div>
                     </div>
