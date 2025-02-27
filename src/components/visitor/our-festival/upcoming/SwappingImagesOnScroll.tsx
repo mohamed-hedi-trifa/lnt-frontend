@@ -1,7 +1,9 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+
 export default function PinnedImageSwap({ edition }: { edition: any }) {
+
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // 1) Scroll progress for this section
@@ -10,26 +12,24 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
     offset: ["start start", "end end"],
   });
 
-  // IMAGES SHIFT
   const image1X = useTransform(scrollYProgress, [0, 0.5], ["0px", "25px"]);
   const image1Y = useTransform(scrollYProgress, [0, 0.5], ["0px", "25px"]);
   const image2X = useTransform(scrollYProgress, [0.5, 1], ["25px", "0px"]);
   const image2Y = useTransform(scrollYProgress, [0.5, 1], ["25px", "0px"]);
 
-  // SWAP zIndex
+
   const image1Zindex = useTransform(scrollYProgress, [0, 0.5], ["0", "1"]);
   const image2Zindex = useTransform(scrollYProgress, [0, 0.5], ["1", "0"]);
 
-  // TEXT FADE
+
   const text1Opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const text2Opacity = useTransform(scrollYProgress, [0.5, 1], [0, 1]);
 
-  // NUMBERS FADE
+
   const num1Opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
   const num2Opacity = useTransform(scrollYProgress, [0.5, 1], [0.3, 1]);
 
-  // SCROLL "HANDLE" (instead of fill)
-  // Track is 570px; handle is 285px; so it slides from 0→285 as we scroll 0→1
+
   const trackHeight = 570;
   const handleHeight = 285;
   const handleY = useTransform(
@@ -37,6 +37,7 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
     [0, 1],
     [0, trackHeight - handleHeight]
   );
+
 
 
   const formatDateRange = (startDate, endDate) => {
@@ -59,6 +60,7 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
 
 
   
+
   return (
     <section
       ref={sectionRef}
@@ -71,8 +73,13 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
       <motion.div
         style={{
           position: "sticky",
+
+          // top: 106,                   // pinned from 106px offset
+          // height: "calc(100vh - 106px)", // pinned container height
+
           top: 106,                 
           height: "calc(100vh - 106px)", 
+
           display: "flex",
           overflow: "hidden",
         }}
@@ -82,6 +89,7 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
         <div style={{ position: "relative", height: "100%" }} className="shrink-0 w-[525px]">
           {/* SECOND IMAGE (BEHIND) */}
           <motion.img
+            // src="/eponge_marine.jpg"
                      src={`${process.env.GATSBY_API_URL}${edition?.image_affiche2}`}
             alt="Second"
             style={{
@@ -96,6 +104,9 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
           />
           {/* FIRST IMAGE (ON TOP) */}
           <motion.img
+
+
+
             src={`${process.env.GATSBY_API_URL}${edition?.image_affiche1}`}
             alt="First"
             style={{
@@ -110,7 +121,6 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
           />
         </div>
 
-        {/* MIDDLE COLUMN — 2 overlapping text blocks, cross-fading */}
         <div
           style={{
             flex: "1",
@@ -131,6 +141,8 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
           >
             <div>
               <h1 style={{ margin: "1rem 0 0 0", fontSize: "2rem", fontWeight: "bold" }}>
+
+
                 {edition.titre_affiche1_en || edition.titre_affiche1_fr }
               </h1>
               <p style={{ marginTop: "1rem" }}>
@@ -153,6 +165,7 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
           >
             <div>
               <h1 style={{ margin: "1rem 0 0 0", fontSize: "2rem", fontWeight: "bold" }}>
+
               {edition.titre_affiche2_en || edition.titre_affiche2_fr }
               </h1>
               <p style={{ marginTop: "1rem" }}>
@@ -160,6 +173,7 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
               </p>
               <p style={{ marginTop: "1rem", fontWeight: "bold" }}>
                 Date: {formatDateRange(edition.start_date, edition.end_date)}
+
               </p>
             </div>
           </motion.div>

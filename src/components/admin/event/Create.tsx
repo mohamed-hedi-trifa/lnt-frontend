@@ -24,6 +24,7 @@ interface FormData {
     location_fr: string;
     latitude: string;
     longitude: string;
+    event_type: string;
 }
 
 
@@ -41,7 +42,8 @@ const CreateEvent: React.FC = () => {
         location_en: "",
         location_fr: "",
         latitude: "34.823808",
-        longitude: "11.250386"
+        longitude: "11.250386",
+        event_type: ""
     });
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -144,6 +146,7 @@ const CreateEvent: React.FC = () => {
             if (englishItems.length === 0) {
                 newErrors.items = "At least one content item is required.";
             }
+
         } else {
             if (!formData.title_fr) {
                 newErrors.title_fr = "Title is required.";
@@ -168,7 +171,9 @@ const CreateEvent: React.FC = () => {
             }
         }
 
-
+        if (!formData.event_type) {
+            newErrors.location_en = "Event type is required.";
+        }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -230,13 +235,14 @@ const CreateEvent: React.FC = () => {
                 location_en: "",
                 location_fr: "",
                 latitude: 34.823808,
-                longitude: 11.250386
+                longitude: 11.250386,
+                event_type: ""
 
 
             });
 
             setErrors({}); // Clear any previous errors
-            toast.success("Post created successfully");
+            toast.success("Event created successfully");
             return response.data;
         } catch (error) {
             let msg = "An error occurred while creating the event. Please try again.";
@@ -277,6 +283,21 @@ const CreateEvent: React.FC = () => {
         language === "en" ? setEnglishItems(updatedItems) : setFrenchItems(updatedItems);
     };
 
+    const [eventTypes, setEventTypes] = useState([]);
+
+    const getEventType = async () => {
+        try {
+            const response = await axios.get("/api/event-type/");
+            setEventTypes(response.data);
+        } catch (error) {
+            console.error("Error fetching event types:", error);
+        }
+    };
+
+    useEffect(() => {
+        getEventType();
+    }, []);
+
     return (
         <div className="h-[calc(100vh-80px)] flex flex-col p-4">
             <div className="flex justify-between">
@@ -305,6 +326,19 @@ const CreateEvent: React.FC = () => {
 
                         <Input label="Location" type="text" name="location_en" value={formData.location_en} onChange={handleChange} />
                         {errors.location_en && <div className="text-red-500 text-sm">{errors.location_en}</div>}
+                        <Select
+
+                            label="Event type:"
+                            name="event_type"
+                            value={formData.event_type}
+                            onChange={(e) => setFormData({ ...formData, event_type: e.target.value })}
+                        >
+                            {eventTypes.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.name_en}
+                                </option>
+                            ))}
+                        </Select>
                     </>
                 )}
 
@@ -321,6 +355,20 @@ const CreateEvent: React.FC = () => {
 
                         <Input label="Lieu" type="text" name="location_fr" value={formData.location_fr} onChange={handleChange} />
                         {errors.location_fr && <div className="text-red-500 text-sm">{errors.location_fr}</div>}
+
+                        <Select
+                            label="Event type:"
+                            name="event_type"
+                            value={formData.event_type}
+                            onChange={(e) => setFormData({ ...formData, event_type: e.target.value })}
+                        >
+                            
+                            {eventTypes.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.name_fr}
+                                </option>
+                            ))}
+                        </Select>
                     </>
                 )}
 

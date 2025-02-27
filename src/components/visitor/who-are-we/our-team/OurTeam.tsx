@@ -42,8 +42,22 @@ export default function OurTeam() {
                                 <PageParagraph>Nous rendons également hommage aux membres fondateurs, dont l’engagement et l’enthousiasme ont jeté les bases de notre association et permis de concrétiser ses premiers projets. Leur contribution continue d’inspirer nos efforts, et nous restons fidèles aux valeurs qu’ils ont incarnées.</PageParagraph>
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-3 gap-6'>
+
+                                {TEAM.map((member) =>
+                                    <div key={member.name} className='group relative z-10 hover:scale-110 transition duration-200 overflow-hidden' >
+                                        <img src={member.img} className='w-full' />
+                                        <div className='sm:translate-x-[-110%] transition duration-500 group-hover:translate-x-0 absolute bottom-2 right-2 left-2 p-2 flex flex-col gap-3 rounded-[15px] bg-[linear-gradient(90deg,rgba(81,173,198,0.8)_0%,rgba(0,110,159,0.8)_100%)]'>
+                                            <div className='font-semibold text-2xl opacity-0'>{member.name}</div>
+                                            <div className='font-semibold text-xl opacity-0'>{member.position}</div>
+                                            <div className='font-medium  opacity-0'>{member.job}</div>
+                                        </div>
+                                        <div className='sm:translate-x-[110%] transition duration-500 group-hover:translate-x-0 absolute bottom-2 right-2 left-2 flex flex-col gap-3 rounded-[15px] p-2'>
+                                            <div className='font-semibold text-white text-2xl'>{member.name}</div>
+                                            <div className='font-semibold text-xl'>{member.position}</div>
+                                            <div className='font-medium text-white'>{member.job}</div>
+
                         
-                                {teamMembers.map((member) =>
+                                {/* {teamMembers.map((member) =>
                                     <div  className='group relative z-10 hover:scale-110 transition duration-200 overflow-hidden' >
                                         <img src={`${process.env.GATSBY_API_URL}${member.image}`} className='w-full' />
                                         <div className='sm:translate-x-[-110%] transition duration-500 group-hover:translate-x-0 absolute bottom-2 right-2 left-2 p-2 flex flex-col gap-3 rounded-[15px] bg-[linear-gradient(90deg,rgba(81,173,198,0.8)_0%,rgba(0,110,159,0.8)_100%)]'>
@@ -54,7 +68,8 @@ export default function OurTeam() {
                                         <div className='sm:translate-x-[110%] transition duration-500 group-hover:translate-x-0 absolute bottom-2 right-2 left-2 flex flex-col gap-3 rounded-[15px] p-2'>
                                             <div className='font-semibold text-white text-2xl'>{member.name}</div>
                                             <div className='font-semibold text-xl'>{member.position_en || member.position_fr}</div>
-                                            <div className='font-medium text-white'>{member.job_en || member.job_fr}</div>
+                                            <div className='font-medium text-white'>{member.job_en || member.job_fr}</div> */}
+
                                         </div>
                                     </div>
                                 )}
@@ -62,7 +77,10 @@ export default function OurTeam() {
                         </section>
 
                     </section>
-                    <section className='border-t border-[#ADA5A5] mt-10 mb-[100px]'>
+
+                    <section className='border-t border-[#ADA5A5] mt-10'>
+                    {/* <section className='border-t border-[#ADA5A5] mt-10 mb-[100px]'> */}
+
                         <ImageHistoire />
                     </section>
                 </div>

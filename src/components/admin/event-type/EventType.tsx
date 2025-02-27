@@ -101,9 +101,7 @@ export default function EventType() {
                                                         
                                              
                                                         <div className="col-span-12 sm:col-span-6 flex justify-end sm:justify-center w-full  gap-3">
-                                                        <Link className="text-center" to={`/admin/event-type/manage-getEventType/${item.slug}`}>
-                                                                <MagnifyingGlassIcon className="block h-8 w-8 text-blue-600" aria-hidden="true" />
-                                                            </Link>
+
                                                             <Link className="text-center" to={`/admin/event-type/${item.slug}`}>
                                                                 <PencilSquareIcon className="block h-8 w-8 text-blue-600" aria-hidden="true" />
                                                             </Link>
