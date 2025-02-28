@@ -24,7 +24,7 @@ interface FormData {
     location_fr: string;
     latitude: string;
     longitude: string;
-    event_type: string;
+    event_type_id: string;
 }
 
 
@@ -43,7 +43,7 @@ const CreateEvent: React.FC = () => {
         location_fr: "",
         latitude: "34.823808",
         longitude: "11.250386",
-        event_type: ""
+        event_type_id: ""
     });
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -171,8 +171,9 @@ const CreateEvent: React.FC = () => {
             }
         }
 
-        if (!formData.event_type) {
-            newErrors.location_en = "Event type is required.";
+        if (!formData.event_type_id) {
+            newErrors.event_type_id = "Event type is required.";
+            console.log('sdfqsdfqsdfqdfsqd')
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -329,16 +330,19 @@ const CreateEvent: React.FC = () => {
                         <Select
 
                             label="Event type:"
-                            name="event_type"
-                            value={formData.event_type}
-                            onChange={(e) => setFormData({ ...formData, event_type: e.target.value })}
+                            name="event_type_id"
+                            value={formData.event_type_id}
+                            onChange={(e) => setFormData({ ...formData, event_type_id: e.target.value })}
                         >
+                            <option value="">Select Event Type</option>
                             {eventTypes.map((item) => (
                                 <option key={item.id} value={item.id}>
                                     {item.name_en}
                                 </option>
                             ))}
+                           
                         </Select>
+                        {errors.event_type_id && <div className="text-red-500 text-sm">{errors.event_type_id}</div>}
                     </>
                 )}
 
@@ -349,7 +353,7 @@ const CreateEvent: React.FC = () => {
 
                         <Input label="Description" type="text" name="description_fr" value={formData.description_fr} onChange={handleChange} />
                         {errors.description_fr && <div className="text-red-500 text-sm">{errors.description_fr}</div>}
-
+                        
                         <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_datetime" value={formData.event_datetime} onChange={handleChange} />
                         {errors.event_datetime && <div className="text-red-500 text-sm">{errors.event_datetime}</div>}
 
@@ -358,17 +362,19 @@ const CreateEvent: React.FC = () => {
 
                         <Select
                             label="Event type:"
-                            name="event_type"
-                            value={formData.event_type}
-                            onChange={(e) => setFormData({ ...formData, event_type: e.target.value })}
+                            name="event_type_id"
+                            value={formData.event_type_id}
+                            onChange={(e) => setFormData({ ...formData, event_type_id: e.target.value })}
                         >
-                            
+                                     <option value="">Select Event Type</option>
                             {eventTypes.map((item) => (
                                 <option key={item.id} value={item.id}>
                                     {item.name_fr}
                                 </option>
                             ))}
+                            
                         </Select>
+                        {errors.event_type_id && <div className="text-red-500 text-sm">{errors.event_type_id}</div>}
                     </>
                 )}
 

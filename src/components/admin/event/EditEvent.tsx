@@ -33,6 +33,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
         latitude: "",
         longitude: "",
         status: "",
+        event_type_id : ""
     });
     const [englishItems, setEnglishItems] = useState<any[]>([]);
     const [frenshItems, setFrenshItems] = useState<any[]>([]);
@@ -41,6 +42,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
     useEffect(() => {
         const slugParam = params.slug;
         setSlug(slugParam);
+        getEventType();
     }, [location]);
 
     useEffect(() => {
@@ -49,53 +51,59 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
             try {
                 const response = await axios.get(`/api/events/${slug}`);
                 const event: any = response.data;
+        
                 // Sort content items by order
                 event.content_items.sort((a: any, b: any) => a.order - b.order);
-
+        
+                // Convert event_datetime to "YYYY-MM-DDTHH:MM" format
+                const formattedDate = event.event_datetime
+                    ? new Date(event.event_datetime).toISOString().slice(0, 16)
+                    : "";
+        
                 // Set form data
                 setFormData({
                     title_en: event.title_en ?? "",
                     title_fr: event.title_fr ?? "",
                     description_en: event.description_en ?? "",
                     description_fr: event.description_fr ?? "",
-                    event_datetime: event.event_datetime ?? "",
+                    event_datetime: formattedDate, // Properly formatted date
                     location_en: event.location_en ?? "",
                     location_fr: event.location_fr ?? "",
                     latitude: event.latitude ?? "",
                     longitude: event.longitude ?? "",
                     status: event.status ?? "",
-
+                    event_type_id: event.event_type_id ?? "",
                 });
-
-                // parse any JSON content
+        
+                // Parse any JSON content
                 const parsedContentItems = event.content_items.map((item: any) => {
                     if (item.type === "list") {
                         return { ...item, content: JSON.parse(item.content) };
                     }
                     return item;
                 });
-
-                // separate by language
+        
+                // Separate by language
                 setEnglishItems(
                     parsedContentItems
                         .filter((item: any) => item.language === "en")
                         .map((item: any, index: number) => ({
                             ...item,
-                            // ensure each item has an ID
                             id: item.id ? String(item.id) : uuidv4(),
-                            order: index
+                            order: index,
                         }))
                 );
+        
                 setFrenshItems(
                     parsedContentItems
                         .filter((item: any) => item.language === "fr")
                         .map((item: any, index: number) => ({
                             ...item,
                             id: item.id ? String(item.id) : uuidv4(),
-                            order: index
+                            order: index,
                         }))
                 );
-
+        
                 // If paramLang is invalid, fallback to whichever is populated
                 if (!["en", "fr"].includes(paramLang || "")) {
                     setLanguage(event.title_en ? "en" : "fr");
@@ -104,12 +112,27 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                 console.error("Error fetching blog event:", error);
             }
         };
+        
 
         fetchEvent();
     }, [slug, paramLang]);
 
 
+    const [eventTypes, setEventTypes] = useState([]);
 
+    const getEventType = async () => {
+        try {
+            const response = await axios.get("/api/event-type/");
+            setEventTypes(response.data);
+            console.log(eventTypes)
+        } catch (error) {
+            console.error("Error fetching event types:", error);
+        }
+    };
+
+    useEffect(() => {
+      
+    }, []);
     const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setLanguage(e.target.value);
     };
@@ -260,11 +283,23 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
 
                         <Input label="Description" type="text" name="description_en" value={formData.description_en} onChange={handleChange} />
 
-
+                 
                         <Input label="Event Date & Time" type="datetime-local" name="event_datetime" value={formData.event_datetime} onChange={handleChange} />
 
                         <Input label="Location" type="text" name="location_en" value={formData.location_en} onChange={handleChange} />
-
+                        <Select
+                            label="Event type:"
+                            name="event_type_id"
+                            value={formData.event_type_id}
+                            onChange={(e) => setFormData({ ...formData, event_type_id: e.target.value })}
+                        >
+                                <option value="">Select Event Type</option>
+                            {eventTypes.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.name_en}
+                                </option>
+                            ))}
+                        </Select>
                     </>
                 )}
 
@@ -280,6 +315,21 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
 
 
                         <Input label="Lieu" type="text" name="location_fr" value={formData.location_fr} onChange={handleChange} />
+
+                        <Select
+                            label="Event type:"
+                            name="event_type_id"
+                            value={formData.event_type_id}
+                            
+                            onChange={(e) => setFormData({ ...formData, event_type_id: e.target.value })}
+                        >
+                                <option value="">Select Event Type</option>
+                            {eventTypes.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.name_fr}
+                                </option>
+                            ))}
+                        </Select>
 
                     </>
                 )}

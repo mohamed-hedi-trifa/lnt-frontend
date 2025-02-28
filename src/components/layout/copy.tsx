@@ -18,25 +18,13 @@ function SubDropdown({ items }: { items: any[] }) {
             className="relative group [&:first-child_.nav-dropdown-item]:rounded-t [&:last-child_.nav-dropdown-item]:rounded-b"
           >
             {subItem.path ? (
-              subItem.dynamic ? (
-                <Link
-                to={subItem.path}
-                className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
-                style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
-              >
-                {subItem.label}qsdfqsdfqsdf
-              </Link>
-              ) :
-              (
-                <LangLink
+              <LangLink
                 to={subItem.path}
                 className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
                 style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
               >
                 {subItem.label}
               </LangLink>
-              )
-
             ) : (
               <div
                 className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
@@ -80,8 +68,7 @@ function Navbar({ location }: { location: any }) {
         // Transform event types into the required structure
         const transformedEventTypes = response.data.map((event) => ({
           label: event.name_en || event.name_fr,
-          path: `/event/${event.slug}?lang=${lang}`,
-          dynamic: true
+          path: `/events/${event.slug}`,
         }));
 
         // Update the "Événements" section with dynamic event types
@@ -120,7 +107,7 @@ function Navbar({ location }: { location: any }) {
             underlineClassName: "w-[100px]",
             items: [
               { label: "Prochains Festivals", path: "/our-festival/upcoming" },
-              { label: "Éditions Précédentes",  path: "/our-festival/previous", },
+              { label: "Éditions Précédentes", path: "/our-festival/past" },
             ],
           },
           { label: "Actualités", path: "/news", underlineClassName: "w-[70px]" },
@@ -192,26 +179,14 @@ function Navbar({ location }: { location: any }) {
                   position="left"
                   renderItem={(item) => (
                     <div className="relative group">
-                      
                       {item.path ? (
-                        item.dynamic ?(
-                          <Link
-                          to={item.path}
-                          className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
-                          style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
-                        >
-                          {item.label}
-                        </Link>
-                        ) : (
-                          <LangLink
+                        <LangLink
                           to={item.path}
                           className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
                           style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
                         >
                           {item.label}
                         </LangLink>
-                        )
-
                       ) : (
                         <div
                           className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"

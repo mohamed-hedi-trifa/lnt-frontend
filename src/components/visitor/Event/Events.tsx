@@ -1,5 +1,4 @@
 import React from 'react'
-
 import PageTitle from '@/components/atoms/titles/PageTitle'
 import PageParagraph from '@/components/atoms/PageParagraph'
 import EventImage from './EventImage'
@@ -8,7 +7,6 @@ import CulturalEvents from './CulturalEvents'
 import FollowUsEvent from './FollowUsEvent'
 import QuestionEvent from './QuestionEvent'
 import LeisureSportsActivities from './LeisureSportsActivities'
-import LocationIcon from '@/assets/icons/LocationIcon'
 
 export default function Events() {
   return (

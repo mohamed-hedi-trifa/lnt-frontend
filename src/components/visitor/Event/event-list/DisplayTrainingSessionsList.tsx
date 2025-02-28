@@ -9,7 +9,7 @@ import ArrowDownIcon from '@/assets/icons/ArrowDownIcon'
 import EventsideBar from '../EventsideBar'
 import TrainingSessionsCards from './TrainingSessionsCards'
 
-export default function DisplayTrainingSessionsList() {
+export default function DisplayTrainingSessionsList({ lang = "fr", eventTypeSlug }: { lang : string , eventTypeSlug: string}) {
 
 
 
@@ -84,7 +84,7 @@ export default function DisplayTrainingSessionsList() {
             </ButtonDropdown>
           </div>
           <div className='sm:hidden px-5 font-semibold leading-[20px] pt-5 text-start'>1 - 12 de 150 Publication</div>
-          <TrainingSessionsCards  />
+          <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug}/>
 
         </section>
       </div>
