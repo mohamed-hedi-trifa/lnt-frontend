@@ -56,7 +56,7 @@ export default function EventsEditionCards({event}) {
             <span className="text-[#0270A0] font-bold">Lieu :</span> {event.location_en || event.location_fr}
           </div>
           <div className="text-start sm:text-xs mt-1 font-medium">
-            <span className="text-[#0270A0] font-bold">Date :</span> {formatDate(event.event_datetime)}
+            <span className="text-[#0270A0] font-bold">Date :</span> {formatDate(event.event_start_at)}
           </div>
         </div>
 

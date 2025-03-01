@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { fr, enUS } from "date-fns/locale";
 import { Link } from 'gatsby';
 
-export default function EventsCard({ event, custunCss, lang = "fr" }: { event: any, custunCss: string, lang: string }) {
+export default function MoreEventCard({ event, custunCss, lang = "fr" }: { event: any, custunCss: string, lang: string }) {
 
 
 

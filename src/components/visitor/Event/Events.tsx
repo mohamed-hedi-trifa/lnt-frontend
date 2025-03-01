@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PageTitle from '@/components/atoms/titles/PageTitle'
 import PageParagraph from '@/components/atoms/PageParagraph'
 import EventImage from './EventImage'
@@ -7,11 +7,31 @@ import CulturalEvents from './CulturalEvents'
 import FollowUsEvent from './FollowUsEvent'
 import QuestionEvent from './QuestionEvent'
 import LeisureSportsActivities from './LeisureSportsActivities'
-
+import axios from "axios";
 export default function Events() {
+  const [events, setEvents] = useState([]);
+  const getEvents = async () => {
+    try {
+      const response = await axios.get(`/api/events`);
+      setEvents(response.data);
+    } catch (error) {
+      console.error("Error fetching event types:", error);
+    }
+  };
+
+    useEffect(() => {
+  
+  
+  
+      getEvents();
+
+  
+  
+  
+    }, [location]);
   return (
     <main className={`relative`}>
-      <EventImage />
+      <EventImage  events={events}/>
 
       <section className="my-5 text-center max-w-7xl mx-auto w-full  mt-20 px-5 ">
         <PageTitle title='Événements' />

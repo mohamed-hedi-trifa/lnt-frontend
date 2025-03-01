@@ -39,10 +39,9 @@ export default function TrainingSessionsCards({ lang = "fr", eventTypeSlug }: { 
         console.log(params);  // Debugging log to check params
 
         // Send the GET request with the params
-        axios.get("http://127.0.0.1:8000/api/get-active-events/10", { params })
+        axios.get("/api/get-active-events/10", { params })
             .then(res => {
                 setItemsList(res.data.data);
-                console.log(res.data.data);
                 setTotalPages(res.data.last_page);
                 setLoading(false);
             })
@@ -50,7 +49,6 @@ export default function TrainingSessionsCards({ lang = "fr", eventTypeSlug }: { 
                 setLoading(false);
                 console.error(err);
                 if (err.response && err.response.data.error) {
-                    // Handle the error if it's returned from the server
                     alert(err.response.data.error); 
                 }
             });
@@ -67,10 +65,10 @@ export default function TrainingSessionsCards({ lang = "fr", eventTypeSlug }: { 
     return (
         <section className='flex flex-col gap-8 w-full relative z-10 my-5 sm:my-10 col-span-1'>
             <div className='grid sm:grid-cols-2 gap-4 px-4 sm:px-0'>
-                {itemsList.map((achievement: any) => (
-                    achievement.event_type_id == eventTypeSlug
+                {itemsList.map((event: any) => (
+                    event.event_type_id == eventTypeSlug
                     ?
-                    <EventsCard key={achievement.id} event={achievement} custunCss="px-3" lang={lang} />
+                    <EventsCard key={event.id} event={event} custunCss="px-3" lang={lang} />
                     : ""
                 ))}
             </div>

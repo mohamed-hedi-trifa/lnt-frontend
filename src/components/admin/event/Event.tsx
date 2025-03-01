@@ -105,7 +105,7 @@ export default function Event() {
                       <div className="text-start col-span-3 font-bold">
                         {item.title_en || item.title_fr}
                       </div>
-                      <div className="col-span-2 text-start">{formatDateTime(item.event_datetime)}</div>
+                      <div className="col-span-2 text-start">{formatDateTime(item.event_start_at)}</div>
                       <div className="col-span-2 text-start">{item.location_en || item.location_fr}</div>
                       <div className="col-span-1">{item.status == "visible" ? "Visible" : "Hidden"}</div>
 

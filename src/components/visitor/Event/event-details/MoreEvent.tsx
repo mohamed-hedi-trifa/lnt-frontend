@@ -3,9 +3,12 @@ import EventsCard from '../EventsCard'
 import { Link } from 'gatsby';
 import recentArticle1 from '../../../../assets/images/recentArticle2.jpg'
 import recentArticle2 from '../../../../assets/images/recentArticle2.jpg'
+import MoreEventCard from './MoreEventCard';
 
-export default function MoreEvent() {
+export default function MoreEvent({ moreEvents }: { moreEvents: any }) {
     const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
+
+    
     return (
         <div>
             <div className='font-bold text-3xl'>
@@ -16,15 +19,15 @@ export default function MoreEvent() {
             </div>
 
             <div className="flex justify-center gap-9 mt-8 sm:px-0 px-5 flex-col sm:flex-row">
-                <Link to={`/event/category1?lang=${lang}`} >
-                    <EventsCard image={recentArticle1} custunCss="px-16" title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" />
-                </Link>
-                <Link to={`/event/category2?lang=${lang}`} >
-                    <EventsCard image={recentArticle2} custunCss="px-16"  title="Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" />
-                </Link>
-                <Link to={`/event/category3?lang=${lang}`} >
-                    <EventsCard image={recentArticle1} custunCss="px-16"  title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" />
-                </Link>
+
+                {
+                    moreEvents.map((event) => (
+                        <Link to={`/event/${event.slug}?lang=${lang}`} key={event.id}>
+                            <MoreEventCard event={event} custunCss="px-16" lang='en' />
+                        </Link>
+                    ))
+                }
+ 
             </div>
 
             <button className="text-white text-xs font-medium self-center rounded-3xl bg-gradient-to-r from-[#51ADC6] to-[#006E9F] w-fit max-w-md py-3 px-7 mt-10 

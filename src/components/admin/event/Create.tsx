@@ -19,7 +19,8 @@ interface FormData {
     title_fr: string;
     description_en: string;
     description_fr: string;
-    event_datetime: Date;
+    event_start_at: Date;
+    event_end_at: Date;
     location_en: string;
     location_fr: string;
     latitude: string;
@@ -38,7 +39,8 @@ const CreateEvent: React.FC = () => {
         title_fr: "",
         description_en: "",
         description_fr: "",
-        event_datetime: "",
+        event_start_at: "",
+        event_end_at: "",
         location_en: "",
         location_fr: "",
         latitude: "34.823808",
@@ -131,8 +133,11 @@ const CreateEvent: React.FC = () => {
             if (!formData.description_en) {
                 newErrors.summary_en = "Summary is required.";
             }
-            if (!formData.event_datetime) {
-                newErrors.event_datetime = "Event date and time are required.";
+            if (!formData.event_start_at) {
+                newErrors.event_start_at = "Event date and time are required.";
+            }
+            if (!formData.event_end_at) {
+                newErrors.event_end_at = "Event date and time are required.";
             }
             if (!formData.location_en) {
                 newErrors.location_en = "Location is required.";
@@ -154,8 +159,11 @@ const CreateEvent: React.FC = () => {
             if (!formData.description_fr) {
                 newErrors.summary_fr = "Summary is required.";
             }
-            if (!formData.event_datetime) {
-                newErrors.event_datetime = "Event date and time are required.";
+            if (!formData.event_start_at) {
+                newErrors.event_start_at = "Event date and time are required.";
+            }
+            if (!formData.event_end_at) {
+                newErrors.event_end_at = "Event date and time are required.";
             }
             if (!formData.location_fr) {
                 newErrors.location_fr = "Location is required.";
@@ -232,7 +240,8 @@ const CreateEvent: React.FC = () => {
                 title_fr: "",
                 description_en: "",
                 description_fr: "",
-                event_datetime: "",
+                event_start_at: "",
+                event_end_at: "",
                 location_en: "",
                 location_fr: "",
                 latitude: 34.823808,
@@ -322,8 +331,11 @@ const CreateEvent: React.FC = () => {
                         <Input label="Description" type="text" name="description_en" value={formData.description_en} onChange={handleChange} />
                         {errors.description_en && <div className="text-red-500 text-sm">{errors.description_en}</div>}
 
-                        <Input label="Event Date & Time" type="datetime-local" name="event_datetime" value={formData.event_datetime} onChange={handleChange} />
-                        {errors.event_datetime && <div className="text-red-500 text-sm">{errors.event_datetime}</div>}
+                        <Input label="Event Date & Time" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
+                        {errors.event_start_at && <div className="text-red-500 text-sm">{errors.event_start_at}</div>}
+
+                        <Input label="Event Date & Time" type="datetime-local" name="event_end_at" value={formData.event_end_at} onChange={handleChange} />
+                        {errors.event_end_at && <div className="text-red-500 text-sm">{errors.event_end_at}</div>}
 
                         <Input label="Location" type="text" name="location_en" value={formData.location_en} onChange={handleChange} />
                         {errors.location_en && <div className="text-red-500 text-sm">{errors.location_en}</div>}
@@ -340,7 +352,7 @@ const CreateEvent: React.FC = () => {
                                     {item.name_en}
                                 </option>
                             ))}
-                           
+
                         </Select>
                         {errors.event_type_id && <div className="text-red-500 text-sm">{errors.event_type_id}</div>}
                     </>
@@ -353,9 +365,12 @@ const CreateEvent: React.FC = () => {
 
                         <Input label="Description" type="text" name="description_fr" value={formData.description_fr} onChange={handleChange} />
                         {errors.description_fr && <div className="text-red-500 text-sm">{errors.description_fr}</div>}
-                        
-                        <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_datetime" value={formData.event_datetime} onChange={handleChange} />
-                        {errors.event_datetime && <div className="text-red-500 text-sm">{errors.event_datetime}</div>}
+
+                        <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
+                        {errors.event_start_at && <div className="text-red-500 text-sm">{errors.event_start_at}</div>}
+
+                        <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_end_at" value={formData.event_end_at} onChange={handleChange} />
+                        {errors.event_end_at && <div className="text-red-500 text-sm">{errors.event_end_at}</div>}
 
                         <Input label="Lieu" type="text" name="location_fr" value={formData.location_fr} onChange={handleChange} />
                         {errors.location_fr && <div className="text-red-500 text-sm">{errors.location_fr}</div>}
@@ -366,13 +381,13 @@ const CreateEvent: React.FC = () => {
                             value={formData.event_type_id}
                             onChange={(e) => setFormData({ ...formData, event_type_id: e.target.value })}
                         >
-                                     <option value="">Select Event Type</option>
+                            <option value="">Select Event Type</option>
                             {eventTypes.map((item) => (
                                 <option key={item.id} value={item.id}>
                                     {item.name_fr}
                                 </option>
                             ))}
-                            
+
                         </Select>
                         {errors.event_type_id && <div className="text-red-500 text-sm">{errors.event_type_id}</div>}
                     </>
@@ -397,6 +412,7 @@ const CreateEvent: React.FC = () => {
                         setItems={language === "en" ? setEnglishItems : setFrenchItems}
                         language={language}
                         key={language}
+                              route = "/api/event-content-items"
                     />
                 ) : (
                     <div className="shadow p-4">There is no content currently, add new content by clicking one of the buttons below</div>

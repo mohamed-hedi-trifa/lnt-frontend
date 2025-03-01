@@ -27,13 +27,14 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
         title_fr: "",
         description_en: "",
         description_fr: "",
-        event_datetime: "",
+        event_start_at: "",
+        event_end_at: "",
         location_en: "",
         location_fr: "",
         latitude: "",
         longitude: "",
         status: "",
-        event_type_id : ""
+        event_type_id: ""
     });
     const [englishItems, setEnglishItems] = useState<any[]>([]);
     const [frenshItems, setFrenshItems] = useState<any[]>([]);
@@ -51,22 +52,26 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
             try {
                 const response = await axios.get(`/api/events/${slug}`);
                 const event: any = response.data;
-        
-                // Sort content items by order
+
+
                 event.content_items.sort((a: any, b: any) => a.order - b.order);
-        
-                // Convert event_datetime to "YYYY-MM-DDTHH:MM" format
-                const formattedDate = event.event_datetime
-                    ? new Date(event.event_datetime).toISOString().slice(0, 16)
+
+
+                const formattedEvnetStartDate = event.event_start_at
+                    ? new Date(event.event_start_at).toISOString().slice(0, 16)
                     : "";
-        
+                const formattedEventEndDate = event.event_end_at
+                    ? new Date(event.event_end_at).toISOString().slice(0, 16)
+                    : "";
+
                 // Set form data
                 setFormData({
                     title_en: event.title_en ?? "",
                     title_fr: event.title_fr ?? "",
                     description_en: event.description_en ?? "",
                     description_fr: event.description_fr ?? "",
-                    event_datetime: formattedDate, // Properly formatted date
+                    event_start_at: formattedEvnetStartDate, 
+                    event_end_at: formattedEventEndDate, 
                     location_en: event.location_en ?? "",
                     location_fr: event.location_fr ?? "",
                     latitude: event.latitude ?? "",
@@ -74,7 +79,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                     status: event.status ?? "",
                     event_type_id: event.event_type_id ?? "",
                 });
-        
+
                 // Parse any JSON content
                 const parsedContentItems = event.content_items.map((item: any) => {
                     if (item.type === "list") {
@@ -82,7 +87,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                     }
                     return item;
                 });
-        
+
                 // Separate by language
                 setEnglishItems(
                     parsedContentItems
@@ -93,7 +98,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                             order: index,
                         }))
                 );
-        
+
                 setFrenshItems(
                     parsedContentItems
                         .filter((item: any) => item.language === "fr")
@@ -103,7 +108,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                             order: index,
                         }))
                 );
-        
+
                 // If paramLang is invalid, fallback to whichever is populated
                 if (!["en", "fr"].includes(paramLang || "")) {
                     setLanguage(event.title_en ? "en" : "fr");
@@ -112,7 +117,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                 console.error("Error fetching blog event:", error);
             }
         };
-        
+
 
         fetchEvent();
     }, [slug, paramLang]);
@@ -131,7 +136,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
     };
 
     useEffect(() => {
-      
+
     }, []);
     const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setLanguage(e.target.value);
@@ -283,8 +288,9 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
 
                         <Input label="Description" type="text" name="description_en" value={formData.description_en} onChange={handleChange} />
 
-                 
-                        <Input label="Event Date & Time" type="datetime-local" name="event_datetime" value={formData.event_datetime} onChange={handleChange} />
+
+                        <Input label="Event Date & Time" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
+                        <Input label="Event Date & Time" type="datetime-local" name="event_end_at" value={formData.event_end_at} onChange={handleChange} />
 
                         <Input label="Location" type="text" name="location_en" value={formData.location_en} onChange={handleChange} />
                         <Select
@@ -293,7 +299,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                             value={formData.event_type_id}
                             onChange={(e) => setFormData({ ...formData, event_type_id: e.target.value })}
                         >
-                                <option value="">Select Event Type</option>
+                            <option value="">Select Event Type</option>
                             {eventTypes.map((item) => (
                                 <option key={item.id} value={item.id}>
                                     {item.name_en}
@@ -311,7 +317,8 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                         <Input label="Description" type="text" name="description_fr" value={formData.description_fr} onChange={handleChange} />
 
 
-                        <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_datetime" value={formData.event_datetime} onChange={handleChange} />
+                        <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
+                        <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_end_at" value={formData.event_end_at} onChange={handleChange} />
 
 
                         <Input label="Lieu" type="text" name="location_fr" value={formData.location_fr} onChange={handleChange} />
@@ -320,10 +327,10 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                             label="Event type:"
                             name="event_type_id"
                             value={formData.event_type_id}
-                            
+
                             onChange={(e) => setFormData({ ...formData, event_type_id: e.target.value })}
                         >
-                                <option value="">Select Event Type</option>
+                            <option value="">Select Event Type</option>
                             {eventTypes.map((item) => (
                                 <option key={item.id} value={item.id}>
                                     {item.name_fr}
@@ -359,7 +366,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                         items={language === "en" ? englishItems : frenshItems}
                         setItems={language === "en" ? setEnglishItems : setFrenshItems} language={language}
                         key={language}
-                        route="/api/content-items"
+                        route="/api/event-content-items"
                     />
                 ) : (
                     <div className="shadow p-4">
