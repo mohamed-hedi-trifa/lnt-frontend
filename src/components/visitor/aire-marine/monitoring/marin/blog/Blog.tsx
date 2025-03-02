@@ -11,6 +11,8 @@ import PageParagraph from "@/components/atoms/PageParagraph";
 import axios from "axios";
 import { navigate } from "gatsby";
 import BlogList from "./BlogList";
+import SpeciesTitle from "@/components/atoms/titles/SpeciesTitle";
+import SectionTitle2 from "@/components/atoms/titles/SectionTitle2";
 
 export default function Blog({ location, params }: { location: any; params: any }) {
   const [blogPost, setBlogPost] = useState<any>(null);
@@ -91,40 +93,30 @@ export default function Blog({ location, params }: { location: any; params: any 
   }
 
   return (
-    <div className="">
+    <div
+      className="min-h-screen bg-cover bg-center bg-fixed"
+      style={{ backgroundImage: `url(${process.env.GATSBY_API_URL}${blogPost.image})` }}
+     >
       <img className="w-full object-cover h-[80vh]" src={achievementsHero} />
       <div className="flex justify-center sm:justify-center pb-4 ">
         <div className="flex justify-center sm:justify-center pb-4 ">
-          <PageTitle title="Suivi Marin" width="w-[160px]" fontSize="text-[48px] md:text-[64px] text-start" />
+          <SpeciesTitle title={blogPost ? blogPost[`title_${language}`] : ""} width="w-[160px]" fontSize="text-[48px] md:text-[64px] text-start" />
         </div>
       </div>
       <section className="px-4">
         <div className="max-w-6xl mx-auto ">
-          <section className="w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10">
+          <section className="w-full flex flex-col sm:flex-row relative sm:gap-8 ">
             <AMCPSidebar />
 
-            <section className="grow w-fit flex flex-col">
-              <div className="flex gap-2 items-center justify-end">
-                <span className="semi-bold font-semibold"> Language:</span>
-                {blogPost.title_en && (
-                  <button className="bg-gray-100 p-1" onClick={() => setLanguage("en")}>
-                    EN
-                  </button>
-                )}
-                {blogPost.title_fr && (
-                  <button className="bg-gray-100 p-1" onClick={() => setLanguage("fr")}>
-                    FR
-                  </button>
-                )}
-              </div>
-              <SectionTitle
-                title={blogPost ? blogPost[`title_${language}`] : ""}
+            <section className="grow w-full flex flex-col  mx-auto shadow-helmi gap-4 rounded-[12px] my-4 sm:mb-10 bg-[rgba(255,255,255,0.8)] ">
+            <SectionTitle2
+                title={blogPost ? blogPost[`subtitle_${language}`] : ""}
                 width="w-[160px]"
                 color="#000000"
                 fontSize=" text-[28px] lg:text-[40px] text-center sm:text-start"
-                spacing="my-8 sm:mt-0"
+                spacing="my-8 sm:mt-0 px-10 pt-6 "
               />
-              <div className="mt-4 flex flex-col">
+              <div className="mt-4 flex flex-col px-10 max-w-full mx-auto  ">
                 {blogPost?.content_items
                   ?.sort((a: any, b: any) => a.order - b.order)
                   .map((item: any) => (
@@ -133,18 +125,21 @@ export default function Blog({ location, params }: { location: any; params: any 
                         item.type === "list" ? (
                           <BlogList content={item.content} />
                         ) : item.type === "title" ? (
-                          <Title customClassName="mb-2">{item.content}</Title>
+                          
+                          <Title customClassName="mb-2 items-start">{item.content}</Title>
                         ) : item.type === "text" ? (
                           // Apply the markdown parser to the text content
-                          <div
-                            className="mb-4"
-                            dangerouslySetInnerHTML={{
-                              __html: parseContent(item.content),
-                            }}
-                          />
+                          <PageParagraph>
+                            <div
+                              className="my-4"
+                              dangerouslySetInnerHTML={{
+                                __html: parseContent(item.content),
+                              }}
+                            />
+                          </PageParagraph>
                         ) : item.type === "image" ? (
-                          <div className="mb-2">
-                            <img src={`${process.env.GATSBY_API_URL}${item.file_path}`} alt="" />
+                          <div className="mb-2" >
+                            <img src={`${process.env.GATSBY_API_URL}${item.file_path}`} alt="" className="w-full max-w-[600px] mx-auto max-h-[400px] rounded-lg shadow-lg mb-4"/>
                           </div>
                         ) : item.type === "pdf" ? (
                           <div>
@@ -159,7 +154,8 @@ export default function Blog({ location, params }: { location: any; params: any 
               </div>
             </section>
           </section>
-
+        
+        <div className="max-w-full mx-auto rounded-[12px] bg-[rgba(255,255,255,0.8)]">
           <div className=" grid grid-cols-[10%_auto_10%] ">
             <div></div>
             <div>
@@ -177,7 +173,7 @@ export default function Blog({ location, params }: { location: any; params: any 
             <div></div>
           </div>
           <Media />
-          <hr className="border-2 border-[#ADA5A5] my-10" />
+          <hr className="border-1 border-[#000000] my-10" />
           <span className="text-[28px] sm:text-[36px] font-bold">
             <p className="text-center">
               <span className="text-[#0270A0]">Recherche</span> et Connaissances sur la Posidonie{" "}
@@ -195,8 +191,8 @@ export default function Blog({ location, params }: { location: any; params: any 
 
           <Table data={dataTable} />
 
-          <section className="border-t border-[#ADA5A5] my-[20px]">
-            <span className="font-bold ">
+          <section className="border-t border-[#000000] my-10 py-10">
+            <span className="font-bold py-10 ">
               <p className="text-center text-[28px] sm:text-[36px] ">
                 <span className="text-[#0270A0] ">Découvrez</span> d'autres espèces fascinantes qui{" "}
               </p>
@@ -204,6 +200,7 @@ export default function Blog({ location, params }: { location: any; params: any 
               <p className="text-center text-[18px] sm:text-[20px]">Découvrez les trésors marins que nous préservons</p>
             </span>
           </section>
+        </div>
         </div>
       </section>
     </div>

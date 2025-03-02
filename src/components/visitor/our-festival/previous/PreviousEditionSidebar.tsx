@@ -50,7 +50,7 @@ export default function PreviousEditionSidebar({ isOpened, setIsOpened }: { isOp
             <Checkbox label="Éditions 2021" />
 
 
-            <div className='flex gap-2 bg-[#EFEFEF] rounded-lg w-fit px-2 py-1 mt-2 cursor-pointer' >
+            <div className='flex gap-2 bg-[#efefef] rounded-lg w-fit px-2 py-1 mt-2 cursor-pointer' >
             <PlusIcon  className='w-[18px]'/> Afficher 3 de plus
             </div>
            

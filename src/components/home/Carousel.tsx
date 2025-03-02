@@ -1,7 +1,10 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Autoplay, FreeMode } from 'swiper';
+import SwiperCore from 'swiper';
+import 'swiper/css';
 import './Carousel.css';
+import { Autoplay, FreeMode } from 'swiper/modules';
+
 
 // Import Swiper styles
 import 'swiper/css';

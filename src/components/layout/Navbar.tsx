@@ -105,7 +105,7 @@ function Navbar({ location }: { location: any }) {
             <div className="hidden md:inline h-8 w-px bg-white"></div>
             <LangLink
               to="/benevole"
-              className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right"
+              className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full shadow-lg bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right"
             >
               DEVENIR BÉNÉVOLE
             </LangLink>
@@ -120,7 +120,7 @@ function Navbar({ location }: { location: any }) {
         </div>
       </header>
 
-      <nav className={`hidden md:flex items-center w-full h-[50px] px-3 ${isScrolled ? "bg-[rgba(0,0,0,0.7)]" : "bg-[rgba(0,0,0,0.25)]"} duration-200`}>
+      <nav className={`hidden md:flex items-center w-full h-[50px] px-3 ${isScrolled ? "bg-[rgba(0,0,0,0.7)]" : "bg-[rgba(0,0,0,0.5)]"} duration-200`}>
         <ul className="flex items-center justify-between w-full max-w-7xl mx-auto">
           {items.map((item, index) => {
             if (item.items) {
@@ -230,6 +230,16 @@ export const items = [
       {
         label: "Présentation",
         path: "/protected-air-marine-coastal-areas/presentation",
+        items: [
+          {
+            label: "AMCP de L'archipel Kerkennah",
+            path: "/protected-air-marine-coastal-areas/presentation/amcp",
+          },
+          {
+            label: "Partenaires AMCP",
+            path: "/protected-air-marine-coastal-areas/presentation/partners",
+          },
+        ],
       },
       {
         label: "Suivi Scientifique",
@@ -301,22 +311,7 @@ export const items = [
   {
     label: "Opportunités",
     underlineClassName: "w-[100px]",
-    path:"/en/opportunities",
-
-    items: [
-      {
-        label: "Offres d'Emplois",
-        path: "/job-offers",
-      },
-      {
-        label: "Appels d'Offres",
-        path: "/tenders",
-      },
-      {
-        label: "Stages",
-        path: "/internships",
-      },
-    ],
+    path:"/opportunities",
   },
   {
     label: "Contact",

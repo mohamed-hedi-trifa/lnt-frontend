@@ -22,6 +22,8 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
   const [formData, setFormData] = useState({
     title_en: "",
     title_fr: "",
+    subtitle_en: "",
+    subtitle_fr: "",
     summary_en: "",
     summary_fr: "",
     type: "marin",
@@ -48,6 +50,8 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
         setFormData({
           title_en: blogPost.title_en ?? "",
           title_fr: blogPost.title_fr ?? "",
+          subtitle_en: blogPost.subtitle_en ?? "",
+          subtitle_fr: blogPost.subtitle_fr ?? "",
           summary_en: blogPost.summary_en ?? "",
           summary_fr: blogPost.summary_fr ?? "",
           type: blogPost.type || "marin",
@@ -246,6 +250,12 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
               value={formData.title_en}
               onChange={handleChange}
             />
+              <Textarea
+                label="Subtitle"
+                name="subtitle_en"
+                value={formData.subtitle_en}
+                onChange={handleChange}
+              />
             <Textarea
               label="Summary"
               name="summary_en"
@@ -261,6 +271,12 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
               type="text"
               name="title_fr"
               value={formData.title_fr}
+              onChange={handleChange}
+            />
+            <Textarea
+              label="Subtitle"
+              name="subtitle_fr"
+              value={formData.subtitle_fr}
               onChange={handleChange}
             />
             <Textarea
