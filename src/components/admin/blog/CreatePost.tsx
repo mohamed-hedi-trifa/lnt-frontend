@@ -201,7 +201,7 @@ const CreatePost: React.FC = () => {
         msg = error?.response?.data?.message;
       }
       setErrors((prevErrors) => ({
-        ...prevErrors,
+        ...prevErrors,  
         apiError: msg,
       })); // Set API error message
     } finally {
