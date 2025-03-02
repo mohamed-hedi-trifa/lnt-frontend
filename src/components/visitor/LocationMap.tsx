@@ -17,17 +17,25 @@ const redIcon = new L.Icon({
 
 
 
-const LocationMap = ({ latitude, longitude }: { latitude: number; longitude: number }) => {
+const LocationMap = ({ event }: { event: any }) => {
+  const latitude = event.latitude;
+  const longitude = parseFloat(event.longitude);
+
+  console.log(event)
+
   return (
+    <>
+    
     <MapContainer center={[latitude, longitude]} zoom={13} style={{ height: "200px", width: "100%", zIndex: "1" }} zoomControl={false} className="rounded-xl"  >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
+        />
       <Marker position={[latitude, longitude]} icon={redIcon}>
         <Popup>📍 Selected Location</Popup>
       </Marker>
     </MapContainer>
+        </>
   );
 };
 

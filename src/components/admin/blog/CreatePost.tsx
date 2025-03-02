@@ -201,7 +201,7 @@ const CreatePost: React.FC = () => {
         msg = error?.response?.data?.message;
       }
       setErrors((prevErrors) => ({
-        ...prevErrors,
+        ...prevErrors,  
         apiError: msg,
       })); // Set API error message
     } finally {
@@ -321,7 +321,6 @@ const CreatePost: React.FC = () => {
             setItems={language === "en" ? setEnglishItems : setFrenchItems}
             language={language}
             key={language}
-
             route = "/api/content-items"
 
           />

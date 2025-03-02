@@ -43,7 +43,10 @@ export default function OurTeam() {
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-3 gap-6'>
 
-                                {teamMembers.map((member:any) =>
+
+
+                        
+                                {teamMembers.map((member) =>
                                     <div  className='group relative z-10 hover:scale-110 transition duration-200 overflow-hidden' >
                                         <img src={`${process.env.GATSBY_API_URL}${member.image}`} className='w-full' />
                                         <div className='sm:translate-x-[-110%] transition duration-500 group-hover:translate-x-0 absolute bottom-2 right-2 left-2 p-2 flex flex-col gap-3 rounded-[15px] bg-[linear-gradient(90deg,rgba(81,173,198,0.8)_0%,rgba(0,110,159,0.8)_100%)]'>
@@ -64,7 +67,8 @@ export default function OurTeam() {
 
                     </section>
 
-                    <section className='border-t border-[#ADA5A5] mt-10 mb-[100px]'>
+                    <section className='border-t border-[#ADA5A5] mt-10'>
+                    {/* <section className='border-t border-[#ADA5A5] mt-10 mb-[100px]'> */}
 
                         <ImageHistoire />
                     </section>

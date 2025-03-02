@@ -21,7 +21,9 @@ export default function WhoAreWe() {
         </article>
         <article className="">
 
-          <h2 className="text-primary text-3xl font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
+          <h2 className="text-primary text-2xl font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
+
+          {/* <h2 className="text-primary text-3xl font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}> */}
 
             Qui Somme-Nous
           </h2>

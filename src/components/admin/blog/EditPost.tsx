@@ -320,9 +320,8 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
             handleItemContentChange={handleItemContentChange}
             items={language === "en" ? englishItems : frenshItems}
             setItems={language === "en" ? setEnglishItems : setFrenshItems} language={language}
-            key={language} 
-            route = "/api/content-items"
-                    />
+            key={language}         />
+
         ) : (
           <div className="shadow p-4">
             There is no content currently, add new content by clicking one of the buttons below

@@ -38,11 +38,11 @@ export default function AmcpTeam() {
 
 
     useEffect(() => {
-        axios.get("/api/team-members/")
+        axios.get("/api/team-members-amcp/")
             .then(res => {
                 setTeamMembers(res.data);
 
-                console.log(teamMembers.length)
+            
                 setLoading(false); // Set loading to false after fetching
             })
             .catch(err => {

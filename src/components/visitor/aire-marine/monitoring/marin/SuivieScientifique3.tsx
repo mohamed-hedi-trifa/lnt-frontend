@@ -124,7 +124,10 @@ export default function SuiviScientifique3() {
 
                 <List items={listMethodologie} />
 
-                <img src="/images/marine_images/marine6.jpg" alt="" className="w-full max-w-[600px] mx-auto h-auto rounded-lg" />
+{/* <<<<<<< HEAD */}
+                <img src="/images/marine_images/marine6.jpg" alt="" className="w-full max-w  h-auto rounded-lg" />
+
+                {/* <img src="/images/marine_images/marine6.jpg" alt="" className="w-full max-w-[600px] mx-auto h-auto rounded-lg" /> */}
 
               </article>
 
@@ -172,7 +175,9 @@ export default function SuiviScientifique3() {
                   />
                 </div>
 
-                <img src="/images/marine_images/marine7.jpg" alt="" className="w-full max-w-[600px] mx-auto h-auto rounded-lg" />
+                <img src="/images/marine_images/marine7.jpg" alt="" className="w-full  h-auto rounded-lg" />
+
+                {/* <img src="/images/marine_images/marine7.jpg" alt="" className="w-full max-w-[600px] mx-auto h-auto rounded-lg" /> */}
 
               </article>
             </section>

@@ -76,9 +76,11 @@ const defaultResearches: Research[] = [
     description: "LLe poulpe est une espèce clé pour la pêche locale et joue un rôle important dans l'économie de Kerkennah.",
     importance:
       "Prédateur et proie, le poulpe occupe une place centrale dans la chaîne alimentaire marine, régulant les populations de petits poissons et invertébrés.",
+    color1: "#7B16FE",
+    color2: "#C69AFF",
 
-    color1: "#DF2222",
-    color2: "#FDBDBD",
+    // color1: "#DF2222",
+    // color2: "#FDBDBD",
 
     path: "/protected-air-marine-coastal-areas/monitoring/marin/poulpe",
   },
@@ -192,7 +194,10 @@ export default function Scientific() {
       </div>
       <div className="max-w-7xl mx-auto text-shadow">
 
-        <h3 className="text-white text-4xl font-bold text-center mb-8">Suivi Marin</h3>
+        <h3 className="text-white text-xl font-bold text-center mb-8">Suivi Marin</h3>
+
+        {/* <h3 className="text-white text-4xl font-bold text-center mb-8">Suivi Marin</h3> */}
+
         <div className="relative w-fit ml-1 pl-3 pr-6 py-3 bg-black/50 after:absolute after:right-full after:top-0 after:bottom-0 after:w-1 after:bg-gradient-to-b after:from-[var(--active-research-color-1)] after:to-[var(--active-research-color-2)]">
           <h3 className="font-bold text-xl text-white">{activeResearch.title}</h3>
         </div>

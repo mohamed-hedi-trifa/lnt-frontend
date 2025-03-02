@@ -9,7 +9,7 @@ import ArrowDownIcon from '@/assets/icons/ArrowDownIcon'
 import EventsideBar from '../EventsideBar'
 import TrainingSessionsCards from './TrainingSessionsCards'
 
-export default function DisplayTrainingSessionsList() {
+export default function DisplayEventsList({ lang = "fr", eventTypeSlug }: { lang : string , eventTypeSlug: string}) {
 
 
 
@@ -25,32 +25,7 @@ export default function DisplayTrainingSessionsList() {
     })
 
 
-  const CATEGORIES = [
-    {
-      id: 1,
-      name: "All themes"
-    },
-    {
-      id: 2,
-      name: "Conservation Marine"
-    },
-    {
-      id: 3,
-      name: "Tourisme Responsable"
-    },
-    {
-      id: 4,
-      name: "Peche Durable"
-    },
-    {
-      id: 5,
-      name: "Ecologie et Environmenet"
-    },
-    {
-      id: 6,
-      name: "Education et Formation"
-    }
-  ]
+ 
   return (
     <div className='w-full '>
 
@@ -65,26 +40,10 @@ export default function DisplayTrainingSessionsList() {
               <FilterIcon />
               <div className="text-center text-white text-sm font-bold font-['Montserrat']">Filtres</div>
             </button>
-            <ButtonDropdown
-              items={CATEGORIES}
-              position="right"
-              renderItem={(item) => (
-                <div className='py-1 px-4'> {item.name}</div>
-              )}
-            >
-              {(isOpen) => (
-                <button className="h-12 rounded-[10px] border-2 border-black justify-center items-center flex w-fit">
-                  <div className="px-2 py-1.5 justify-center items-center gap-2 flex">
-                    <div className='text-primary'> <img src={sortIcon} className='size-6' /> </div>
-                    <div className="text-center text-black text-xl font-medium font-['Montserrat'] leading-tight tracking-tight">Trier</div>
-                    <div className={`w-6 h-6 relative transition duration-200 ${isOpen ? "-rotate-180" : ""}`}><ArrowDownIcon /></div>
-                  </div>
-                </button>
-              )}
-            </ButtonDropdown>
+
           </div>
           <div className='sm:hidden px-5 font-semibold leading-[20px] pt-5 text-start'>1 - 12 de 150 Publication</div>
-          <TrainingSessionsCards  />
+          <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug}/>
 
         </section>
       </div>

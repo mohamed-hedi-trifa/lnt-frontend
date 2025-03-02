@@ -1,4 +1,4 @@
-import TrainingSessions from '@/components/visitor/Event/training-sessions/TrainingSessions'
+import TrainingSessions from '@/components/visitor/Event/event-list/EventList'
 import { AMCPSidebarProvider } from '@/contexts/AMCPSidebarContext'
 import React from 'react'
 

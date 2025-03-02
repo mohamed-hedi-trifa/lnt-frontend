@@ -58,8 +58,8 @@ const PastEditionsCarousel = ({ prevEditions }: { prevEditions: any[] }) => {
         ))}
       </Swiper>
       <div className="w-full h-full top-0 z-10 absolute flex items-center justify-between pointer-events-none">
-        <div className="past-edit-swiper-prev ml-[-50px] flex justify-center items-center"><div className="rotate-180"><ArrowRightIcon /></div></div>
-        <div className="past-edit-swiper-next mr-[-50px] flex justify-center items-center"><ArrowRightIcon /></div>
+        <div className="past-edit-swiper-prev ml-[-50px] flex justify-center items-center pointer-events-auto"><div className="rotate-180"><ArrowRightIcon /></div></div>
+        <div className="past-edit-swiper-next mr-[-50px] flex justify-center items-center pointer-events-auto"><ArrowRightIcon /></div>
       </div>
 
     </div>

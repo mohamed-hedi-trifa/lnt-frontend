@@ -2,17 +2,27 @@ import React from "react";
 import reactStringReplace from "react-string-replace";
 
 export default function BlogList({ content }: { content: any[] }) {
+
+  const data = JSON.parse(content);
+
   return (
-    <ul className={`divide-y mb-4 list-inside ${content[0]?.image ? "" : "list-disc"}`}>
-      {content.map((listItem: any, index: number) => (
-        <li key={index} className="py-2">
-          <div className="inline-flex gap-2 items-center">
-            {listItem.image && <img src={`${process.env.GATSBY_API_URL}${listItem.image}`} alt="" className="size-20 object-contain" />}
-            <div className="whitespace-pre-wrap">{parseContent(listItem.text)}</div>
-          </div>
-        </li>
-      ))}
-    </ul>
+
+
+
+      <ul className="divide-y mx-4 mb-4 list-disc">
+
+
+
+        {data.map((listItem, index) => (
+          <li key={index} className="py-2">
+            <div className="inline-flex gap-2 items-center">
+              {listItem.image && <img src={`${process.env.GATSBY_API_URL}${listItem.image}`} alt="" className="size-20 object-contain" />}
+              <div className="whitespace-pre-wrap">{parseContent(listItem.text)}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+
   );
 }
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import Carousel from "./Carousel";
-
 import { SwiperOptions } from "swiper/types";
+
+
 
 
 type Partner = {
@@ -72,7 +72,7 @@ export default function Partners() {
         <img src="/spot.png" alt="" className="w-full h-full object-contain" />
       </div>
 
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto">
 
         <h2 className="text-white text-center font-bold text-3xl">Avec qui nous sommes engagés...</h2>
         <p className="mt-4 text-white text-center md:text-base leading-7">
@@ -96,9 +96,6 @@ export default function Partners() {
             </swiper-slide>
           ))}
         </swiper-container>
-        <div className="mt-10">
-        <Carousel slides={defaultPartners} />
-        </div>
 
       </div>
     </section>
