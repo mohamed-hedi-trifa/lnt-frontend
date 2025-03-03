@@ -116,6 +116,7 @@ function Navbar({ location }: { location: any }) {
             ],
           },
           {
+            
             label: "Notre Festival",
             underlineClassName: "w-[100px]",
             items: [
