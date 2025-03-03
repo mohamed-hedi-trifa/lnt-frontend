@@ -1,0 +1,9 @@
+.overlay {
+    transition: height 0.3s ease, background-color 0.3s ease; /* Smooth transition for height and background color */
+    height: 38px; /* Initial height */
+}
+
+.overlay:hover {
+    height: 100px; /* Increased height on hover */
+    background-color: rgba(255, 255, 255, 0.7); /* Optional: change background color on hover */
+}
