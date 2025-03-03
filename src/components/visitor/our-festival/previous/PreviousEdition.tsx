@@ -17,6 +17,7 @@ export default function PreviousEdition() {
     const [isOpened, setIsOpened] = useState(false);
     return (
         <div>
+        
             <main className={`relative`}>
 
                 <div className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${isOpened ? "opacity-50" : "opacity-0 pointer-events-none"}`} onClick={() => setIsOpened(false)}></div>
