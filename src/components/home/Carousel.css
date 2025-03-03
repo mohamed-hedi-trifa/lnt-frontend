@@ -42,4 +42,7 @@
   .c-carousel img {
     margin: 0 auto;
   }
+  .c-carousel__wrapper .swiper-wrapper {
+    transition-timing-function: linear !important;
+  }
   

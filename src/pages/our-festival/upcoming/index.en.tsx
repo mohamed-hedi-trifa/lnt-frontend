@@ -16,15 +16,6 @@ import Media from '@/components/visitor/Media';
 import PastEditionsCarousel from '@/components/visitor/our-festival/PastEditionsCarousel';
 import EventsEditionCards from "@/components/visitor/our-festival/upcoming/EventsEditionCards";
 
-
-
-
-
-
-
-
-
-
 const gallery = [
   '/festivales_images/img1.jpg',
   '/festivales_images/img2.jpg',
@@ -41,12 +32,6 @@ const gallery = [
 
 
 ]
-
-
-
-
-
-
 
 export default function FestivalVenir() {
   const [edition, setEdition] = useState([]);

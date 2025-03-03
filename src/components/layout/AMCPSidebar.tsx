@@ -125,7 +125,7 @@ const AMCPSidebar = () => {
         <div
           className={`flex flex-col ${
             opened ? "gap-6" : "gap-0"
-          } sm:gap-8 transition-all duration-300 p-4 sm:p-8 py-2 sm:py-12 rounded-3xl sm:rounded-[20px] text-white`}
+          } sm:gap-8 transition-all duration-300 p-4 sm:p-8 py-2 sm:py-12 rounded-3xl sm:rounded-[20px] text-white shadow-helmi`}
           style={{ background: "linear-gradient(90deg, #51ADC6 0%, #006E9F 100%)" }}
         >
           <section className="flex justify-between w-full items-center">
@@ -211,10 +211,10 @@ const defaultItems = [
   },
   {
     label: "Formation et Campement Scientifique",
-    path: "/formation",
+    path: "/protected-air-marine-coastal-areas/training",
   },
   {
     label: "L’équipe",
-    path: "/team",
+    path: "/protected-air-marine-coastal-areas/team",
   },
 ];

@@ -17,7 +17,6 @@ const TitleParagraphPrersentation : React.FC<ImageAireMarineProps> = ({ doc }) =
                     doc.map(lineDescription=>(
                         <div className='flex flex-col'>
                             <div className='mt-10 flex items-center gap-4 '>
-                                <div><img src="/images/aire_marines/presentation/eclipse.png" alt="" /></div>
                                 <div><p className='text-[25px] md:text-[28px]'></p>{lineDescription.title}</div>
                             </div>
 

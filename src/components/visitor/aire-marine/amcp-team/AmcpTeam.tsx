@@ -9,13 +9,6 @@ import achievementsHero from '../../../../assets/images/training.jpeg'
 import AMCPSidebar from '@/components/layout/AMCPSidebar'
 import PageParagraph from '@/components/atoms/PageParagraph'
 import ContainerImageMarine from '../ContainerImageMarine'
-import fatmaB from "../../../../assets/images/FatmaB.png"
-import habibK from "../../../../assets/images/HabibK.png"
-import hakimS from "../../../../assets/images/HakimS.png"
-import jamilK from "../../../../assets/images/JamilK.png"
-import karimB from "../../../../assets/images/KarimB.png"
-import najahH from "../../../../assets/images/NajahH.png"
-import ahmedYellow from "../../../../assets/images/ahmed-yellow.png"
 import TeamCard from '../../TeamCard'
 
 
@@ -57,7 +50,7 @@ export default function AmcpTeam() {
                 title="L’équipe"
             />
             <PageBody>
-                <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
+                <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10 pb-10'>
                     <AMCPSidebar />
                     <section className='w-fit flex flex-col gap-8 mt-5 sm:mt-0'>
                         <PageParagraph>Derrière chaque initiative de l’Aire Marine et Côtière Protégée de Kerkennah se trouve une équipe passionnée, unie par un engagement commun : préserver les trésors écologiques de l’archipel et soutenir les communautés locales qui en dépendent. Ce collectif rassemble des experts dans divers domaines — biologie marine, gestion environnementale, éducation et sensibilisation — ainsi que des bénévoles animés par la volonté de faire une différence.</PageParagraph>
@@ -81,16 +74,16 @@ export default function AmcpTeam() {
                     </section>
                 </section>
 
-                <hr className='my-6 border-[2px] text-custom-gray' />
+                <section className='border-t border-black pb-10 '/>
                 <section className='flex items-start justify-center '>
 
-                    <div className='w-full flex items-center justify-center '>
+                    <div className='w-full flex items-center justify-center mb-20 '>
                         <ContainerImageMarine images={images} />
                     </div>
 
                 </section>
 
-                <div className='mt-20'></div>
+            
             </PageBody>
         </main>
     )

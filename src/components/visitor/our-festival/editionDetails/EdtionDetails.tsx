@@ -107,7 +107,7 @@ export default function EditionDetails({ location, params }: { location: any; pa
                 {
                     (previousEdition?.images?.length > 0 || previousEdition?.videos?.length > 0) && (
                         <section className='flex-col text-center max-w-7xl w-full mx-auto justify-between px-5 h-fit my-10 mb-10'>
-                            <hr className='border-2 my-20 border-[#ADA5A5]' />
+                            <hr className='border-t my-20 border-[#000000]' />
                             <div className='text-center my-10'>
                                 <span className='text-[28px] sm:text-[36px] font-bold'>
                                     <span className='text-[#0270A0]'>Immersion Visuelle</span> <span>dans l'Édition {previousEdition?.year}</span>
@@ -125,7 +125,7 @@ export default function EditionDetails({ location, params }: { location: any; pa
 
 
                 <section className=' flex-col  text-center max-w-7xl w-full mx-auto justify-between   px-5 h-fit  my-10 mb-10'>
-                    <hr className='border-2 my-20 border-[#ADA5A5]' />
+                    <hr className='border-t my-20 border-[#000000]' />
 
                     <div className=' flex items-center justify-center'>
                         <span className='text-[28px] sm:text-[36px] font-bold text-center'>

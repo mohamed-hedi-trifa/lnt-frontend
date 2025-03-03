@@ -17,6 +17,8 @@ import { v4 as uuidv4 } from "uuid";
 interface FormData {
   title_en: string;
   title_fr: string;
+  subtitle_en: string;
+  subtitle_fr: string;
   summary_en: string;
   summary_fr: string;
   type: string;
@@ -27,6 +29,8 @@ const CreatePost: React.FC = () => {
   const [formData, setFormData] = useLocalStorage("blog-info", {
     title_en: "",
     title_fr: "",
+    subtitle_en: "",
+    subtitle_fr: "",
     summary_en: "",
     summary_fr: "",
     type: "marin",
@@ -42,8 +46,8 @@ const CreatePost: React.FC = () => {
   const handleLanguageChange = async (e: ChangeEvent<HTMLSelectElement>) => {
     const lang = e.target.value;
     if (
-      (lang === "en" && (formData.title_fr || formData.summary_fr || frenchItems.length > 0)) ||
-      (lang === "fr" && (formData.title_en || formData.summary_en || englishItems.length > 0))
+      (lang === "en" && (formData.title_fr || formData.summary_fr || formData.subtitle_fr || frenchItems.length > 0)) ||
+      (lang === "fr" && (formData.title_en || formData.summary_en || formData.subtitle_en || englishItems.length > 0))
     ) {
       const result = await Swal.fire({
         title: "You have unsaved changes",
@@ -114,6 +118,9 @@ const CreatePost: React.FC = () => {
       if (!formData.title_en) {
         newErrors.title_en = "Title is required.";
       }
+      if (!formData.subtitle_en) {
+        newErrors.subtitle_en = "subtitle is required.";
+      }
       if (!formData.summary_en) {
         newErrors.summary_en = "Summary is required.";
       }
@@ -123,6 +130,9 @@ const CreatePost: React.FC = () => {
     } else {
       if (!formData.title_fr) {
         newErrors.title_fr = "Title is required.";
+      }
+      if (!formData.subtitle_fr) {
+        newErrors.subtitle_fr = "subtitle is required.";
       }
       if (!formData.summary_fr) {
         newErrors.summary_fr = "Summary is required.";
@@ -188,6 +198,8 @@ const CreatePost: React.FC = () => {
       setFormData({
         title_en: "",
         title_fr: "",
+        subtitle_en: "",
+        subtitle_fr: "",
         summary_en: "",
         summary_fr: "",
         type: "marin",
@@ -259,6 +271,18 @@ const CreatePost: React.FC = () => {
           <>
             <Input label="Title" type="text" name="title_fr" value={formData.title_fr} onChange={handleChange} />
             {errors.title_fr && <div className="text-red-500 text-sm">{errors.title_fr}</div>}
+          </>
+        )}
+        {language === "en" && (
+          <>
+            <Input label="Subtitle" type="text" name="subtitle_en" value={formData.subtitle_en} onChange={handleChange} />
+            {errors.subtitle_en && <div className="text-red-500 text-sm">{errors.subtitle_en}</div>}
+          </>
+        )}
+        {language === "fr" && (
+          <>
+            <Input label="Subtitle" type="text" name="subtitle_fr" value={formData.subtitle_fr} onChange={handleChange} />
+            {errors.subtitle_fr && <div className="text-red-500 text-sm">{errors.subtitle_fr}</div>}
           </>
         )}
         {language === "en" && (

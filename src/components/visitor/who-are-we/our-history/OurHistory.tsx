@@ -25,7 +25,7 @@ export default function OurHistory() {
                         </section>
 
                     </section>
-                    <section className='border-t border-[#ADA5A5] mb-[100px]'>
+                    <section className='border-t border-[#000000] sm:pb-20 pb-20'>
                         <ImageHistoire />
                     </section>
                 </div>

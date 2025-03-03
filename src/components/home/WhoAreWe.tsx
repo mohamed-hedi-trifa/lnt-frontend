@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import LangLink from "../LangLink";
 import Button from "../atoms/Button";
+import PageParagraph from "../atoms/PageParagraph";
 
 export default function WhoAreWe() {
   return (
@@ -28,24 +29,26 @@ export default function WhoAreWe() {
             Qui Somme-Nous
           </h2>
           <p className="mt-3 text-2xl md:text-3xl font-bold">Association Kratten du Développement Durable de la Culture et du Loisir</p>
-          <div className="mt-2 flex gap-2">
-            <div className="h-[5px] w-5 bg-[#006E9F]"></div>
-            <div className="h-[5px] w-20 bg-[#006E9F]"></div>
+          <div className="mt-0 flex gap-2 ">
+            <div className="h-[5px] w-5 bg-gradient-to-r from-[#51ADC6] to-[#006E9F] rounded-lg"></div>
+            <div className="h-[5px] w-20 bg-gradient-to-r from-[#51ADC6] to-[#006E9F] rounded-lg"></div>
           </div>
+          <PageParagraph>
           <p className="mt-3 text-sm leading-6">
             L'Association Kratten du Développement Durable de la Culture et du Loisir(AKDDCL) est une organisation à but non lucratif fondée en 2014, dédiée à
             la préservation de l’environnement et à la promotion de la culture locale à Kerkennah. Nous œuvrons pour soutenir les pêcheurs dans une gestion
             durable des ressources maritimes et pour lutter contre la pêche illégale autour de l'archipel.
-          </p>
+          </p>         
           <p className="mt-3 text-sm leading-6">
             En plus de nos initiatives pour la protection de l’environnement, nous organisons divers événements culturels et sportifs, comme le Festival de la
             Culture des Îles Méditerranéennes, qui célèbre le riche patrimoine des îles de Kerkennah. Nous croyons en un développement équilibré, respectueux de
             notre environnement et de nos traditions, tout en créant des opportunités pour les générations futures. Notre mission est de rassembler la
             communauté autour de valeurs de durabilité, de culture et de solidarité pour bâtir un avenir meilleur pour notre île et ses habitants.
           </p>
+          </PageParagraph>
           <LangLink
             to="/who-are-we"
-            className="mt-4 flex justify-center sm:justify-start"
+            className="mt-4 flex justify-center sm:justify-start pt-4"
           >
             <Button variant="primary">
             En savoir plus

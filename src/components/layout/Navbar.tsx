@@ -166,7 +166,7 @@ function Navbar({ location }: { location: any }) {
             <div className="hidden md:inline h-8 w-px bg-white"></div>
             <LangLink
               to="/benevole"
-              className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right"
+              className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full shadow-lg bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right"
             >
               DEVENIR BÉNÉVOLE
             </LangLink>
@@ -181,7 +181,7 @@ function Navbar({ location }: { location: any }) {
         </div>
       </header>
 
-      <nav className={`hidden md:flex items-center w-full h-[50px] px-3 bg-slate-700 ${isScrolled ? "" : "bg-opacity-50"} duration-200`}>
+      <nav className={`hidden md:flex items-center w-full h-[50px] px-3 ${isScrolled ? "bg-[rgba(0,0,0,0.7)]" : "bg-[rgba(0,0,0,0.5)]"} duration-200`}>
         <ul className="flex items-center justify-between w-full max-w-7xl mx-auto">
           {items.map((item, index) => (
             <li key={index}>
@@ -262,7 +262,134 @@ function Navbar({ location }: { location: any }) {
 
 export default Navbar;
 
-// ArrowDown Component
+export const items = [
+  {
+    label: "Qui Sommes-Nous",
+    underlineClassName: "w-[100px]",
+    items: [
+      {
+        label: "Notre Histoire",
+        path: "/who-are-we/our-history",
+      },
+      {
+        label: "Principes et Valeurs",
+        path: "/who-are-we/our-values",
+      },
+      {
+        label: "Nos Réalisations",
+        path: "/who-are-we/our-achievements",
+      },
+      {
+        label: "Notre Équipe",
+        path: "/who-are-we/our-team",
+      },
+      {
+        label: "Partenaires",
+        path: "/who-are-we/partners",
+      },
+      {
+        label: "Rapport Financier",
+        path: "/who-are-we/financial-report",
+      },
+    ],
+  },
+  {
+    label: "Air Marine et Côtière Protégée",
+    underlineClassName: "w-[150px]",
+    items: [
+      {
+        label: "Présentation",
+        path: "/protected-air-marine-coastal-areas/presentation",
+        items: [
+          {
+            label: "AMCP de L'archipel Kerkennah",
+            path: "/protected-air-marine-coastal-areas/presentation/amcp",
+          },
+          {
+            label: "Partenaires AMCP",
+            path: "/protected-air-marine-coastal-areas/presentation/partners",
+          },
+        ],
+      },
+      {
+        label: "Suivi Scientifique",
+        path: "/protected-air-marine-coastal-areas/monitoring",
+        items: [
+          {
+            label: "Suivi Marin",
+            path: "/protected-air-marine-coastal-areas/monitoring/marin",
+          },
+          {
+            label: "Suivi Terrestre",
+            path: "/protected-air-marine-coastal-areas/monitoring/terrestre",
+          },
+        ],
+      },
+      {
+        label: "Formation et Campement Scientifique",
+        path: "/protected-air-marine-coastal-areas/training",
+      },
+      {
+        label: "Équipe",
+        path: "/protected-air-marine-coastal-areas/team",
+      },
+    ],
+  },
+  {
+    label: "Notre Festival",
+    path:"/our-festival",
+    underlineClassName: "w-[100px]",
+    items: [
+      {
+        label: "Prochains Festivals",
+        path: "/our-festival/upcoming",
+      },
+      {
+        label: "Éditions Précédentes",
+        path: "/our-festival/previous",
+      },
+    ],
+  },
+  {
+    label: "Actualités",
+    path: "/news",
+    underlineClassName: "w-[70px]",
+  },
+  {
+    label: "Événements",
+    path:"/en/event",
+    underlineClassName: "w-[100px]",
+    items: [
+      {
+        label: "Ateliers et Formations",
+        path: "/training-sessions",
+      },
+      {
+        label: "Événements Culturels",
+        path: "/culturel-events",
+      },
+      {
+        label: "Activités de Loisirs et Sportives",
+        path: "/sport-events",
+      },
+      {
+        label: "No event",
+        path: "/event/no-event",
+      },
+    ],
+  },
+  {
+    label: "Opportunités",
+    underlineClassName: "w-[100px]",
+    path:"/opportunities",
+  },
+  {
+    label: "Contact",
+    path: "/contact",
+    underlineClassName: "w-[55px]",
+  },
+];
+
 function ArrowDown(props: { className?: string }) {
   return (
     <svg viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>

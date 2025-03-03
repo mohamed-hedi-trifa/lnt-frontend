@@ -24,9 +24,9 @@ export default function SidebarAdmin() {
             </Link>
 
             {user?.role == 1 && (
-                ['Prtners', 'Qui Sommes-Nous', 'Air Marine et Côtière Protégée', 'Notre Festival', 'Actualités', 'Événements', 'Opportunités'].map((section, index) => (
-                    <Accordion key={index} open={openSection === section}>
-                        <AccordionHeader onClick={() => toggleSection(section)} className="p-4 text-white bg-gray-700 flex items-center">
+                ['Prtners','Qui Sommes-Nous', 'Air Marine et Côtière Protégée', 'Notre Festival', 'Actualités', 'Événements', 'Opportunités'].map((section, index) => (
+                    <Accordion key={index} open={openSection === section} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                        <AccordionHeader onClick={() => toggleSection(section)} className="p-4 text-white bg-gray-700 flex items-center" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                             <PhotoIcon className="h-6 w-6" aria-hidden="true" />
                             <span className="ml-2">{section}</span>
                         </AccordionHeader>

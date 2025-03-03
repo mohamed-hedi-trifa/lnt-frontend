@@ -30,8 +30,10 @@ export default function PartnersPage() {
         <div className=''>
             <HeroSection imgSrc={partnersHero} title="Des Alliances pour un Futur Meilleur" subTitle="Nos partenaires locaux et internationaux sont au cœur de nos succès : ensemble, nous façonnons un avenir durable" />
             <PageTitle title='Partners' />
+            <section className='px-4 sm:px-0' >
+
             <section className='max-w-6xl mx-auto flex flex-col gap-12'>
-                    <section className='w-full flex relative gap-8 py-10'>
+                    <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
                     <Sidebar />
 
                     <section className='w-fit text-justify text-[22px]'>
@@ -42,9 +44,10 @@ export default function PartnersPage() {
                     <section>
                     <Partners />
                     </section>
-                    <section className='border-t border-[#ADA5A5] mb-[100px]'>
+                    <section className='border-t border-black sm:pb-20 pb-20'>
                         <ImageHistoire />
                     </section>
+            </section>
             </section>
         </div>
     )

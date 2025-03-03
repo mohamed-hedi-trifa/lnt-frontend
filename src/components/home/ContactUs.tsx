@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import PageParagraph from "../atoms/PageParagraph";
 
 export default function ContactUs() {
   const [input, setInput] = useState({
@@ -19,10 +20,12 @@ export default function ContactUs() {
           <h2 className="text-slate-800 text-2xl md:text-4xl font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.33)" }}>
             Contactez<span className="text-primary">-Nous</span>
           </h2>
-          <p className="font-semibold text-sm" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.33)" }}>
-            Vous avez des questions ou souhaitez en savoir plus sur nos projets et activités ? N'hésitez pas à nous contacter ! Notre équipe est à votre écoute
-            pour toute demande d'information ou de collaboration.
-          </p>
+          <PageParagraph>
+            <p className="font-semibold text-sm" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.33)" }}>
+              Vous avez des questions ou souhaitez en savoir plus sur nos projets et activités ? N'hésitez pas à nous contacter ! Notre équipe est à votre écoute
+              pour toute demande d'information ou de collaboration.
+            </p>
+          </PageParagraph>
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <section className="flex flex-col gap-3">
               <input
@@ -77,14 +80,12 @@ export default function ContactUs() {
             </div>
           </form>
         </article>
-        <article className="relative flex gap-8 flex-col md:flex-row shrink-0 w-full max-w-[400px] lg:max-w-[450px]">
+        <article className="relative flex gap-8 flex-col md:flex-row shrink-0 w-full max-w-[550px] lg:max-w-[550px] max-h-[500px]">
           <div className="relative z-10 w-full rounded-lg aspect-[7/10] mr-auto overflow-hidden">
             {/* <img src="/kerkennah_map.png" alt="" className="w-full h-full object-cover" /> */}
             <iframe
-              // src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15287.114129610636!2d11.250828264314954!3d34.82118199375824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1301af003fa3e687%3A0x2cdfb1354d9f1c47!2sPhare%20Ras%20Jelija!5e0!3m2!1sen!2stn!4v1735253439321!5m2!1sen!2stn"
-              // src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15287.114129610636!2d11.2500271!3d34.8217164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1301af003fa3e687%3A0x2cdfb1354d9f1c47!2sPhare%20Ras%20Jelija!5e0!3m2!1sen!2stn!4v1735253439321!5m2!1sen!2stn"
-              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14563.116032879212!2d11.254996129929653!3d34.81668553451732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2stn!4v1735279113765!5m2!1sen!2stn"
-              className="w-full h-full"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.0534666483472!2d11.255356599999999!3d34.8297482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1301a9e32deb070d%3A0x453f7c016acebeb3!2sAssociation%20Kraten%20du%20d%C3%A9veloppement%20durable%20de%20la%20culture%20et%20du%20loisir%20AKDDCL!5e0!3m2!1sfr!2stn!4v1740282338761!5m2!1sfr!2stn"
+              className="w-full h-full shadow-gl rounded-lg"
               style={{ border: 0 }}
               allowFullScreen={true}
               loading="lazy"
@@ -92,19 +93,19 @@ export default function ContactUs() {
             ></iframe>
           </div>
           <div className="flex md:flex-col gap-12 justify-center items-center flex-wrap">
-            <a href="#" className="shrink-0 flex items-center justify-center size-12 bg-[#0866ff] rounded-full">
+            <a href="https://www.facebook.com/AKDDCL" className="shrink-0 flex items-center justify-center size-12 bg-[#0866ff] rounded-full">
               <FacebookIcon />
             </a>
-            <a href="#" className="shrink-0 flex items-center justify-center size-12 bg-[#DD2A7B] rounded-full">
+            <a href="https://www.instagram.com/akddcl.kerkennah/" className="shrink-0 flex items-center justify-center size-12 bg-[#DD2A7B] rounded-full">
               <InstagramIcon />
             </a>
-            <a href="#" className="shrink-0 flex items-center justify-center size-12 bg-sky-600 rounded-full">
+            <a href="https://www.linkedin.com/company/association-kratten-du-d%C3%A9veloppement-%C3%A9veloppement-durable-de-la-culture-et-du-loisir/?viewAsMember=true" className="shrink-0 flex items-center justify-center size-12 bg-sky-600 rounded-full">
               <LinkedinIcon />
             </a>
             <a href="#" className="shrink-0 flex items-center justify-center size-12 bg-black rounded-full">
               <XIcon />
             </a>
-            <a href="#" className="shrink-0 flex items-center justify-center size-12 bg-red-500 rounded-full">
+            <a href="https://www.youtube.com/@AKDDCL-Kerkennah" className="shrink-0 flex items-center justify-center size-12 bg-red-500 rounded-full">
               <YoutubeIcon />
             </a>
           </div>
