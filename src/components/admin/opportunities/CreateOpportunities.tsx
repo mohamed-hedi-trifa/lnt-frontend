@@ -134,21 +134,10 @@ const CreateOpportunity: React.FC = () => {
             if (!formData.description_en) {
                 newErrors.summary_en = "Summary is required.";
             }
-            if (!formData.opportunity_start_at) {
-                newErrors.opportunity_start_at = "Event date and time are required.";
-            }
-            if (!formData.opportunity_end_at) {
-                newErrors.opportunity_end_at = "Event date and time are required.";
-            }
             if (!formData.location_en) {
                 newErrors.location_en = "Location is required.";
             }
-            if (!formData.latitude) {
-                newErrors.latitude = "Latitude is required.";
-            }
-            if (!formData.longitude) {
-                newErrors.longitude = "Longitude is required.";
-            }
+
             if (englishItems.length === 0) {
                 newErrors.items = "At least one content item is required.";
             }
@@ -169,20 +158,12 @@ const CreateOpportunity: React.FC = () => {
             if (!formData.location_fr) {
                 newErrors.location_fr = "Location is required.";
             }
-            if (!formData.latitude) {
-                newErrors.latitude = "Latitude is required.";
-            }
-            if (!formData.longitude) {
-                newErrors.longitude = "Longitude is required.";
-            }
             if (frenchItems.length === 0) {
                 newErrors.items = "At least one content item is required.";
             }
         }
-
-        if (!formData.opportunity_type_id) {
-            newErrors.opportunity_type_id = "Event type is required.";
-            console.log('sdfqsdfqsdfqdfsqd')
+        if (formData.type == "") {
+            newErrors.type = "Type is required.";
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -338,11 +319,6 @@ const CreateOpportunity: React.FC = () => {
                         <Input label="Description" type="text" name="description_fr" value={formData.description_fr} onChange={handleChange} />
                         {errors.description_fr && <div className="text-red-500 text-sm">{errors.description_fr}</div>}
 
-                        <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
-                        {errors.event_start_at && <div className="text-red-500 text-sm">{errors.event_start_at}</div>}
-
-                        <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_end_at" value={formData.event_end_at} onChange={handleChange} />
-                        {errors.event_end_at && <div className="text-red-500 text-sm">{errors.event_end_at}</div>}
 
                         <Input label="Lieu" type="text" name="location_fr" value={formData.location_fr} onChange={handleChange} />
                         {errors.location_fr && <div className="text-red-500 text-sm">{errors.location_fr}</div>}
@@ -351,19 +327,26 @@ const CreateOpportunity: React.FC = () => {
                     </>
                 )}
                 <Select
-
-                    label="Event type:"
-                    name="event_type_id"
-                    value={formData.event_type_id}
-                    onChange={(e) => setFormData({ ...formData, event_type_id: e.target.value })}
+                    label="Opportunity type:"
+                    name="type"
+                    value={formData.type}
+                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                 >
-                    <option value="en">English</option>
-                    <option value="fr">French</option>
-             
+                    <option value="">select type</option>
+                    <option value="job-offer">job-offer</option>
+                    <option value="call-for-tender">call for tender</option>
+                    <option value="internship">internship</option>
 
                 </Select>
-                {errors.event_type_id && <div className="text-red-500 text-sm">{errors.event_type_id}</div>}
+                {errors.type && <div className="text-red-500 text-sm">{errors.type}</div>}
 
+                <Input label="Contract type" type="text" name="contract_type" value={formData.contract_type} onChange={handleChange} />
+                {errors.contract_type && <div className="text-red-500 text-sm">{errors.contract_type}</div>}
+
+                <Input label="due_date" type="date" name="due_date" value={formData.due_date} onChange={handleChange} />
+                {errors.due_date && <div className="text-red-500 text-sm">{errors.due_date}</div>}
+                <Input label="Post Start" type="date" name="postStart" value={formData.postStart} onChange={handleChange} />
+                {errors.postStart && <div className="text-red-500 text-sm">{errors.postStart}</div>}
 
 
 

@@ -239,12 +239,12 @@ const EditOpportunity = ({ location, params }: { location: any; params: any }) =
                 headers: { "Content-Type": "multipart/form-data" },
             });
             if (response.status === 200) {
-                Swal.fire("Success", "Event updated successfully", "success");
+                Swal.fire("Success", "Opportunities updated successfully", "success");
                 navigate("/admin/opportunities");
             }
         } catch (error) {
             console.error("Error updating opportunity:", error);
-            Swal.fire("Error", "Failed to update Event.", "error");
+            Swal.fire("Error", "Failed to update opportunities.", "error");
         }
     };
 
@@ -255,7 +255,7 @@ const EditOpportunity = ({ location, params }: { location: any; params: any }) =
                     <Link to="/admin/opportunities">
                         <ArrowLeftIcon className="h-6 w-6" />
                     </Link>
-                    <Title>Edit Event</Title>
+                    <Title>Edit opportunity</Title>
                 </div>
                 <Select
                     divClassNames="!flex-row items-center gap-2"
@@ -270,39 +270,57 @@ const EditOpportunity = ({ location, params }: { location: any; params: any }) =
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col grow">
-                {language === "en" && (
+            {language === "en" && (
                     <>
                         <Input label="Title" type="text" name="title_en" value={formData.title_en} onChange={handleChange} />
-
+                        
 
                         <Input label="Description" type="text" name="description_en" value={formData.description_en} onChange={handleChange} />
-
-
                       
+
+
                         <Input label="Location" type="text" name="location_en" value={formData.location_en} onChange={handleChange} />
-                   
+                       
+
                     </>
                 )}
 
                 {language === "fr" && (
                     <>
                         <Input label="Titre" type="text" name="title_fr" value={formData.title_fr} onChange={handleChange} />
-
+                        {errors.title_fr && <div className="text-red-500 text-sm">{errors.title_fr}</div>}
 
                         <Input label="Description" type="text" name="description_fr" value={formData.description_fr} onChange={handleChange} />
+                        {errors.description_fr && <div className="text-red-500 text-sm">{errors.description_fr}</div>}
 
 
-                
                         <Input label="Lieu" type="text" name="location_fr" value={formData.location_fr} onChange={handleChange} />
+                        {errors.location_fr && <div className="text-red-500 text-sm">{errors.location_fr}</div>}
 
 
                     </>
                 )}
+                <Select
+                    label="Opportunity type:"
+                    name="type"
+                    value={formData.type}
+                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                >
+                    <option value="">select type</option>
+                    <option value="job-offer">job-offer</option>
+                    <option value="call-for-tender">call for tender</option>
+                    <option value="internship">internship</option>
+                </Select>
+          
 
-                <Input label="Latitude" type="text" name="latitude" value={formData.latitude} onChange={handleChange} />
+                <Input label="Contract type" type="text" name="contract_type" value={formData.contract_type} onChange={handleChange} />
 
 
-                <Input label="Longitude" type="text" name="longitude" value={formData.longitude} onChange={handleChange} />
+                <Input label="due_date" type="date" name="due_date" value={formData.due_date} onChange={handleChange} />
+
+                <Input label="Post Start" type="date" name="postStart" value={formData.postStart} onChange={handleChange} />
+       
+
 
                 <Select
                     name="status"

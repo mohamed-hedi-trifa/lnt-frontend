@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 
 interface InputFieldProps {
   label: string;
@@ -7,7 +7,9 @@ interface InputFieldProps {
   required?: boolean;
   type?: string;
   placeholder?: string;
-  width?: string; // Allows dynamic width
+  width?: string;
+  value?: string;  // Added value prop
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void; // Added onChange prop
 }
 
 const InputFieldBenevole: React.FC<InputFieldProps> = ({
@@ -17,10 +19,12 @@ const InputFieldBenevole: React.FC<InputFieldProps> = ({
   required = false,
   type = "text",
   placeholder = "",
-  width = "300px", // Default width
+  width = "300px",
+  value,
+  onChange,
 }) => {
   return (
-    <div className="flex flex-col items-start gap-1  w-full" >
+    <div className="flex flex-col items-start gap-1 w-full">
       <label htmlFor={id} className="font-semibold text-sm text-start">
         {label} {required && <span className="text-[#FF0000]">*</span>}
       </label>
@@ -28,8 +32,10 @@ const InputFieldBenevole: React.FC<InputFieldProps> = ({
         type={type}
         name={name}
         id={id}
-        className="border border-[#D6DDEB] h-[34px] px-4 w-full "
+        className="border border-[#D6DDEB] h-[34px] px-4 w-full"
         placeholder={placeholder}
+        value={value} // Controlled input
+        onChange={onChange} // Event handler
       />
     </div>
   );
