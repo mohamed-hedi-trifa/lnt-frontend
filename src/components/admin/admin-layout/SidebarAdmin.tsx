@@ -12,7 +12,7 @@ export default function SidebarAdmin() {
         console.log("user:", user);
     }, [user]);
 
-    const toggleSection = (section:any) => {
+    const toggleSection = (section: any) => {
         setOpenSection(openSection === section ? null : section);
     };
 
@@ -24,7 +24,7 @@ export default function SidebarAdmin() {
             </Link>
 
             {user?.role == 1 && (
-                ['Prtners','Qui Sommes-Nous', 'Air Marine et Côtière Protégée', 'Notre Festival', 'Actualités', 'Événements', 'Opportunités'].map((section, index) => (
+                ['Prtners', 'Qui Sommes-Nous', 'Air Marine et Côtière Protégée', 'Notre Festival', 'Actualités', 'Événements', 'Opportunités', 'Notifications'].map((section, index) => (
                     <Accordion key={index} open={openSection === section} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                         <AccordionHeader onClick={() => toggleSection(section)} className="p-4 text-white bg-gray-700 flex items-center" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                             <PhotoIcon className="h-6 w-6" aria-hidden="true" />
@@ -42,6 +42,7 @@ export default function SidebarAdmin() {
                                     <Link to="/admin/key-moment" className="block p-4 text-gray-300 hover:bg-gray-700">Key Moments</Link>
                                     <Link to="/admin/team-members" className="block p-4 text-gray-300 hover:bg-gray-700">Team Members</Link>
                                     <Link to="/admin/financial-report" className="block p-4 text-gray-300 hover:bg-gray-700">Financial Report</Link>
+                                    <Link to="/admin/financial-source" className="block p-4 text-gray-300 hover:bg-gray-700">Financial Source</Link>
                                 </>
                             )}
                             {section === 'Notre Festival' && (
@@ -63,6 +64,16 @@ export default function SidebarAdmin() {
                             {section === 'Air Marine et Côtière Protégée' && (
                                 <>
                                     <Link to="/admin/posts" className="block p-4 text-gray-300 hover:bg-gray-700">Blog</Link>
+                                </>
+                            )}
+                            {section === 'Opportunités' && (
+                                <>
+                                    <Link to="/admin/opportunities" className="block p-4 text-gray-300 hover:bg-gray-700">Opportunities</Link>
+                                </>
+                            )}
+                            {section === 'Notifications' && (
+                                <>
+                                    <Link to="/admin/internship-application" className="block p-4 text-gray-300 hover:bg-gray-700">Internship Application</Link>
                                 </>
                             )}
                         </AccordionBody>

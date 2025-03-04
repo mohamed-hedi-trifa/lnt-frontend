@@ -51,8 +51,7 @@ const GallerySection = () => {
 };
 
 export default GallerySection;
-<<<<<<< HEAD
-=======
+
 
 // import React from 'react';
 
@@ -107,4 +106,3 @@ export default GallerySection;
 // };
 
 // export default GallerySection;
->>>>>>> 4d633a403293f170a3fc1b0fc5b69ed7fd34e9f2

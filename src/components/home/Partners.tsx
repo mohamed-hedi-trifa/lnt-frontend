@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { SwiperOptions } from "swiper/types";
 
 import PageParagraph from "../atoms/PageParagraph";
+import Carousel from "./Carousel";
 
 
 

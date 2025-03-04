@@ -32,20 +32,20 @@ const TabeFinancement: React.FC<TabeFinancement> = ({ data }) => {
             <React.Fragment key={index}>
               {/* Row format for larger screens */}
               <tr className="hidden sm:table-row hover:bg-gray-100">
-                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.periode}</td>
+                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.period}</td>
                 <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.source}</td>
-                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.titreDuProjet}</td>
-                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.description}</td>
-                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.montant}</td>
+                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.title_en || item.title_fr}</td>
+                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.description_en || item.description_fr}</td>
+                <td className="border border-gray-300 px-4 py-2 pb-4 sm:text-base text-[14px]">{item.amount}</td>
               </tr>
 
               {/* Stacked format for smaller screens */}
               <tr className="sm:hidden border-t border-gray-300">
-              <td colSpan={2} className="text-[#0270A0] text-center border-2 px-4 py-2 font-bold text-[16px]">{item.titreDuProjet}</td>
+              <td colSpan={2} className="text-[#0270A0] text-center border-2 px-4 py-2 font-bold text-[16px]">{item.title_en || item.title_fr}</td>
               </tr>
               <tr className="sm:hidden border 2">
                 <td className="px-4 py-2 font-medium bg-[#0270A0] "><span className="text-[#ffffff]">Période</span></td>
-                <td className="px-4 py-2">{item.periode}</td>
+                <td className="px-4 py-2">{item.period}</td>
               </tr>
               <tr className="sm:hidden border-2">
                 <td className="px-4 py-2 font-medium bg-[#0270A0]"><span className="text-[#ffffff]">Source</span></td>
@@ -53,11 +53,11 @@ const TabeFinancement: React.FC<TabeFinancement> = ({ data }) => {
               </tr>
               <tr className="sm:hidden border2">
                 <td className="px-4 py-2 font-medium bg-[#0270A0]"><span className="text-[#ffffff]">Description</span></td>
-                <td className="px-4 py-2">{item.description}</td>
+                <td className="px-4 py-2">{item.description_en || item.description_fr}</td>
               </tr>
               <tr className="sm:hidden border-2">
                 <td className="px-4 py-2 font-medium bg-[#0270A0]"><span className="text-[#ffffff]">Montant</span></td>
-                <td className="px-4 py-2">{item.montant}</td>
+                <td className="px-4 py-2">{item.amount}</td>
               </tr>
             </React.Fragment>
           ))}

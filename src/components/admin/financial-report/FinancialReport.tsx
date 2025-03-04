@@ -64,7 +64,7 @@ export default function FinancialReport() {
             <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
                 <div className="rounded-lg shadow-lg">
                     <div className="flex justify-between items-center bg-gray-100 p-3 rounded-t-lg">
-                        <h5 className="mb-3">Parteners ( {itemsList.length} )</h5>
+                        <h5 className="mb-3">Financial Report ( {itemsList.length} )</h5>
                         <Link to="/admin/financial-report/create" className="bg-blue-600 text-white p-2 rounded">
                             Create financial report
                         </Link>

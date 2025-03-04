@@ -1,13 +1,8 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-<<<<<<< HEAD
-export default function PinnedImageSwap({ edition }: { edition: any }) {
-=======
-
 
 export default function PinnedImageSwap({ edition }: { edition: any }) {
 
->>>>>>> 4d633a403293f170a3fc1b0fc5b69ed7fd34e9f2
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // 1) Scroll progress for this section
@@ -42,11 +37,6 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
     [0, trackHeight - handleHeight]
   );
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 4d633a403293f170a3fc1b0fc5b69ed7fd34e9f2
-
   const formatDateRange = (startDate, endDate) => {
     const options = { day: "numeric", month: "long", year: "numeric" };
 
@@ -65,12 +55,6 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
     }
 };
 
-
-  
-<<<<<<< HEAD
-=======
-
->>>>>>> 4d633a403293f170a3fc1b0fc5b69ed7fd34e9f2
   return (
     <section
       ref={sectionRef}
@@ -83,18 +67,10 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
       <motion.div
         style={{
           position: "sticky",
-<<<<<<< HEAD
           top: 106,                 
           height: "calc(100vh - 106px)", 
-=======
-
           // top: 106,                   // pinned from 106px offset
           // height: "calc(100vh - 106px)", // pinned container height
-
-          top: 106,                 
-          height: "calc(100vh - 106px)", 
-
->>>>>>> 4d633a403293f170a3fc1b0fc5b69ed7fd34e9f2
           display: "flex",
           overflow: "hidden",
         }}
@@ -104,10 +80,9 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
         <div style={{ position: "relative", height: "100%" }} className="shrink-0 w-[525px]">
           {/* SECOND IMAGE (BEHIND) */}
           <motion.img
-<<<<<<< HEAD
-=======
+
             // src="/eponge_marine.jpg"
->>>>>>> 4d633a403293f170a3fc1b0fc5b69ed7fd34e9f2
+
                      src={`${process.env.GATSBY_API_URL}${edition?.image_affiche2}`}
             alt="Second"
             style={{
@@ -122,12 +97,6 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
           />
           {/* FIRST IMAGE (ON TOP) */}
           <motion.img
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 4d633a403293f170a3fc1b0fc5b69ed7fd34e9f2
             src={`${process.env.GATSBY_API_URL}${edition?.image_affiche1}`}
             alt="First"
             style={{
@@ -162,11 +131,7 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
           >
             <div>
               <h1 style={{ margin: "1rem 0 0 0", fontSize: "2rem", fontWeight: "bold" }}>
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 4d633a403293f170a3fc1b0fc5b69ed7fd34e9f2
                 {edition.titre_affiche1_en || edition.titre_affiche1_fr }
               </h1>
               <p style={{ marginTop: "1rem" }}>
@@ -190,10 +155,7 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
           >
             <div>
               <h1 style={{ margin: "1rem 0 0 0", fontSize: "2rem", fontWeight: "bold" }}>
-<<<<<<< HEAD
-=======
 
->>>>>>> 4d633a403293f170a3fc1b0fc5b69ed7fd34e9f2
               {edition.titre_affiche2_en || edition.titre_affiche2_fr }
               </h1>
               <p style={{ marginTop: "1rem" }}>
@@ -202,10 +164,7 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
              
               <p style={{ marginTop: "1rem", fontWeight: "bold" }}>
                 Date: {formatDateRange(edition.start_date, edition.end_date)}
-<<<<<<< HEAD
-=======
 
->>>>>>> 4d633a403293f170a3fc1b0fc5b69ed7fd34e9f2
               </p>
             </div>
           </motion.div>

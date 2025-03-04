@@ -7,7 +7,9 @@ interface InputFieldProps {
   required?: boolean;
   type?: string;
   placeholder?: string;
-  width?: string; // Allows dynamic width
+  width?: string;
+  value?: string; // Added value prop
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // Added onChange prop
 }
 
 const InputFieldOpportunity: React.FC<InputFieldProps> = ({
@@ -17,7 +19,9 @@ const InputFieldOpportunity: React.FC<InputFieldProps> = ({
   required = false,
   type = "text",
   placeholder = "",
-  width = "300px", // Default width
+  width = "300px",
+  value,
+  onChange,
 }) => {
   return (
     <div className="flex flex-col items-start gap-1" style={{ width }}>
@@ -28,8 +32,10 @@ const InputFieldOpportunity: React.FC<InputFieldProps> = ({
         type={type}
         name={name}
         id={id}
-        className="border border-[#D6DDEB] h-[34px] px-4 w-full "
+        className="border border-[#D6DDEB] h-[34px] px-4 w-full"
         placeholder={placeholder}
+        value={value} // Now supports controlled input
+        onChange={onChange} // Handles input change
       />
     </div>
   );
