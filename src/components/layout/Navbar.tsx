@@ -118,6 +118,7 @@ function Navbar({ location }: { location: any }) {
           {
             label: "Notre Festival",
             underlineClassName: "w-[100px]",
+            path:"/our-festival",
             items: [
               { label: "Prochains Festivals", path: "/our-festival/upcoming" },
               { label: "Éditions Précédentes",  path: "/our-festival/previous", },
