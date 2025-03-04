@@ -1,39 +1,174 @@
-import React, { useState } from "react";
-
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import axios, { AxiosError } from "axios";
 import UploadIcon from "@/assets/icons/UploadIcon";
-import InputFieldBenevole from "./InputFieldBenevole";
-import SelectFieldBenevole from "./SelectFieldBenevole";
-import DateTimeBenevole from "./DateTimeBenevole";
 
+import { toast } from "react-toastify";
+import useLocalStorage from "@/lib/useLocalStorage";
+import InputFieldBenevole from "../Benevole/InputFieldBenevole";
+import SelectFieldBenevole from "../Benevole/SelectFieldBenevole";
+import DateTimeBenevole from "../Benevole/DateTimeBenevole";
 
-export default function BenevoleForm() {
+interface FormData {
+    first_name: string;
+    last_name: string;
+    birthDay: number;
+    birthMonth: number;
+    birthYear: number;
+    email: string;
+    phone: string;
+    address: string;
+    professional_situation: string;
+    professionalSector: string;
+    interests_motivation: string;
+    competences_experiences: string;
+    availability_start_date: string;
+    availabilityEndDate: string;
+    cvFile: File | null;
+    motivationLetter: File | null;
+}
 
+const BenevoleForm: React.FC = () => {
+    const [isFormFilled, setIsFormFilled] = useState(false);
+    const [formData, setFormData] = useLocalStorage("benevole-form", {
+        first_name: "",
+        last_name: "",
+        birthDay: 0,
+        birthMonth: 0,
+        birthYear: 0,
+        email: "",
+        phone: "",
+        address: "",
+        professional_situation: "",
+        professionalSector: "",
+        interests_motivation: "",
+        competences_experiences: "",
+        availability_start_date: "",
+        availabilityEndDate: "",
+        cvFile: null,
+        motivationLetter: null,
+    });
 
-    const [isFormFilled, setisFormFilled] = useState(false);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [cvFileName, setCvFileName] = useState<string>("");
+    const [motivationLetterFileName, setMotivationLetterFileName] = useState<string>("");
 
-    const [interestsMotivationCharCount, setInterestsMotivationCharCount] = useState(0);
-    const [competencesExperiencesCharCount, setCompetencesExperiencesCharCount] = useState(0);
-    const maxLength = 500;
-
-    const handleInterestsMotivationChange = (e: { target: { value: string | any[]; }; }) => {
-        setInterestsMotivationCharCount(e.target.value.length);
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
     };
 
-    const handleCompetencesExperiencesChange = (e: { target: { value: string | any[]; }; }) => {
-        setCompetencesExperiencesCharCount(e.target.value.length);
+    const handleCvFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const file = e.target.files[0];
+            setFormData({
+                ...formData,
+                cvFile: file,
+            });
+            setCvFileName(file.name);
+        }
+    };
+
+    const handleMotivationLetterFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const file = e.target.files[0];
+            setFormData({
+                ...formData,
+                motivationLetter: file,
+            });
+            setMotivationLetterFileName(file.name);
+        }
+    };
+
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+
+        if (!formData.first_name) newErrors.first_name = "Le nom est requis.";
+        if (!formData.last_name) newErrors.last_name = "Le prénom est requis.";
+        if (!formData.birthDay || !formData.birthMonth || !formData.birthYear) newErrors.birthDate = "La date de naissance est requise.";
+        if (!formData.email) newErrors.email = "L'adresse e-mail est requise.";
+        if (!formData.phone) newErrors.phone = "Le numéro de téléphone est requis.";
+        if (!formData.address) newErrors.address = "L'adresse est requise.";
+        if (!formData.professional_situation) newErrors.professional_situation = "La situation professionnelle est requise.";
+        if (!formData.interests_motivation) newErrors.interests_motivation = "Les intérêts et motivations sont requis.";
+        if (!formData.competences_experiences) newErrors.competences_experiences = "Les compétences et expériences sont requises.";
+        if (!formData.availability_start_date) newErrors.availability_start_date = "La date de début de disponibilité est requise.";
+        if (!formData.availabilityEndDate) newErrors.availabilityEndDate = "La date de fin de disponibilité est requise.";
+        if (!formData.cvFile) newErrors.cvFile = "Le CV est requis.";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
+
+        const formDataToSend = new FormData();
+        for (const key in formData) {
+            if (formData[key as keyof FormData] !== null) {
+                formDataToSend.append(key, formData[key as keyof FormData]);
+            }
+        }
+
+        setIsLoading(true);
+        try {
+            const response = await axios.post("/api/submit-volunteer-application", formDataToSend, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            toast.success("Votre demande a été envoyée avec succès !");
+            setIsFormFilled(true);
+        } catch (error) {
+            let msg = "Une erreur s'est produite lors de l'envoi de la demande. Veuillez réessayer.";
+            if (error instanceof AxiosError) {
+                msg = error?.response?.data?.message || msg;
+            }
+            toast.error(msg);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
         <div>
             {!isFormFilled ? (
-                <div className="bg-white p-6 rounded-lg shadow-lg   relative sm:mr-10">
-                    <div className="flex items-start flex-col mt-4 gap-5">
+                <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg relative sm:mr-10">
+                    <h2 className="text-xl font-semibold mb-4 text-[#0270A0]">Formulaire de Demande de Bénévolat</h2>
 
+                    <hr className="border-t-2 border-black" />
+                    <div className="flex items-start flex-col mt-4 gap-5">
+                        <h1 className="font-semibold text-lg">Informations Personnelles</h1>
 
                         <div className="flex gap-6 sm:flex-row flex-col">
-
-                            <InputFieldBenevole label="Nom" id="firstName" name="firstName" required width="200px" />
-                            <InputFieldBenevole label="Prénom" id="secondName" name="secondName" required width="200px" />
+                            <InputFieldBenevole
+                                label="Nom"
+                                id="first_name"
+                                name="first_name"
+                                value={formData.first_name}
+                                onChange={handleChange}
+                                required
+                                width="200px"
+                            />
+                            {errors.first_name && <div className="text-red-500 text-sm">{errors.first_name}</div>}
+                            <InputFieldBenevole
+                                label="Prénom"
+                                id="last_name"
+                                name="last_name"
+                                value={formData.last_name}
+                                onChange={handleChange}
+                                required
+                                width="200px"
+                            />
+                            {errors.last_name && <div className="text-red-500 text-sm">{errors.last_name}</div>}
                         </div>
 
                         <div className="flex flex-col items-start gap-1">
@@ -41,58 +176,84 @@ export default function BenevoleForm() {
                                 Date de naissance <span className="text-[#FF0000]">*</span>
                             </label>
                             <div className="flex gap-6 flex-wrap">
-                                {/* Day Select */}
                                 <div className="w-[103px]">
                                     <SelectFieldBenevole
-                                        id="day"
-                                        name="day"
+                                        id="birthDay"
+                                        name="birthDay"
+                                        value={formData.birthDay}
+                                        onChange={handleChange}
                                         required
-                                        options={Array.from({ length: 31 }, (_, i) => (i + 1).toString())} // Days 1-31
+                                        options={Array.from({ length: 31 }, (_, i) => (i + 1).toString())}
                                         placeholder="Jours"
-                             
                                         rounded={true}
                                     />
                                 </div>
-                                {/* Month Select */}
                                 <div className="w-[103px]">
                                     <SelectFieldBenevole
-                                        id="month"
-                                        name="month"
+                                        id="birthMonth"
+                                        name="birthMonth"
+                                        value={formData.birthMonth}
+                                        onChange={handleChange}
                                         required
                                         options={[
                                             'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
                                         ]}
                                         placeholder="Mois"
-
                                         rounded={true}
                                     />
                                 </div>
                                 <div className="w-[110px]">
                                     <SelectFieldBenevole
-                                        id="year"
-                                        name="year"
+                                        id="birthYear"
+                                        name="birthYear"
+                                        value={formData.birthYear}
+                                        onChange={handleChange}
                                         required
-                                        options={Array.from({ length: 30 }, (_, i) => (2023 + i).toString())} // Years from 2023 to 2052
+                                        options={Array.from({ length: 30 }, (_, i) => (2023 + i).toString())}
                                         placeholder="Années"
                                         rounded={true}
                                     />
                                 </div>
                             </div>
+                            {errors.birthDate && <div className="text-red-500 text-sm">{errors.birthDate}</div>}
                         </div>
 
                         <div className="flex gap-6 sm:w-[500px] w-full">
-
-                            <InputFieldBenevole label="Adresse e-mail" id="email" name="email" type="email" required />
+                            <InputFieldBenevole
+                                label="Adresse e-mail"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                type="email"
+                                required
+                            />
+                            {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
                         </div>
 
-                        <div className="flex gap-6  sm:w-[500px] w-full">
-
-                            <InputFieldBenevole label="Numéro de téléphone" id="phone" name="phone" type="tel" required />
+                        <div className="flex gap-6 sm:w-[500px] w-full">
+                            <InputFieldBenevole
+                                label="Numéro de téléphone"
+                                id="phone"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                type="tel"
+                                required
+                            />
+                            {errors.phone && <div className="text-red-500 text-sm">{errors.phone}</div>}
                         </div>
 
-                        <div className="flex gap-6  sm:w-[500px] w-full">
-
-                            <InputFieldBenevole label="Adresse" id="address" name="address" />
+                        <div className="flex gap-6 sm:w-[500px] w-full">
+                            <InputFieldBenevole
+                                label="Adresse"
+                                id="address"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                                required
+                            />
+                            {errors.address && <div className="text-red-500 text-sm">{errors.address}</div>}
                         </div>
 
                         <div className="flex gap-2 flex-col items-start sm:w-[300px] w-full">
@@ -100,56 +261,70 @@ export default function BenevoleForm() {
                                 Votre situation professionnelle <span className="text-[#FF0000]">*</span>
                             </label>
                             <SelectFieldBenevole
-                                id="ProfessionalSituation situation"
-                                name="ProfessionalSituation"
+                                id="professional_situation"
+                                name="professional_situation"
+                                value={formData.professional_situation}
+                                onChange={handleChange}
                                 required
-                                options={Array.from({ length: 30 }, (_, i) => (2023 + i).toString())} // Years from 2023 to 2052
+                                options={[
+                                    "Employé", "Étudiant", "Indépendant", "Chômeur", "Retraité", "Autre"
+                                ]}
                                 placeholder="Veuillez sélectionner"
-
                                 rounded={true}
                             />
+                            {errors.professional_situation && <div className="text-red-500 text-sm">{errors.professional_situation}</div>}
                         </div>
-                        <div className="flex gap-6">
 
-                            <InputFieldBenevole label="Si vous êtes en activité, veuillez indiquer votre secteur professionnel" required id="address" name="address" width="501px" />
+                        <div className="flex gap-6">
+                            <InputFieldBenevole
+                                label="Si vous êtes en activité, veuillez indiquer votre secteur professionnel"
+                                id="professionalSector"
+                                name="professionalSector"
+                                value={formData.professionalSector}
+                                onChange={handleChange}
+                                required
+                                width="501px"
+                            />
+                            {errors.professionalSector && <div className="text-red-500 text-sm">{errors.professionalSector}</div>}
                         </div>
-                       
 
                         <div className="flex gap-2 flex-col items-start w-full">
                             <label className="font-semibold text-sm">
                                 Intérêts et Motivation <span className="text-[#FF0000]">*</span>
                             </label>
                             <textarea
-                                name="interestsMotivation"
+                                name="interests_motivation"
                                 placeholder="Pourquoi souhaitez-vous devenir bénévole avec nous ?"
                                 className="border border-[#D6DDEB] px-4 w-full h-[150px] py-4 sm:text-base text-sm"
-                                maxLength={maxLength}
-                                onChange={handleInterestsMotivationChange}
+                                maxLength={500}
+                                value={formData.interests_motivation}
+                                onChange={handleChange}
                             />
                             <div className="flex w-full justify-between text-[#A8ADB7] text-sm">
-                                <p>Maximum {maxLength} characters</p>
-                                <p>{interestsMotivationCharCount} / {maxLength}</p>
+                                <p>Maximum 500 characters</p>
+                                <p>{formData.interests_motivation?.length} / 500</p>
                             </div>
+                            {errors.interests_motivation && <div className="text-red-500 text-sm">{errors.interests_motivation}</div>}
                         </div>
 
-                        {/* Compétences et Expériences */}
                         <div className="flex gap-2 flex-col items-start w-full">
                             <label className="font-semibold text-sm">
                                 Compétences et Expériences <span className="text-[#FF0000]">*</span>
                             </label>
                             <textarea
-                                name="competencesExperiences"
+                                name="competences_experiences"
                                 placeholder="Décrivez vos compétences pertinentes et vos expériences passées"
                                 className="border border-[#D6DDEB] px-4 w-full h-[150px] py-4 sm:text-base text-sm"
-                                maxLength={maxLength}
-                                onChange={handleCompetencesExperiencesChange}
+                                maxLength={500}
+                                value={formData.competences_experiences}
+                                onChange={handleChange}
                             />
                             <div className="flex w-full justify-between text-[#A8ADB7] text-sm">
-                                <p>Maximum {maxLength} characters</p>
-                                <p>{competencesExperiencesCharCount} / {maxLength}</p>
+                                <p>Maximum 500 characters</p>
+                                <p>{formData.competences_experiences?.length} / 500</p>
                             </div>
+                            {errors.competences_experiences && <div className="text-red-500 text-sm">{errors.competences_experiences}</div>}
                         </div>
-
 
                         <div className="flex flex-col items-start gap-1">
                             <label className="font-semibold text-sm">
@@ -157,7 +332,13 @@ export default function BenevoleForm() {
                             </label>
                             <div className="flex sm:gap-5 gap-3 flex-wrap">
 
-                                <DateTimeBenevole />
+                                <DateTimeBenevole
+
+                                    id="availability_start_date"
+                                    name="availability_start_date"
+                                    value={formData.availability_start_date}
+                                    onChange={handleChange}
+                                />
                                 <div className="w-[90px]">
                                     <SelectFieldBenevole
                                         id="day"
@@ -186,97 +367,99 @@ export default function BenevoleForm() {
                                 </div>
 
                             </div>
-
+                            {errors.availability_start_date && <div className="text-red-500 text-sm">{errors.availability_start_date}</div>}
+                            {errors.availabilityEndDate && <div className="text-red-500 text-sm">{errors.availabilityEndDate}</div>}
                         </div>
                     </div>
 
-
-
                     <hr className="border-t-2 border-black mt-5" />
                     <div className="flex items-start flex-col mt-4">
-                        <h1 className="font-semibold text-lg mb-2">
-                            Documents à Joindre
-                        </h1>
+                        <h1 className="font-semibold text-lg mb-2">Documents à Joindre</h1>
 
-                        <p className=" text-start">
+                        <p className="text-start">
                             Veuillez ajouter votre CV et, si possible, une lettre de motivation pour compléter votre demande.
                         </p>
 
                         <p>
-                            <span className="font-semibold underline"> Formats acceptés</span> : PDF, taille maximale 5 Mo
+                            <span className="font-semibold underline">Formats acceptés</span> : PDF, taille maximale 5 Mo
                         </p>
 
                         <div className="flex flex-col items-start gap-2 mt-2">
                             <label className="font-semibold text-sm">
                                 Joindre votre CV <span className="text-[#FF0000]">*</span>
                             </label>
-
                             <div className="relative w-full max-w-sm">
-                                <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD]  border-dashed ">
-
-
+                                <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD] border-dashed">
                                     <UploadIcon />
-                                    <span className="text-gray-700 ml-2 font-medium">Ajouter mon CV</span>
-                                    <input type="file" className="hidden" />
+                                    <span className="text-gray-700 ml-2 font-medium">
+                                        {cvFileName ? cvFileName : "Ajouter mon CV"}
+                                    </span>
+                                    <input
+                                        type="file"
+                                        id="cvFile"
+                                        name="cvFile"
+                                        onChange={handleCvFileChange}
+                                        className="hidden"
+                                        required
+                                    />
                                 </label>
                             </div>
-
-
+                            {errors.cvFile && <div className="text-red-500 text-sm">{errors.cvFile}</div>}
                         </div>
 
                         <div className="flex flex-col items-start gap-2 mt-2">
                             <label className="font-semibold text-sm">
-                                Joindre votre  Lettre de Motivation
+                                Joindre votre Lettre de Motivation
                             </label>
-
                             <div className="relative w-full max-w-sm">
-                                <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD]  border-dashed ">
-
-
+                                <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD] border-dashed">
                                     <UploadIcon />
-                                    <span className="text-gray-700 ml-2 font-medium">Ajouter ma lettre de motivation</span>
-                                    <input type="file" className="hidden" />
+                                    <span className="text-gray-700 ml-2 font-medium">
+                                        {motivationLetterFileName ? motivationLetterFileName : "Ajouter ma lettre de motivation"}
+                                    </span>
+                                    <input
+                                        type="file"
+                                        id="motivationLetter"
+                                        name="motivationLetter"
+                                        onChange={handleMotivationLetterFileChange}
+                                        className="hidden"
+                                    />
                                 </label>
                             </div>
-
-
                         </div>
-
-
                     </div>
+
                     <hr className="border-t-2 border-black mt-5" />
                     <div className="w-full mt-4 flex flex-col gap-4">
                         <button
+                            type="submit"
                             className="bg-[#0270A0] text-white py-2 px-4 rounded-lg font-semibold w-full"
-                            onClick={() => setisFormFilled(true)}
+                            disabled={isLoading}
                         >
-                            Envoyer ma demande
+                            {isLoading ? "Envoi en cours..." : "Envoyer ma demande"}
                         </button>
 
-                        <p className="text-start">En envoyant la demande, vous confirmez que vous acceptez nos
-
-                            <span className="underline mx-1 text-[#0077B6] ">Conditions d'utilisation </span>
-
+                        <p className="text-start">
+                            En envoyant la demande, vous confirmez que vous acceptez nos
+                            <span className="underline mx-1 text-[#0077B6]">Conditions d'utilisation</span>
                             et notre
-                            <span className="underline mx-1 text-[#0077B6]">Politique de confidentialité</span>
+                            <span className="underline mx-1 text-[#0077B6]">Politique de confidentialité</span>.
                         </p>
-
                     </div>
-                </div>
+                </form>
             ) : (
-
-                <div className="w-full   flex justify-center">
-
-                    <div className="bg-[#feefef] p-6 rounded-lg shadow-lg w-[500px] flex flex-col gap-3 justify-between items-center ">
+                <div className="w-full flex justify-center">
+                    <div className="bg-[#feefef] p-6 rounded-lg shadow-lg w-[500px] flex flex-col gap-3 justify-between items-center">
                         <div className="flex flex-col justify-between items-center gap-2">
-
                             <img src="/icons/folderIcon.png" alt="" width={45} />
-                            <p className="font-semibold text-lg"><span className="text-[#0270A0]">Votre Demande</span> a été Envoyée avec Succès !</p>
+                            <p className="font-semibold text-lg">
+                                <span className="text-[#0270A0]">Votre Demande</span> a été Envoyée avec Succès !
+                            </p>
                         </div>
 
                         <div className="text-sm flex flex-col gap-2 px-4">
                             <p>
-                                Merci d'avoir postulé pour devenir bénévole avec l'AKDDCL. Nous avons bien reçu votre demande et nous l'examinerons dans les plus brefs délais
+                                Merci d'avoir postulé pour devenir bénévole avec l'AKDDCL. Nous avons bien reçu votre demande et nous l'examinerons dans les plus brefs délais.
                             </p>
                             <p>
                                 En attendant, n'hésitez pas à explorer nos autres opportunités ou à
@@ -284,11 +467,11 @@ export default function BenevoleForm() {
                                 pour toute question supplémentaire.
                             </p>
                         </div>
-
-
                     </div>
                 </div>
             )}
         </div>
     );
-}
+};
+
+export default BenevoleForm;

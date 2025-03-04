@@ -43,7 +43,7 @@ export default function Events() {
     
         <section className="flex gap-20 flex-col sm:flex-row my-5 text-center max-w-7xl w-full mx-auto justify-between mt-20 px-5 h-fit">
           <div className="h-full w-full">
-            <WorkshopsAndTraining />
+            <WorkshopsAndTraining events={events}/>
             <CulturalEvents />
           </div>
     

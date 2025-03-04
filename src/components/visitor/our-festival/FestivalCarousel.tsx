@@ -139,8 +139,6 @@ const FestivalCarousel: React.FC<Props> = ({ switcher }) => {
 };
 
 export default FestivalCarousel;
-<<<<<<< HEAD
-=======
 
 // import React, { useState, useEffect, ReactNode } from "react";
 
@@ -283,5 +281,3 @@ export default FestivalCarousel;
 // };
 
 // export default FestivalCarousel;
-
->>>>>>> 4d633a403293f170a3fc1b0fc5b69ed7fd34e9f2

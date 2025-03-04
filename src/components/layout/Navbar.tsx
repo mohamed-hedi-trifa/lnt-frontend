@@ -24,7 +24,7 @@ function SubDropdown({ items }: { items: any[] }) {
                 className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
                 style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
               >
-                {subItem.label}qsdfqsdfqsdf
+                {subItem.label}
               </Link>
               ) :
               (
@@ -116,6 +116,7 @@ function Navbar({ location }: { location: any }) {
             ],
           },
           {
+            
             label: "Notre Festival",
             underlineClassName: "w-[100px]",
             path:"/our-festival",
@@ -134,6 +135,7 @@ function Navbar({ location }: { location: any }) {
           {
             label: "Opportunités",
             underlineClassName: "w-[100px]",
+            path:"/en/opportunities",
             items: [
               { label: "Offres d'Emplois", path: "/job-offers" },
               { label: "Appels d'Offres", path: "/tenders" },
