@@ -37,8 +37,6 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
     [0, trackHeight - handleHeight]
   );
 
-
-
   const formatDateRange = (startDate, endDate) => {
     const options = { day: "numeric", month: "long", year: "numeric" };
 
@@ -57,9 +55,6 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
     }
 };
 
-
-  
-
   return (
     <section
       ref={sectionRef}
@@ -74,7 +69,8 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
           position: "sticky",
           top: 106,                 
           height: "calc(100vh - 106px)", 
-
+          // top: 106,                   // pinned from 106px offset
+          // height: "calc(100vh - 106px)", // pinned container height
           display: "flex",
           overflow: "hidden",
         }}
@@ -84,6 +80,8 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
         <div style={{ position: "relative", height: "100%" }} className="shrink-0 w-[525px]">
           {/* SECOND IMAGE (BEHIND) */}
           <motion.img
+
+            // src="/eponge_marine.jpg"
 
                      src={`${process.env.GATSBY_API_URL}${edition?.image_affiche2}`}
             alt="Second"
@@ -99,7 +97,6 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
           />
           {/* FIRST IMAGE (ON TOP) */}
           <motion.img
-
             src={`${process.env.GATSBY_API_URL}${edition?.image_affiche1}`}
             alt="First"
             style={{

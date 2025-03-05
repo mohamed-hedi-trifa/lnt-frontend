@@ -118,7 +118,7 @@ export default function EditionDetails({ location, params }: { location: any; pa
                                 <p>Revivez les moments forts du festival à travers nos photos et vidéos captivantes</p>
                             </div>
 
-                            <Media edition={previousEdition} />
+                            <Media mediaContent={previousEdition} />
                         </section>
                     )
                 }

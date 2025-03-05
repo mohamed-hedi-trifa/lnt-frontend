@@ -234,7 +234,8 @@ export default function TrainingDetails({ location, params }: { location: any; p
                        <div className="flex justify-center">Vidéos</div>
                       </div>
                     </Title>
-            <Media />
+            <Media mediaContent={blogPost}/>
+
           </div>
 
           <RightSidebar />

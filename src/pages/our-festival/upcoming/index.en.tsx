@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-
 import CarouselCard from '@/components/visitor/our-festival/CarouselCard';
 import ListCardFestivales from '@/components/visitor/our-festival/ListCardsFestival';
 import HeroSection from '@/components/visitor/HeroSection';
@@ -12,9 +11,9 @@ import Partners from '@/components/visitor/who-are-we/partners/Partners';
 import PinnedImageSwap from '@/components/visitor/our-festival/upcoming/SwappingImagesOnScroll';
 import ImageGallery from '@/components/visitor/ImageGallery';
 import Media from '@/components/visitor/Media';
-
 import PastEditionsCarousel from '@/components/visitor/our-festival/PastEditionsCarousel';
 import EventsEditionCards from "@/components/visitor/our-festival/upcoming/EventsEditionCards";
+import LangLink from "@/components/LangLink";
 
 
 
@@ -45,7 +44,6 @@ const gallery = [
 
 
 
-
 export default function FestivalVenir() {
   const [edition, setEdition] = useState([]);
   const [prevEditions, setprevEditions] = useState([]);
@@ -64,7 +62,7 @@ export default function FestivalVenir() {
     try {
       const res = await axios.get("/api/previous-editions");
       setprevEditions(res.data);
-   
+
     } catch (err) {
       Swal.fire("Error", err.response?.data?.message || "Failed to fetch Edition", "error");
     }
@@ -108,10 +106,7 @@ export default function FestivalVenir() {
           </div>
 
 
-
-
-
-          <hr className='border-2 my-20 border-[#ADA5A5]' />
+          <hr className='border-t my-20 border-[#000000]' />
 
           <div className=' flex items-center justify-center'>
             <span className='text-[28px] sm:text-[36px] font-bold text-center'>
@@ -127,8 +122,7 @@ export default function FestivalVenir() {
 
           <div className='mt-12'>
 
-            <Partners partners={edition.partners}/>
-
+            <Partners partners={edition.partners} />
           </div>
 
           <div className=' text-center my-10'>
@@ -143,8 +137,8 @@ export default function FestivalVenir() {
           </div>
 
 
-          <Media edition={edition} />
->>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
+          <Media mediaContent={edition} />
+
           <hr className='mb-[50px] mt-[80px] border-black' />
 
           <div className='text-center mb-3'>
@@ -161,15 +155,16 @@ export default function FestivalVenir() {
           <PastEditionsCarousel prevEditions={prevEditions} />
 
 
-
         </section>
 
       </div>
 
       <div className='flex items-center justify-center py-4'>
-        <button className=" px-8 py-3 my-4 bg-gradient-to-r from-[#51ADC6] to-[#006E9F] text-white font-bold rounded-full hover:shadow-lg ">
-          Voir Toutes les Éditions Précédentes
-        </button>
+        <LangLink to="/our-festival/previous/">
+          <button className=" px-8 py-3 my-4 bg-gradient-to-r from-[#51ADC6] to-[#006E9F] text-white font-bold rounded-full hover:shadow-lg ">
+            Voir Toutes les Éditions Précédentes
+          </button>
+        </LangLink>
       </div>
 
     </div>

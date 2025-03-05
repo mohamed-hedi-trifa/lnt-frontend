@@ -18,25 +18,13 @@ function SubDropdown({ items }: { items: any[] }) {
             className="relative group [&:first-child_.nav-dropdown-item]:rounded-t [&:last-child_.nav-dropdown-item]:rounded-b"
           >
             {subItem.path ? (
-              subItem.dynamic ? (
-                <Link
-                to={subItem.path}
-                className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
-                style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
-              >
-                {subItem.label}
-              </Link>
-              ) :
-              (
-                <LangLink
+              <LangLink
                 to={subItem.path}
                 className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
                 style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
               >
                 {subItem.label}
               </LangLink>
-              )
-
             ) : (
               <div
                 className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
@@ -57,7 +45,7 @@ function SubDropdown({ items }: { items: any[] }) {
 function Navbar({ location }: { location: any }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [eventTypes, setEventTypes] = useState([]);
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState([]);
 
   const lang = location?.pathname.startsWith("/fr/") ? "fr" : "en";
 
@@ -78,10 +66,9 @@ function Navbar({ location }: { location: any }) {
         setEventTypes(response.data);
 
         // Transform event types into the required structure
-        const transformedEventTypes = response.data.map((event:any) => ({
+        const transformedEventTypes = response.data.map((event) => ({
           label: event.name_en || event.name_fr,
-          path: `/event/${event.slug}?lang=${lang}`,
-          dynamic: true
+          path: `/events/${event.slug}`,
         }));
 
         // Update the "Événements" section with dynamic event types
@@ -89,7 +76,6 @@ function Navbar({ location }: { location: any }) {
           {
             label: "Qui Sommes-Nous",
             underlineClassName: "w-[100px]",
-            path:`/${lang}/who-are-we/our-history`,
             items: [
               { label: "Notre Histoire", path: "/who-are-we/our-history" },
               { label: "Principes et Valeurs", path: "/who-are-we/our-values" },
@@ -102,7 +88,6 @@ function Navbar({ location }: { location: any }) {
           {
             label: "Air Marine et Côtière Protégée",
             underlineClassName: "w-[150px]",
-            path:`/${lang}/protected-air-marine-coastal-areas/presentation`,
             items: [
               { label: "Présentation", path: "/protected-air-marine-coastal-areas/presentation" },
               {
@@ -118,13 +103,11 @@ function Navbar({ location }: { location: any }) {
             ],
           },
           {
-            
             label: "Notre Festival",
             underlineClassName: "w-[100px]",
-            path:"/our-festival",
             items: [
               { label: "Prochains Festivals", path: "/our-festival/upcoming" },
-              { label: "Éditions Précédentes",  path: "/our-festival/previous", },
+              { label: "Éditions Précédentes", path: "/our-festival/past" },
             ],
           },
           { label: "Actualités", path: "/news", underlineClassName: "w-[70px]" },
@@ -137,7 +120,11 @@ function Navbar({ location }: { location: any }) {
           {
             label: "Opportunités",
             underlineClassName: "w-[100px]",
-            path:"/opportunities",
+            items: [
+              { label: "Offres d'Emplois", path: "/job-offers" },
+              { label: "Appels d'Offres", path: "/tenders" },
+              { label: "Stages", path: "/internships" },
+            ],
           },
           { label: "Contact", path: "/contact", underlineClassName: "w-[55px]" },
         ];
@@ -153,26 +140,20 @@ function Navbar({ location }: { location: any }) {
 
   return (
     <div className="fixed z-30 w-full">
-<header className={`w-full px-3  ${isScrolled ? "bg-[linear-gradient(90deg,#51ADC6_0%,_#006E9F_100%)]" : "bg-[linear-gradient(90deg,rgba(81,173,198,0.25)_0%,rgba(0,110,159,0.25)_100%)]"} duration-200`}>
-
-        <div className="flex items-center justify-between max-w-7xl mx-auto ">
+      <header className={`w-full px-3 bg-slate-900 ${isScrolled ? "" : "bg-opacity-25"} duration-200`}>
+        <div className="flex items-center justify-between max-w-7xl mx-auto">
           <LangLink to="/" className="flex gap-1 items-center">
             <img src="/logo.png" alt="AKDDCL" className="size-14 shrink-0 object-contain drop-shadow-[0px_4px_2px_rgb(0,0,0,.3)]" />
             <p className="max-w-[200px] text-white text-xs font-bold">
-              {/* <span className="hidden md:inline">Association Kratten du Développement Durable de la Culture et du Loisir</span>
-              <span className="inline md:hidden">AKDDCL</span> */}
               <span className="italic font-extrabold text-base">AKDDCL</span>
             </p>
           </LangLink>
           <div className="grow flex gap-3 items-center justify-end">
-            {/* <button className="hidden md:block">
-              <MagnifyingGlassIcon className="h-8 w-8 text-white -scale-x-100" />
-            </button> */}
             <NavbarSearch />
             <div className="hidden md:inline h-8 w-px bg-white"></div>
             <LangLink
               to="/benevole"
-              className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full shadow-lg bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right"
+              className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right"
             >
               DEVENIR BÉNÉVOLE
             </LangLink>
@@ -187,9 +168,9 @@ function Navbar({ location }: { location: any }) {
         </div>
       </header>
 
-      <nav className={`hidden md:flex items-center w-full h-[50px] px-3 ${isScrolled ? "bg-[rgba(0,0,0,0.7)]" : "bg-[rgba(0,0,0,0.5)]"} duration-200`}>
+      <nav className={`hidden md:flex items-center w-full h-[50px] px-3 bg-slate-700 ${isScrolled ? "" : "bg-opacity-50"} duration-200`}>
         <ul className="flex items-center justify-between w-full max-w-7xl mx-auto">
-          {items.map((item:any, index) => (
+          {items.map((item, index) => (
             <li key={index}>
               {item.items ? (
                 <NavDropdown
@@ -198,26 +179,14 @@ function Navbar({ location }: { location: any }) {
                   position="left"
                   renderItem={(item) => (
                     <div className="relative group">
-                      
                       {item.path ? (
-                        item.dynamic ?(
-                          <Link
-                          to={item.path}
-                          className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
-                          style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
-                        >
-                          {item.label}
-                        </Link>
-                        ) : (
-                          <LangLink
+                        <LangLink
                           to={item.path}
                           className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
                           style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}
                         >
                           {item.label}
                         </LangLink>
-                        )
-
                       ) : (
                         <div
                           className="block py-2.5 px-2 font-semibold text-black hover:bg-gradient-to-r from-[#0887BECC] to-[#4FACC5CC] transition duration-300 nav-dropdown-item"
@@ -268,134 +237,7 @@ function Navbar({ location }: { location: any }) {
 
 export default Navbar;
 
-export const items = [
-  {
-    label: "Qui Sommes-Nous",
-    underlineClassName: "w-[100px]",
-    items: [
-      {
-        label: "Notre Histoire",
-        path: "/who-are-we/our-history",
-      },
-      {
-        label: "Principes et Valeurs",
-        path: "/who-are-we/our-values",
-      },
-      {
-        label: "Nos Réalisations",
-        path: "/who-are-we/our-achievements",
-      },
-      {
-        label: "Notre Équipe",
-        path: "/who-are-we/our-team",
-      },
-      {
-        label: "Partenaires",
-        path: "/who-are-we/partners",
-      },
-      {
-        label: "Rapport Financier",
-        path: "/who-are-we/financial-report",
-      },
-    ],
-  },
-  {
-    label: "Air Marine et Côtière Protégée",
-    underlineClassName: "w-[150px]",
-    items: [
-      {
-        label: "Présentation",
-        path: "/protected-air-marine-coastal-areas/presentation",
-        items: [
-          {
-            label: "AMCP de L'archipel Kerkennah",
-            path: "/protected-air-marine-coastal-areas/presentation/amcp",
-          },
-          {
-            label: "Partenaires AMCP",
-            path: "/protected-air-marine-coastal-areas/presentation/partners",
-          },
-        ],
-      },
-      {
-        label: "Suivi Scientifique",
-        path: "/protected-air-marine-coastal-areas/monitoring",
-        items: [
-          {
-            label: "Suivi Marin",
-            path: "/protected-air-marine-coastal-areas/monitoring/marin",
-          },
-          {
-            label: "Suivi Terrestre",
-            path: "/protected-air-marine-coastal-areas/monitoring/terrestre",
-          },
-        ],
-      },
-      {
-        label: "Formation et Campement Scientifique",
-        path: "/protected-air-marine-coastal-areas/training",
-      },
-      {
-        label: "Équipe",
-        path: "/protected-air-marine-coastal-areas/team",
-      },
-    ],
-  },
-  {
-    label: "Notre Festival",
-    path:"/our-festival",
-    underlineClassName: "w-[100px]",
-    items: [
-      {
-        label: "Prochains Festivals",
-        path: "/our-festival/upcoming",
-      },
-      {
-        label: "Éditions Précédentes",
-        path: "/our-festival/previous",
-      },
-    ],
-  },
-  {
-    label: "Actualités",
-    path: "/news",
-    underlineClassName: "w-[70px]",
-  },
-  {
-    label: "Événements",
-    path:"/en/event",
-    underlineClassName: "w-[100px]",
-    items: [
-      {
-        label: "Ateliers et Formations",
-        path: "/training-sessions",
-      },
-      {
-        label: "Événements Culturels",
-        path: "/culturel-events",
-      },
-      {
-        label: "Activités de Loisirs et Sportives",
-        path: "/sport-events",
-      },
-      {
-        label: "No event",
-        path: "/event/no-event",
-      },
-    ],
-  },
-  {
-    label: "Opportunités",
-    underlineClassName: "w-[100px]",
-    path:"/opportunities",
-  },
-  {
-    label: "Contact",
-    path: "/contact",
-    underlineClassName: "w-[55px]",
-  },
-];
-
+// ArrowDown Component
 function ArrowDown(props: { className?: string }) {
   return (
     <svg viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>

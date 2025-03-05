@@ -2,8 +2,8 @@ import React from "react";
 
 const Table: React.FC<{ data: { title: string; date: string; image: string }[] }> = ({ data }) => {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border-collapse ">
+    <div className="overflow-x-auto shadow-helmi">
+      <table className="min-w-full border-collapse shadow-helmi ">
         <thead className="h-[82px]">
           <tr className="bg-[#0270A0] text-white">
             <th className="px-4 py-2"><span className="text-16">Titre</span></th>
@@ -14,7 +14,7 @@ const Table: React.FC<{ data: { title: string; date: string; image: string }[] }
           {data.map((item, index) => (
             <tr
               key={index}
-              className={`h-[82px] ${index % 2 !== 0 ? "bg-[#C7E9F8]" : "bg-white"} hover:bg-gray-100`}
+              className={`h-[82px] ${index % 2 !== 0 ? "bg-[#C7E9F8]" : "bg-[rgba(255,255,255,0.6)]"} hover:bg-gray-300`}
             >
               <td className="px-4 py-2 flex items-center">
                 <a

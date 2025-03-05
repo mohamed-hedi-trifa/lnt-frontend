@@ -7,7 +7,6 @@ import { Link } from 'gatsby';
 
 
 
-
 import Pagination from '../Pagination';
 import OpportunityCard from './OpportunityCard';
 

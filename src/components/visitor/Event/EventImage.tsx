@@ -16,7 +16,6 @@ export default function EventImage({ events, language="fr" }: { events: any, lan
   const [activeIndex, setActiveIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0 });
 
-
   const eventsData = events.slice(0, 4);
 
   // Function to calculate the time left until the event

@@ -1,18 +1,34 @@
 import React, { useEffect, useState } from "react";
-import achievementsHero from "../../../../../../assets/images/achievements-hero.jpg";
-import PageTitle from "@/components/atoms/titles/PageTitle";
-import AMCPSidebar from "@/components/layout/AMCPSidebar";
-import SectionTitle from "@/components/atoms/titles/SectionTitle";
-import Table from "@/components/visitor/who-are-we/rapports/Table";
-import Media from "@/components/visitor/who-are-we/our-achievements/acheivement2/Media2";
-import List from "@/components/atoms/List";
-import Title from "@/components/atoms/titles/Title";
-import PageParagraph from "@/components/atoms/PageParagraph";
 import axios from "axios";
 import { navigate } from "gatsby";
+import achievementsHero from "../../../../../../assets/images/achievements-hero.jpg";
+import AMCPSidebar from "@/components/layout/AMCPSidebar";
+import SectionTitle2 from "@/components/atoms/titles/SectionTitle2";
+import Title from "@/components/atoms/titles/Title";
+import PageParagraph from "@/components/atoms/PageParagraph";
 import BlogList from "./BlogList";
 import SpeciesTitle from "@/components/atoms/titles/SpeciesTitle";
-import SectionTitle2 from "@/components/atoms/titles/SectionTitle2";
+import Media2 from "@/components/visitor/who-are-we/our-achievements/acheivement2/Media2";
+import Table from "@/components/visitor/who-are-we/rapports/Table";
+import DecouvrezDautresEspeces from "./DecouvrezDautresEspeces";
+import Media from "@/components/visitor/Media";
+
+
+// Fonction utilitaire pour parser le contenu markdown
+const parseContent = (content: string): string => {
+  if (!content) return "";
+
+  // Remplacer **texte** par <strong>texte</strong>
+  const boldParsed = content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+  // Détecter les URLs et les convertir en liens cliquables
+  const linkParsed = boldParsed.replace(
+    /(https?:\/\/[^\s]+)/g,
+    '<a href="$1" class="markdown-link" target="_blank" rel="noopener noreferrer">$1</a>'
+  );
+
+  return linkParsed;
+};
 
 export default function Blog({ location, params }: { location: any; params: any }) {
   const [blogPost, setBlogPost] = useState<any>(null);
@@ -20,41 +36,44 @@ export default function Blog({ location, params }: { location: any; params: any 
 
   useEffect(() => {
     const slug = params.slug;
-
     if (slug) {
       axios
         .get(`/api/posts/${slug}`)
         .then((res) => {
           res.data.content_items.forEach((item: any) => {
             if (item.type === "list") {
-              item.content = JSON.parse(item.content);
+              try {
+                item.content = JSON.parse(item.content);
+              } catch (error) {
+                console.error("Erreur lors du parsing du contenu de type 'list' :", error);
+              }
             }
           });
 
           setBlogPost(res.data);
 
-          // Extract language from URL query
+          // Extraction de la langue depuis l'URL
           const searchParams = new URLSearchParams(location.search);
           const urlLanguage = searchParams.get("lang");
 
-          // If language from URL is valid and content exists in that language
+          // Si la langue extraite existe dans le contenu, on l'utilise
           if (urlLanguage && res.data[`title_${urlLanguage}`]) {
             setLanguage(urlLanguage);
           } else {
-            // Default to English or French if the content is unavailable
+            // Par défaut, utiliser l'anglais ou le français selon la disponibilité
             setLanguage(res.data.title_en ? "en" : "fr");
           }
         })
         .catch((err) => {
-          console.error("Error fetching blog post:", err);
-          // @ts-ignore
+          console.error("Erreur lors de la récupération du blog post :", err);
           navigate("/404");
         });
     }
-  }, [location]);
+  }, [location, params.slug]);
 
   console.log("-------------------- blogPost --------------------");
   console.log(blogPost);
+
   const dataTable = [
     {
       title: "Posidonie_Kerkennah_Suivi.pdf",
@@ -66,26 +85,7 @@ export default function Blog({ location, params }: { location: any; params: any 
       date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés",
       image: "/images/Pdf.png",
     },
-    {
-      title: "Posidonie_Kerkennah_Suivi.pdf",
-      date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés",
-      image: "/images/Pdf.png",
-    },
-    {
-      title: "Posidonie_Kerkennah_Suivi.pdf",
-      date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés",
-      image: "/images/Pdf.png",
-    },
-    {
-      title: "Posidonie_Kerkennah_Suivi.pdf",
-      date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés",
-      image: "/images/Pdf.png",
-    },
-    {
-      title: "Posidonie_Kerkennah_Suivi.pdf",
-      date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés",
-      image: "/images/Pdf.png",
-    },
+    // ... (ajouter d'autres éléments si nécessaire)
   ];
 
   if (!blogPost) {
@@ -94,127 +94,138 @@ export default function Blog({ location, params }: { location: any; params: any 
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-fixed"
+      className="min-h-full bg-cover bg-center bg-fixed"
       style={{ backgroundImage: `url(${process.env.GATSBY_API_URL}${blogPost.image})` }}
-     >
-      <img className="w-full object-cover h-[80vh]" src={achievementsHero} />
-      <div className="flex justify-center sm:justify-center pb-4 ">
-        <div className="flex justify-center sm:justify-center pb-4 ">
-          <SpeciesTitle title={blogPost ? blogPost[`title_${language}`] : ""} width="w-[160px]" fontSize="text-[48px] md:text-[64px] text-start" />
-        </div>
+    >
+      <img
+        className="w-full object-cover h-[80vh]"
+        src={achievementsHero}
+        alt="Achievements Hero"
+      />
+      <div className="flex justify-center pb-4">
+        <SpeciesTitle
+          title={blogPost[`title_${language}`] || ""}
+          width="w-[160px]"
+          fontSize="text-[48px] md:text-[64px] text-start"
+        />
       </div>
       <section className="px-4">
-        <div className="max-w-6xl mx-auto ">
-          <section className="w-full flex flex-col sm:flex-row relative sm:gap-8 ">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col sm:flex-row relative sm:gap-8">
             <AMCPSidebar />
-
-            <section className="grow w-full flex flex-col  mx-auto shadow-helmi gap-4 rounded-[12px] my-4 sm:mb-10 bg-[rgba(255,255,255,0.8)] ">
-            <SectionTitle2
-                title={blogPost ? blogPost[`subtitle_${language}`] : ""}
-                width="w-[160px]"
+            <div className="grow w-full flex flex-col mx-auto shadow-helmi gap-4 rounded-[12px] bg-[rgba(255,255,255,0.8)]">
+              {/* Sous-titre */}
+              <SectionTitle2
+                title={blogPost[`subtitle_${language}`] || ""}
+                width="w-full"
                 color="#000000"
-                fontSize=" text-[28px] lg:text-[40px] text-center sm:text-start"
-                spacing="my-8 sm:mt-0 px-10 pt-6 "
+                fontSize="text-[28px] lg:text-[36px] text-center sm:text-start font-semibold italic"
+                spacing="sm:mt-0 px-10 pt-6"
               />
-              <div className="mt-4 flex flex-col px-10 max-w-full mx-auto  ">
-                {blogPost?.content_items
-                  ?.sort((a: any, b: any) => a.order - b.order)
-                  .map((item: any) => (
-                    <div key={item.id}>
-                      {item.language === language ? (
-                        item.type === "list" ? (
-                          <BlogList content={item.content} />
-                        ) : item.type === "title" ? (
-                          
-                          <Title customClassName="mb-2 items-start">{item.content}</Title>
-                        ) : item.type === "text" ? (
-                          // Apply the markdown parser to the text content
-                          <PageParagraph>
-                            <div
-                              className="my-4"
-                              dangerouslySetInnerHTML={{
-                                __html: parseContent(item.content),
-                              }}
-                            />
-                          </PageParagraph>
-                        ) : item.type === "image" ? (
-                          <div className="mb-2" >
-                            <img src={`${process.env.GATSBY_API_URL}${item.file_path}`} alt="" className="w-full max-w-[600px] mx-auto max-h-[400px] rounded-lg shadow-lg mb-4"/>
-                          </div>
-                        ) : item.type === "pdf" ? (
-                          <div>
-                            <a download href={`${process.env.GATSBY_API_URL}${item.file_path}`}>
-                              Download Pdf
-                            </a>
-                          </div>
-                        ) : null
-                      ) : null}
-                    </div>
-                  ))}
-              </div>
-            </section>
-          </section>
-        
-        <div className="max-w-full mx-auto rounded-[12px] bg-[rgba(255,255,255,0.8)]">
-          <div className=" grid grid-cols-[10%_auto_10%] ">
-            <div></div>
-            <div>
-              <span className=" text-[28px] sm:text-[36px] font-bold">
-                <p className="text-center">
-                  <span className="text-[#0270A0]">Immersion visuelle</span> dans L'Ecosystéme de la{" "}
-                </p>
-                <p className="text-center">Posidonie</p>
-              </span>
-              <span className="">
-                <p className="text-center text-[20px] font-semibold">Découvrez la richesse visuelle de la posidonie à travers les images</p>
-                <p className="text-center text-[20px] font-semibold">captivantes et des vidéos éducatives</p>
-              </span>
+
+              {/* Résumé */}
+              {blogPost[`summary_${language}`] && (
+                <div className="px-10 text-center sm:text-start">
+                  <PageParagraph>
+                    {blogPost[`summary_${language}`]}
+                  </PageParagraph>
+                </div>
+              )}
+
+              {/* Liste des items de type "list" */}
+              {blogPost.content_items
+                ?.filter((item: any) => item.language === language && item.type === "list")
+                .sort((a: any, b: any) => a.order - b.order)
+                .map((item: any) => (
+                  <BlogList key={item.id} content={item.content} />
+                ))}
+
+              {/* Autres contenus */}
+              {blogPost.content_items
+                ?.filter((item: any) => item.language === language && item.type !== "list")
+                .sort((a: any, b: any) => a.order - b.order)
+                .map((item: any) => {
+                  switch (item.type) {
+                    case "title":
+                      return (
+                        <Title
+                          variant="pill"
+                          size="text-[24px] sm:text-[24px]"
+                          key={item.id}
+                          customClassName="items-start px-10 mt-2"
+                        >
+                          {item.content}
+                        </Title>
+                      );
+                    case "text":
+                      return (
+                        <PageParagraph key={item.id}>
+                          <div
+                            className="px-10 sm:text-start"
+                            dangerouslySetInnerHTML={{ __html: parseContent(item.content) }}
+                          />
+                        </PageParagraph>
+                      );
+                    case "image":
+                      return (
+                        <div key={item.id} className="mb-2">
+                          <img
+                            src={`${process.env.GATSBY_API_URL}${item.file_path}`}
+                            alt=""
+                            className="w-full max-w-[600px] mx-auto max-h-[400px] rounded-lg shadow-lg mb-4"
+                          />
+                        </div>
+                      );
+                    case "pdf":
+                      return (
+                        <div key={item.id}>
+                          <a download href={`${process.env.GATSBY_API_URL}${item.file_path}`}>
+                            <div className="text-blue">Download Pdf</div>
+                          </a>
+                        </div>
+                      );
+                    default:
+                      return null;
+                  }
+                })}
             </div>
-            <div></div>
           </div>
-          <Media />
-          <hr className="border-1 border-[#000000] my-10" />
-          <span className="text-[28px] sm:text-[36px] font-bold">
-            <p className="text-center">
-              <span className="text-[#0270A0]">Recherche</span> et Connaissances sur la Posidonie{" "}
-            </p>
-          </span>
-          <div className="my-10"></div>
-          <div className="font-semibold text-[18px] sm:text-[20px]">
-            <p className="text-center">La recherche scienntifique sue la Posidonie, plante emblématique de la </p>
-            <p className="text-center">Méditerannée, est essentielle pour comprendre son roleécologique et les menaces</p>
-            <p className="text-center">auxquelles, elle fait face. Cette section regroupedes rapports et des articles </p>
-            <p className="text-center">détaillant les résultats des suivis scientifiques, les méthodologies utilisées,et les </p>
-            <p className="text-center"> recommendations pour préserver cet écosystémeclé dans l'archipelde </p>
-            <p className="text-center">Kerkennah</p>
-          </div>
-
-          <Table data={dataTable} />
-
-          <section className="border-t border-[#000000] my-10 py-10">
-            <span className="font-bold py-10 ">
-              <p className="text-center text-[28px] sm:text-[36px] ">
-                <span className="text-[#0270A0] ">Découvrez</span> d'autres espèces fascinantes qui{" "}
-              </p>
-              <p className="text-center text-[28px] sm:text-[36px]">peuplent nos écosystèmes marins</p>
-              <p className="text-center text-[18px] sm:text-[20px]">Découvrez les trésors marins que nous préservons</p>
-            </span>
-          </section>
-        </div>
         </div>
       </section>
+      <div className="w-screen mx-0 rounded-[12px] bg-[rgba(255,255,255,0.8)] mt-[60px] shadow-helmi">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-center mx-16 py-10">
+            <div className="text-center">
+              <h1 className="text-[28px] sm:text-[36px] font-bold">
+                <span className="text-[#0270A0]">Immersion visuelle</span> dans l'écosystème de la Posidonie
+              </h1>
+              <PageParagraph>
+                <p className="text-[20px] font-semibold mt-4 mx-20 text-center">
+                  Découvrez la richesse visuelle de la posidonie à travers des images captivantes et des vidéos éducatives
+                </p>
+              </PageParagraph>
+            </div>
+          </div>
+          <Media />
+          <hr className="my-10 border-1 border-[#000000]" />
+          <div className="text-center mx-20">
+            <h1 className="text-[28px] sm:text-[36px] font-bold">
+              <span className="text-[#0270A0]">Recherche</span> et Connaissances sur la Posidonie
+            </h1>
+          </div>
+          <PageParagraph>
+            <div className="mx-28 pt-4 font-semibold text-[18px] sm:text-[20px]">
+              <p className="mb-[30px] text-center">
+                La recherche scientifique sur la Posidonie, plante emblématique de la Méditerranée, est essentielle pour comprendre son rôle écologique et les menaces auxquelles elle fait face. Cette section regroupe des rapports et des articles détaillant les résultats des suivis scientifiques, les méthodologies utilisées, et les recommandations pour préserver cet écosystème clé dans l'archipel de Kerkennah.
+              </p>
+            </div>
+          </PageParagraph>
+          <Table data={dataTable} />
+          <section className="border-t border-[#000000] my-10 py-10">
+            <DecouvrezDautresEspeces />
+          </section>
+        </div>
+      </div>
     </div>
   );
 }
-
-const parseContent = (content: any) => {
-  if (!content) return "";
-
-  // Replace **bold** with <strong>bold</strong>
-  const boldParsed = content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-
-  // Detect URLs and convert them to clickable links
-  const linkParsed = boldParsed.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" class="markdown-link" target="_blank" rel="noopener noreferrer">$1</a>');
-
-  return linkParsed;
-};

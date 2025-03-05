@@ -112,7 +112,6 @@ export default function PreviousEditionSidebar({
               />
             ))}
 
-
             {/* Show toggle button only if there are more than 4 years */}
             {years.length > 4 && (
               <div
@@ -123,7 +122,10 @@ export default function PreviousEditionSidebar({
                 {showAll ? 'Afficher moins' : `Afficher ${years.length - 4} de plus`}
               </div>
             )}
-
+            <div className='flex gap-2 bg-[#efefef] rounded-lg w-fit px-2 py-1 mt-2 cursor-pointer' >
+            <PlusIcon  className='w-[18px]'/> Afficher 3 de plus
+            </div>
+           
           </div>
         </div>
 

@@ -29,7 +29,6 @@ export default function Opportunities() {
                 </section>
 
 
-
                 <section className='flex gap-20 flex-col sm:flex-row   text-center max-w-7xl w-full mx-auto justify-start items-start  mt-4 px-5 h-fit   '>
 
                     <div className='h-full w-full ' >

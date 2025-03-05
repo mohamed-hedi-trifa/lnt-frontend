@@ -5,11 +5,11 @@ import React from 'react';
 export default function OpportunityCard({ opportunity }: { opportunity: any }) {
     const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
 
-    const calculateDaysRemaining = (dueDate) => {
+    const calculateDaysRemaining = (dueDate:any) => {
         if (!dueDate) return "N/A";
 
-        const today = new Date();
-        const due = new Date(dueDate);
+        const today:any = new Date();
+        const due:any = new Date(dueDate);
         const timeDifference = due - today;
         const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 

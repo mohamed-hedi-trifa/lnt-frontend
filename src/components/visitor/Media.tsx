@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import Title from '../atoms/titles/Title'
 import ImageGallery from './ImageGallery'
 import VideoGallery from './VideoGallery';
 
-export default function Media({edition} : {edition: any}) {
+export default function Media({mediaContent} : {mediaContent: any}) {
   const [media, setMedia] = useState<"photos" | "videos">("photos");
   return (
     <div className='flex flex-col gap-[60px]'>
@@ -16,10 +15,10 @@ export default function Media({edition} : {edition: any}) {
       </div>
 
       {media == "photos" ? <div className="">
-        <ImageGallery images={edition?.images} />
+        <ImageGallery images={mediaContent?.images} />
       </div> :
         <div>
-        <VideoGallery videos={edition?.videos}/>
+        <VideoGallery videos={mediaContent?.videos}/>
         </div>}
     </div>
   )

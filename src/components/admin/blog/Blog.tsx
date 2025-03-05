@@ -1,4 +1,4 @@
-import { InboxIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { InboxIcon, PencilSquareIcon, TrashIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -96,6 +96,10 @@ export default function Blog() {
                         <div className="pt-3 text-end sm:text-center col-span-1 sm:col-span-2">
                           <div className="grid grid-cols-12">
                             <div className="col-span-12 sm:col-span-6 flex justify-end sm:justify-center">
+                            <Link className="text-center" to={`/admin/posts/manage-posts/${item.slug}`}>
+                               <MagnifyingGlassIcon className="block h-8 w-8 text-blue-600" aria-hidden="true" />
+                              </Link>
+
                               <Link className="text-center" to={`/admin/posts/${item.slug}`}>
                                 <PencilSquareIcon className="block h-8 w-8 text-blue-600" aria-hidden="true" />
                               </Link>
