@@ -113,15 +113,15 @@ export default function Footer() {
 const links = [
   {
     text: "Qui Sommes-Nous",
-    path: "/about-us",
+    path: "/who-are-we/our-history",
   },
   {
     text: "Aire Marine et Côtière Protégée",
-    path: "/aire",
+    path: "/protected-air-marine-coastal-areas/presentation",
   },
   {
     text: "Notre Festival",
-    path: "/festival",
+    path: "/our-festival",
   },
   {
     text: "Actualités",
@@ -129,7 +129,7 @@ const links = [
   },
   {
     text: "Événements",
-    path: "/events",
+    path: "/event",
   },
   {
     text: "Opportunités",
@@ -137,7 +137,7 @@ const links = [
   },
   {
     text: "Devenir Bénévole",
-    path: "/blabla",
+    path: "/benevole",
   },
 ];
 

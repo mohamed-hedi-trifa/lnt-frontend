@@ -89,6 +89,7 @@ function Navbar({ location }: { location: any }) {
           {
             label: "Qui Sommes-Nous",
             underlineClassName: "w-[100px]",
+            path:`/${lang}/who-are-we/our-history`,
             items: [
               { label: "Notre Histoire", path: "/who-are-we/our-history" },
               { label: "Principes et Valeurs", path: "/who-are-we/our-values" },
@@ -101,6 +102,7 @@ function Navbar({ location }: { location: any }) {
           {
             label: "Air Marine et Côtière Protégée",
             underlineClassName: "w-[150px]",
+            path:`/${lang}/protected-air-marine-coastal-areas/presentation`,
             items: [
               { label: "Présentation", path: "/protected-air-marine-coastal-areas/presentation" },
               {
@@ -135,12 +137,7 @@ function Navbar({ location }: { location: any }) {
           {
             label: "Opportunités",
             underlineClassName: "w-[100px]",
-            path:"/en/opportunities",
-            items: [
-              { label: "Offres d'Emplois", path: "/job-offers" },
-              { label: "Appels d'Offres", path: "/tenders" },
-              { label: "Stages", path: "/internships" },
-            ],
+            path:"/opportunities",
           },
           { label: "Contact", path: "/contact", underlineClassName: "w-[55px]" },
         ];
@@ -156,33 +153,39 @@ function Navbar({ location }: { location: any }) {
 
   return (
     <div className="fixed z-30 w-full">
-      <header className={`w-full px-3 bg-slate-900 ${isScrolled ? "" : "bg-opacity-25"} duration-200`}>
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <LangLink to="/" className="flex gap-1 items-center">
-            <img src="/logo.png" alt="AKDDCL" className="size-14 shrink-0 object-contain drop-shadow-[0px_4px_2px_rgb(0,0,0,.3)]" />
-            <p className="max-w-[200px] text-white text-xs font-bold">
-              <span className="italic font-extrabold text-base">AKDDCL</span>
-            </p>
-          </LangLink>
-          <div className="grow flex gap-3 items-center justify-end">
-            <NavbarSearch />
-            <div className="hidden md:inline h-8 w-px bg-white"></div>
-            <LangLink
-              to="/benevole"
-              className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full shadow-lg bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right"
-            >
-              DEVENIR BÉNÉVOLE
-            </LangLink>
-            <button className="flex items-center">
-              <GlobeAltIcon className="h-8 w-8 text-white" />
-              <p className="text-white font-bold">EN</p>
-            </button>
-            <div className="block md:hidden">
-              <MobileNavbar />
-            </div>
-          </div>
-        </div>
-      </header>
+      <header className={`w-full px-3  ${isScrolled ? "bg-[linear-gradient(90deg,#51ADC6_0%,_#006E9F_100%)]" : "bg-[linear-gradient(90deg,rgba(81,173,198,0.25)_0%,rgba(0,110,159,0.25)_100%)]"} duration-200`}>
+
+<div className="flex items-center justify-between max-w-7xl mx-auto ">
+  <LangLink to="/" className="flex gap-1 items-center">
+    <img src="/logo.png" alt="AKDDCL" className="size-14 shrink-0 object-contain drop-shadow-[0px_4px_2px_rgb(0,0,0,.3)]" />
+    <p className="max-w-[200px] text-white text-xs font-bold">
+      {/* <span className="hidden md:inline">Association Kratten du Développement Durable de la Culture et du Loisir</span>
+      <span className="inline md:hidden">AKDDCL</span> */}
+      <span className="italic font-extrabold text-base">AKDDCL</span>
+    </p>
+  </LangLink>
+  <div className="grow flex gap-3 items-center justify-end">
+    {/* <button className="hidden md:block">
+      <MagnifyingGlassIcon className="h-8 w-8 text-white -scale-x-100" />
+    </button> */}
+    <NavbarSearch />
+    <div className="hidden md:inline h-8 w-px bg-white"></div>
+    <LangLink
+      to="/benevole"
+      className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full shadow-lg bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right"
+    >
+      DEVENIR BÉNÉVOLE
+    </LangLink>
+    <button className="flex items-center">
+      <GlobeAltIcon className="h-8 w-8 text-white" />
+      <p className="text-white font-bold">EN</p>
+    </button>
+    <div className="block md:hidden">
+      <MobileNavbar />
+    </div>
+  </div>
+</div>
+</header>
 
       <nav className={`hidden md:flex items-center w-full h-[50px] px-3 ${isScrolled ? "bg-[rgba(0,0,0,0.7)]" : "bg-[rgba(0,0,0,0.5)]"} duration-200`}>
         <ul className="flex items-center justify-between w-full max-w-7xl mx-auto">

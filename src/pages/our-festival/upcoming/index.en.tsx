@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-
 import CarouselCard from '@/components/visitor/our-festival/CarouselCard';
 import ListCardFestivales from '@/components/visitor/our-festival/ListCardsFestival';
 import HeroSection from '@/components/visitor/HeroSection';
@@ -12,9 +11,9 @@ import Partners from '@/components/visitor/who-are-we/partners/Partners';
 import PinnedImageSwap from '@/components/visitor/our-festival/upcoming/SwappingImagesOnScroll';
 import ImageGallery from '@/components/visitor/ImageGallery';
 import Media from '@/components/visitor/Media';
-
 import PastEditionsCarousel from '@/components/visitor/our-festival/PastEditionsCarousel';
 import EventsEditionCards from "@/components/visitor/our-festival/upcoming/EventsEditionCards";
+
 
 const gallery = [
   '/festivales_images/img1.jpg',
@@ -32,6 +31,10 @@ const gallery = [
 
 
 ]
+
+
+
+
 
 export default function FestivalVenir() {
   const [edition, setEdition] = useState([]);
@@ -76,6 +79,15 @@ export default function FestivalVenir() {
         <section className='max-w-7xl'>
           <div style={{ display: "" }}></div>
 
+          <PageTitle title={<div className=''><span className='block leading-[55px]'>Festival de La Culture des iles Méditerranéees</span> <span className='block leading-[55px]'>(Edition {edition.year})</span></div>} />
+          <p className='text-[24px] sm:text-[32px] text-[#0270A0] text-center font-semibold my-4'>{edition.name_en || edition.name_fr}</p>
+
+          <PinnedImageSwap edition={edition} />
+          <hr className='border-t my-20 border-[#000000]' />
+          <div className='flex justify-center flex-col items-center'>
+            <Title size='text-[36px]'><span className='text-primary'>Programme</span> du Festival</Title>
+            <div className='font-semibold'>Explorez les moments forts et les activités qui rythmeront cette édition unique du festival</div>
+          </div>
           <div className="grid sm:grid-cols-3 items-center justify-center px-4 sm:px-0 mt-5">
             {edition?.events?.map((event, index) => (
               <EventsEditionCards key={index} event={event} />
@@ -83,10 +95,7 @@ export default function FestivalVenir() {
           </div>
 
 
-
-
-
-          <hr className='border-2 my-20 border-[#ADA5A5]' />
+          <hr className='border-t my-20 border-[#000000]' />
 
           <div className=' flex items-center justify-center'>
             <span className='text-[28px] sm:text-[36px] font-bold text-center'>
@@ -101,8 +110,8 @@ export default function FestivalVenir() {
           </div>
 
           <div className='mt-12'>
-            <Partners partners={edition.partners}/>
 
+            <Partners partners={edition.partners}/>
           </div>
 
           <div className=' text-center my-10'>
@@ -118,7 +127,6 @@ export default function FestivalVenir() {
 
 
           <Media edition={edition} />
-
 
           <hr className='mb-[50px] mt-[80px] border-black' />
 
@@ -136,7 +144,6 @@ export default function FestivalVenir() {
           <PastEditionsCarousel prevEditions={prevEditions} />
 
 
-
         </section>
 
       </div>
@@ -150,6 +157,3 @@ export default function FestivalVenir() {
     </div>
   )
 }
-
-
-
