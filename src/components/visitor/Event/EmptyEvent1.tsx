@@ -1,10 +1,11 @@
 import React from 'react'
-import TitleSectionEvent from '../TitleSectionEvent'
+import TitleSectionEvent from './TitleSectionEvent'
 
-export default function WorkshopsAndTrainings() {
+
+export default function EmptyEvent1() {
     return (
         <div className='w-full'>
-            <TitleSectionEvent headerName="Ateliers et Formations" showButton={true} />
+          
 
             <div className="bg-white shadow-lg p-10 font-bold mt-6 text-start leading-[45px] text-lg">
             Aucun atelier ou formation n'est programmé pour le moment. Inscrivez-vous à notre 

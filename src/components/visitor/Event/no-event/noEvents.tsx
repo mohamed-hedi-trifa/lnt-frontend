@@ -6,7 +6,7 @@ import PageParagraph from '@/components/atoms/PageParagraph'
 import QuestionEvent from '../QuestionEvent'
 import FollowUsEvent from '../FollowUsEvent'
 import EventImage from '../EventImage'
-import WorkshopsAndTrainings from './WorkshopsAndTrainings'
+// import WorkshopsAndTrainings from './WorkshopsAndTrainings'
 import LeisureAndSportsActivities from './LeisureAndSportsActivities'
 import CulturalEvents from './CulturalEvents'
 
@@ -26,7 +26,7 @@ export default function NoEvents() {
       <section className='flex gap-20 flex-col sm:flex-row   my-5 text-center max-w-7xl w-full mx-auto justify-between  mt-20 px-5 h-fit   '>
 
         <div className='h-full w-full ' >
-    <WorkshopsAndTrainings/>
+    {/* <WorkshopsAndTrainings/> */}
     <CulturalEvents/>
         </div>
 

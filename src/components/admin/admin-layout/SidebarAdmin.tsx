@@ -74,6 +74,7 @@ export default function SidebarAdmin() {
                             {section === 'Notifications' && (
                                 <>
                                     <Link to="/admin/internship-application" className="block p-4 text-gray-300 hover:bg-gray-700">Internship Application</Link>
+                                    <Link to="/admin/benevole" className="block p-4 text-gray-300 hover:bg-gray-700">Benevole</Link>
                                 </>
                             )}
                         </AccordionBody>

@@ -8,30 +8,29 @@ import eventImage4 from '../../../assets/images/eventImage4.jpg'
 
 
 import LocationIcon from '@/assets/icons/LocationIcon'
-import TitleSectionEvent from './TitleSectionEvent'
-export default function WorkshopsAndTraining({ events, language = "fr" }: { events: any, language: string }) {
+export default function PopularEventType1({ events, language = "fr" }: { events: any, language: string }) {
 
     const eventsData = events.slice(1, 4);
     const formatEventDate = (dateString, language) => {
         const date = new Date(dateString.replace(" ", "T")); // Convert to valid date format
-      
+
         const options = {
-          weekday: "long", // Full weekday name (e.g., "Friday" or "Vendredi")
-          day: "numeric",  // Day of the month (e.g., "2")
-          month: "long",   // Full month name (e.g., "August" or "août")
-          year: "numeric", // Full year (e.g., "2024")
-          hour: "numeric", // Hour (e.g., "17" or "5")
-          minute: "numeric", // Minute (e.g., "00")
-          hour12: language === "en", // Use 12-hour format for English, 24-hour for French
+            weekday: "long", // Full weekday name (e.g., "Friday" or "Vendredi")
+            day: "numeric",  // Day of the month (e.g., "2")
+            month: "long",   // Full month name (e.g., "August" or "août")
+            year: "numeric", // Full year (e.g., "2024")
+            hour: "numeric", // Hour (e.g., "17" or "5")
+            minute: "numeric", // Minute (e.g., "00")
+            hour12: language === "en", // Use 12-hour format for English, 24-hour for French
         };
-      
+
         const formatter = new Intl.DateTimeFormat(language === "fr" ? "fr-FR" : "en-US", options);
         return formatter.format(date);
-      };
-    
+    };
+
     return (
         <div className='w-full'>
-            <TitleSectionEvent headerName="Articles Récents" showButton={true} />
+
 
             <div className="flex justify-between flex-col sm:flex-row w-full h-fit mt-10  font-['Montserrat']">
 
@@ -50,7 +49,14 @@ export default function WorkshopsAndTraining({ events, language = "fr" }: { even
 
                         <div className="flex gap-2 text-white">
                             <img src="/carousel_images/whiteCalendar.svg" className='size-5 ' />
-                            <span className="uppercase font-light text-sm">15 février 2025 à 10:30</span>
+                            <span className="uppercase font-light text-sm">
+                                {
+                                    events[0]?.event_start_at ?
+                                        formatEventDate(events[0]?.event_start_at, language)
+                                        :
+                                        "Date not available"
+                                }
+                            </span>
                         </div>
 
                         <div className="flex gap-3 text-white ml-1 items-center">
@@ -68,7 +74,7 @@ export default function WorkshopsAndTraining({ events, language = "fr" }: { even
                             <img className="h-full aspect-square object-cover rounded-xl"
                                 src={`${process.env.GATSBY_API_URL}${event?.image}`}
                                 alt={events?.title_en || events?.title_fr}
-                                 />
+                            />
                             <div className="flex flex-col  py-2 sm:ml-2 ml-4  sm:p-3 flex-grow text-start sm:gap-4 gap-2 sm:h-fit h-full justify-between">
                                 <div className="font-bold sm:text-lg text-lg  leading-6">{event.title_en || event.title_fr}</div>
 
@@ -76,12 +82,12 @@ export default function WorkshopsAndTraining({ events, language = "fr" }: { even
                                     <div className="flex gap-2 items-center text-[#6D757F]">
                                         <img src="/carousel_images/grayCalendar.png" className='size-4' />
                                         <span className="uppercase font-light text-xs">
-                                        {
-                        event?.event_start_at ?
-                        formatEventDate(event?.event_start_at, language)
-                        :
-                        "Date not available"
-                    }
+                                            {
+                                                event?.event_start_at ?
+                                                    formatEventDate(event?.event_start_at, language)
+                                                    :
+                                                    "Date not available"
+                                            }
                                         </span>
                                     </div>
 

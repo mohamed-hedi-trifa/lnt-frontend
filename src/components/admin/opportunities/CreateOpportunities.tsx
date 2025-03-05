@@ -91,7 +91,11 @@ const CreateOpportunity: React.FC = () => {
             [name]: value,
         });
     };
-
+    useEffect(() => {
+        if (formData.type === 'internship') {
+            setFormData((prevData) => ({ ...prevData, contract_type: null }));
+        }
+    }, [formData.type]);
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setImage(e.target.files[0]); // Store the file object
@@ -126,28 +130,28 @@ const CreateOpportunity: React.FC = () => {
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
-
+    
         if (language === "en") {
             if (!formData.title_en) {
                 newErrors.title_en = "Title is required.";
             }
             if (!formData.description_en) {
-                newErrors.summary_en = "Summary is required.";
+                newErrors.description_en = "Description is required.";
             }
             if (!formData.location_en) {
                 newErrors.location_en = "Location is required.";
             }
-
+    
             if (englishItems.length === 0) {
                 newErrors.items = "At least one content item is required.";
             }
-
+    
         } else {
             if (!formData.title_fr) {
                 newErrors.title_fr = "Title is required.";
             }
             if (!formData.description_fr) {
-                newErrors.summary_fr = "Summary is required.";
+                newErrors.description_fr = "Description is required.";
             }
             if (!formData.opportunity_start_at) {
                 newErrors.opportunity_start_at = "Event date and time are required.";
@@ -162,12 +166,28 @@ const CreateOpportunity: React.FC = () => {
                 newErrors.items = "At least one content item is required.";
             }
         }
-        if (formData.type == "") {
+    
+        if (formData.type === "") {
             newErrors.type = "Type is required.";
         }
+        if (formData.due_date === "") {
+            newErrors.due_date = "Due date is required.";
+        }
+    
+        if (formData.postStart === "") {
+            newErrors.postStart = "PostStart is required.";
+        }
+    
+    
+       
+        if (formData.type !== "internship" && !formData.contract_type) {
+            newErrors.contract_type = "Contract type is required.";
+        }
+    
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
+    
 
     async function createEvent(): Promise<{ slug: string } | null> {
         if (!validateForm()) {
@@ -336,12 +356,22 @@ const CreateOpportunity: React.FC = () => {
                     <option value="job-offer">job-offer</option>
                     <option value="call-for-tender">call for tender</option>
                     <option value="internship">internship</option>
-
                 </Select>
                 {errors.type && <div className="text-red-500 text-sm">{errors.type}</div>}
 
-                <Input label="Contract type" type="text" name="contract_type" value={formData.contract_type} onChange={handleChange} />
+                {formData.type !== 'internship' && (
+                    <Input
+                        label="Contract type"
+                        type="text"
+                        name="contract_type"
+                        value={formData.contract_type}
+                        onChange={handleChange}
+                    />
+                )}
+
+
                 {errors.contract_type && <div className="text-red-500 text-sm">{errors.contract_type}</div>}
+
 
                 <Input label="due_date" type="date" name="due_date" value={formData.due_date} onChange={handleChange} />
                 {errors.due_date && <div className="text-red-500 text-sm">{errors.due_date}</div>}

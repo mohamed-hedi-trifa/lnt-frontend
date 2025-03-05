@@ -55,7 +55,7 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
         end_date_day: "",
         end_date_month: "",
         end_date_year: "",
-        
+
     });
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -94,7 +94,7 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
 
         if (!formData.first_name) newErrors.first_name = "Le nom est requis.";
         if (!formData.last_name) newErrors.last_name = "Le prénom est requis.";
-        if (!formData.birth_day || !formData.birth_month || !formData.birth_year) newErrors.birth_date = "La date de naissance est requise." ;
+        if (!formData.birth_day || !formData.birth_month || !formData.birth_year) newErrors.birth_date = "La date de naissance est requise.";
         if (!formData.email) newErrors.email = "L'adresse e-mail est requise.";
         if (!formData.phone) newErrors.phone = "Le numéro de téléphone est requis.";
         if (!formData.address) newErrors.address = "L'adresse est requise.";
@@ -103,7 +103,7 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
         if (!formData.study_field) newErrors.study_field = "Le domaine d'études est requis.";
         if (!formData.internship_type) newErrors.internship_type = "Le type de stage est requis.";
         if (!formData.desired_internship_field) newErrors.desired_internship_field = "Le domaine de stage souhaité est requis.";
-        if (!formData.start_date_day || !formData.start_date_month ||!formData.start_date_year) newErrors.start_date = "La date de début est requise.";
+        if (!formData.start_date_day || !formData.start_date_month || !formData.start_date_year) newErrors.start_date = "La date de début est requise.";
         if (!formData.end_date_day || !formData.end_date_month || !formData.end_date_year) newErrors.end_date = "La date de fin est requise.";
         if (!cvFileName) newErrors.cvFile = "Le CV est requis.";
 
@@ -249,7 +249,7 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
                                     value={formData.birth_year}
                                     onChange={handleChange}
                                     required
-                                    options={Array.from({ length: 30 }, (_, i) => (2023 + i).toString())}
+                                    options={Array.from({ length: 60 }, (_, i) => (2015 - i).toString())}
                                     placeholder="Années"
                                     width="100px"
                                 />
@@ -355,7 +355,7 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
                                 value={formData.internship_type}
                                 onChange={handleChange}
                                 required
-                                options={["1", "2", "4"]}
+                                options={["Stage d'Initiation", "Stage PFA (Projet de Fin d'Année)", "Stage PFE (Projet de Fin d'Études)", "Stage Professionnel", "Stage de Recherche", "Autre"]}
                                 placeholder="Sélectionnez un type de stage"
                                 width="500px"
                             />
@@ -484,7 +484,7 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
                                 <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD] border-dashed">
                                     <UploadIcon />
                                     <span className="text-gray-700 ml-2 font-medium">
-                                    {cvFileName ? cvFileName : "Ajouter mon CV"}
+                                        {cvFileName ? cvFileName : "Ajouter mon CV"}
                                     </span>
                                     <input
                                         type="file"
@@ -492,9 +492,10 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
                                         name="cvFile"
                                         onChange={handleCvFileChange}
                                         className="hidden"
+                                        accept="application/pdf"
                                         required
                                     />
-                                         
+
                                 </label>
                             </div>
                             {errors.cvFile && <div className="text-red-500 text-sm">{errors.cvFile}</div>}
@@ -508,13 +509,13 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
                                 <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD] border-dashed">
                                     <UploadIcon />
                                     <span className="text-gray-700 ml-2 font-medium">
-                                    {motivationLetterFileName ? motivationLetterFileName : "Joindre votre Lettre de Motivation"}
+                                        {motivationLetterFileName ? motivationLetterFileName : "Joindre votre Lettre de Motivation"}
                                     </span>
                                     <input
                                         type="file"
                                         id="motivation_letter"
                                         name="motivation_letter"
-                                      
+                                        accept="application/pdf"
                                         onChange={handleMotivationLetterFileChange}
                                         className="hidden"
                                     />
