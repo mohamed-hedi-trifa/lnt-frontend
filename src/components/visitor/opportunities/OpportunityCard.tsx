@@ -5,11 +5,11 @@ import React from 'react';
 export default function OpportunityCard({ opportunity }: { opportunity: any }) {
     const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
 
-    const calculateDaysRemaining = (dueDate) => {
+    const calculateDaysRemaining = (dueDate:any) => {
         if (!dueDate) return "N/A";
 
-        const today = new Date();
-        const due = new Date(dueDate);
+        const today:any = new Date();
+        const due:any = new Date(dueDate);
         const timeDifference = due - today;
         const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
@@ -72,7 +72,7 @@ export default function OpportunityCard({ opportunity }: { opportunity: any }) {
 
                 </div>
                 <div className='w-full text-start self-start  mx-3 '>
-                    <Link to={`/opportunities/category1?lang=${lang}`}>
+                    <Link to={`/opportunities/opportunity-details/${opportunity?.slug}?lang=${lang}`}>
                         <button className="text-white sm:mb-0  mb-5 sm:text-xs  font-medium  self-start rounded-3xl bg-gradient-to-r from-[#51ADC6] to-[#006E9F] w-fit py-2 px-6 
                             shadow-[0px_6px_12px_rgba(0,0,0,0.3)] 
                             hover:shadow-[0px_10px_20px_rgba(0,0,0,0.4)] 

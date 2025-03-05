@@ -15,6 +15,13 @@ import PastEditionsCarousel from '@/components/visitor/our-festival/PastEditions
 import EventsEditionCards from "@/components/visitor/our-festival/upcoming/EventsEditionCards";
 
 
+
+
+
+
+
+
+
 const gallery = [
   '/festivales_images/img1.jpg',
   '/festivales_images/img2.jpg',
@@ -83,11 +90,14 @@ export default function FestivalVenir() {
           <p className='text-[24px] sm:text-[32px] text-[#0270A0] text-center font-semibold my-4'>{edition.name_en || edition.name_fr}</p>
 
           <PinnedImageSwap edition={edition} />
-          <hr className='border-t my-20 border-[#000000]' />
+
+
           <div className='flex justify-center flex-col items-center'>
             <Title size='text-[36px]'><span className='text-primary'>Programme</span> du Festival</Title>
             <div className='font-semibold'>Explorez les moments forts et les activités qui rythmeront cette édition unique du festival</div>
           </div>
+
+
           <div className="grid sm:grid-cols-3 items-center justify-center px-4 sm:px-0 mt-5">
             {edition?.events?.map((event, index) => (
               <EventsEditionCards key={index} event={event} />
