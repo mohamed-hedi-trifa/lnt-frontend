@@ -16,6 +16,14 @@ import Media from '@/components/visitor/Media';
 import PastEditionsCarousel from '@/components/visitor/our-festival/PastEditionsCarousel';
 import EventsEditionCards from "@/components/visitor/our-festival/upcoming/EventsEditionCards";
 
+
+
+
+
+
+
+
+
 const gallery = [
   '/festivales_images/img1.jpg',
   '/festivales_images/img2.jpg',
@@ -32,6 +40,11 @@ const gallery = [
 
 
 ]
+
+
+
+
+
 
 export default function FestivalVenir() {
   const [edition, setEdition] = useState([]);
@@ -76,6 +89,18 @@ export default function FestivalVenir() {
         <section className='max-w-7xl'>
           <div style={{ display: "" }}></div>
 
+          <PageTitle title={<div className=''><span className='block leading-[55px]'>Festival de La Culture des iles Méditerranéees</span> <span className='block leading-[55px]'>(Edition {edition.year})</span></div>} />
+          <p className='text-[24px] sm:text-[32px] text-[#0270A0] text-center font-semibold my-4'>{edition.name_en || edition.name_fr}</p>
+
+          <PinnedImageSwap edition={edition} />
+
+
+          <div className='flex justify-center flex-col items-center'>
+            <Title size='text-[36px]'><span className='text-primary'>Programme</span> du Festival</Title>
+            <div className='font-semibold'>Explorez les moments forts et les activités qui rythmeront cette édition unique du festival</div>
+          </div>
+
+
           <div className="grid sm:grid-cols-3 items-center justify-center px-4 sm:px-0 mt-5">
             {edition?.events?.map((event, index) => (
               <EventsEditionCards key={index} event={event} />
@@ -101,6 +126,7 @@ export default function FestivalVenir() {
           </div>
 
           <div className='mt-12'>
+
             <Partners partners={edition.partners}/>
 
           </div>
@@ -118,8 +144,7 @@ export default function FestivalVenir() {
 
 
           <Media edition={edition} />
-
-
+>>>>>>> 92e42f645dca74d846795714bae508fc2edc6a79
           <hr className='mb-[50px] mt-[80px] border-black' />
 
           <div className='text-center mb-3'>
@@ -150,6 +175,3 @@ export default function FestivalVenir() {
     </div>
   )
 }
-
-
-

@@ -10,7 +10,7 @@ import OpportunityCards from './OpportunityCards'
 
 
 
-export default function DisplayOpportinitiesList() {
+export default function DisplayOpportinitiesList({opportunities} : {opportunities:any}) {
 
 
 

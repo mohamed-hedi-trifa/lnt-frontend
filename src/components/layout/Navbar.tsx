@@ -155,15 +155,21 @@ function Navbar({ location }: { location: any }) {
 
   return (
     <div className="fixed z-30 w-full">
-      <header className={`w-full px-3 bg-slate-900 ${isScrolled ? "" : "bg-opacity-25"} duration-200`}>
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
+<header className={`w-full px-3  ${isScrolled ? "bg-[linear-gradient(90deg,#51ADC6_0%,_#006E9F_100%)]" : "bg-[linear-gradient(90deg,rgba(81,173,198,0.25)_0%,rgba(0,110,159,0.25)_100%)]"} duration-200`}>
+
+        <div className="flex items-center justify-between max-w-7xl mx-auto ">
           <LangLink to="/" className="flex gap-1 items-center">
             <img src="/logo.png" alt="AKDDCL" className="size-14 shrink-0 object-contain drop-shadow-[0px_4px_2px_rgb(0,0,0,.3)]" />
             <p className="max-w-[200px] text-white text-xs font-bold">
+              {/* <span className="hidden md:inline">Association Kratten du Développement Durable de la Culture et du Loisir</span>
+              <span className="inline md:hidden">AKDDCL</span> */}
               <span className="italic font-extrabold text-base">AKDDCL</span>
             </p>
           </LangLink>
           <div className="grow flex gap-3 items-center justify-end">
+            {/* <button className="hidden md:block">
+              <MagnifyingGlassIcon className="h-8 w-8 text-white -scale-x-100" />
+            </button> */}
             <NavbarSearch />
             <div className="hidden md:inline h-8 w-px bg-white"></div>
             <LangLink

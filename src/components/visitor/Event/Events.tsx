@@ -21,13 +21,7 @@ export default function Events() {
   };
 
     useEffect(() => {
-  
-  
-  
       getEvents();
-
-  
-  
   
     }, [location]);
     return events ? (

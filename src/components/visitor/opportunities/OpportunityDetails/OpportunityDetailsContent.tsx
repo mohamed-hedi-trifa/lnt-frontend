@@ -1,73 +1,127 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 
+import { navigate } from "gatsby";
+import Title from "@/components/atoms/titles/Title";
+import BlogList from "../../aire-marine/monitoring/marin/blog/BlogList";
 
-export default function OpportunityDetailsContent() {
+// Helper function to parse custom markdown-like syntax
+const parseContent = (content: any) => {
+    if (!content) return "";
+
+    // Replace **bold** with <strong>bold</strong>
+    const boldParsed = content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+    // Detect URLs and convert them to clickable links
+    const linkParsed = boldParsed.replace(
+        /(https?:\/\/[^\s]+)/g,
+        '<a href="$1" class="markdown-link" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
+
+    return linkParsed;
+};
+
+function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const options: any = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("en-US", options);
+}
+
+export default function OpportunityDetailsContent({ location, params }: { location: any; params: any }) {
+    const [opportunity, setEvent] = useState<any>(null);
+    const [slug, setSlug] = useState<string | null>(null);
+    const [language, setLanguage] = useState<string>("en");
+
+    useEffect(() => {
+        const slugParam = params.slug;
+        setSlug(slugParam);
+    }, [location]);
+
+    useEffect(() => {
+        if (slug) {
+            axios
+                .get(`/api/opportunities/${slug}`)
+                .then((res) => {
+                    setEvent(res.data);
+
+
+                    const searchParams = new URLSearchParams(location.search);
+                    const urlLanguage = searchParams.get("lang");
+
+                    if (urlLanguage && res.data[`title_${urlLanguage}`]) {
+                        setLanguage(urlLanguage);
+                    } else {
+
+                        setLanguage(res.data.title_en ? "en" : "fr");
+                    }
+                })
+                .catch((err) => {
+                    console.error("Error fetching blog post:", err);
+
+                    navigate("/404");
+                });
+        }
+    }, [slug, location.search]);
+
+    const handleLanguageChange = (selectedLanguage: string) => {
+        setLanguage(selectedLanguage);
+    };
+
+    if (!opportunity) {
+        return <div>Loading...</div>;
+    }
+
     return (
-        <div>
-            <div className="text-bold text-start sm:text-3xl text-2xl  font-bold leading-[43.88px]">
-            À propos de l’Opportunité
+        <div className="w-full">
+            <div className="w-full px-8 text-start max-w-3xl mx-auto" dir={language === "ar" ? "rtl" : "ltr"}>
+
+
+
+                <div className="mt-4 flex flex-col">
+                    {opportunity?.content_items
+                        ?.sort((a: any, b: any) => a.order - b.order)
+                        .map((item: any) => (
+                            <div key={item.id}>
+                                {item.language === language ? (
+                                    item.type === "title" ? (
+                                        <Title customClassName="mb-2">{item.content}</Title>
+                                    ) : item.type === "text" ? (
+                                        // Apply the markdown parser to the text content
+                                        <div
+                                            className="mb-4"
+                                            dangerouslySetInnerHTML={{
+                                                __html: parseContent(item.content),
+                                            }}
+                                        />
+                                    ) : item.type === "image" ? (
+                                        <div className="mb-2">
+                                            <img
+                                                src={`${process.env.GATSBY_API_URL}${item.file_path}`}
+                                                alt=""
+                                            />
+                                        </div>
+                                    ) : item.type === "pdf" ? (
+                                        <div>
+                                            <a
+                                                download
+                                                href={`${process.env.GATSBY_API_URL}${item.file_path}`}
+                                            >
+                                                Download Pdf
+                                            </a>
+                                        </div>
+                                    ) : item.type === 'list' ? (
+                                        <div>
+                                            <BlogList content={item.content} />
+                                        </div>
+
+                                    ) : null
+
+                                ) : null}
+                            </div>
+                        ))}
+                </div>
             </div>
-
-
-
-
-            <div className='sm:mt-8 mt-2 text-start' >
-            Nous recherchons un coordinateur passionné et compétent pour piloter nos initiatives de co-gestion en partenariat avec MedFund. Vous serez en charge de planifier, coordonner et évaluer les activités liées à la protection de l’Aire Marine Protégée des Îlots Nord de Kerkennah
-            </div>
-
-
-
-            <div className='sm:mt-8 mt-5  text-start font-bold' >
-            Vos Missions
-            </div>
-
-
-            <div className='sm:mt-2 mt-2 text-start leading-8 flex flex-col' >
-                <span> 1. Superviser les projets de co-gestion et assurer leur bon déroulement </span>
-            
-                <span>2. Coordonner les relations avec les partenaires locaux et internationaux</span>
-
-                <span> 3. Élaborer des rapports techniques et financiers réguliers </span>
-   
-                <span> 4. Mobiliser les communautés locales pour renforcer leur implication dans les initiatives de préservation</span>
-
-
-            </div>
-        <div className='sm:mt-8 mt-5  text-start font-bold' >
-        Profil Recherché
-            </div>
-            <div className='sm:mt-2 mt-2 text-start leading-8 flex flex-col' >
-                <span> 1. Formation : Master en gestion de projets, biologie marine, environnement ou domaine connexe </span>
-            
-                <span>2. Project management Expérience : Minimum 3 ans dans un rôle similaire, idéalement dans la conservation ou la gestion environnementale</span>
-
-                <span> 3. Élaborer des rapports techniques et financiers réguliers </span>
-   
-                <span> 4. Expérience avec des partenaires internationaux</span>
-  
-            </div>
-
-
-
-            <div className='sm:mt-8 mt-5 text-start font-bold' >
-                Consultez le Document Complet
-            </div>
-
-
-
-
-            <div className='flex items-center gap-3 mt-3' >
-               <img src="/images/pdf.png" alt=""  width="30"/>
-               <span className='text-[#0270A0] font-semibold' >TDRs_02_Coordinateur AKDDCL.pdf</span>
-            </div>
-
-
-
-
-      
-
-
         </div>
-    )
+    );
 }

@@ -6,10 +6,11 @@ interface SelectFieldProps {
   required?: boolean;
   rounded?: boolean;
   options: string[];
+  valueoptions?: string[]; 
   placeholder?: string;
   height?: string;
-  value?: string; // Added value prop
-  onChange?: (e: ChangeEvent<HTMLSelectElement>) => void; // Added onChange prop
+  value?: string;
+  onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const SelectFieldBenevole: React.FC<SelectFieldProps> = ({
@@ -18,9 +19,10 @@ const SelectFieldBenevole: React.FC<SelectFieldProps> = ({
   required = false,
   rounded = false,
   options,
+  valueoptions, 
   placeholder = "",
   height = "39px",
-  value,
+  value = "", // Default to empty string for placeholder functionality
   onChange,
 }) => {
   return (
@@ -28,18 +30,21 @@ const SelectFieldBenevole: React.FC<SelectFieldProps> = ({
       <select
         name={name}
         id={id}
-        value={value} // Controlled component
-        onChange={onChange} // Event handler
+        value={value} // Ensures controlled behavior
+        onChange={onChange}
         style={{ height }}
-        className={`border border-[#D6DDEB] font-bold text-sm h-[34px] pl-4 w-full ${rounded ? "rounded-md" : "rounded-none"}`}
+        className={`border border-[#D6DDEB] font-bold text-sm h-[34px] pl-4 w-full ${
+          rounded ? "rounded-md" : "rounded-none"
+        }`}
       >
+        {/* Placeholder option that remains disabled */}
         {placeholder && (
-          <option value="" disabled>
+          <option value=""  >
             {placeholder}
           </option>
         )}
         {options.map((option, index) => (
-          <option key={index} value={option}>
+          <option key={index} value={valueoptions ? valueoptions[index] : option}>
             {option}
           </option>
         ))}

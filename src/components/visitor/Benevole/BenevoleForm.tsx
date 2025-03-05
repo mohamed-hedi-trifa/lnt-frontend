@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import axios, { AxiosError } from "axios";
 import UploadIcon from "@/assets/icons/UploadIcon";
 
@@ -18,17 +18,20 @@ interface FormData {
     phone: string;
     address: string;
     professional_situation: string;
-    professionalSector: string;
+    professional_sector: string;
     interests_motivation: string;
     competences_experiences: string;
     availability_start_date: string;
-    availabilityEndDate: string;
-    cvFile: File | null;
-    motivationLetter: File | null;
+    availability_time: Date;
+    availability_day: number;
+    availability_month: number;
+  
 }
 
 const BenevoleForm: React.FC = () => {
-    const [isFormFilled, setIsFormFilled] = useState(false);
+    const [isFormFilled, setIsFormFilled] = useState<boolean>(() => {
+        return localStorage.getItem("isFormFilled") === "true";
+      });
     const [formData, setFormData] = useLocalStorage("benevole-form", {
         first_name: "",
         last_name: "",
@@ -39,13 +42,13 @@ const BenevoleForm: React.FC = () => {
         phone: "",
         address: "",
         professional_situation: "",
-        professionalSector: "",
+        professional_sector: "",
         interests_motivation: "",
         competences_experiences: "",
-        availability_start_date: "",
-        availabilityEndDate: "",
-        cvFile: null,
-        motivationLetter: null,
+        availability_month: "",
+        availability_day: "",
+        availability_time: "",
+
     });
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -61,27 +64,7 @@ const BenevoleForm: React.FC = () => {
         });
     };
 
-    const handleCvFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const file = e.target.files[0];
-            setFormData({
-                ...formData,
-                cvFile: file,
-            });
-            setCvFileName(file.name);
-        }
-    };
-
-    const handleMotivationLetterFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const file = e.target.files[0];
-            setFormData({
-                ...formData,
-                motivationLetter: file,
-            });
-            setMotivationLetterFileName(file.name);
-        }
-    };
+  
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
@@ -95,17 +78,38 @@ const BenevoleForm: React.FC = () => {
         if (!formData.professional_situation) newErrors.professional_situation = "La situation professionnelle est requise.";
         if (!formData.interests_motivation) newErrors.interests_motivation = "Les intérêts et motivations sont requis.";
         if (!formData.competences_experiences) newErrors.competences_experiences = "Les compétences et expériences sont requises.";
-        if (!formData.availability_start_date) newErrors.availability_start_date = "La date de début de disponibilité est requise.";
-        if (!formData.availabilityEndDate) newErrors.availabilityEndDate = "La date de fin de disponibilité est requise.";
-        if (!formData.cvFile) newErrors.cvFile = "Le CV est requis.";
+        if (!formData.availability_time || !formData.availability_day || !formData.availability_month) newErrors.availability_start_date = "La date de début de disponibilité est requise.";
+        if (!cvFileName) newErrors.cvFile = "Le CV est requis.";
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
+    const [cvFile, setCvFile] = useState<File | null>(null);
+    const [motivation_letter, setMotivation_letter] = useState<File | null>(null);
+    const handleCvFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const file = e.target.files[0];
+            setCvFile(file);
+            setCvFileName(file.name);
+        }
+    };
+
+    const handleMotivationLetterFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const file = e.target.files[0];
+            setMotivation_letter(file);
+            setMotivationLetterFileName(file.name);
+        }
+    };
+    
+    useEffect(() => {
+        localStorage.setItem("isFormFilled", String(isFormFilled));
+      }, [isFormFilled]);
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
+       
         if (!validateForm()) {
             return;
         }
@@ -117,7 +121,15 @@ const BenevoleForm: React.FC = () => {
             }
         }
 
+        if (cvFile) {
+            formDataToSend.append("cv_file", cvFile);
+        }
+        if (motivation_letter) {
+            formDataToSend.append("motivation_letter", motivation_letter);
+        }
+
         setIsLoading(true);
+    
         try {
             const response = await axios.post("/api/submit-volunteer-application", formDataToSend, {
                 headers: {
@@ -209,10 +221,11 @@ const BenevoleForm: React.FC = () => {
                                         value={formData.birthYear}
                                         onChange={handleChange}
                                         required
-                                        options={Array.from({ length: 30 }, (_, i) => (2023 + i).toString())}
+                                        options={Array.from({ length: 105 }, (_, i) => (new Date().getFullYear() - i).toString())} // Generate years dynamically
                                         placeholder="Années"
                                         rounded={true}
                                     />
+
                                 </div>
                             </div>
                             {errors.birthDate && <div className="text-red-500 text-sm">{errors.birthDate}</div>}
@@ -278,14 +291,14 @@ const BenevoleForm: React.FC = () => {
                         <div className="flex gap-6">
                             <InputFieldBenevole
                                 label="Si vous êtes en activité, veuillez indiquer votre secteur professionnel"
-                                id="professionalSector"
-                                name="professionalSector"
-                                value={formData.professionalSector}
+                                id="professional_sector"
+                                name="professional_sector"
+                                value={formData.professional_sector}
                                 onChange={handleChange}
                                 required
                                 width="501px"
                             />
-                            {errors.professionalSector && <div className="text-red-500 text-sm">{errors.professionalSector}</div>}
+                            {errors.professional_sector && <div className="text-red-500 text-sm">{errors.professional_sector}</div>}
                         </div>
 
                         <div className="flex gap-2 flex-col items-start w-full">
@@ -334,19 +347,22 @@ const BenevoleForm: React.FC = () => {
 
                                 <DateTimeBenevole
 
-                                    id="availability_start_date"
-                                    name="availability_start_date"
-                                    value={formData.availability_start_date}
+                                    id="availability_time"
+                                    name="availability_time"
+                                    value={formData.availability_time}
+                                
                                     onChange={handleChange}
                                 />
+                                  
                                 <div className="w-[90px]">
                                     <SelectFieldBenevole
-                                        id="day"
-                                        name="day"
+                                        id="availability_day"
+                                        name="availability_day"
+                                        value={formData.availability_day}
                                         required
                                         options={Array.from({ length: 31 }, (_, i) => (i + 1).toString())} // Days 1-31
                                         placeholder="Jours"
-
+                                        onChange={handleChange}
                                         rounded={true}
                                     />
                                 </div>
@@ -354,21 +370,25 @@ const BenevoleForm: React.FC = () => {
 
                                 <div className="w-[90px]">
                                     <SelectFieldBenevole
-                                        id="month"
-                                        name="month"
+                                        id="availability_month"
+                                        name="availability_month"
                                         required
+                                        value={formData.availability_month}
                                         options={[
                                             'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
                                         ]}
+                                        valueoptions={[
+                                            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
+                                        ]}
                                         placeholder="Mois"
-
+                                        onChange={handleChange}
                                         rounded={true}
                                     />
                                 </div>
 
                             </div>
-                            {errors.availability_start_date && <div className="text-red-500 text-sm">{errors.availability_start_date}</div>}
-                            {errors.availabilityEndDate && <div className="text-red-500 text-sm">{errors.availabilityEndDate}</div>}
+                            {errors.availability_date && <div className="text-red-500 text-sm">{errors.availability_start_date}</div>}
+            
                         </div>
                     </div>
 
@@ -400,6 +420,7 @@ const BenevoleForm: React.FC = () => {
                                         name="cvFile"
                                         onChange={handleCvFileChange}
                                         className="hidden"
+                                        accept="application/pdf"
                                         required
                                     />
                                 </label>
@@ -422,6 +443,7 @@ const BenevoleForm: React.FC = () => {
                                         id="motivationLetter"
                                         name="motivationLetter"
                                         onChange={handleMotivationLetterFileChange}
+                                        accept="application/pdf"
                                         className="hidden"
                                     />
                                 </label>
@@ -449,7 +471,7 @@ const BenevoleForm: React.FC = () => {
                 </form>
             ) : (
                 <div className="w-full flex justify-center">
-                    <div className="bg-[#feefef] p-6 rounded-lg shadow-lg w-[500px] flex flex-col gap-3 justify-between items-center">
+                    <div className="bg-[#fff] p-6 rounded-lg shadow-helmi w-[700px] flex flex-col gap-3 justify-between items-center">
                         <div className="flex flex-col justify-between items-center gap-2">
                             <img src="/icons/folderIcon.png" alt="" width={45} />
                             <p className="font-semibold text-lg">
