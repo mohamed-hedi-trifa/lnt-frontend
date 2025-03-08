@@ -1,8 +1,9 @@
+import IUser from "@/models/IUser";
 import React, { useState, useEffect, useContext, ReactNode } from "react";
 
 interface AuthContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
+  user: IUser | null;
+  setUser: (user: IUser | null) => void;
 }
 
 const defaultState: AuthContextType = {
@@ -17,7 +18,7 @@ interface AuthProviderProps {
 }
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>

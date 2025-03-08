@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import ReactLoading from "react-loading"
 import Modal from '../../Modal';
+import IUser from '@/models/IUser';
 
-export default function EditUserModal({ toedit, show, hide }: { toedit: User, show: boolean, hide: () => void }) {
-    const [userInput, setUser] = useState<User>({
+export default function EditUserModal({ toedit, show, hide }: { toedit: IUser, show: boolean, hide: () => void }) {
+    const [userInput, setUser] = useState<IUser>({
         name: '',
         email: '',
         role: 0,

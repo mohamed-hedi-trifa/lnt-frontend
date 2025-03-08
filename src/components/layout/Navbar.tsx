@@ -74,7 +74,7 @@ function Navbar({ location }: { location: any }) {
   useEffect(() => {
     const fetchEventTypes = async () => {
       try {
-        const response = await axios.get("/api/event-type");
+        const response = await axios.get("/api/event-type/visible");
         setEventTypes(response.data);
 
         // Transform event types into the required structure

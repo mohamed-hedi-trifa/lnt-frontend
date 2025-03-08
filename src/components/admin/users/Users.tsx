@@ -7,6 +7,7 @@ import AddUserModal from './AddUserModal';
 import EditUserModal from './EditUserModal';
 import Card from '../../atoms/Card';
 import Table from '../../atoms/Table';
+import IUser from '@/models/IUser';
 
 export default function Users() {
 
@@ -33,7 +34,7 @@ export default function Users() {
         return;
     }, [])
 
-    const deleteItem = (e: any, item: User) => {
+    const deleteItem = (e: any, item: IUser) => {
         e.preventDefault();
 
         Swal.fire({
@@ -97,7 +98,7 @@ export default function Users() {
                                     </>
                                 }
                             >
-                                {itemsList?.map((item: User) => {
+                                {itemsList?.map((item: IUser) => {
                                     return (
 
                                         <div key={item?.id} className="mx-0 grid grid-cols-12 text-center break-all">

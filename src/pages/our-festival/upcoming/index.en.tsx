@@ -2,26 +2,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import CarouselCard from '@/components/visitor/our-festival/CarouselCard';
-import ListCardFestivales from '@/components/visitor/our-festival/ListCardsFestival';
 import HeroSection from '@/components/visitor/HeroSection';
 import PageTitle from '@/components/atoms/titles/PageTitle';
 import Title from '@/components/atoms/titles/Title';
 import Partners from '@/components/visitor/who-are-we/partners/Partners';
 import PinnedImageSwap from '@/components/visitor/our-festival/upcoming/SwappingImagesOnScroll';
-import ImageGallery from '@/components/visitor/ImageGallery';
 import Media from '@/components/visitor/Media';
 import PastEditionsCarousel from '@/components/visitor/our-festival/PastEditionsCarousel';
 import EventsEditionCards from "@/components/visitor/our-festival/upcoming/EventsEditionCards";
 import LangLink from "@/components/LangLink";
-
-
-
-
-
-
-
-
+import IEdition from "@/models/IEdition";
+import ShareIcon from "@/assets/icons/ShareIcon";
 
 const gallery = [
   '/festivales_images/img1.jpg',
@@ -35,17 +26,10 @@ const gallery = [
   '/festivales_images/img9.jpg',
   '/festivales_images/img10.jpg',
   '/festivales_images/img.jpg',
-
-
-
 ]
 
-
-
-
-
 export default function FestivalVenir() {
-  const [edition, setEdition] = useState([]);
+  const [edition, setEdition] = useState<IEdition>();
   const [prevEditions, setprevEditions] = useState([]);
 
   const getEdition = async () => {
@@ -53,7 +37,7 @@ export default function FestivalVenir() {
       const res = await axios.get("/api/get-current-edition");
       setEdition(res.data);
 
-    } catch (err) {
+    } catch (err:any) {
       Swal.fire("Error", err.response?.data?.message || "Failed to fetch Edition", "error");
     }
   };
@@ -63,7 +47,7 @@ export default function FestivalVenir() {
       const res = await axios.get("/api/previous-editions");
       setprevEditions(res.data);
 
-    } catch (err) {
+    } catch (err:any) {
       Swal.fire("Error", err.response?.data?.message || "Failed to fetch Edition", "error");
     }
   };
@@ -83,12 +67,18 @@ export default function FestivalVenir() {
       <div className='flex items-ceter justify-center'>
 
       </div>
-      <div className='w-full  flex items-center  justify-center  p-4'>
+      <div className='w-full  flex items-center  justify-center  p-4 relative'>
         <section className='max-w-7xl'>
-          <div style={{ display: "" }}></div>
-
-          <PageTitle title={<div className=''><span className='block leading-[55px]'>Festival de La Culture des iles Méditerranéees</span> <span className='block leading-[55px]'>(Edition {edition.year})</span></div>} />
-          <p className='text-[24px] sm:text-[32px] text-[#0270A0] text-center font-semibold my-4'>{edition.name_en || edition.name_fr}</p>
+          <div className="h-full w-full absolute top-0 left-0">
+            <div className="sticky top-0 h-screen flex items-center">
+            <button className=" bg-[#000000B2] text-white flex flex-col items-center gap-2.5 pt-5 pb-4 px-[5px] rounded-r-[10px] z-50">
+<ShareIcon />
+<div className="text-xs">partager</div>
+            </button>
+            </div>
+          </div>
+          <PageTitle title={<div className=''><span className='block leading-[55px]'>Festival de La Culture des iles Méditerranéees</span> <span className='block leading-[55px]'>(Edition {edition?.year})</span></div>} />
+          <p className='text-[24px] sm:text-[32px] text-[#0270A0] text-center font-semibold my-4'>{edition?.name_en || edition?.name_fr}</p>
 
           <PinnedImageSwap edition={edition} />
 
@@ -122,7 +112,7 @@ export default function FestivalVenir() {
 
           <div className='mt-12'>
 
-            <Partners partners={edition.partners} />
+            <Partners partners={edition?.partners || []} />
           </div>
 
           <div className=' text-center my-10'>

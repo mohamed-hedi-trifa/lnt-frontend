@@ -1,6 +1,9 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" };
+
+
 export default function PinnedImageSwap({ edition }: { edition: any }) {
 
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -37,8 +40,8 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
     [0, trackHeight - handleHeight]
   );
 
-  const formatDateRange = (startDate, endDate) => {
-    const options = { day: "numeric", month: "long", year: "numeric" };
+  const formatDateRange = (startDate: string, endDate: string) => {
+    const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" };
 
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -132,14 +135,14 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
             <div>
               <h1 style={{ margin: "1rem 0 0 0", fontSize: "2rem", fontWeight: "bold" }}>
 
-                {edition.titre_affiche1_en || edition.titre_affiche1_fr }
+                {edition?.titre_affiche1_en || edition?.titre_affiche1_fr }
               </h1>
               <p style={{ marginTop: "1rem" }}>
-              {edition.desciption_affich1_en || edition.desciption_affich1_fr }
+              {edition?.desciption_affich1_en || edition?.desciption_affich1_fr }
               </p>
         
               <p style={{ marginTop: "1rem", fontWeight: "bold" }}>
-                Date:  {formatDateRange(edition.start_date, edition.end_date)}
+                Date:  {formatDateRange(edition?.start_date, edition?.end_date)}
               </p>
             </div>
           </motion.div>
@@ -156,14 +159,14 @@ export default function PinnedImageSwap({ edition }: { edition: any }) {
             <div>
               <h1 style={{ margin: "1rem 0 0 0", fontSize: "2rem", fontWeight: "bold" }}>
 
-              {edition.titre_affiche2_en || edition.titre_affiche2_fr }
+              {edition?.titre_affiche2_en || edition?.titre_affiche2_fr }
               </h1>
               <p style={{ marginTop: "1rem" }}>
-              {edition.desciption_affich2_en || edition.desciption_affich2_fr }
+              {edition?.desciption_affich2_en || edition?.desciption_affich2_fr }
               </p>
              
               <p style={{ marginTop: "1rem", fontWeight: "bold" }}>
-                Date: {formatDateRange(edition.start_date, edition.end_date)}
+                Date: {formatDateRange(edition?.start_date, edition?.end_date)}
 
               </p>
             </div>
