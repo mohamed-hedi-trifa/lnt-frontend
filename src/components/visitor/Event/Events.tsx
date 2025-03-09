@@ -1,51 +1,81 @@
-import React, { useEffect, useState } from 'react'
-import PageTitle from '@/components/atoms/titles/PageTitle'
-import PageParagraph from '@/components/atoms/PageParagraph'
-import EventImage from './EventImage'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import PageTitle from '@/components/atoms/titles/PageTitle';
+import PageParagraph from '@/components/atoms/PageParagraph';
+import EventImage from './EventImage';
+import FollowUsEvent from './FollowUsEvent';
+import QuestionEvent from './QuestionEvent';
+import NoEvents from './no-event/noEvents';
+import EmptyEvent1 from './EmptyEvent1';
+import PopularEventType1 from './PopularEventType1';
+import TitleSectionEvent from './TitleSectionEvent';
+import PopularEventType2 from './PopularEventType2';
+import LeisureAndSportsActivities from './no-event/LeisureAndSportsActivities';
 
-import CulturalEvents from './CulturalEvents'
-import FollowUsEvent from './FollowUsEvent'
-import QuestionEvent from './QuestionEvent'
-import LeisureSportsActivities from './PopularEventType2'
-import axios from "axios";
-import NoEvents from './no-event/noEvents'
-
-import EmptyEvent1 from './EmptyEvent1'
-import PopularEventType1 from './PopularEventType1'
-import TitleSectionEvent from './TitleSectionEvent'
-import PopularEventType2 from './PopularEventType2'
-import LeisureAndSportsActivities from './no-event/LeisureAndSportsActivities'
 export default function Events() {
   const [events, setEvents] = useState([]);
-  const getEvents = async () => {
-    try {
-      const response = await axios.get(`/api/events`);
-      setEvents(response.data);
-    } catch (error) {
-      console.error("Error fetching event types:", error);
-    }
-  };
-
   const [eventTypes, setEventTypes] = useState([]);
 
-  const getEventType = async () => {
+  const fetchEvents = async () => {
     try {
-      const response = await axios.get("/api/event-type/");
-      setEventTypes(response.data);
+      const response = await axios.get('/api/events');
+      setEvents(response.data);
     } catch (error) {
-      console.error("Error fetching event types:", error);
+      console.error('Error fetching events:', error);
     }
   };
 
-
+  const fetchEventTypes = async () => {
+    try {
+      const response = await axios.get('/api/event-type');
+      setEventTypes(response.data);
+    } catch (error) {
+      console.error('Error fetching event types:', error);
+    }
+  };
 
   useEffect(() => {
-    getEvents();
-    getEventType();
+    fetchEvents();
+    fetchEventTypes();
+  }, []);
 
-  }, [location]);
-  return events ? (
-    <main className={`relative`}>
+  const renderEventSection = (displayPlace, defaultTitle) => {
+
+ 
+
+    const eventType = eventTypes.find(et => et.display_place === displayPlace);
+
+    return (
+      <div>
+        <TitleSectionEvent
+          headerName={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}
+          showButton={true}
+        />
+        {eventType ? (
+          displayPlace === 'card3' ? (
+            <PopularEventType2 events={eventType.events} eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}/>
+          ) : (
+            <PopularEventType1 events={eventType.events} eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}/>
+          )
+        ) : (
+          displayPlace === 'card3' ? (
+            <LeisureAndSportsActivities event_title={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}  />
+          ) : (
+            <EmptyEvent1 />
+          )
+          
+   
+        )}
+      </div>
+    );
+  };
+
+  if (!events) {
+    return <NoEvents />;
+  }
+
+  return (
+    <main className="relative">
       <EventImage events={events} />
 
       <section className="my-5 text-center max-w-7xl mx-auto w-full mt-20 px-5">
@@ -57,41 +87,8 @@ export default function Events() {
 
       <section className="flex gap-20 flex-col sm:flex-row my-5 text-center max-w-7xl w-full mx-auto justify-between mt-20 px-5 h-fit">
         <div className="h-full w-full">
-          {
-            eventTypes.length > 0 ?
-              (
-                <>
-                  <TitleSectionEvent headerName={eventTypes[0].name_en || eventTypes[0].name_fr} showButton={true} />
-                  <PopularEventType1 events={eventTypes[0].events} />
-                </>
-              )
-              :
-              (
-                <>
-                  <TitleSectionEvent headerName="Ateliers et Formations" showButton={true} />
-                  <EmptyEvent1 />
-                </>
-              )
-          }
-
-          {
-            eventTypes.length > 1 ?
-              (
-                <>
-                  <TitleSectionEvent headerName={eventTypes[1].name_en || eventTypes[1].name_fr} showButton={true} />
-                  <PopularEventType1 events={eventTypes[1].events} />
-                </>
-              )
-              :
-              (
-                <div className='mt-10'>
-                  <TitleSectionEvent headerName="Événements culturels" showButton={true} />
-                  <EmptyEvent1 />
-                </div>
-              )
-          }
-
-
+          {renderEventSection('card1', 'Ateliers et Formations')}
+          {renderEventSection('card2', 'Événements culturels')}
         </div>
 
         <div className="flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10 sm:w-[300px]">
@@ -100,42 +97,17 @@ export default function Events() {
         </div>
       </section>
 
+      <section
+        className="rounded-xl shadow-helmi mb-10 bg-[rgba(255, 255, 255, 0.40)]"
+      
 
-      {
-        eventTypes.length > 2 ?
-          (
-            <section
-              className="rounded-xl shadow-lg"
-              style={{
-                backgroundImage:
-                  "linear-gradient(30deg, rgba(135, 208, 228, 1) 0%, rgba(135, 208, 228, 1) 15%, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 1) 65%, rgba(135, 208, 228, 1) 100%)",
-              }}
-            >
-              <div className='my-5 py-10  text-center max-w-7xl w-full mx-auto justify-between mt-20 px-5  h-fit'>
+      >
 
-                <TitleSectionEvent headerName={eventTypes[2].name_en || eventTypes[2].name_fr} showButton={true} />
-                <PopularEventType2 events={eventTypes[2].events} />
-              </div>
-            </section>
-          )
-          :
-          (
+        <div className='my-5 py-10  text-center max-w-7xl w-full mx-auto justify-between mt-20 px-5  h-fit'>
 
-            <section className='rounded-xl shadow-lg mb-10'
-
-              style={{
-                backgroundImage: "linear-gradient(30deg, rgba(135, 208, 228, 1) 0%, rgba(135, 208, 228, 1) 15%, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 1) 65%, rgba(135, 208, 228, 1) 100%)"
-              }}
-            >
-              <LeisureAndSportsActivities />
-            </section>
-
-          )
-      }
-
-
+          {renderEventSection('card3', 'Loisirs et Activités Sportives')}
+        </div>
+      </section>
     </main>
-  ) : (
-    <NoEvents />
   );
 }

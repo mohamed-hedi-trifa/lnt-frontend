@@ -206,7 +206,7 @@ export default function Blog({ location, params }: { location: any; params: any 
               </PageParagraph>
             </div>
           </div>
-          <Media />
+          <Media mediaContent={blogPost}/>
           <hr className="my-10 border-1 border-[#000000]" />
           <div className="text-center mx-20">
             <h1 className="text-[28px] sm:text-[36px] font-bold">

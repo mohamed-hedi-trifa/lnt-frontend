@@ -20,7 +20,8 @@ const UpdateEventType = ({ location, params }: { location: any; params: any }) =
     const [formData, setFormData] = useState({
         name_en: "",
         name_fr: "",
-        status: ""
+        status: "",
+        display_place: ""
 
     });
 
@@ -42,7 +43,7 @@ const UpdateEventType = ({ location, params }: { location: any; params: any }) =
                     name_en: previousEvent.name_en ?? "",
                     name_fr: previousEvent.name_fr ?? "",
                     status: previousEvent.status ?? "",
-
+                    display_place: previousEvent.display_place ?? "",
                 });
 
 
@@ -81,6 +82,10 @@ const UpdateEventType = ({ location, params }: { location: any; params: any }) =
 
         // Build form data
         const formDataToSend = new FormData();
+
+
+
+
         formDataToSend.append("_method", "PUT");
 
         for (const key in formData) {
@@ -153,6 +158,23 @@ const UpdateEventType = ({ location, params }: { location: any; params: any }) =
                     <option value="hidden">Hidden</option>
                     <option value="visible">Visible</option>
                 </Select>
+
+                {formData.status !== 'hidden' && (
+                    <Select
+                        name="Event Type"
+                        label="display_place"
+                        value={formData.display_place}
+                        onChange={(e) => setFormData({ ...formData, display_place: e.target.value })}
+                    >
+                        <option value="not-visible">not Visible</option>
+                        <option value="card1">card 1</option>
+                        <option value="card2">card 2</option>
+                        <option value="card3">card 3</option>
+
+                    </Select>
+                    )
+
+                }
 
                 <Button type="submit" disabled={isLoading}>
                     {isLoading ? (

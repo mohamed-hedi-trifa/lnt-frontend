@@ -8,28 +8,29 @@ import ArrowDownIcon from '@/assets/icons/ArrowDownIcon'
 
 import EventsideBar from '../EventsideBar'
 import TrainingSessionsCards from './TrainingSessionsCards'
+import NoEventsMessage from '../NoEventsMessage'
 
-export default function DisplayEventsList({ lang = "fr", eventTypeSlug }: { lang : string , eventTypeSlug: string}) {
-
-
-
-
-    const [isOpened, setIsOpened] = useState(false);
-  
-    useEffect(() => {
-      if (isOpened) {
-        document.querySelector("body")!.style.overflow = "hidden";
-      } else {
-        document.querySelector("body")!.style.overflow = "visible";
-      }
-    })
+export default function DisplayEventsList({ lang = "fr", eventTypeSlug , eventTypeName}: { lang: string, eventTypeSlug: string , eventTypeName: string}) {
 
 
- 
+
+
+  const [isOpened, setIsOpened] = useState(false);
+
+  useEffect(() => {
+    if (isOpened) {
+      document.querySelector("body")!.style.overflow = "hidden";
+    } else {
+      document.querySelector("body")!.style.overflow = "visible";
+    }
+  })
+
+
+
   return (
     <div className='w-full '>
 
- 
+
 
       <div className='flex justify-between gap-5 '>
         <EventsideBar isOpened={isOpened} setIsOpened={setIsOpened} />
@@ -43,7 +44,18 @@ export default function DisplayEventsList({ lang = "fr", eventTypeSlug }: { lang
 
           </div>
           <div className='sm:hidden px-5 font-semibold leading-[20px] pt-5 text-start'>1 - 12 de 150 Publication</div>
-          <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug}/>
+
+          {/* {
+            eventTypeSlug && eventTypeSlug.length > 0 ? (
+              <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug} />
+            ) : (
+              <NoEventsMessage eventTypeTitle={eventTypeName} />
+            )
+          } */}
+                  <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug} />
+
+
+
 
         </section>
       </div>
