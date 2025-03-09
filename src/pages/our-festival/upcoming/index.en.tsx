@@ -12,7 +12,7 @@ import PastEditionsCarousel from '@/components/visitor/our-festival/PastEditions
 import EventsEditionCards from "@/components/visitor/our-festival/upcoming/EventsEditionCards";
 import LangLink from "@/components/LangLink";
 import IEdition from "@/models/IEdition";
-import ShareIcon from "@/assets/icons/ShareIcon";
+import ShareButton from "@/components/visitor/our-festival/upcoming/ShareButton";
 
 const gallery = [
   '/festivales_images/img1.jpg',
@@ -37,7 +37,7 @@ export default function FestivalVenir() {
       const res = await axios.get("/api/get-current-edition");
       setEdition(res.data);
 
-    } catch (err:any) {
+    } catch (err: any) {
       Swal.fire("Error", err.response?.data?.message || "Failed to fetch Edition", "error");
     }
   };
@@ -47,7 +47,7 @@ export default function FestivalVenir() {
       const res = await axios.get("/api/previous-editions");
       setprevEditions(res.data);
 
-    } catch (err:any) {
+    } catch (err: any) {
       Swal.fire("Error", err.response?.data?.message || "Failed to fetch Edition", "error");
     }
   };
@@ -69,14 +69,7 @@ export default function FestivalVenir() {
       </div>
       <div className='w-full  flex items-center  justify-center  p-4 relative'>
         <section className='max-w-7xl'>
-          <div className="h-full w-full absolute top-0 left-0">
-            <div className="sticky top-0 h-screen flex items-center">
-            <button className=" bg-[#000000B2] text-white flex flex-col items-center gap-2.5 pt-5 pb-4 px-[5px] rounded-r-[10px] z-50">
-<ShareIcon />
-<div className="text-xs">partager</div>
-            </button>
-            </div>
-          </div>
+<ShareButton />
           <PageTitle title={<div className=''><span className='block leading-[55px]'>Festival de La Culture des iles Méditerranéees</span> <span className='block leading-[55px]'>(Edition {edition?.year})</span></div>} />
           <p className='text-[24px] sm:text-[32px] text-[#0270A0] text-center font-semibold my-4'>{edition?.name_en || edition?.name_fr}</p>
 
