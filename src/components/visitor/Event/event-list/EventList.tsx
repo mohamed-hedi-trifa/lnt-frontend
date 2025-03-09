@@ -77,7 +77,7 @@ export default function EventList({ location, params }: { location: any; params:
       <section className='flex gap-20 flex-col sm:flex-row   text-center max-w-7xl w-full mx-auto justify-start items-start  mt-20 px-5 h-fit   '>
 
         <div className='h-full w-full ' >
-          <DisplayEventsList lang={language} eventTypeSlug={eventType.id} />
+          <DisplayEventsList lang={language} eventTypeSlug={eventType.id} eventTypeName={eventType.name_en || eventType.name_fr}/>
         </div>
 
         <div className='flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10  sm:w-[300px] mb-6'>

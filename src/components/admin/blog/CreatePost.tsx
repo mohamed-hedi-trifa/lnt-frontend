@@ -132,10 +132,10 @@ const CreatePost: React.FC = () => {
         newErrors.title_fr = "Title is required.";
       }
       if (!formData.subtitle_fr) {
-        newErrors.subtitle_fr = "subtitle is required.";
+        newErrors.subtitle_fr = "subtitle_fr is required.";
       }
       if (!formData.summary_fr) {
-        newErrors.summary_fr = "Summary is required.";
+        newErrors.summary_fr = "summary_fr is required.";
       }
       if (frenchItems.length === 0) {
         newErrors.items = "At least one content item is required.";
