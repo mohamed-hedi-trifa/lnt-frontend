@@ -55,6 +55,10 @@ export default function EditionDetails({ location, params }: { location: any; pa
         setSlug(slugParam);
     }, [location]);
 
+    const getImageSrc = (image) => {
+        if (!image) return '';
+        return image.startsWith('http') ? image : `${process.env.GATSBY_API_URL}${image}`;
+      };
 
     return (
         <div>
@@ -63,7 +67,7 @@ export default function EditionDetails({ location, params }: { location: any; pa
                 <div className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${isOpened ? "opacity-50" : "opacity-0 pointer-events-none"}`} onClick={() => setIsOpened(false)}></div>
                 <div className="relative text-center w-full">
                     <img className="w-full object-cover h-[301px] sm:h-[607px]"
-                        src={`${process.env.GATSBY_API_URL}${previousEdition?.image}`} />
+                        src={getImageSrc(previousEdition?.image)} />
                     <div className="absolute bg-[rgba(0,0,0,0.2)] h-full w-full top-0 left-0"></div>
 
 

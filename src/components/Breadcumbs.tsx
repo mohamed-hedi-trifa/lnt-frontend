@@ -22,7 +22,7 @@ const Breadcrumbs = ({ title }: { title?: string }) => {
   return (
     <nav className="overflow-hidden ">
       {/*flex items-center w-fit mx-auto sm:mx-10 rounded-b-lg h-[50px] md:h-[60px] px-3 md:px-6 bg-[linear-gradient(to_right,rgba(0,110,159),rgba(81,173,198))] shadow-lg*/}
-      <ul className="flex items-center gap-2 flex-wrap whitespace-nowrap sm:ml-10">
+      <ul className="flex items-center gap-2 flex-wrap whitespace-nowrap sm:ml-10 ml-3">
         {/* Root breadcrumb with Home icon */}
         <li className="flex items-center gap-1">
           <Link

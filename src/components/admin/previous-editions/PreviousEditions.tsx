@@ -24,6 +24,10 @@ export default function PreviousEditions() {
         getPreviousEditions();
         return;
     }, []);
+    const getImageSrc = (image) => {
+        if (!image) return '';
+        return image.startsWith('http') ? image : `${process.env.GATSBY_API_URL}${image}`;
+      };
 
     const deleteItem = (e: any, item: any) => {
         e.preventDefault();
@@ -87,7 +91,7 @@ export default function PreviousEditions() {
                                                
                                                 <div className="col-span-2 flex justify-center">
                                                     <img className="w-[70px] sm:w-[130px] md:w-[160px]"
-                                                        src={`${process.env.GATSBY_API_URL}${item.image}`} alt="" />
+                                                        src={getImageSrc(item.image)} alt="" />
                                                 </div>
                                                 <div className="pt-3 col-span-2 text-start">{item.place_en || item.place_fr}</div>
                                                 <div className="pt-3 text-start col-span-5 sm:col-span-3">

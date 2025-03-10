@@ -53,6 +53,7 @@ const PastEditionsCarousel = ({ prevEditions }: { prevEditions: any[] }) => {
               titre={edition.titre}
               lieu={edition.place_en || edition.place_fr} 
               slug={edition.slug}
+              image={edition.image}
             />
           </SwiperSlide>
         ))}

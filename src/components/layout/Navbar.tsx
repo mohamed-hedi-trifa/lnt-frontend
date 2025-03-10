@@ -93,6 +93,7 @@ function Navbar({ location }: { location: any }) {
             items: [
               { label: "Notre Histoire", path: "/who-are-we/our-history" },
               { label: "Principes et Valeurs", path: "/who-are-we/our-values" },
+              { label: "Our Mission & Vision", path: "/who-are-we/our-mission-and-vision" },
               { label: "Nos Réalisations", path: "/who-are-we/our-achievements" },
               { label: "Notre Équipe", path: "/who-are-we/our-team" },
               { label: "Partenaires", path: "/who-are-we/partners" },
@@ -100,7 +101,7 @@ function Navbar({ location }: { location: any }) {
             ],
           },
           {
-            label: "Air Marine et Côtière Protégée",
+            label: "Aire Marine et Côtière Protégée",
             underlineClassName: "w-[150px]",
             path:`/${lang}/protected-air-marine-coastal-areas/presentation`,
             items: [
@@ -132,7 +133,7 @@ function Navbar({ location }: { location: any }) {
             label: "Événements",
             path: "/en/event",
             underlineClassName: "w-[100px]",
-            items: transformedEventTypes, // Dynamic event types
+            items: transformedEventTypes, 
           },
           {
             label: "Opportunités",

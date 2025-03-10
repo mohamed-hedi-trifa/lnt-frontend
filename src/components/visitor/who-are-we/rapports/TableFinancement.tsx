@@ -15,7 +15,7 @@ interface TabeFinancement {
 
 const TabeFinancement: React.FC<TabeFinancement> = ({ data }) => {
   return (
-    <div className="overflow-x-auto bg-white">
+    <div className="overflow-x-auto bg-white shadow-helmi">
       <table className="min-w-full border-collapse ">
         <thead className="hidden sm:table-header-group">
           {/* Header is hidden on smaller screens */}
