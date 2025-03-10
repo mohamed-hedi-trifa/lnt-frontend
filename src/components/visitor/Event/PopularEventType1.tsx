@@ -8,8 +8,12 @@ import eventImage4 from '../../../assets/images/eventImage4.jpg'
 
 
 import LocationIcon from '@/assets/icons/LocationIcon'
-export default function PopularEventType1({ events, language = "fr" }: { events: any, language: string }) {
-
+import EmptyEvent1 from './EmptyEvent1'
+import NoEventsMessage from './NoEventsMessage'
+export default function PopularEventType1({ events, eventTypeTitle, language = "fr" }: { events: any, language: string, eventTypeTitle: string }) {
+    if (!events || events.length === 0) {
+        return <NoEventsMessage eventTypeTitle={eventTypeTitle} />;
+    }
     const eventsData = events.slice(1, 4);
     const formatEventDate = (dateString, language) => {
         const date = new Date(dateString.replace(" ", "T")); // Convert to valid date format
@@ -34,7 +38,10 @@ export default function PopularEventType1({ events, language = "fr" }: { events:
 
             <div className="flex justify-between flex-col sm:flex-row w-full h-fit mt-10  font-['Montserrat']">
 
-                <div className="relative text-start sm:w-[50.67%] sm:h-[460px] h-[416px]">
+                <div
+                    className={`relative text-start  sm:h-[460px] h-[416px] shadow-helmi ${events.length === 1 ? "w-full" : "sm:w-[50.67%]"
+                        }`}
+                >
                     <img className="w-full h-full object-cover rounded-lg"
                         src={`${process.env.GATSBY_API_URL}${events[0]?.image}`}
                         alt={events[0]?.title_en || events[0]?.title_fr}
@@ -45,7 +52,7 @@ export default function PopularEventType1({ events, language = "fr" }: { events:
 
                     <div className="absolute    bottom-[40px] right-[60px]  left-[40px] text-white max-w-3xl flex flex-col gap-5 sm:gap-5">
 
-                        <div className="font-bold sm:text-2xl text-lg">{events[0]?.title_en || events[0]?.title_fr}</div>
+                        <div className="font-bold sm:text-2xl text-lg">{events[0]?.title_en || events[0]?.title_fr} </div>
 
                         <div className="flex gap-2 text-white">
                             <img src="/carousel_images/whiteCalendar.svg" className='size-5 ' />

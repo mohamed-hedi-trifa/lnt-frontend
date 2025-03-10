@@ -77,6 +77,7 @@ export default function EventType() {
                                     <div className="pb-3 text-start col-span-2">Name</div>
                       
                                     <div className="pb-3 text-start col-span-5 sm:col-span-3">Status</div>
+                                    <div className="pb-3 text-start col-span-5 sm:col-span-3">Display </div>
                                     <div className="pb-3 hidden sm:block text-end sm:text-center col-span-2">Actions</div>
                                 </div>
                                 <div className="divide-y">
@@ -94,7 +95,7 @@ export default function EventType() {
                                                       
                                                     </div>{" "}
                                                 </div>
-
+                                                <div className="pt-3 col-span-2 text-start">{item.display_place}</div>
 
                                                 <div className="pt-3 text-end sm:text-center col-span-1 sm:col-span-2">
                                               

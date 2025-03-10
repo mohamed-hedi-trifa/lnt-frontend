@@ -102,7 +102,7 @@ const VideoGallery = ({ videos = [] }: { videos: any[] }) => {
 
       {/* Thumbnail Swiper */}
       {isDesktop ? (
-        <div className="px-10 relative mt-[30px]">
+        <div className="px-10 relative mt-[30px] ">
           <Swiper
             modules={[Thumbs, FreeMode, Navigation]}
             onSwiper={setThumbsSwiper}
