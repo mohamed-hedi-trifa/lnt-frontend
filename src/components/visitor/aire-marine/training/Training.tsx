@@ -25,32 +25,7 @@ import Line from '@/components/atoms/Line'
 import FilterIcon from '@/assets/icons/FilterIcon'
 import sortIcon from "@/assets/icons/sort-icon.png"
 
-const CATEGORIES = [
-  {
-    id: 1,
-    name: "All themes"
-  },
-  {
-    id: 2,
-    name: "Conservation Marine"
-  },
-  {
-    id: 3,
-    name: "Tourisme Responsable"
-  },
-  {
-    id: 4,
-    name: "Peche Durable"
-  },
-  {
-    id: 5,
-    name: "Ecologie et Environmenet"
-  },
-  {
-    id: 6,
-    name: "Education et Formation"
-  }
-]
+
 
 const images = [
   {
@@ -78,8 +53,8 @@ export default function Training() {
 
   const LeftSidebar = () => <aside className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 sm:sticky sm:top-[116px] inset-0 p-5 transition duration-300 lg:translate-x-0 ${isOpened ? "translate-x-0" : "translate-x-[-100%]"}`} >
     <div className='opacity-90 sm:opacity-100  bg-white flex flex-col p-[10px] gap-4 sm:gap-10 w-full sm:w-[320px] rounded-xl shadow-xl overflow-y-auto pointer-events-auto h-full'
-        style={{
-          boxShadow: "0px -8px 80px 0px rgba(0, 0, 0, 0.07), 0px -2.92px 29.2px 0px rgba(0, 0, 0, 0.05), 0px -1.42px 14.18px 0px rgba(0, 0, 0, 0.04), 0px -0.69px 6.95px 0px rgba(0, 0, 0, 0.03), 0px -0.27px 2.75px 0px rgba(0, 0, 0, 0.02)"
+      style={{
+        boxShadow: "0px -8px 80px 0px rgba(0, 0, 0, 0.07), 0px -2.92px 29.2px 0px rgba(0, 0, 0, 0.05), 0px -1.42px 14.18px 0px rgba(0, 0, 0, 0.04), 0px -0.69px 6.95px 0px rgba(0, 0, 0, 0.03), 0px -0.27px 2.75px 0px rgba(0, 0, 0, 0.02)"
       }}>
       <div className="border rounded-lg border-black flex gap-4 p-2">
         <MagnifyingGlassIcon className="size-5" />
@@ -173,7 +148,7 @@ export default function Training() {
       </Link>
     </div>
 
-     <NewsLetterSub2 title="Restez Connectés !" paragraph="Inscrivez-vous à notre newsletter pour Recevez les infos sur nos prochaines formations et campements"/>
+    <NewsLetterSub2 title="Restez Connectés !" paragraph="Inscrivez-vous à notre newsletter pour Recevez les infos sur nos prochaines formations et campements" />
     <div className="h-[279.40px] flex-col justify-center gap-[25px] flex">
       <div className="self-stretch h-[26.40px] text-[#183354] text-xl font-bold font-['Montserrat'] capitalize leading-relaxed">Une Question ?</div>
       <Line />
@@ -214,55 +189,8 @@ export default function Training() {
           <LeftSidebar />
 
           {/* Main content area (example placeholder) */}
-          <section className="flex-1">
-            <div className='hidden sm:flex justify-between relative z-20'>
-              <ButtonDropdown
-                items={CATEGORIES}
-                position="left"
-                renderItem={(item) => (
-                  <div className='py-1 px-4'> {item.name}</div>
-                )}
-              >
-                {(isOpen) => (
-                  <button className="h-12 rounded-[10px] border-2 border-black justify-center items-center flex w-fit">
-                    <div className="px-2 py-1.5 justify-center items-center gap-2 flex">
-                      <div className='text-primary'> <img src={sortIcon} className='size-6' /> </div>
-                      <div className="text-center text-black text-xl font-medium font-['Montserrat'] leading-tight tracking-tight">Trier</div>
-                      <div className={`w-6 h-6 relative transition duration-200 ${isOpen ? "-rotate-180" : ""}`}><ArrowDownIcon /></div>
-                    </div>
-                  </button>
-                )}
-              </ButtonDropdown>
 
-              <div className="text-center text-black text-xl font-semibold font-['Montserrat'] leading-tight tracking-tight mt-[2px]">1 - 12 de 150 Publication</div>
-            </div>
-            <div className='sm:hidden flex justify-between pr-5 relative z-20'>
-              <button type='button' onClick={() => setIsOpened(true)} className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl justify-start items-center gap-2.5 inline-flex">
-                <FilterIcon />
-                <div className="text-center text-white text-sm font-bold font-['Montserrat']">Filtres</div>
-              </button>
-              <ButtonDropdown
-                items={CATEGORIES}
-                position="right"
-                renderItem={(item) => (
-                  <div className='py-1 px-4'> {item.name}</div>
-                )}
-              >
-                {(isOpen) => (
-                  <button className="h-12 rounded-[10px] border-2 border-black justify-center items-center flex w-fit">
-                    <div className="px-2 py-1.5 justify-center items-center gap-2 flex">
-                      <div className='text-primary'> <img src={sortIcon} className='size-6' /> </div>
-                      <div className="text-center text-black text-xl font-medium font-['Montserrat'] leading-tight tracking-tight">Trier</div>
-                      <div className={`w-6 h-6 relative transition duration-200 ${isOpen ? "-rotate-180" : ""}`}><ArrowDownIcon /></div>
-                    </div>
-                  </button>
-                )}
-              </ButtonDropdown>
-            </div>
-            <div className='sm:hidden px-5 font-semibold leading-[20px] pt-5'>1 - 12 de 150 Publication</div>
-            <TrainingCards />
-          </section>
-
+  <TrainingCards />
           <RightSidebar />
         </section>
 

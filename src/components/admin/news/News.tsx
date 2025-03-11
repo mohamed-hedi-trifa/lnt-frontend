@@ -6,13 +6,13 @@ import ReactLoading from "react-loading";
 import { Link } from "gatsby";
 import { EyeIcon } from "@heroicons/react/24/solid";
 
-export default function Achievements() {
+export default function News() {
   const [loading, setLoading] = useState(true);
   const [itemsList, setItemsList] = useState([]);
 
-  function getAchievementss() {
+  function getNews() {
     axios
-      .get("/api/achievements")
+      .get("/api/news")
       .then((res) => {
         setItemsList(res.data);
         setLoading(false);
@@ -22,7 +22,7 @@ export default function Achievements() {
       });
   }
   useEffect(() => {
-    getAchievementss();
+    getNews();
     return;
   }, []);
 
@@ -30,7 +30,7 @@ export default function Achievements() {
     e.preventDefault();
 
     Swal.fire({
-      title: "Delete Achievement",
+      title: "Delete News",
       text: `Are you sure to delete ${item.title_en || item.title_fr} ?`,
       showDenyButton: true,
       confirmButtonText: "Delete",
@@ -40,10 +40,10 @@ export default function Achievements() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`/api/achievements/${item.id}`)
+          .delete(`/api/news/${item.id}`)
           .then((res) => {
             Swal.fire("Success", res.data.message, "success");
-            getAchievementss();
+            getNews();
           })
           .catch((err) => {
             if (err.response.data.status === 404) {
@@ -65,9 +65,9 @@ export default function Achievements() {
       <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
         <div className="rounded-lg shadow-lg">
           <div className="flex justify-between items-center bg-gray-100 p-3 rounded-t-lg">
-            <h5 className="mb-3">Achievementss ( {itemsList.length} )</h5>
-            <Link to="/admin/achievements/create" className="bg-blue-600 text-white p-2 rounded">
-              Create Achievements
+            <h5 className="mb-3">News ( {itemsList.length} )</h5>
+            <Link to="/admin/news/create" className="bg-blue-600 text-white p-2 rounded">
+              Create News
             </Link>
           </div>
           <div className="p-5">
@@ -99,11 +99,11 @@ export default function Achievements() {
 
                       {/* Actions - Ensures Icons Stay Inline */}
                       <div className="hidden sm:flex col-span-1 justify-end sm:justify-center gap-3">
-                        <Link to={`/admin/achievements/manage-achievement/${item.slug}`}>
+                        <Link to={`/admin/news/manage-news/${item.slug}`}>
                           <MagnifyingGlassIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
                         </Link>
 
-                        <Link to={`/admin/achievements/${item.slug}`}>
+                        <Link to={`/admin/news/${item.slug}`}>
                           <PencilSquareIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
                         </Link>
                         <button type="button" onClick={(e) => deleteItem(e, item)}>
@@ -119,7 +119,7 @@ export default function Achievements() {
             ) : (
               <div className="flex flex-col gap-4 items-center justify-center text-center h-[25vh]">
                 <InboxIcon className="block h-20 w-20" aria-hidden="true" />
-                <h3 className="text-2xl font-bold">Theres no Achievements</h3>
+                <h3 className="text-2xl font-bold">Theres no News</h3>
               </div>
             )}
           </div>

@@ -18,11 +18,11 @@ export default function TrainingCard({ post }:{post:any}) {
             {post?.image && <img src={`${process.env.GATSBY_API_URL}${post.image}`} alt={post.title_en || post.title_fr} className='w-full h-36 object-cover rounded-md' />}
             
             <div className='flex gap-4'>
-                {post?.categories?.map((category:string, index:number) => (
+                {/* {post?.themes?.map((theme:string, index:number) => (
                     <div key={index} className='bg-[#4B6BFB0D] text-[#006E9F] font-medium py-1 px-3 rounded-md w-fit'>
-                        {category}
+                        {theme.name_en || theme.name_fr}
                     </div>
-                ))}
+                ))} */}
             </div>
             
             <div className='text-xl font-semibold'>{post[`title_${lang}`]}</div>
