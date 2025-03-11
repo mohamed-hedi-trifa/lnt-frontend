@@ -142,10 +142,6 @@ export default function ManagePreviousEdition({ params }: { params: any }) {
       }
     });
   };
-  const getImageSrc = (image) => {
-    if (!image) return '';
-    return image.startsWith('http') ? image : `${process.env.GATSBY_API_URL}${image}`;
-  };
 
   return (
     <div className="container mx-auto p-6">
@@ -176,8 +172,8 @@ export default function ManagePreviousEdition({ params }: { params: any }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="border rounded-lg overflow-hidden shadow-sm">
               <img
-                src={getImageSrc(previousEdition?.image)}
-                alt="Affiche 1"
+                src={`${process.env.GATSBY_API_URL}${previousEdition?.image}`}
+                alt={previousEdition.name_fr || previousEdition.name_en}
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">

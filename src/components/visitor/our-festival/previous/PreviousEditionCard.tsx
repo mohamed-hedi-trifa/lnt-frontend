@@ -22,7 +22,7 @@ const PreviousEditionCard: React.FC<CardProps> = ({ titre, description, lieu, da
         <div className="bg-white rounded-xl p-4 flex flex-col sm:flex-row gap-4 shadow-helmi mt-3 min-h-[200px] w-full transition-all duration-300 ">
             <div className="shrink-0 relative sm:w-fit w-full">
                 <img 
-                    src={image} 
+                    src={`${process.env.GATSBY_API_URL}${image}`} 
                     alt="Festival Image" 
                     className="rounded-lg shadow-lg sm:w-[224px] w-full sm:h-full h-full" 
                 />
