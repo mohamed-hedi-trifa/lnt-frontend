@@ -1,10 +1,10 @@
 import NewsDetails from '@/components/visitor/news/NewsDetails/NewsDetails'
 import React from 'react'
 
-export default function index() {
+export default function index({ location, params }: { location: any, params: any }) {
     return (
       <div>
-    <NewsDetails  />
+    <NewsDetails  location={location} params={params} />
       </div>
     
     )

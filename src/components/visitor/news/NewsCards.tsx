@@ -7,6 +7,10 @@ import NewsCard from './NewsCard';
 import { Link } from 'gatsby';
 import recentArticle1 from '../../../assets/images/recentArticle1.jpg'
 import recentArticle2 from '../../../assets/images/recentArticle2.jpg'
+import ButtonDropdown from '@/components/ButtonDropdown'
+import sortIcon from "@/assets/icons/sort-icon.png"
+import FilterIcon from '@/assets/icons/FilterIcon'
+import ArrowDownIcon from '@/assets/icons/ArrowDownIcon'
 
 export default function NewsCards() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -27,9 +31,9 @@ export default function NewsCards() {
     const [loading, setLoading] = useState(true);
     const [itemsList, setItemsList] = useState([]);
 
-    function getPosts(query: any, page = currentPage) {
+    function getNews(query: any, page = currentPage) {
         setLoading(true);
-        axios.get(`/api/get-active-posts/${limit ? limit : ""}`, {
+        axios.get(`/api/get-active-news/${limit ? limit : ""}`, {
             params: { query, page }
         }).then(res => {
             setItemsList(res.data.data);
@@ -43,45 +47,97 @@ export default function NewsCards() {
     }
 
     useEffect(() => {
-        getPosts(searchQuery, currentPage);
+        getNews(searchQuery, currentPage);
     }, [searchQuery, currentPage]);
 
     if (loading) return "Loading..."
     const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
+
+    const CATEGORIES = [
+        {
+            id: 1,
+            name: "All themes"
+        },
+        {
+            id: 2,
+            name: "Conservation Marine"
+        },
+        {
+            id: 3,
+            name: "Tourisme Responsable"
+        },
+        {
+            id: 4,
+            name: "Peche Durable"
+        },
+        {
+            id: 5,
+            name: "Ecologie et Environmenet"
+        },
+        {
+            id: 6,
+            name: "Education et Formation"
+        }
+    ]
     return (
-        <section className='flex flex-col gap-8 w-full relative z-10 my-5 sm:my-10 col-span-1'>
+        <div>
+            <div className='hidden sm:flex justify-between relative z-20'>
+                <ButtonDropdown
+                    items={CATEGORIES}
+                    position="left"
+                    renderItem={(item) => (
+                        <div className='py-1 px-4'> {item.name}</div>
+                    )}
+                >
+                    {(isOpen) => (
+                        <button className="h-12 rounded-[10px] border-2 border-black justify-center items-center flex w-fit">
+                            <div className="px-2 py-1.5 justify-center items-center gap-2 flex">
+                                <div className='text-primary'> <img src={sortIcon} className='size-6' /> </div>
+                                <div className="text-center text-black text-xl font-medium font-['Montserrat'] leading-tight tracking-tight">Trier</div>
+                                <div className={`w-6 h-6 relative transition duration-200 ${isOpen ? "-rotate-180" : ""}`}><ArrowDownIcon /></div>
+                            </div>
+                        </button>
+                    )}
+                </ButtonDropdown>
 
-            <div className='grid sm:grid-cols-2 gap-4 px-4 sm:px-0'>
-                {/* {itemsList.map((achievement:any)=><NewCard key={achievement.id} post={achievement} />)} */}
-
-                <Link to={`/news/category1?lang=${lang}`} >
-                    <NewsCard image={recentArticle1} slug="category1" category="Formation" title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" date="Le 4 octobre 2024" />
-                </Link>
-
-                <Link to={`/news/category2?lang=${lang}`} >
-                    <NewsCard image={recentArticle2} slug="category2" category="Initiative scientifique" title="Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" date="Le 4 octobre 2024" />
-                </Link>
-                <Link to={`/news/category3?lang=${lang}`} >
-
-
-                    <NewsCard image={recentArticle1} slug="category3" category="Formation" title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" date="Le 4 octobre 2024" />
-
-                </Link>
-                <Link to={`/news/${"category4"}?lang=${lang}`} >
-                    <NewsCard image={recentArticle2} slug="category4" category="Initiative scientifique" title="Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" date="Le 4 octobre 2024" />
-                </Link>
-                <NewsCard image={recentArticle1} slug="category5" category="Formation" title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" date="Le 4 octobre 2024" />
-
-                <NewsCard image={recentArticle2} slug="category6" category="Initiative scientifique" title="Suivi du Pinna nobilis (Grande Nacre) à Kerkennah" date="Le 4 octobre 2024" />
-                <NewsCard image={recentArticle1} slug="category7" category="Formation" title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" date="Le 4 octobre 2024" />
-
-                <NewsCard image={recentArticle2} slug="category8" category="Initiative scientifique" title="Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" date="Le 4 octobre 2024" />
-                <NewsCard image={recentArticle1} slug="category9" category="Formation" title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" date="Le 4 octobre 2024" />
-
-                <NewsCard image={recentArticle2} slug="category10" category="Initiative scientifique" title="Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" date="Le 4 octobre 2024" />
+                <div className=" text-black text-xl font-semibold font-['Montserrat'] leading-tight tracking-tight mt-[2px]"> {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} Publicaciones`}</div>
             </div>
+            <div className='sm:hidden flex justify-between pr-5 relative z-20'>
+                <button type='button' onClick={() => setIsOpened(true)} className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl justify-start items-center gap-2.5 inline-flex">
+                    <FilterIcon />
+                    <div className="text-center text-white text-sm font-bold font-['Montserrat']">Filtres</div>
+                </button>
+                <ButtonDropdown
+                    items={CATEGORIES}
+                    position="right"
+                    renderItem={(item) => (
+                        <div className='py-1 px-4'> {item.name}</div>
+                    )}
+                >
+                    {(isOpen) => (
+                        <button className="h-12 rounded-[10px] border-2 border-black justify-center items-center flex w-fit">
+                            <div className="px-2 py-1.5 justify-center items-center gap-2 flex">
+                                <div className='text-primary'> <img src={sortIcon} className='size-6' /> </div>
+                                <div className="text-center text-black text-xl font-medium font-['Montserrat'] leading-tight tracking-tight">Trier</div>
+                                <div className={`w-6 h-6 relative transition duration-200 ${isOpen ? "-rotate-180" : ""}`}><ArrowDownIcon /></div>
+                            </div>
+                        </button>
+                    )}
+                </ButtonDropdown>
+            </div>
+            <div className='sm:hidden px-5 font-semibold leading-[20px] pt-5 text-start'>{`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} Publicaciones`}</div>
+            <section className='flex flex-col gap-8 w-full relative z-10 my-5 sm:my-10 col-span-1'>
 
-            <div className='flex justify-center px-4 sm:px-0'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>
-        </section>
+                <div className='grid sm:grid-cols-2 gap-4 px-4 sm:px-0'>
+                    {itemsList.map((article: any) => (
+                        <Link key={article.id} to={`/news/${article.slug}`}>
+                            <NewsCard article={article} />
+                        </Link>
+                    ))}
+                </div>
+
+                <div className='flex justify-center px-4 sm:px-0'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>
+            </section>
+        </div>
     )
 }

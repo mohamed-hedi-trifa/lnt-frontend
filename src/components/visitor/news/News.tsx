@@ -38,14 +38,14 @@ export default function News() {
 
             </section>
 
-            <section className='flex gap-20 flex-col sm:flex-row   my-5 text-center max-w-7xl w-full mx-auto   mt-20 px-5 h-fit  '>
+            <section className='flex gap-20 flex-col sm:flex-row   my-5 text-center max-w-7xl w-full mx-auto   mt-20  h-fit  '>
 
                 <div className='h-full    '>
                     <RecentArticle />
                     <PopularNews />
                 </div>
 
-                <div className='flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10'>
+                <div className='flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10 px-5'>
                     <FollowUs />
                     <Question />
                     <PopularCategory />

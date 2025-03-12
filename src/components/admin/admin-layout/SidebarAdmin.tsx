@@ -44,6 +44,8 @@ export default function SidebarAdmin() {
                                     <Link to="/admin/financial-report" className="block p-4 text-gray-300 hover:bg-gray-700">Financial Report</Link>
                                     <Link to="/admin/financial-source" className="block p-4 text-gray-300 hover:bg-gray-700">Financial Source</Link>
                                     <Link to="/admin/achievements" className="block p-4 text-gray-300 hover:bg-gray-700">Achievements</Link>
+                                    <Link to="/admin/theme" className="block p-4 text-gray-300 hover:bg-gray-700">Theme</Link>
+                                    <Link to="/admin/management-plan" className="block p-4 text-gray-300 hover:bg-gray-700">Management Plan</Link>
                                 </>
                             )}
                             {section === 'Notre Festival' && (
@@ -60,6 +62,12 @@ export default function SidebarAdmin() {
 
                                     <Link to="/admin/event-type" className="block p-4 text-gray-300 hover:bg-gray-700">Events Types</Link>
                                     <Link to="/admin/events" className="block p-4 text-gray-300 hover:bg-gray-700">Events</Link>
+                                </>
+                            )}
+                            {section === 'Actualités' && (
+                                <>
+
+                                    <Link to="/admin/news" className="block p-4 text-gray-300 hover:bg-gray-700">Actualités</Link>
                                 </>
                             )}
                             {section === 'Air Marine et Côtière Protégée' && (

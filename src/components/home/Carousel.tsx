@@ -27,7 +27,7 @@ const Carousel = ({ slides }: { slides: any[] }) => {
           freeMode={false}
           freeModeMomentum={false}
           allowTouchMove={true}
-          loopAdditionalSlides={slides.length}
+          loopAdditionalSlides={slides ? slides.length : 0}
           slidesPerView={1}
           breakpoints={{
             375: { slidesPerView: 2 },
@@ -37,9 +37,11 @@ const Carousel = ({ slides }: { slides: any[] }) => {
           }}
           className="c-carousel__wrapper"
         >
-          {slides.map((slide, index) => (
+          {slides?.map((slide, index) => (
             <SwiperSlide key={index} className="c-carousel__item">
-              <img src={slide.image} alt={`Logo ${index}`} className="h-20" />
+              <img 
+                  src={`${process.env.GATSBY_API_URL}${slide?.image}`}              
+              alt={slide.name} className="h-20" />
             </SwiperSlide>
           ))}
         </Swiper>

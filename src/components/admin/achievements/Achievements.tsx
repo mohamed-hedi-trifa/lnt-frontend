@@ -99,7 +99,7 @@ export default function Achievements() {
 
                       {/* Actions - Ensures Icons Stay Inline */}
                       <div className="hidden sm:flex col-span-1 justify-end sm:justify-center gap-3">
-                        <Link to={`/admin/achievements/event-details/${item.slug}`}>
+                        <Link to={`/admin/achievements/manage-achievement/${item.slug}`}>
                           <MagnifyingGlassIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
                         </Link>
 
