@@ -6,16 +6,17 @@ interface CardProps {
   description: string;
   lieu: string;
   date: string;
+  image: string;
 
   }
 
-    const  FestivalCardCarousel: React.FC<CardProps> = ({  titre,description,lieu,date }) => {
+    const  FestivalCardCarousel: React.FC<CardProps> = ({  titre,description,lieu,date, image }) => {
     return(
         <section >
             <div className=" mx-auto  bg-white rounded-xl shadow-xl relative p-4  ">
                     <div className={`flex flex-col sm:flex-row `}>
                         <div className="w-full bg-cover bg-center" style={{backgroundImage:'festivales_images/img.jpg'}} >
-                            <img src='/festivales_images/img.jpg' alt="Festival Image" className="rounded-lg shadow-lg w-full h-full "/>
+                            <img src={image} alt="Festival Image" className="rounded-lg shadow-lg w-full  "/>
                         </div>
                         <div className="w-full px-4 relative  ">
                             <h3 className="text-[16px] md:text-[24px] font-bold mt-4 ">{titre}</h3>

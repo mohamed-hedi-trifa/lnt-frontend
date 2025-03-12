@@ -24,6 +24,7 @@ import NewsLetterSub2 from '@/components/NewsLetterSub2'
 import Line from '@/components/atoms/Line'
 import FilterIcon from '@/assets/icons/FilterIcon'
 import sortIcon from "@/assets/icons/sort-icon.png"
+import path from 'path'
 
 
 
@@ -31,12 +32,14 @@ const images = [
   {
     title: 'Explorez l’Aire Marine Protégée',
     description: 'Préservons ensemble les Îlots Nord de Kerkennah',
-    imageUrl: '/images/aire_marines/marine1.jfif'
+    imageUrl: '/images/aire_marines/marine1.jfif',
+    path: '/protected-air-marine-coastal-areas/monitoring/marin'
   },
   {
-    title: 'Découvrez nos Partenaires',
-    description: 'Engagés pour la Protection des Îles de Kerkennah',
-    imageUrl: '/images/aire_marines/marine2.jfif'
+    title: "Rencontrez l'Équipe de l'AMCP",
+    description: 'Les acteurs engagés pour la préservation des écosystèmes marins',
+    imageUrl: '/images/aire_marines/marine3.jpg',
+    path: '/protected-air-marine-coastal-areas/team'
   }
 ]
 

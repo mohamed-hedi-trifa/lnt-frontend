@@ -2,16 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { navigate } from "gatsby";
 import achievementsHero from "../../../../../../assets/images/achievements-hero.jpg";
-import AMCPSidebar from "@/components/layout/AMCPSidebar";
 import SectionTitle2 from "@/components/atoms/titles/SectionTitle2";
 import Title from "@/components/atoms/titles/Title";
 import PageParagraph from "@/components/atoms/PageParagraph";
 import BlogList from "./BlogList";
 import SpeciesTitle from "@/components/atoms/titles/SpeciesTitle";
-import Media2 from "@/components/visitor/who-are-we/our-achievements/acheivement2/Media2";
 import Table from "@/components/visitor/who-are-we/rapports/Table";
 import DecouvrezDautresEspeces from "./DecouvrezDautresEspeces";
 import Media from "@/components/visitor/Media";
+import AMCPSuiviScientifiqueSidebar from "@/components/layout/AMCPSuiviScientifiqueSidebar";
 
 
 // Fonction utilitaire pour parser le contenu markdown
@@ -112,7 +111,7 @@ export default function Blog({ location, params }: { location: any; params: any 
       <section className="px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col sm:flex-row relative sm:gap-8">
-            <AMCPSidebar />
+            <AMCPSuiviScientifiqueSidebar />
             <div className="grow w-full flex flex-col mx-auto shadow-helmi gap-4 rounded-[12px] bg-[rgba(255,255,255,0.8)]">
               {/* Sous-titre */}
               <SectionTitle2

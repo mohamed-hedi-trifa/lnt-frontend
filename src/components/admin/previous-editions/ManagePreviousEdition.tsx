@@ -173,7 +173,7 @@ export default function ManagePreviousEdition({ params }: { params: any }) {
             <div className="border rounded-lg overflow-hidden shadow-sm">
               <img
                 src={`${process.env.GATSBY_API_URL}${previousEdition?.image}`}
-                alt="Affiche 1"
+                alt={previousEdition.name_fr || previousEdition.name_en}
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">

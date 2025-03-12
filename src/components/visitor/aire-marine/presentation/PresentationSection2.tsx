@@ -35,14 +35,18 @@ export default function PresentationSection2() {
 
     const images = [
         {
-            title: 'Découvrir nos partenaires',
-            description: 'Egagés pour la protection des iles de Kerkennah',
-            imageUrl: '/images/aire_marines/marine2.jfif'
+
+            title :'Découvrir nos partenaires',
+            description : 'Egagés pour la protection des iles de Kerkennah',
+            imageUrl : '/images/aire_marines/marine2.jfif',
+            path: '/protected-air-marine-coastal-areas/presentation/partners'
         },
-        {
-            title: 'Explorer le suivi scientifique',
-            description: 'Protégeons ensemble la biodiversité de kerkennah',
-            imageUrl: '/images/aire_marines/presentation/img6.jpg'
+        {   
+            title :'Explorer le suivi scientifique',
+            description : 'Protégeons ensemble la biodiversité de kerkennah',
+            imageUrl : '/images/aire_marines/presentation/img6.jpg',
+            path: '/protected-air-marine-coastal-areas/monitoring'
+
         }
     ]
     const tab = [

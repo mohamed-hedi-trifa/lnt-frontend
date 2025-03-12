@@ -1,58 +1,44 @@
-import React, { useState } from 'react'
-import previousEditionImage from '../../../../assets/images/previousEdition.jpg'
-
-import PageTitle from '@/components/atoms/titles/PageTitle';
-import FollowUsOpportunity from '../../opportunities/FollowUsOpportunity';
+import React, { useState } from 'react';
+import previousEditionImage from '../../../../assets/images/previousEdition.jpg';
+import FollowUsPreviousEdition from './FollowUsPreviousEdition';
 import QuestionEvent from '../../Event/QuestionEvent';
 import PreviousEditionImage from './PreviousEditionImage';
 import AboutFestival from './AboutFestival';
 import DisplayEditionList from './DisplayEditionList';
-import { Upcoming } from '@mui/icons-material';
 import UpcomingEdition from './UpcomingEdition';
-
-
-
+import Breadcrumbs from "@/components/Breadcumbs";
 
 export default function PreviousEdition() {
-    const [isOpened, setIsOpened] = useState(false);
-    return (
-        <div>
-        
-            <main className={`relative`}>
+  const [isOpened, setIsOpened] = useState(false);
 
-                <div className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${isOpened ? "opacity-50" : "opacity-0 pointer-events-none"}`} onClick={() => setIsOpened(false)}></div>
-                <PreviousEditionImage imgSrc={previousEditionImage} />
+  return (
+    <div className=''>
+      <main className="relative">
+        {/* Overlay pour la sidebar */}
+        <div
+          className={`fixed inset-0 bg-black transition-opacity duration-500 z-40 ${
+            isOpened ? 'opacity-50' : 'opacity-0 pointer-events-none'
+          }`}
+          onClick={() => setIsOpened(false)}
+        ></div>
 
-                <section className="my-16 text-center max-w-7xl mx-auto w-full  mt-11 px-5 ">
-                    <AboutFestival />
-                    <div className="h-[1px] w-full bg-black mb-8 mt-16" />
-                </section>
-
-
-
-                <section className='flex  flex-col sm:flex-row   text-center sm:max-w-7xl w-full sm:mx-auto justify-start items-start  mt-4 sm:px-5 h-fit   '>
-
-                    <div className='h-full w-full sm:px-6' >
-                        <DisplayEditionList />
-                    </div>
-
-                    <div className='flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10  sm:w-[260px] mb-6  '>
-                        <FollowUsOpportunity />
-                        <QuestionEvent />
-
-                    </div>
-
-                </section>
-                <section className=' flex-col  text-center max-w-7xl w-full mx-auto justify-between   px-5 h-fit  my-10 '>
-                    <div className="h-[1px] w-full bg-black mb-8 mt-16" />
-
-                    <UpcomingEdition />
-
-                </section>
-
-
-
-            </main>
+        <PreviousEditionImage imgSrc={previousEditionImage} />
+        <div className="max-w-full mx-auto px-4">
+          <Breadcrumbs />
         </div>
-    )
+        <div className="max-w-[1400px] mx-auto px-4">
+          <section className="my-10 text-center">
+            <AboutFestival />
+          </section>
+          <section className="border-t border-gray-800 pt-10">
+            <DisplayEditionList />
+          </section>
+          <section className="my-10 text-center">
+            <hr className="border-gray-800 mb-8 mt-16" />
+            <UpcomingEdition />
+          </section>
+        </div>
+      </main>
+    </div>
+  );
 }

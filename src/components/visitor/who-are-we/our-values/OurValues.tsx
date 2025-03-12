@@ -1,13 +1,6 @@
 import React from 'react'
 import PageTitle from '../../../atoms/titles/PageTitle'
 import Sidebar from '../../../layout/Sidebar'
-import ahmedYellow from "../../../../assets/images/ahmed-yellow.png"
-import fatmaB from "../../../../assets/images/FatmaB.png"
-import habibK from "../../../../assets/images/HabibK.png"
-import hakimS from "../../../../assets/images/HakimS.png"
-import jamilK from "../../../../assets/images/JamilK.png"
-import karimB from "../../../../assets/images/KarimB.png"
-import najahH from "../../../../assets/images/NajahH.png"
 import valuesHero from "../../../../assets/images/our-values-hero.jpg";
 import ImageHistoire from '../our-team/ImageHistoire'
 import Value from './Value'
@@ -90,25 +83,6 @@ export default function OurValues() {
                                 titlesrc={"/images/principes/principe6.svg"} 
                                 description={"L’AKDDCL favorise un environnement inclusif où chacun, indépendamment de son parcours ou de son origine, trouve sa place. En valorisant la diversité, nous enrichissons notre communauté et construisons un avenir où chacun peut s’épanouir."}
                             />
-
-                            {/* Ligne horizontale responsive */}
-                            <div className="flex justify-center my-4">
-                                <hr className="w-full max-w-full border-t border-black" />
-                            </div>
-                            <div>    
-                                <span className="font-bold text-[38px] sm:text-[40px] sm:px-0 text-[#0270A0]">Notre Mission</span>
-                                <PageParagraph fontWeight="normal" spacing="normal">
-                                    Nous œuvrons pour la protection et la valorisation des richesses naturelles et culturelles de Kerkennah. Notre mission consiste à mettre en œuvre des initiatives durables qui allient préservation de l'environnement, promotion des traditions locales et développement communautaire. Grâce à nos projets et collaborations, nous souhaitons renforcer l'engagement local, sensibiliser aux enjeux environnementaux, et offrir des opportunités de développement économique respectueux de la nature
-                                </PageParagraph>                            
-                            </div>    
-                           <div>
-                            <span className="font-bold text-[38px] sm:text-[40px] sm:px-0 text-[#0270A0]">Notre Vision</span>
-                            <PageParagraph fontWeight="normal" spacing="normal">
-                            Nous aspirons à faire de Kerkennah un modèle de durabilité et d'excellence culturelle. Notre vision est celle d'un archipel où la biodiversité marine et terrestre est protégée, où les traditions se perpétuent en harmonie avec l'innovation, et où la communauté s'épanouit grâce à un développement équilibré. Nous envisageons un avenir où l'interaction entre l'homme et la nature se traduit par des actions concrètes et inspirantes, faisant de Kerkennah un exemple à suivre.
-                            </PageParagraph> 
-                           </div>
-
-
                         </section>
                     </section>
                     <section className='border-t border-black pb-20'>
