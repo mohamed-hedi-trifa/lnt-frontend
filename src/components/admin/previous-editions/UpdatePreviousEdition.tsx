@@ -52,7 +52,7 @@ const UpdatePreviousEdition = ({ location, params }: { location: any; params: an
                 // Sort content items by order
 
 
-                // Set form data
+                
                 setFormData({
                     name_en: edition.name_en ?? "",
                     name_fr: edition.name_fr ?? "",
