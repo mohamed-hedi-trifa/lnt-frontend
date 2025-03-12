@@ -60,6 +60,18 @@ export default function News() {
     return <ReactLoading type="spinningBubbles" color="white" height={25} width={25} />;
   }
 
+  const handleUpdatePopularStatus = (id: number, isPopular: string) => {
+    axios
+      .put(`/api/news/${id}/update-popular-status`, { is_popular: isPopular })
+      .then((res) => {
+        Swal.fire("Success", res.data.message, "success");
+        getNews(); // Refresh the news list
+      })
+      .catch((err) => {
+        Swal.fire("Error", err.response?.data?.message || "Failed to update popular status", "error");
+      });
+  };
+
   return (
     <>
       <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
@@ -76,33 +88,45 @@ export default function News() {
                 <div className="grid grid-cols-12 items-center text-center border-b font-bold py-2 bg-gray-100">
                   <div className="hidden sm:block text-start col-span-1">ID</div>
                   <div className="text-start col-span-2">Image</div>
-                  <div className="text-start col-span-3">Title</div> 
+                  <div className="text-start col-span-3">Title</div>
                   <div className="text-start col-span-2">Date</div>
-        
-                  <div className="col-span-1">Status</div> 
+                  <div className="col-span-1">Status</div>
+                  <div className="col-span-1">Popular</div> {/* New Column */}
                   <div className="hidden sm:block text-end col-span-1">Actions</div>
                 </div>
 
                 <div className="divide-y">
                   {itemsList?.map((item: any) => (
-                    <div key={item.id} className="grid grid-cols-12 items-center text-center py-2">
+                    <div className="grid grid-cols-12 items-center text-center py-2">
                       <div className="hidden sm:block text-start col-span-1">{item.id}</div>
                       <div className="col-span-2 flex justify-center">
-                        <img className="w-[70px] sm:w-[130px] md:w-[160px]"
-                          src={`${process.env.GATSBY_API_URL}${item.image}`} alt="" />
+                        <img
+                          className="w-[70px] sm:w-[130px] md:w-[160px]"
+                          src={`${process.env.GATSBY_API_URL}${item.image}`}
+                          alt=""
+                        />
                       </div>
                       <div className="text-start col-span-3 font-bold">
                         {item.title_en || item.title_fr}
                       </div>
                       <div className="col-span-2 text-start">{item.date}</div>
-                      <div className="col-span-1">{item.status == "visible" ? "Visible" : "Hidden"}</div>
-
-                      {/* Actions - Ensures Icons Stay Inline */}
+                      <div className="col-span-1">
+                        {item.status == "visible" ? "Visible" : "Hidden"}
+                      </div>
+                      <div className="col-span-1">
+                        <select
+                          value={item.is_popular}
+                          onChange={(e) => handleUpdatePopularStatus(item.id, e.target.value)}
+                          className="p-1 border rounded"
+                        >
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        </select>
+                      </div>
                       <div className="hidden sm:flex col-span-1 justify-end sm:justify-center gap-3">
                         <Link to={`/admin/news/manage-news/${item.slug}`}>
                           <MagnifyingGlassIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
                         </Link>
-
                         <Link to={`/admin/news/${item.slug}`}>
                           <PencilSquareIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
                         </Link>

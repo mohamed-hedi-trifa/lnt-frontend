@@ -1,53 +1,34 @@
 import React, { useEffect, useRef, useState } from "react";
-
-import { SwiperOptions } from "swiper/types";
-
+import axios from "axios";
+import Swal from "sweetalert2";
 import PageParagraph from "../atoms/PageParagraph";
 import Carousel from "./Carousel";
 
 
 
-type Partner = {
-  image?: string;
-};
 
-const defaultPartners: Partner[] = [
-  {
-    image: "/the_med_fund.png",
-  },
-  {
-    image: "/gef.png",
-  },
-  {
-    image: "/kantara_sea.png",
-  },
-  {
-    image: "/snorkeling_kerkennah.png",
-  },
-  {
-    image: "/apal.png",
-  },
-  // THESE ONES ARE FOR TESTING PURPOSES
-  {
-    image: "/the_med_fund.png",
-  },
-  {
-    image: "/gef.png",
-  },
-  {
-    image: "/kantara_sea.png",
-  },
-  {
-    image: "/snorkeling_kerkennah.png",
-  },
-  {
-    image: "/apal.png",
-  },
-];
+
 
 export default function Partners() {
 
-  const [partners, setPartners] = useState(defaultPartners);
+  const [partners, setPartners] = useState<any>(null);
+  const getPartners = async () => {
+      try {
+
+          const res = await axios.get("/api/get-general-parteners");
+          setPartners(res.data);
+          console.log(res.data)
+
+      } catch (err) {
+          Swal.fire("Error", err.response?.data?.message || "Failed to fetch edition", "error");
+      } finally {
+
+      }
+  };
+
+  useEffect(() => {
+      getPartners();
+  }, [])
   const swiperRef = useRef<any>(null);
 
 
@@ -73,7 +54,7 @@ export default function Partners() {
           </p>
         </PageParagraph>
         <div className="mt-10">
-        <Carousel slides={defaultPartners} />
+        <Carousel slides={partners} />
         </div>
 
       </div>

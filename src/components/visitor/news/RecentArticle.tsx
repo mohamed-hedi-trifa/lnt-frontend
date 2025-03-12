@@ -11,6 +11,7 @@ export default function RecentArticle() {
       .get("/api/recent-news")
       .then((response) => {
         setArticles(response.data);
+        console.log(news[0])
       })
       .catch((error) => {
         console.error("Error fetching recent news:", error);
@@ -22,7 +23,7 @@ export default function RecentArticle() {
   }
 
   return (
-    <div>
+    <div className="px-5">
       <HeaderSection headerName="Articles Récents" />
 
       <div className="flex justify-between flex-col sm:flex-row w-full gap-1 h-fit mt-10 font-['Montserrat']">
@@ -37,7 +38,7 @@ export default function RecentArticle() {
           <div className="absolute h-full w-full top-0 left-0 bg-black bg-opacity-50 rounded-xl"></div>
 
           <div className="absolute left-[30px] bottom-[30px] right-[60px] sm:left-[40px] text-white max-w-3xl flex flex-col gap-5 sm:gap-5">
-            {news.themes?.map((item: any) =>
+            {news[0]?.themes?.map((item: any) =>
 
               <button
                 type="submit"
@@ -95,7 +96,7 @@ export default function RecentArticle() {
               </div>
               <img
                 src={`${process.env.GATSBY_API_URL}${article.image}`}
-                className="object-cover rounded-xl max-w-[46%] sm:max-w-[37.67%] h-full"
+                className="object-cover rounded-xl max-w-[46%] sm:w-40 sm:h-40 h-full"
                 alt={article.title_en || article.title_fr}
               />
             </div>

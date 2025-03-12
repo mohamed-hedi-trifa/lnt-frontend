@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import NewsGallery from "./NewsGalery";
+
 
 export default function ManageNews({ params }: { params: any }) {
     const [news, setNews] = useState<any>(null);
@@ -174,10 +176,12 @@ export default function ManageNews({ params }: { params: any }) {
                             </button>
                         </form>
                     </div>
+
+                    <NewsGallery newsId={news.id} />
                 </div>
             ) : (
                 <div className="text-center text-gray-500">
-                    <p>Edition not found.</p>
+                    <p>News not found.</p>
                 </div>
             )}
         </div>

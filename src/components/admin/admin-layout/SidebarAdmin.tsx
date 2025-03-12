@@ -45,6 +45,7 @@ export default function SidebarAdmin() {
                                     <Link to="/admin/financial-source" className="block p-4 text-gray-300 hover:bg-gray-700">Financial Source</Link>
                                     <Link to="/admin/achievements" className="block p-4 text-gray-300 hover:bg-gray-700">Achievements</Link>
                                     <Link to="/admin/theme" className="block p-4 text-gray-300 hover:bg-gray-700">Theme</Link>
+                                    <Link to="/admin/management-plan" className="block p-4 text-gray-300 hover:bg-gray-700">Management Plan</Link>
                                 </>
                             )}
                             {section === 'Notre Festival' && (

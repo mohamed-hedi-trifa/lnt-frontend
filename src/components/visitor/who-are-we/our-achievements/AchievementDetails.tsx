@@ -1,45 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import newsDeteails from '../../../../assets/images/newsDeteails.jpg'
-import NewsImage from '../NewsImage';
-import Breadcrumbs from '@/components/Breadcumbs';
-import NewsDetailsContent from './NewsDetailsContent';
-import FollowUs from '../FollowUs';
-import Question from '../Question';
-import RelatedNews from './RelatedNews';
+import NewsImage from '../../news/NewsImage';
+import { Breadcrumbs } from '@material-tailwind/react';
+import AchievementDetailsContent from './AchievementDetailsContent';
+import FollowUs from '../../news/FollowUs';
+import Question from '../../news/Question';
+import RelatedNews from '../../news/NewsDetails/RelatedNews';
 
-export default function NewsDetails({ location, params }: { location: any; params: any }) {
+
+export default function AchievementDetails({ location, params }: { location: any; params: any }) {
     const searchParams = new URLSearchParams(location?.search);
     const paramLang = searchParams.get("lang");
   
     
-    const [news, setNews] = useState([]);
+    const [achievement, setAchievement] = useState([]);
     const [moreEvents, setMoreNews] = useState([]);
     
-    const getNews = async (slugNews) => {
+    const getAchievements = async (slugAchievements) => {
       try {
-        const response = await axios.get(`/api/news/${slugNews}`);
-        setNews(response.data);
+        const response = await axios.get(`/api/achievements/${slugAchievements}`);
+        setAchievement(response.data);
       } catch (error) {
-        console.error("Error fetching news types:", error);
+        console.error("Error fetching achievement types:", error);
       }
     };
   
-    // const getMoreNews = async (slugNews) => {
-    //   try {
-    //     const response = await axios.get(`/api/more-news/${slugNews}`);
-    //     setMoreNews(response.data);
-        
-  
-    //   } catch (error) {
-    //     console.error("Error fetching news types:", error);
-    //   }
-    // };
+
   
     useEffect(() => {
-      const slugNews = params.slug;
-      getNews(slugNews);
-    //   getMoreNews(slugNews);
+      const slugAchievements = params.slug;
+      getAchievements(slugAchievements);
   
     }, [location]);
 
@@ -60,7 +51,7 @@ export default function NewsDetails({ location, params }: { location: any; param
                 <section className='flex gap-20 sm:flex-row flex-col   my-5 text-center max-w-7xl w-full mx-auto   mt-20 px-5 h-fit  '>
 
                     <div className='sm:w-[2500px]'>
-                        <NewsDetailsContent params={params} location={location} />
+                        <AchievementDetailsContent params={params} location={location} />
                     </div>
 
                     <div className='h-full w-full md:col-span-1 col-span-2 flex flex-col gap-10'>

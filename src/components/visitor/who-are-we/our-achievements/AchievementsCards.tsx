@@ -6,6 +6,7 @@ import ButtonDropdown from '@/components/ButtonDropdown';
 import FilterIcon from '@/assets/icons/FilterIcon';
 import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
 import sortIcon from "@/assets/icons/sort-icon.png"
+import { Link } from 'gatsby';
 const CATEGORIES = [
   {
     id: 1,
@@ -126,7 +127,11 @@ export default function AchievementsCards() {
       </div>
       <section className='flex flex-col gap-8 w-full relative z-10 my-5'>
         <div className='grid sm:grid-cols-2 gap-4'>
-          {itemsList.map((achievement: any) => <AchievementCard key={achievement.id} achievement={achievement} />)}
+          {itemsList.map((achievement: any) => (
+            <Link key={achievement.id} to={`/who-are-we/our-achievements/${achievement.slug}`}>
+              <AchievementCard key={achievement.id} achievement={achievement} />
+            </Link>
+          ))}
         </div>
 
         <div className='flex justify-center'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>

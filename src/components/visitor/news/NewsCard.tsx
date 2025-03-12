@@ -1,50 +1,79 @@
 import React from 'react';
 
 
-export default function NewsCard({ image, slug, category, title, date }: { image: string, slug: string, category: string, title: string, date: string }) {
- 
+export default function NewsCard({ article }: { article: any }) {
+
     return (
         <>
-            {/* Mobile View */}
-     
-         
-            <div className='flex sm:hidden flex-col bg-white shadow-xl gap-4 items-start rounded-2xl min-h-[432px]'>
-                <div className='flex flex-col justify-start items-start gap-3'>
-                    <div className='px-2 pt-4'>
-                        <img className="w-full h-[250px] object-cover rounded-xl" src={image} alt={title} />
-                    </div>
-                    <div className='flex flex-col gap-3 px-5 pt-5'>
-                        <button className="rounded-lg bg-[#F6F8FF] text-[#006E9F] font-normal py-1 px-2 text-xs w-fit">
-                            {category}
-                        </button>
-                        <div className="text-sm leading-6 font-bold drop-shadow-md text-start">
-                            {title}
+
+
+
+
+            <div className='sm:hidden '>
+                <div className="self-stretch p-4 bg-white rounded-xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-1 outline-offset-[-1px] outline-[#e8e8ea] inline-flex flex-col justify-center items-center gap-4 overflow-hidden">
+                    <img className="w-[360px] h-60 rounded-md shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]"
+                        src={`${process.env.GATSBY_API_URL}${article?.image}`}
+                        alt={article.title_en || article.title_fr} />
+                    <div className="self-stretch p-2 flex flex-col justify-start items-start gap-5">
+                        <div className="self-stretch flex flex-col justify-start items-start gap-4">
+                            <div className="fles gap-4">
+
+                                {article.themes?.map((item: any) =>
+                                    <div data-color="Primary" data-icon="None" data-size="md" data-style="Light" className="px-2.5 py-1 bg-[#4b6bfb]/5 rounded-md inline-flex justify-center items-center gap-4">
+                                        <div className="justify-start text-[#006e9f] text-sm font-medium font-['Montserrat'] leading-tight">
+                                            {item?.name_en || item?.name_fr}
+                                        </div>
+
+                                    </div>
+                                )}
+                            </div>
+                            <div className="self-stretch justify-start text-[#181a2a] text-xl font-semibold font-['Montserrat'] leading-7 text-start">
+                                {article.title_en || article.title_fr}
+                            </div>
+                        </div>
+                        <div className="inline-flex justify-start items-center gap-5">
+                            <div className="justify-start text-[#97989f] text-base font-normal font-['Work_Sans'] leading-normal">Le {new Date(article.date).toLocaleDateString("fr-FR", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                        })}</div>
                         </div>
                     </div>
                 </div>
-                <span className="uppercase font-light text-sm px-5 py-5">{date}</span>
             </div>
-       
+
             {/* Larger Screens */}
-            <div className='hidden sm:flex flex-col bg-white shadow-xl px-5 py-5 gap-4 items-start h-[448px] justify-between'>
-                <div className='flex flex-col justify-start items-start gap-3'>
-                    <img className="w-full h-[250px] object-cover rounded-xl" src={image} alt={title} />
-                    <button className="rounded-lg bg-[#F6F8FF] text-[#006E9F] font-normal py-1 px-2 text-xs w-fit">
-                        {category}
-                    </button>
-                    <div className="text-sm leading-6 font-bold drop-shadow-md text-start">
-                        {title}
+            <div className="hidden sm:inline-flex w-[392px] shadow-helmi p-4 bg-white rounded-xl outline-1 outline-offset-[-1px] outline-[#e8e8ea]  flex-col justify-center items-center gap-4 overflow-hidden">
+                <img className="w-[360px] h-60 rounded-md shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]"
+                    src={`${process.env.GATSBY_API_URL}${article?.image}`}
+                    alt={article.title_en || article.title_fr} />
+                <div className="self-stretch p-2 flex flex-col justify-start items-start gap-5">
+                    <div className="self-stretch flex flex-col justify-start items-start gap-4">
+                        <div className="flex gap-2">
+                            {article.themes?.map((item: any) =>
+
+                                <div data-color="Primary" data-icon="None" data-size="md" data-style="Light" className="px-2.5 py-1 bg-[#4b6bfb]/5 rounded-md inline-flex justify-center items-center gap-1">
+                                    <div className="justify-start text-[#006e9f] text-sm font-medium font-['Montserrat'] leading-tight">
+                                        {item?.name_en || item?.name_fr}
+                                    </div>
+                                </div>
+                            )}
+
+
+                        </div>
+                        <div className="self-stretch justify-start text-[#181a2a] text-xl font-semibold font-['Montserrat'] leading-7 text-start" >{article.title_en || article.title_fr}</div>
+                    </div>
+                    <div className="inline-flex justify-start items-center gap-5">
+                        <div className="justify-start text-[#97989f] text-base font-normal font-['Work_Sans'] leading-normal">Le {new Date(article.date).toLocaleDateString("fr-FR", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                        })}</div>
                     </div>
                 </div>
-                <span className="uppercase font-light text-sm">{date}</span>
             </div>
         </>
     );
 }
 
-const CalendarIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" width={20} height={20}>
-        <path d="M152 64c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16V16c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v48zm192 0c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16V16c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v48zM0 128c0-35.3 28.7-64 64-64h32v16c0 26.5 21.5 48 48 48h16c26.5 0 48-21.5 48-48V64h128v16c0 26.5 21.5 48 48 48h16c26.5 0 48-21.5 48-48V64h32c35.3 0 64 28.7 64 64v336c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128zm48 80v256c0 8.8 7.2 16 16 16h352c8.8 0 16-7.2 16-16V208H48z"></path>
-    </svg>
-);
 

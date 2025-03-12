@@ -22,7 +22,7 @@ const Partners: React.FC<{ partners: any[] }> = ({ partners = [] }) => {
     return (
         <Fragment>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 sm:gap-10">
-                {partners.map((partner, index) => (
+                {partners?.map((partner, index) => (
                     <div
                         key={index}
                         onClick={() => handleOpenModal(partner)}
