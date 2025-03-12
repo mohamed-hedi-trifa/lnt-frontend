@@ -15,12 +15,14 @@ export default function PresentationPartenaire() {
         {
             title: 'Explorez l’Aire Marine Protégée',
             description: 'Préservons ensemble les Îlots Nord de Kerkennah',
-            imageUrl: '/images/aire_marines/marine1.jfif'
+            imageUrl: '/images/aire_marines/marine1.jfif',
+            path: '/protected-air-marine-coastal-areas/presentation/amcp'
         },
         {
-            title: 'Découvrez nos Partenaires',
-            description: 'Engagés pour la Protection des Îles de Kerkennah',
-            imageUrl: '/images/aire_marines/marine2.jfif'
+            title :'Explorer le suivi scientifique',
+            description : 'Protégeons ensemble la biodiversité de kerkennah',
+            imageUrl : '/images/aire_marines/presentation/img6.jpg',
+            path: '/protected-air-marine-coastal-areas/monitoring'
         }
     ]
 

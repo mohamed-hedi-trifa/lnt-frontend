@@ -10,7 +10,7 @@ const Card = ({ member, customClassName = "", textHidden = false }: { member: an
 
 export default function TeamCard({ member }: { member: any }) {
   return (
-    <div key={member.name} className='group relative z-10 hover:scale-110 transition duration-200 overflow-hidden' >
+    <div key={member.name} className='group relative z-10 hover:scale-110 transition duration-200 overflow-hidden shadow-helmi rounded-[15px]' >
       <img src={`${process.env.GATSBY_API_URL}${member.image}`} className='w-full' />
       <Card member={member} customClassName='bg-[linear-gradient(90deg,rgba(81,173,198,0.8)_0%,rgba(0,110,159,0.8)_100%)]' textHidden={true} />
 

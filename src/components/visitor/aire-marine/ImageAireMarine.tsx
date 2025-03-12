@@ -1,12 +1,16 @@
 import React from 'react';
+import { Link } from "gatsby";
+import LangLink from '@/components/LangLink';
+
 
 interface ImageAireMarineProps {
     title: string;
     description: string;
     imageUrl: string;
+    path: string;
 }
 
-const ImageAireMarine: React.FC<ImageAireMarineProps> = ({ title, description, imageUrl }) => {
+const ImageAireMarine: React.FC<ImageAireMarineProps> = ({ title, description, imageUrl, path }) => {
     return (
         <div
             className=" max-w-[355px] lg:w-full lg:max-w-[616px] h-[320px] md:h-[297px] relative bg-cover rounded-[15px] flex items-center justify-center transition-all duration-500 group shadow-helmi"
@@ -17,10 +21,10 @@ const ImageAireMarine: React.FC<ImageAireMarineProps> = ({ title, description, i
 
             <div className="text-white flex flex-col md:flex items-start justify-center gap-4 sm:gap-6 px-4 sm:px-6 relative">
                 <div className="transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-5 flex flex-col gap-6">
-                    <p className="font-bold text-[20px] sm:text-[30px] transition-all">
+                    <p className="font-bold text-[20px] sm:text-[30px] transition-all drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] ">
                         {title}
                     </p>
-                    <p className="text-sm font-semibold text-[18px] sm:text-[28px] leading-[20px] sm:leading-[28px] md:leading-[32px] transition-all">
+                    <p className="text-sm font-semibold text-[18px] sm:text-[28px] leading-[20px] sm:leading-[28px] md:leading-[32px] transition-all drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] ">
                         {description}
                     </p>
                 </div>
@@ -44,11 +48,10 @@ const ImageAireMarine: React.FC<ImageAireMarineProps> = ({ title, description, i
             <div
                         className="absolute right-2 bottom-2 md:right-8 md:bottom-8  scale-110 md:scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
                     >
-                        <img
-                            src="/images/aire_marines/button.svg"
-                            alt=""
-                            className="w-full h-auto "
-                        />
+                        <LangLink to={path}>
+                          <img src="/images/aire_marines/button.svg" alt="" className="w-full h-auto "/>
+                        </LangLink>
+                        
             </div>
         </div>
     );

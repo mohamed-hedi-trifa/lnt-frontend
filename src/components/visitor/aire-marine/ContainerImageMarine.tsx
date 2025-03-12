@@ -5,6 +5,7 @@ type NewType = {
     title: string;
     description: string;
     imageUrl: string; // Make sure each item in the images array has an imageUrl
+    path: string;
 };
 
 interface ContainerImageMarineProps {
@@ -21,6 +22,7 @@ const ContainerImageMarine: React.FC<ContainerImageMarineProps> = ({ images }) =
                     title={image.title}
                     description={image.description}
                     imageUrl={image.imageUrl}
+                    path={image.path}
                 />
             ))}
         </div>

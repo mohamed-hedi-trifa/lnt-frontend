@@ -74,19 +74,19 @@ export default function PreviousEditionSidebar({
 
   return (
     <aside
-      className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 sm:sticky sm:top-[116px] inset-0 p-5 transition duration-300 lg:translate-x-0 ${
+      className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 sm:sticky sm:top-[116px] inset-0 pt-5  transition duration-300 lg:translate-x-0 ${
         isOpened ? 'translate-x-0' : 'translate-x-[-100%]'
       }`}
       onClick={() => setIsOpened(false)}
     >
       <form
-        className="opacity-90 sm:opacity-100 bg-white flex flex-col p-[10px] gap-4 sm:gap-10 w-full sm:w-[320px] rounded-xl shadow-xl overflow-y-auto pointer-events-auto h-full"
+        className="opacity-90 sm:opacity-100 sm:bg-[rgba(255,255,255,0.7)] bg-white flex flex-col p-[10px] gap-4 sm:gap-10 w-full sm:w-[320px] rounded-xl shadow-helmi overflow-y-auto pointer-events-auto h-full sticky"
         onClick={(e) => e.stopPropagation()} // Prevent click propagation to parent
       >
         {/* Search Input */}
         <div className="border rounded-lg border-black flex gap-4 p-2">
           <MagnifyingGlassIcon className="size-5" />
-          <input type="text" placeholder="Recherche" />
+          <input type="text" className='bg-transparent' placeholder="Recherche" />
         </div>
 
         {/* Date Filter */}
@@ -122,10 +122,7 @@ export default function PreviousEditionSidebar({
                 {showAll ? 'Afficher moins' : `Afficher ${years.length - 4} de plus`}
               </div>
             )}
-            <div className='flex gap-2 bg-[#efefef] rounded-lg w-fit px-2 py-1 mt-2 cursor-pointer' >
-            <PlusIcon  className='w-[18px]'/> Afficher 3 de plus
-            </div>
-           
+            
           </div>
         </div>
 

@@ -13,6 +13,10 @@ const Sidebar = () => {
           path: "/who-are-we/our-values",
         },
         {
+          label: "Our Mission & Vision",
+          path: "/who-are-we/our-mission-and-vision",
+        },
+        {
           label: "Nos Réalisations",
           path: "/who-are-we/our-achievements",
         },

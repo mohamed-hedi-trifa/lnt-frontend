@@ -99,14 +99,16 @@ const ProjectsSection = ({ images }) => (
 export default function SuiviScientifique() {
   const images = [
     {
-      title: 'Explorez l’Aire Marine Protégée',
-      description: 'Préservons ensemble les Îlots Nord de Kerkennah',
-      imageUrl: '/images/marine_images/marine3.jpg'
+      title: 'Plongez dans le Suivi Marin',
+      description: 'Protégeons les trésors sous-marins',
+      imageUrl: '/images/marine_images/marine3.jpg',
+      path: '/protected-air-marine-coastal-areas/monitoring/marin'
     },
     {
-      title: 'Découvrez nos Partenaires',
-      description: 'Engagés pour la Protection des Îles de Kerkennah',
-      imageUrl: '/images/marine_images/marine4.jpg'
+      title: 'Explorez le Suivi Terrestre',
+      description: 'Préservons la biodiversité côtière',
+      imageUrl: '/images/marine_images/marine4.jpg',
+      path: '/protected-air-marine-coastal-areas/monitoring/terrestre'
     }
   ]
 

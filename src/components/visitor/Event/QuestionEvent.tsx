@@ -4,7 +4,7 @@ import TitleSectionEvent from './TitleSectionEvent'
 
 export default function QuestionEvent() {
     return (
-        <div className='sm:w-[300px] float-end '>
+        <div className='sm:w-[300px] float-end mt-6 '>
                        <TitleSectionEvent headerName="Question"  showButton={false}/>
             <p className='text-start mt-8 font-bold text-lg'>
                 Besoin de plus d'informations ? N'hésitez pas à nous contacter. Cliquez sur le Bouton ci-dessous pour accéder à notre page de contact et poser vos questions
@@ -13,8 +13,8 @@ export default function QuestionEvent() {
                    shadow-[0px_6px_12px_rgba(0,0,0,0.3)] 
                    hover:shadow-[0px_10px_20px_rgba(0,0,0,0.4)] 
                    hover:opacity-90 transition duration-300 ease-in-out">
-  Contactez-Nous
-</button>
+                 Contactez-Nous
+            </button>
 
 
         </div>

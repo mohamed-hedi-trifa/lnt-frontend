@@ -8,6 +8,8 @@ import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
 import PreviousEditionSidebar from './PreviousEditionSidebar';
 import PreviousEditionCard from './PreviousEditionCard';
 import Pagination from '../../Pagination';
+import FollowUsPreviousEdition from './FollowUsPreviousEdition';
+import QuestionEvent from '../../Event/QuestionEvent';
 
 export default function DisplayEditionList() {
   const [edition, setEdition] = useState([]);
@@ -15,44 +17,44 @@ export default function DisplayEditionList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [sortCriteria, setSortCriteria] = useState('name'); // Default sort by name
-  const [sortOrder, setSortOrder] = useState('asc'); // Default sort order ascending
-  const [language, setLanguage] = useState('en'); // Default language is English
-  const [filteredYears, setFilteredYears] = useState<number[]>([]); // State for filtered years
-  const [isOpened, setIsOpened] = useState(false); // State for sidebar open/close
+  const [sortCriteria, setSortCriteria] = useState('name'); // Tri par défaut sur le nom
+  const [sortOrder, setSortOrder] = useState('asc'); // Ordre croissant par défaut
+  const [language, setLanguage] = useState('en'); // Langue par défaut
+  const [filteredYears, setFilteredYears] = useState<number[]>([]); // Années filtrées
+  const [isSidebarOpened, setIsSidebarOpened] = useState(false); // État d'ouverture de la sidebar
 
-  // Fetch current edition
+  // Récupération de l'édition courante
   const getEdition = async () => {
     try {
       const res = await axios.get('/api/get-current-edition');
       setEdition(res.data);
-    } catch (err) {
-      Swal.fire('Error', err.response?.data?.message || 'Failed to fetch Edition', 'error');
+    } catch (err: any) {
+      Swal.fire('Error', err.response?.data?.message || 'Erreur lors de la récupération de l\'édition', 'error');
     }
   };
 
-  // Fetch previous editions with filters
+  // Récupération des éditions précédentes avec filtres
   const getPrevEditions = async (page = 1) => {
     try {
       const res = await axios.get('/api/previous-editions-pagination', {
         params: {
-          page: page,
+          page,
           per_page: 10,
           sort_by: sortCriteria,
           order: sortOrder,
-          language: language,
-          years: filteredYears.join(','), // Pass filtered years to the API
+          language,
+          years: filteredYears.join(','),
         },
       });
       setPrevEditions(res.data.data);
       setTotalPages(res.data.last_page);
       setTotalItems(res.data.total);
-    } catch (err) {
-      Swal.fire('Error', err.response?.data?.message || 'Failed to fetch Edition', 'error');
+    } catch (err: any) {
+      Swal.fire('Error', err.response?.data?.message || 'Erreur lors de la récupération des éditions', 'error');
     }
   };
 
-  // Handle page change for pagination
+  // Gestion du changement de page
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
       setCurrentPage(newPage);
@@ -60,43 +62,46 @@ export default function DisplayEditionList() {
     }
   };
 
-  // Handle sorting criteria selection
+  // Gestion du tri
   const handleSortChange = (item: { id: number; name: string }) => {
     if (item.name === 'Trier par Nom') {
       setSortCriteria('name');
     } else if (item.name === 'Trier par Date') {
       setSortCriteria('start_date');
     }
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'); // Toggle sort order
+    // Inverse l'ordre à chaque clic
+    setSortOrder(prevOrder => (prevOrder === 'asc' ? 'desc' : 'asc'));
   };
 
-  // Fetch data on component mount and when filters change
+  // Chargement initial et lors des changements de filtres/tri
   useEffect(() => {
     getEdition();
     getPrevEditions(currentPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortCriteria, sortOrder, language, filteredYears, currentPage]);
 
-  // Handle body overflow when sidebar is opened
+  // Gestion du débordement lors de l'ouverture de la sidebar
   useEffect(() => {
-    document.body.style.overflow = isOpened ? 'hidden' : 'visible';
-  }, [isOpened]);
+    document.body.style.overflow = isSidebarOpened ? 'hidden' : 'visible';
+  }, [isSidebarOpened]);
 
   return (
-    <div className="w-full">
-      <div className="flex justify-between">
-        {/* Sidebar for filters */}
-        <PreviousEditionSidebar
-          isOpened={isOpened}
-          setIsOpened={setIsOpened}
-          filteredYears={filteredYears}
-          setFilteredYears={setFilteredYears}
-        />
+    <div className="container mx-auto px-4">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+        {/* Sidebar */}
+        <div className="md:col-span-3 gap-6">
+          <PreviousEditionSidebar
+            isOpened={isSidebarOpened}
+            setIsOpened={setIsSidebarOpened}
+            filteredYears={filteredYears}
+            setFilteredYears={setFilteredYears}
+          />
+        </div>
 
-        {/* Main content */}
-        <section className="">
-          {/* Sorting and pagination info */}
-          <div className="hidden sm:flex justify-between relative z-20">
-            {/* Sorting dropdown */}
+        {/* Contenu principal */}
+        <div className="md:col-span-6 flex flex-col gap-6">
+          {/* En-tête Desktop */}
+          <div className="hidden sm:flex justify-between items-center py-4">
             <ButtonDropdown
               items={[
                 { id: 1, name: 'Trier par Nom' },
@@ -105,7 +110,7 @@ export default function DisplayEditionList() {
               position="left"
               renderItem={(item) => (
                 <div
-                  className="py-1 px-4 hover:bg-gray-100 cursor-pointer"
+                  className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
                   onClick={() => handleSortChange(item)}
                 >
                   {item.name}
@@ -113,37 +118,29 @@ export default function DisplayEditionList() {
               )}
             >
               {(isOpen) => (
-                <button className="h-12 rounded-[10px] border-2 border-black justify-center items-center flex w-fit">
-                  <div className="px-2 py-1.5 justify-center items-center gap-2 flex">
-                    <div className="text-primary">
-                      <img src={sortIcon} className="size-6" />
-                    </div>
-                    <div className="text-center text-black text-xl font-medium font-['Montserrat'] leading-tight tracking-tight">
-                      Trier
-                    </div>
-                    <div className={`w-6 h-6 relative transition duration-200 ${isOpen ? '-rotate-180' : ''}`}>
-                      <ArrowDownIcon />
-                    </div>
+                <button className="flex items-center gap-2 border-2 border-black rounded-lg px-4 py-2">
+                  <img src={sortIcon} alt="Icône de tri" className="w-6 h-6" />
+                  <span className="text-black text-lg font-medium">Trier</span>
+                  <div className={`transition-transform duration-200 ${isOpen ? '-rotate-180' : ''}`}>
+                    <ArrowDownIcon />
                   </div>
                 </button>
               )}
             </ButtonDropdown>
-
-            {/* Pagination info */}
-            <div className="text-center text-black text-xl font-semibold font-['Montserrat'] leading-tight tracking-tight mt-[2px]">
+            <div className="text-black text-lg font-semibold">
               {currentPage * 10 - 9} - {Math.min(currentPage * 10, totalItems)} de {totalItems} Publications
             </div>
           </div>
 
-          {/* Mobile: Sorting and filters */}
-          <div className="sm:hidden flex justify-between pr-5 relative z-20">
+          {/* En-tête Mobile */}
+          <div className="sm:hidden flex justify-between items-center z-20 sticky top-0  py-2">
             <button
               type="button"
-              onClick={() => setIsOpened(true)}
-              className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl justify-start items-center gap-2.5 inline-flex"
+              onClick={() => setIsSidebarOpened(true)}
+              className="flex items-center gap-2 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-lg rounded-br-lg px-4 py-2 shadow-lg"
             >
               <FilterIcon />
-              <div className="text-center text-white text-sm font-bold font-['Montserrat']">Filtres</div>
+              <span className="text-white text-sm font-bold">Filtres</span>
             </button>
             <ButtonDropdown
               items={[
@@ -153,7 +150,7 @@ export default function DisplayEditionList() {
               position="right"
               renderItem={(item) => (
                 <div
-                  className="py-1 px-4 hover:bg-gray-100 cursor-pointer"
+                  className="py-2 px-4 hover:bg-gray-100 cursor-pointer "
                   onClick={() => handleSortChange(item)}
                 >
                   {item.name}
@@ -161,30 +158,19 @@ export default function DisplayEditionList() {
               )}
             >
               {(isOpen) => (
-                <button className="h-12 rounded-[10px] border-2 border-black justify-center items-center flex w-fit">
-                  <div className="px-2 py-1.5 justify-center items-center gap-2 flex">
-                    <div className="text-primary">
-                      <img src={sortIcon} className="size-6" />
-                    </div>
-                    <div className="text-center text-black text-xl font-medium font-['Montserrat'] leading-tight tracking-tight">
-                      Trier
-                    </div>
-                    <div className={`w-6 h-6 relative transition duration-200 ${isOpen ? '-rotate-180' : ''}`}>
-                      <ArrowDownIcon />
-                    </div>
+                <button className="flex items-center gap-2 border-2 border-black rounded-lg px-4 py-2 shadow-lg">
+                  <img src={sortIcon} alt="Icône de tri" className="w-6 h-6" />
+                  <span className="text-black text-lg font-medium">Trier</span>
+                  <div className={`transition-transform duration-200 ${isOpen ? '-rotate-180' : ''}`}>
+                    <ArrowDownIcon />
                   </div>
                 </button>
               )}
             </ButtonDropdown>
           </div>
 
-          {/* Mobile: Pagination info */}
-          <div className="sm:hidden px-5 font-semibold leading-[20px] pt-5 sm:text-center text-start">
-            {currentPage * 10 - 9} - {Math.min(currentPage * 10, totalItems)} de {totalItems} Publications
-          </div>
-
-          {/* List of previous editions */}
-          <div className="sm:mx-0 mx-6">
+          {/* Liste des éditions */}
+          <div className="grid grid-cols-1 gap-6">
             {prevEditions?.map((edition, index) => (
               <PreviousEditionCard
                 key={index}
@@ -194,19 +180,22 @@ export default function DisplayEditionList() {
                 lieu={language === 'en' ? edition.place_en : edition.place_fr}
                 slug={edition.slug}
                 year={edition.year}
+                image={edition.image}
               />
             ))}
           </div>
 
-          {/* Pagination component */}
-          <div className="flex justify-center px-4 sm:px-0 mt-5">
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-            />
+          {/* Pagination */}
+          <div className="flex justify-center py-6">
+            <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
           </div>
-        </section>
+        </div>
+
+        {/* Colonne complémentaire */}
+        <div className="md:col-span-3 flex flex-col gap-6">
+          <FollowUsPreviousEdition />
+          <QuestionEvent />
+        </div>
       </div>
     </div>
   );
