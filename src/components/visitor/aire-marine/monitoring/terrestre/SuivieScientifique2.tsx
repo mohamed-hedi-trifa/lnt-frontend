@@ -10,6 +10,7 @@ import terrestrehero from "@/assets/images/Terrestres-hero.jpg";
 import PageParagraph from "@/components/atoms/PageParagraph";
 import List from "@/components/atoms/List";
 import Title from "@/components/atoms/titles/Title";
+import AMCPSuiviScientifiqueSidebar from "@/components/layout/AMCPSuiviScientifiqueSidebar";
 export default function SuiviScientifique2() {
   const images = [
     {
@@ -33,7 +34,7 @@ export default function SuiviScientifique2() {
       <section className="px-4 sm:px-0">
         <div className="max-w-6xl mx-auto">
           <section className="w-full flex flex-col sm:flex-row relative gap-4 md:gap-8 py-2 md:py-10 pb-10">
-            <AMCPSidebar />
+            <AMCPSuiviScientifiqueSidebar />
 
             <section className="w-fit flex flex-col gap-8">
               <article className="flex flex-col gap-5">

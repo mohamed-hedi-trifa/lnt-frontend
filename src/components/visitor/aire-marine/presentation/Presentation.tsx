@@ -1,6 +1,5 @@
 import React from 'react'
 import PageTitle from '../../../atoms/titles/PageTitle'
-import Sidebar from '../../../layout/Sidebar'
 import ContainerImageMarine from '../ContainerImageMarine'
 import HeroSection from '../../HeroSection'
 import AMCPSidebar from '../../../layout/AMCPSidebar'
@@ -8,18 +7,22 @@ import SectionTitle from '../../../atoms/titles/SectionTitle'
 import achievementsHero from '../../../../assets/images/achievements-hero.jpg'
 import PageParagraph from '../../../atoms/PageParagraph'
 
+
 export default function Presentation() {
+    
 
     const images = [
         {
             title: 'Explorez l’Aire Marine Protégée',
             description: 'Préservons ensemble les Îlots Nord de Kerkennah',
-            imageUrl: '/images/aire_marines/marine1.jfif'
+            imageUrl: '/images/aire_marines/marine1.jfif',
+            path: '/protected-air-marine-coastal-areas/presentation/amcp'
         },
         {
             title: 'Découvrez nos Partenaires',
             description: 'Engagés pour la Protection des Îles de Kerkennah',
-            imageUrl: '/images/aire_marines/marine2.jfif'
+            imageUrl: '/images/aire_marines/marine2.jfif',
+            path: '/protected-air-marine-coastal-areas/presentation/partners'
         }
     ]
 
