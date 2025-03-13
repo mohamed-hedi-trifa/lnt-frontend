@@ -16,35 +16,41 @@ const Carousel = ({ slides }: { slides: any[] }) => {
   return (
     <div className="u-wrapper">
       <div className="c-carousel">
-        <Swiper
-          spaceBetween={0}
-          speed={3000}
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: false,
-          }}
-          loop={true}
-          freeMode={false}
-          freeModeMomentum={false}
-          allowTouchMove={true}
-          loopAdditionalSlides={slides ? slides.length : 0}
-          slidesPerView={1}
-          breakpoints={{
-            375: { slidesPerView: 2 },
-            640: { slidesPerView: 3 },
-            768: { slidesPerView: 3 },
-            1024: { slidesPerView: 5 },
-          }}
-          className="c-carousel__wrapper"
-        >
-          {slides?.map((slide, index) => (
-            <SwiperSlide key={index} className="c-carousel__item">
-              <img 
-                  src={`${process.env.GATSBY_API_URL}${slide?.image}`}              
-              alt={slide.name} className="h-20" />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {slides ? (
+          <Swiper
+  spaceBetween={0}
+  speed={1000}
+  autoplay={{
+    delay: 0, // No delay between slides
+    disableOnInteraction: false, // Autoplay continues after user interaction
+  }}
+  loop={true}
+  freeMode={false}
+  freeModeMomentum={false}
+  allowTouchMove={true}
+  loopAdditionalSlides={slides ? slides.length : 0}
+  slidesPerView={1}
+  breakpoints={{
+    375: { slidesPerView: 2 },
+    640: { slidesPerView: 3 },
+    768: { slidesPerView: 3 },
+    1024: { slidesPerView: 5 },
+  }}
+  className="c-carousel__wrapper"
+>
+  {slides?.map((slide, index) => (
+    <SwiperSlide key={index} className="c-carousel__item">
+      <img
+        src={`${process.env.GATSBY_API_URL}${slide?.image}`}
+        alt={slide.name}
+        className="h-20"
+      />
+    </SwiperSlide>
+  ))}
+</Swiper>
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </div>
   );

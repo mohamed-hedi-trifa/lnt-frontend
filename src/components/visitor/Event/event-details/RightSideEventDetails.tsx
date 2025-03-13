@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import LocationMap from '../../LocationMap'
 import LocationIcon from '@/assets/icons/LocationIcon'
 import FacebookIcon from '@/assets/icons/FacebookIcon'
@@ -6,16 +6,35 @@ import FacebookIconType2 from '@/assets/icons/FacebookIconType2'
 import InstagramIconType2 from '@/assets/icons/InstagramIconType2'
 import LinkdinType2 from '@/assets/icons/LinkdinType2'
 import XIconType2 from '@/assets/icons/XIconType2'
+import MapPicker from '@/components/MapPicker'
 
 export default function RightSideEventDetails({event} : {event:any}) {
-    console.log(event)
+
+    const [initialPosition, setInitialPosition] = useState([36.8065, 10.1815]); // Default: Tunis coordinates
+
+    useEffect(() => {
+      if (event?.latitude != null && event?.longitude != null) {
+        setInitialPosition([event.latitude, event.longitude]);
+      }
+    }, [event?.latitude, event?.longitude]);
+    const handleSelectLocation = (lat, lng) => {
+      return
+      };
+
     return (
         <div className='flex flex-col justify-start gap-2 items-start'>
             <div className="font-bold ">
                 Où se déroule l'événement ?
                 
             </div>
-            {/* <LocationMap event={event} />  */}
+           
+           <div className='relative'>
+           <MapPicker initialPosition={initialPosition} onSelectLocation={handleSelectLocation} role="view" />
+    
+           </div>
+    
+            
+            
             <div className="flex gap-2 sm:justify-start items-center ">
                 <span className='text-[#0270A0]'> <LocationIcon /></span>
                 <span className="uppercases text-start  text-xs">Port de pêche de Kraten, Kerkennah</span>

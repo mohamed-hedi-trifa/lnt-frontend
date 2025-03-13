@@ -13,6 +13,7 @@ import ReactLoading from "react-loading";
 import { toast } from "react-toastify";
 import useLocalStorage from "@/lib/useLocalStorage";
 import { v4 as uuidv4 } from "uuid";
+import MapPicker from "../../MapPicker";
 
 interface FormData {
     title_en: string;
@@ -318,6 +319,9 @@ const CreateEvent: React.FC = () => {
         getEventType();
     }, []);
 
+    const handleSelectLocation = (lat, lng) => {
+        setFormData({ ...formData, latitude: lat, longitude: lng });
+      };
     return (
         <div className="h-[calc(100vh-80px)] flex flex-col p-4">
             <div className="flex justify-between">
@@ -408,12 +412,35 @@ const CreateEvent: React.FC = () => {
                         {errors.event_type_id && <div className="text-red-500 text-sm">{errors.event_type_id}</div>}
                     </>
                 )}
+                <input
+                    type="hidden"
+                    name="latitude"
+                    value={formData.latitude || "34.823808"}
+                    onChange={handleChange}
+                />
+                <input
+                    type="hidden"
+                    name="longitude"
+                    value={formData.longitude || "11.250386"}
+                    onChange={handleChange}
+                />
 
-                <Input label="Latitude" type="text" name="latitude" value={formData.latitude || "34.823808"} onChange={handleChange} />
+                {/* Map Picker */}
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Select Location</label>
+                    <MapPicker onSelectLocation={handleSelectLocation} />
+                </div>
+
+                {/* Display Selected Latitude and Longitude (Optional) */}
+                <div className="mt-4">
+                    <p>Selected Latitude: {formData.latitude}</p>
+                    <p>Selected Longitude: {formData.longitude}</p>
+                </div>
+
+                {/* Error Messages */}
                 {errors.latitude && <div className="text-red-500 text-sm">{errors.latitude}</div>}
-
-                <Input label="Longitude" type="text" name="longitude" value={formData.longitude || "11.250386"} onChange={handleChange} />
                 {errors.longitude && <div className="text-red-500 text-sm">{errors.longitude}</div>}
+
 
 
 
@@ -428,7 +455,7 @@ const CreateEvent: React.FC = () => {
                         setItems={language === "en" ? setEnglishItems : setFrenchItems}
                         language={language}
                         key={language}
-                              route = "/api/event-content-items"
+                        route="/api/event-content-items"
                     />
                 ) : (
                     <div className="shadow p-4">There is no content currently, add new content by clicking one of the buttons below</div>

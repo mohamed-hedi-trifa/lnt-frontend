@@ -12,6 +12,8 @@ import Select from "../../atoms/inputs/Select";
 import ItemsList from "../ItemsList";
 // ...
 import { v4 as uuidv4 } from "uuid";
+import MapPicker from "@/components/MapPicker";
+
 
 const EditEvent = ({ location, params }: { location: any; params: any }) => {
 
@@ -74,8 +76,8 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                     description_fr: event.description_fr ?? "",
                     card_description_en: event.card_description_en ?? "",
                     card_description_fr: event.card_description_fr ?? "",
-                    event_start_at: formattedEvnetStartDate, 
-                    event_end_at: formattedEventEndDate, 
+                    event_start_at: formattedEvnetStartDate,
+                    event_end_at: formattedEventEndDate,
                     location_en: event.location_en ?? "",
                     location_fr: event.location_fr ?? "",
                     latitude: event.latitude ?? "",
@@ -262,7 +264,9 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
             Swal.fire("Error", "Failed to update Event.", "error");
         }
     };
-
+    const handleSelectLocation = (lat, lng) => {
+        setFormData({ ...formData, latitude: lat, longitude: lng });
+    };
     return (
         <div className="h-[calc(100vh-80px)] flex flex-col p-4">
             <div className="flex justify-between">
@@ -347,11 +351,41 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                     </>
                 )}
 
-                <Input label="Latitude" type="text" name="latitude" value={formData.latitude} onChange={handleChange} />
+                <input
+                    type="hidden"
+                    name="latitude"
+                    value={formData.latitude}
+                    onChange={handleChange}
+                />
+                <input
+                    type="hidden"
+                    name="longitude"
+                    value={formData.longitude}
+                    onChange={handleChange}
+                />
 
+                <div className="flex items-center gap-20">
 
-                <Input label="Longitude" type="text" name="longitude" value={formData.longitude} onChange={handleChange} />
+                    {/* Map Picker */}
+                    {formData.latitude ? (
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">Select Location</label>
+                        <MapPicker
+                            onSelectLocation={handleSelectLocation}
+                            initialPosition={[formData.latitude, formData.longitude]} // Pass initial position
+                        />
+                    </div>
+  ) : (
+    <p>Loading...</p>
+  )}
+                    {/* Display Selected Latitude and Longitude (Optional) */}
+                    <div className="mt-4">
+                        <p>Selected Latitude: {formData.latitude}</p>
+                        <p>Selected Longitude: {formData.longitude}</p>
+                    </div>
 
+                </div>
+                {/* Status Select */}
                 <Select
                     name="status"
                     label="Status"
@@ -361,7 +395,6 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                     <option value="hidden">Hidden</option>
                     <option value="visible">Visible</option>
                 </Select>
-
 
 
                 <div className="text-sm text-slate-500 font-medium mb-2">Content</div>
