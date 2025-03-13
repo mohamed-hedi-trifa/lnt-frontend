@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 import PageTitle from '../../../atoms/titles/PageTitle'
 import Sidebar from '../../../layout/Sidebar'
 import ContainerImageMarine from '../ContainerImageMarine'
@@ -10,6 +12,26 @@ import HeroSection from '../../HeroSection'
 import PageParagraph from '../../../atoms/PageParagraph'
 
 export default function PresentationPartenaire() {
+
+
+    const [partners, setPartners] = useState<any>(null);
+    const getPartners = async () => {
+        try {
+
+            const res = await axios.get("/api/get-amcp-parteners");
+            setPartners(res.data);
+            console.log(res.data)
+
+        } catch (err) {
+            Swal.fire("Error", err.response?.data?.message || "Failed to fetch edition", "error");
+        } finally {
+
+        }
+    };
+
+    useEffect(() => {
+        getPartners();
+    }, [])
 
     const images = [
         {
@@ -27,6 +49,7 @@ export default function PresentationPartenaire() {
     ]
 
     return (
+        
 
         <div className=''>
 
@@ -51,7 +74,7 @@ export default function PresentationPartenaire() {
                                 />
                             </div>
                             <PageParagraph>L'Aire Marine et Côtière Protégée des îlots nord de l'archipel de Kerkennah repose sur un réseau solide de partenaires engagés. Grâce à leur soutien, nous œuvrons ensemble pour protéger les richesses marines et côtières tout en assurant le développement durable des communautés locales. Nos collaborations s'appuient sur une vision commune : préserver l'écosystème unique de Kerkennah, renforcer la résilience face aux défis environnementaux, et promouvoir des pratiques de pêche durables. Découvrez comment chaque partenaire contribue à la réussite de notre mission et à la préservation de cet espace naturel exceptionnel.</PageParagraph>
-                            <Partners />
+                            <Partners partners={partners}/>
                         </section>
                     </section>
                     <section className='border-t border-[#000000] mb-10 '/>

@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import Swiper, { SwiperOptions } from "swiper";
+import axios from "axios";
+import Swal from "sweetalert2";
 import { SwiperSlideProps } from "swiper/react";
-import UpcomingEventCard from "./UpcomingEventCard";
+import UpcomingEventCard from "./UpcomingCard";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import LangLink from "../LangLink";
+import UpcomingCard from "./UpcomingCard";
 type Kebab<T extends string, A extends string = ""> = T extends `${infer F}${infer R}`
   ? Kebab<R, `${A}${F extends Lowercase<F> ? "" : "-"}${Lowercase<F>}`>
   : A;
@@ -37,7 +40,7 @@ declare global {
       ref?: React.RefObject<SwiperRef>;
       children?: React.ReactNode;
     }
-    interface SwiperSlideAttributes extends KebabObjectKeys<SwiperSlideProps> {}
+    interface SwiperSlideAttributes extends KebabObjectKeys<SwiperSlideProps> { }
   }
 }
 
@@ -50,86 +53,9 @@ type Event = {
   sub?: string;
 };
 
-const defaultEvents: Event[] = [
-  {
-    image:
-      "https://s3-alpha-sig.figma.com/img/2c11/7c68/bc48112ce61984596b11b9b169f0c478?Expires=1731283200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TsmEh4P0HalKpMYqrPEcjbYAz6pX37d1Bxts6G6CxF4o0pTPhKN8MtHlEHL8j8MafZ~1YojN0vI0PzbJrn6u8Fr4qM-rzSgi51A7JP-wWKHvh9144uoM3sHU7xLoiEJIwIUiVggxyXVQUPywRai-ruacP8Jm5i~qunxwfLtb3JVd42KtcXoVrdX1WFCunOpxu9qLb3aDGu6vxRo3jD1XAoapxSEq1PGyvML29Tg4mGTpnCzUfZYXwEnRfZGIiJf1A~znsmRIpq6oSvmxfcIiJXg3DSinFPhc7mnSzTEvM07GZqDZuhkf4gmLGoHTwnKrsd5cUtaTjzxfcff4x~Bjuw__",
-    title: "Festival de la Culture des îles Méditerranéennes de Kerkennah",
-    content: `L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), en partenariat avec la Maison des Jeunes de Kraten, organise le Festival de la Culture des Îles Méditerranéennes "Édition du regretté Farid Khasharem". Du 1er au 6 août`,
-    date: new Date("2024-12-31T00:00:00"),
-    location: "Kraten, Kerkennah",
-    sub: "Du 1er au 6 août",
-  },
-  {
-    image:
-      "https://s3-alpha-sig.figma.com/img/2c11/7c68/bc48112ce61984596b11b9b169f0c478?Expires=1731283200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TsmEh4P0HalKpMYqrPEcjbYAz6pX37d1Bxts6G6CxF4o0pTPhKN8MtHlEHL8j8MafZ~1YojN0vI0PzbJrn6u8Fr4qM-rzSgi51A7JP-wWKHvh9144uoM3sHU7xLoiEJIwIUiVggxyXVQUPywRai-ruacP8Jm5i~qunxwfLtb3JVd42KtcXoVrdX1WFCunOpxu9qLb3aDGu6vxRo3jD1XAoapxSEq1PGyvML29Tg4mGTpnCzUfZYXwEnRfZGIiJf1A~znsmRIpq6oSvmxfcIiJXg3DSinFPhc7mnSzTEvM07GZqDZuhkf4gmLGoHTwnKrsd5cUtaTjzxfcff4x~Bjuw__",
-    title: "Festival de la Culture des îles Méditerranéennes de Kerkennah",
-    content: `L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), en partenariat avec la Maison des Jeunes de Kraten, organise le Festival de la Culture des Îles Méditerranéennes "Édition du regretté Farid Khasharem". Du 1er au 6 août`,
-    date: new Date(),
-    location: "Kraten, Kerkennah",
-    sub: "Du 1er au 6 août",
-  },
-  {
-    image:
-      "https://s3-alpha-sig.figma.com/img/2c11/7c68/bc48112ce61984596b11b9b169f0c478?Expires=1731283200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TsmEh4P0HalKpMYqrPEcjbYAz6pX37d1Bxts6G6CxF4o0pTPhKN8MtHlEHL8j8MafZ~1YojN0vI0PzbJrn6u8Fr4qM-rzSgi51A7JP-wWKHvh9144uoM3sHU7xLoiEJIwIUiVggxyXVQUPywRai-ruacP8Jm5i~qunxwfLtb3JVd42KtcXoVrdX1WFCunOpxu9qLb3aDGu6vxRo3jD1XAoapxSEq1PGyvML29Tg4mGTpnCzUfZYXwEnRfZGIiJf1A~znsmRIpq6oSvmxfcIiJXg3DSinFPhc7mnSzTEvM07GZqDZuhkf4gmLGoHTwnKrsd5cUtaTjzxfcff4x~Bjuw__",
-    title: "Festival de la Culture des îles Méditerranéennes de Kerkennah",
-    content: `L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), en partenariat avec la Maison des Jeunes de Kraten, organise le Festival de la Culture des Îles Méditerranéennes "Édition du regretté Farid Khasharem". Du 1er au 6 août`,
-    date: new Date(),
-    location: "Kraten, Kerkennah",
-    sub: "Du 1er au 6 août",
-  },
-  {
-    image: "https://elcamba.ahmedatri.com/logo.png",
-    title: "Festival de la Culture des îles Méditerranéennes de Kerkennah",
-    content: `L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), en partenariat avec la Maison des Jeunes de Kraten, organise le Festival de la Culture des Îles Méditerranéennes "Édition du regretté Farid Khasharem". Du 1er au 6 août`,
-    date: new Date(),
-    location: "Kraten, Kerkennah",
-    sub: "Du 1er au 6 août",
-  },
-  {
-    image: "https://elcamba.ahmedatri.com/logo.png",
-    title: "Festival de la Culture des îles Méditerranéennes de Kerkennah",
-    content: `L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), en partenariat avec la Maison des Jeunes de Kraten, organise le Festival de la Culture des Îles Méditerranéennes "Édition du regretté Farid Khasharem". Du 1er au 6 août`,
-    date: new Date(),
-    location: "Kraten, Kerkennah",
-    sub: "Du 1er au 6 août",
-  },
-  {
-    image: "https://elcamba.ahmedatri.com/logo.png",
-    title: "Festival de la Culture des îles Méditerranéennes de Kerkennah",
-    content: `L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), en partenariat avec la Maison des Jeunes de Kraten, organise le Festival de la Culture des Îles Méditerranéennes "Édition du regretté Farid Khasharem". Du 1er au 6 août`,
-    date: new Date(),
-    location: "Kraten, Kerkennah",
-    sub: "Du 1er au 6 août",
-  },
-  {
-    image: "https://elcamba.ahmedatri.com/logo.png",
-    title: "Festival de la Culture des îles Méditerranéennes de Kerkennah",
-    content: `L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), en partenariat avec la Maison des Jeunes de Kraten, organise le Festival de la Culture des Îles Méditerranéennes "Édition du regretté Farid Khasharem". Du 1er au 6 août`,
-    date: new Date(),
-    location: "Kraten, Kerkennah",
-    sub: "Du 1er au 6 août",
-  },
-  {
-    image: "https://elcamba.ahmedatri.com/logo.png",
-    title: "Festival de la Culture des îles Méditerranéennes de Kerkennah",
-    content: `L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), en partenariat avec la Maison des Jeunes de Kraten, organise le Festival de la Culture des Îles Méditerranéennes "Édition du regretté Farid Khasharem". Du 1er au 6 août`,
-    date: new Date(),
-    location: "Kraten, Kerkennah",
-    sub: "Du 1er au 6 août",
-  },
-  {
-    image: "https://elcamba.ahmedatri.com/logo.png",
-    title: "Festival de la Culture des îles Méditerranéennes de Kerkennah",
-    content: `L'Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), en partenariat avec la Maison des Jeunes de Kraten, organise le Festival de la Culture des Îles Méditerranéennes "Édition du regretté Farid Khasharem". Du 1er au 6 août`,
-    date: new Date(),
-    location: "Kraten, Kerkennah",
-    sub: "Du 1er au 6 août",
-  },
-];
 
 export default function UpcomingEvents() {
-  const [events, setEvents] = useState(defaultEvents);
+
   const swiperRef = useRef<SwiperRef>(null);
 
   useEffect(() => {
@@ -155,19 +81,39 @@ export default function UpcomingEvents() {
     swiperRef.current?.initialize();
   }, []);
 
+  const [data, setData] = useState<any>(null);
+  const [dataType, setDataType] = useState<string>("");
+
+  const fetchVisibleEventTypes = async () => {
+    try {
+      const response = await axios.get("/api/visible-event-types");
+
+      // Set both the data and the type
+      setData(response.data.data);
+      setDataType(response.data.type);
+    } catch (error) {
+      Swal.fire("Error", error.response?.data?.message || "Failed to fetch event types", "error");
+    }
+  };
+
+  useEffect(() => {
+    fetchVisibleEventTypes();
+  }, []);
+
   return (
     <section className="px-3 py-20">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-primary text-2xl sm:text-[40px] text-center font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
-          Événements à venir
+          {dataType === "event" ? "Événements" : "Réalisation"}  à venir
         </h2>
         <article className="mt-10">
           <swiper-container ref={swiperRef} class="w-full mx-auto max-w-[360px] md:max-w-7xl" init="false">
-            {events?.map((event, index) => (
-              <swiper-slide key={index} class="relative pb-10">
-                <UpcomingEventCard event={event} />
+            {data?.map((item, index) => (
+              <swiper-slide key={index} className="relative pb-10">
+                <UpcomingCard data={item} type={item.type} />
               </swiper-slide>
             ))}
+
           </swiper-container>
           <div className="relative z-10 flex justify-between max-w-[300px] md:max-w-4xl mx-auto px-3 translate-y-[-90px] md:translate-y-0">
             <button id="events-prev">
@@ -195,16 +141,10 @@ export default function UpcomingEvents() {
           </div>
 
           <LangLink
-            to="/events"
+            to={`/${dataType === "event" ? "event" : "who-are-we/our-achievements"}`}
             className="block w-fit mx-auto mt-4 md:-mt-4 px-5 py-4 text-white font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
-
-
-          // <LangLink
-          //   to="/events"
-          //   className="block w-fit mx-auto mt-4 md:-mt-4 px-5 py-4 text-white font-semibold rounded-full bg-[linear-gradient(to_right,#006E9F,#51ADC6,#006E9F)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
-
           >
-            Voir tous les événements
+            Voir tous les  {dataType === "event" ? "événements" : "réalisation"}
           </LangLink>
         </article>
       </div>

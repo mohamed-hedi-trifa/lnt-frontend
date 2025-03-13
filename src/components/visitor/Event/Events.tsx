@@ -27,7 +27,7 @@ export default function Events() {
 
   const fetchEventTypes = async () => {
     try {
-      const response = await axios.get('/api/event-type');
+      const response = await axios.get('/api/active-event-type');
       setEventTypes(response.data);
     } catch (error) {
       console.error('Error fetching event types:', error);
@@ -41,7 +41,7 @@ export default function Events() {
 
   const renderEventSection = (displayPlace, defaultTitle) => {
 
- 
+
 
     const eventType = eventTypes.find(et => et.display_place === displayPlace);
 
@@ -49,22 +49,22 @@ export default function Events() {
       <div>
         <TitleSectionEvent
           headerName={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}
-          showButton={true}
+          showButton={ eventType?.events?.length >0 ? true : false}
         />
         {eventType ? (
           displayPlace === 'card3' ? (
-            <PopularEventType2 events={eventType.events} eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}/>
+            <PopularEventType2 events={eventType.events} eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} />
           ) : (
-            <PopularEventType1 events={eventType.events} eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}/>
+            <PopularEventType1 events={eventType.events} eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} />
           )
         ) : (
           displayPlace === 'card3' ? (
-            <LeisureAndSportsActivities event_title={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}  />
+            <LeisureAndSportsActivities event_title={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} />
           ) : (
             <EmptyEvent1 />
           )
-          
-   
+
+
         )}
       </div>
     );
@@ -99,7 +99,7 @@ export default function Events() {
 
       <section
         className="rounded-xl shadow-helmi mb-10 bg-[rgba(255, 255, 255, 0.40)]"
-      
+
 
       >
 

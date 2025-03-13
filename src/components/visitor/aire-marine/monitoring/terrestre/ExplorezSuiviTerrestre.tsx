@@ -1,41 +1,31 @@
 import ResearchCard from "@/components/visitor/aire-marine/monitoring/terrestre/ResearchCard";
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 import { SwiperOptions } from "swiper/types";
 
-type Research = {
-  image?: string;
-  title?: string;
-};
 
-const defaultResearches: Research[] = [
-  {
-    image: "/posidonie.jpg",
-    title: "Posidonie",
-  },
-  {
-    image: "/grande_nacre.jpg",
-    title: "Grande Nacre",
-  },
-  {
-    image: "/poulpe.jpg",
-    title: "Poulpe",
-  },
-  {
-    image: "/tortue_marine.jpg",
-    title: "Tortue Marine",
-  },
-  {
-    image: "/eponge_marine.jpg",
-    title: "Éponge Marine",
-  },
-  {
-    image: "/avifaunes.jpg",
-    title: "Avifaune",
-  },
-];
 
 export default function ExplorezSuiviTerrestre() {
-  const [researches, setResearches] = useState(defaultResearches);
+  const [researches, setResearches] = useState();
+
+  const getResearches = async () => {
+    try {
+
+      const res = await axios.get("/api/get-terrestre-researches");
+      setResearches(res.data);
+      console.log(res.data)
+
+    } catch (err) {
+      Swal.fire("Error", err.response?.data?.message || "Failed to fetch edition", "error");
+    } finally {
+
+    }
+  };
+
+  useEffect(() => {
+    getResearches();
+  }, [])
   const swiperRef = useRef<any>(null);
 
   useEffect(() => {
