@@ -19,6 +19,8 @@ interface FormData {
     title_fr: string;
     description_en: string;
     description_fr: string;
+    card_description_en: string;
+    card_description_fr: string;
     event_start_at: Date;
     event_end_at: Date;
     location_en: string;
@@ -39,6 +41,8 @@ const CreateEvent: React.FC = () => {
         title_fr: "",
         description_en: "",
         description_fr: "",
+        card_description_en: "",
+        card_description_fr: "",
         event_start_at: "",
         event_end_at: "",
         location_en: "",
@@ -131,7 +135,10 @@ const CreateEvent: React.FC = () => {
                 newErrors.title_en = "Title is required.";
             }
             if (!formData.description_en) {
-                newErrors.summary_en = "Summary is required.";
+                newErrors.summary_en = "description is required.";
+            }
+            if (!formData.card_description_en) {
+                newErrors.card_description_en = "card description is required.";
             }
             if (!formData.event_start_at) {
                 newErrors.event_start_at = "Event date and time are required.";
@@ -157,7 +164,10 @@ const CreateEvent: React.FC = () => {
                 newErrors.title_fr = "Title is required.";
             }
             if (!formData.description_fr) {
-                newErrors.summary_fr = "Summary is required.";
+                newErrors.description_fr = "description is required.";
+            }
+            if (!formData.card_description_fr) {
+                newErrors.card_description_fr = "card description is required.";
             }
             if (!formData.event_start_at) {
                 newErrors.event_start_at = "Event date and time are required.";
@@ -331,6 +341,9 @@ const CreateEvent: React.FC = () => {
                         <Input label="Description" type="text" name="description_en" value={formData.description_en} onChange={handleChange} />
                         {errors.description_en && <div className="text-red-500 text-sm">{errors.description_en}</div>}
 
+                        <Input label="Card Description" type="text" name="card_description_en" value={formData.card_description_en} onChange={handleChange} />
+                        {errors.card_description_en && <div className="text-red-500 text-sm">{errors.card_description_en}</div>}
+
                         <Input label="Event Date & Time" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
                         {errors.event_start_at && <div className="text-red-500 text-sm">{errors.event_start_at}</div>}
 
@@ -365,6 +378,9 @@ const CreateEvent: React.FC = () => {
 
                         <Input label="Description" type="text" name="description_fr" value={formData.description_fr} onChange={handleChange} />
                         {errors.description_fr && <div className="text-red-500 text-sm">{errors.description_fr}</div>}
+
+                        <Input label="Card Description" type="text" name="card_description_fr" value={formData.card_description_fr} onChange={handleChange} />
+                        {errors.card_description_fr && <div className="text-red-500 text-sm">{errors.card_description_fr}</div>}
 
                         <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
                         {errors.event_start_at && <div className="text-red-500 text-sm">{errors.event_start_at}</div>}

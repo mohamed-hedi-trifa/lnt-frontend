@@ -27,6 +27,8 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
         title_fr: "",
         description_en: "",
         description_fr: "",
+        card_description_en: "",
+        card_description_fr: "",
         event_start_at: "",
         event_end_at: "",
         location_en: "",
@@ -70,6 +72,8 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
                     title_fr: event.title_fr ?? "",
                     description_en: event.description_en ?? "",
                     description_fr: event.description_fr ?? "",
+                    card_description_en: event.card_description_en ?? "",
+                    card_description_fr: event.card_description_fr ?? "",
                     event_start_at: formattedEvnetStartDate, 
                     event_end_at: formattedEventEndDate, 
                     location_en: event.location_en ?? "",
@@ -288,6 +292,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
 
                         <Input label="Description" type="text" name="description_en" value={formData.description_en} onChange={handleChange} />
 
+                        <Input label="Card Description" type="text" name="card_description_en" value={formData.card_description_en} onChange={handleChange} />
 
                         <Input label="Event Date & Time" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
                         <Input label="Event Date & Time" type="datetime-local" name="event_end_at" value={formData.event_end_at} onChange={handleChange} />
@@ -316,6 +321,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
 
                         <Input label="Description" type="text" name="description_fr" value={formData.description_fr} onChange={handleChange} />
 
+                        <Input label="Card Description" type="text" name="card_description_fr" value={formData.card_description_fr} onChange={handleChange} />
 
                         <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
                         <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_end_at" value={formData.event_end_at} onChange={handleChange} />
