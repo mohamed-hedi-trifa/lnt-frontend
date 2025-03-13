@@ -1,41 +1,34 @@
 import ResearchCard from "@/components/visitor/aire-marine/monitoring/terrestre/ResearchCard";
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 import { SwiperOptions } from "swiper/types";
 
-type Research = {
-  image?: string;
-  title?: string;
-};
 
-const defaultResearches: Research[] = [
-  {
-    image: "/posidonie.jpg",
-    title: "Posidonie",
-  },
-  {
-    image: "/grande_nacre.jpg",
-    title: "Grande Nacre",
-  },
-  {
-    image: "/poulpe.jpg",
-    title: "Poulpe",
-  },
-  {
-    image: "/tortue_marine.jpg",
-    title: "Tortue Marine",
-  },
-  {
-    image: "/eponge_marine.jpg",
-    title: "Éponge Marine",
-  },
-  {
-    image: "/avifaunes.jpg",
-    title: "Avifaune",
-  },
-];
 
-export default function DecouvrezDautresEspeces() {
-  const [researches, setResearches] = useState(defaultResearches);
+
+export default function DecouvrezDautresEspeces({ currentBlog }: { currentBlog: any }) {
+
+  const [researches, setResearches] = useState();
+
+  const getResearches = async () => {
+    try {
+
+      const res = await axios.get(`/api/get-${currentBlog.type}-researches`);
+      setResearches(res.data);
+      console.log(res.data)
+
+    } catch (err) {
+      Swal.fire("Error", err.response?.data?.message || "Failed to fetch edition", "error");
+    } finally {
+
+    }
+  };
+
+  useEffect(() => {
+    getResearches();
+  }, [])
+
   const swiperRef = useRef<any>(null);
 
   useEffect(() => {
@@ -51,33 +44,37 @@ export default function DecouvrezDautresEspeces() {
 
   return (
     <article className="">
-       <span className="font-bold py-10">
+      <span className="font-bold py-10">
         <p className="text-center text-[28px] sm:text-[36px]">
-            <span className="text-[#0270A0]">Découvrez</span> d'autres espèces fascinantes qui{" "}
+          <span className="text-[#0270A0]">Découvrez</span> d'autres espèces fascinantes qui{" "}
         </p>
         <p className="text-center text-[28px] sm:text-[36px]">
-            peuplent nos écosystèmes marins
+          peuplent nos écosystèmes marins
         </p>
         <p className="text-center text-[18px] sm:text-[20px]">
-            Découvrez les trésors marins que nous préservons
+          Découvrez les trésors marins que nous préservons
         </p>
-       </span>
+      </span>
       <div className="hidden md:block">
         <swiper-container ref={swiperRef} class="w-full mt-[50px] mb-[50px] mx-auto" init="false">
-          {researches?.map((research, index) => (
-            <swiper-slide key={index} class="relative w-fit">
-              <ResearchCard image={research.image} title={research.title} />
-            </swiper-slide>
-          ))}
+          {researches
+            ?.filter((research) => research.id !== currentBlog.id)
+            .map((research, index) => (
+              <swiper-slide key={index} class="relative w-fit">
+                <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
+              </swiper-slide>
+            ))}
         </swiper-container>
       </div>
       <div className="md:hidden">
         <div className="grid grid-cols-2 mt-[50px] mb-[80px] gap-[20px]">
-          {researches?.map((research, index) => (
-            <div key={index} className="relative">
-              <ResearchCard image={research.image} title={research.title} />
-            </div>
-          ))}
+          {researches
+            ?.filter((research) => research.id !== currentBlog.id )
+            .map((research, index) => (
+              <div key={index} className="relative">
+                <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
+              </div>
+            ))}
         </div>
       </div>
     </article>

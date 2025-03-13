@@ -221,7 +221,7 @@ export default function Blog({ location, params }: { location: any; params: any 
           </PageParagraph>
           <Table data={dataTable} />
           <section className="border-t border-[#000000] mt-10 py-10">
-            <DecouvrezDautresEspeces />
+            <DecouvrezDautresEspeces currentBlog={blogPost}/>
           </section>
         </div>
       </div>

@@ -13,12 +13,15 @@ import ReactLoading from "react-loading";
 import { toast } from "react-toastify";
 import useLocalStorage from "@/lib/useLocalStorage";
 import { v4 as uuidv4 } from "uuid";
+import MapPicker from "../../MapPicker";
 
 interface FormData {
     title_en: string;
     title_fr: string;
     description_en: string;
     description_fr: string;
+    card_description_en: string;
+    card_description_fr: string;
     event_start_at: Date;
     event_end_at: Date;
     location_en: string;
@@ -39,6 +42,8 @@ const CreateEvent: React.FC = () => {
         title_fr: "",
         description_en: "",
         description_fr: "",
+        card_description_en: "",
+        card_description_fr: "",
         event_start_at: "",
         event_end_at: "",
         location_en: "",
@@ -131,7 +136,10 @@ const CreateEvent: React.FC = () => {
                 newErrors.title_en = "Title is required.";
             }
             if (!formData.description_en) {
-                newErrors.summary_en = "Summary is required.";
+                newErrors.summary_en = "description is required.";
+            }
+            if (!formData.card_description_en) {
+                newErrors.card_description_en = "card description is required.";
             }
             if (!formData.event_start_at) {
                 newErrors.event_start_at = "Event date and time are required.";
@@ -157,7 +165,10 @@ const CreateEvent: React.FC = () => {
                 newErrors.title_fr = "Title is required.";
             }
             if (!formData.description_fr) {
-                newErrors.summary_fr = "Summary is required.";
+                newErrors.description_fr = "description is required.";
+            }
+            if (!formData.card_description_fr) {
+                newErrors.card_description_fr = "card description is required.";
             }
             if (!formData.event_start_at) {
                 newErrors.event_start_at = "Event date and time are required.";
@@ -308,6 +319,9 @@ const CreateEvent: React.FC = () => {
         getEventType();
     }, []);
 
+    const handleSelectLocation = (lat, lng) => {
+        setFormData({ ...formData, latitude: lat, longitude: lng });
+      };
     return (
         <div className="h-[calc(100vh-80px)] flex flex-col p-4">
             <div className="flex justify-between">
@@ -330,6 +344,9 @@ const CreateEvent: React.FC = () => {
 
                         <Input label="Description" type="text" name="description_en" value={formData.description_en} onChange={handleChange} />
                         {errors.description_en && <div className="text-red-500 text-sm">{errors.description_en}</div>}
+
+                        <Input label="Card Description" type="text" name="card_description_en" value={formData.card_description_en} onChange={handleChange} />
+                        {errors.card_description_en && <div className="text-red-500 text-sm">{errors.card_description_en}</div>}
 
                         <Input label="Event Date & Time" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
                         {errors.event_start_at && <div className="text-red-500 text-sm">{errors.event_start_at}</div>}
@@ -366,6 +383,9 @@ const CreateEvent: React.FC = () => {
                         <Input label="Description" type="text" name="description_fr" value={formData.description_fr} onChange={handleChange} />
                         {errors.description_fr && <div className="text-red-500 text-sm">{errors.description_fr}</div>}
 
+                        <Input label="Card Description" type="text" name="card_description_fr" value={formData.card_description_fr} onChange={handleChange} />
+                        {errors.card_description_fr && <div className="text-red-500 text-sm">{errors.card_description_fr}</div>}
+
                         <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
                         {errors.event_start_at && <div className="text-red-500 text-sm">{errors.event_start_at}</div>}
 
@@ -392,12 +412,35 @@ const CreateEvent: React.FC = () => {
                         {errors.event_type_id && <div className="text-red-500 text-sm">{errors.event_type_id}</div>}
                     </>
                 )}
+                <input
+                    type="hidden"
+                    name="latitude"
+                    value={formData.latitude || "34.823808"}
+                    onChange={handleChange}
+                />
+                <input
+                    type="hidden"
+                    name="longitude"
+                    value={formData.longitude || "11.250386"}
+                    onChange={handleChange}
+                />
 
-                <Input label="Latitude" type="text" name="latitude" value={formData.latitude || "34.823808"} onChange={handleChange} />
+                {/* Map Picker */}
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Select Location</label>
+                    <MapPicker onSelectLocation={handleSelectLocation} />
+                </div>
+
+                {/* Display Selected Latitude and Longitude (Optional) */}
+                <div className="mt-4">
+                    <p>Selected Latitude: {formData.latitude}</p>
+                    <p>Selected Longitude: {formData.longitude}</p>
+                </div>
+
+                {/* Error Messages */}
                 {errors.latitude && <div className="text-red-500 text-sm">{errors.latitude}</div>}
-
-                <Input label="Longitude" type="text" name="longitude" value={formData.longitude || "11.250386"} onChange={handleChange} />
                 {errors.longitude && <div className="text-red-500 text-sm">{errors.longitude}</div>}
+
 
 
 
@@ -412,7 +455,7 @@ const CreateEvent: React.FC = () => {
                         setItems={language === "en" ? setEnglishItems : setFrenchItems}
                         language={language}
                         key={language}
-                              route = "/api/event-content-items"
+                        route="/api/event-content-items"
                     />
                 ) : (
                     <div className="shadow p-4">There is no content currently, add new content by clicking one of the buttons below</div>

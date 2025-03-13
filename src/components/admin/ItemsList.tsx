@@ -33,6 +33,7 @@ const handleDragEnd = (event:any) => {
     setItems(newItems);
   };
   
+  console.log(items)
 
   return (
     <DndContext 
