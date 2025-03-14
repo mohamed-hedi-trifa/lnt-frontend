@@ -20,7 +20,7 @@ export default function Partners() {
           console.log(res.data)
 
       } catch (err) {
-          Swal.fire("Error", err.response?.data?.message || "Failed to fetch edition", "error");
+          Swal.fire("Error", err.response?.data?.message || "Failed to fetch Partners", "error");
       } finally {
 
       }

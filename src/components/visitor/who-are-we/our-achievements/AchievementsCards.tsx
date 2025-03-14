@@ -1,20 +1,51 @@
-import React, { useEffect, useState } from 'react'
-import axios from "axios"
-import AchievementCard from './AchievementCard'
-import Pagination from '../../Pagination'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import AchievementCard from './AchievementCard';
+import Pagination from '../../Pagination';
 import ButtonDropdown from '@/components/ButtonDropdown';
 import FilterIcon from '@/assets/icons/FilterIcon';
 import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
-import sortIcon from "@/assets/icons/sort-icon.png"
+import sortIcon from '@/assets/icons/sort-icon.png';
 import { Link } from 'gatsby';
 
+interface AchievementsCardsProps {
+  filter:{
+    searchQuery?: string;
+    themes?: number[];
+    dateFilter?: any; 
+    sortOrder?: 'desc' | 'asc';
+  }
+  setIsOpened: (val: boolean) => void;
+}
 
-export default function AchievementsCards({filter}:{filter?:{themes:number[]}}) {
+export default function AchievementsCards({
+  filter,
+  setIsOpened,
+}: AchievementsCardsProps) {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [limit] = useState<number>(10); // Limite d'éléments par page
+  const [loading, setLoading] = useState<boolean>(true);
+  const [itemsList, setItemsList] = useState<any[]>([]);
+
+  // Définir la fonction de tri ici (en fonction de la date)
+  function sortByDate(data: any[], order: 'desc' | 'asc'): any[] {
+    const sortedData = [...data].sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+
+      return order === 'desc'
+        ? dateB - dateA // le plus récent en premier
+        : dateA - dateB; // le plus ancien en premier
+    });
+    return sortedData;
+  }
+
+  // Petit helper pour éviter les erreurs si le tableau est undefined
+  const resSafeLength = (arr: any[]) => (Array.isArray(arr) ? arr.length : 0);
+
   const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
   const [searchQuery, setSearchQuery] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [limit, setLimit] = useState(10);
   const [themes, setThemes] = useState([]);
 
   const handleSearchChange = (e: any) => {
@@ -27,8 +58,6 @@ export default function AchievementsCards({filter}:{filter?:{themes:number[]}}) 
       setCurrentPage(newPage);
     }
   };
-  const [loading, setLoading] = useState(true);
-  const [itemsList, setItemsList] = useState([]);
 
   function getPosts(query: any, page = currentPage, themes:number[]) {
     setLoading(true);
@@ -70,66 +99,129 @@ export default function AchievementsCards({filter}:{filter?:{themes:number[]}}) 
   if (loading) return "Loading..."
 
 
+  // Indices pour l'affichage "X - Y de ..."
+  const startIndex = (currentPage - 1) * limit + 1;
+  const endIndex = Math.min(currentPage * limit, resSafeLength(itemsList));
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
-      <div className='hidden sm:flex justify-between relative z-20'>
+      {/* Barre du haut (version desktop) pour le tri */}
+      <div className="hidden sm:flex justify-between relative z-20">
+        {/* Dropdown de tri (exemple minimaliste) */}
         <ButtonDropdown
-          items={themes}
+          items={[
+            { key: 'desc', name: 'Les plus récents' },
+            { key: 'asc', name: 'Les plus anciens' },
+          ]}
           position="left"
+          // onSelect={(item:any) => {
+          //   console.log('Selected sort:', item);
+          // }}
           renderItem={(item) => (
-            <div className='py-1 px-4'> {item[`name_${lang}`]}</div>
+            <div className='py-1 px-4 cursor-pointer'> {item[`name_${lang}`]}</div>
           )}
         >
           {(isOpen) => (
-            <button className="h-12 rounded-[10px] border-2 border-black justify-center items-center flex w-fit">
-              <div className="px-2 py-1.5 justify-center items-center gap-2 flex">
-                <div className='text-primary'> <img src={sortIcon} className='size-6' /> </div>
-                <div className="text-center text-black text-xl font-medium font-['Montserrat'] leading-tight tracking-tight">Trier</div>
-                <div className={`w-6 h-6 relative transition duration-200 ${isOpen ? "-rotate-180" : ""}`}><ArrowDownIcon /></div>
+            <button className="h-12 rounded-[10px] border-2 border-black flex items-center">
+              <div className="px-2 py-1.5 flex items-center gap-2">
+                <img src={sortIcon} className="size-6" alt="Sort Icon" />
+                <div className="text-black text-xl font-medium font-['Montserrat']">
+                  Trier
+                </div>
+                <div
+                  className={`w-6 h-6 transition duration-200 ${
+                    isOpen ? '-rotate-180' : ''
+                  }`}
+                >
+                  <ArrowDownIcon />
+                </div>
               </div>
             </button>
           )}
         </ButtonDropdown>
 
-        <div className="text-center text-black text-xl font-semibold font-['Montserrat'] leading-tight tracking-tight mt-[2px]"> {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList?.length)} de ${itemsList?.length} Publicaciones`}</div>
+        <div className="text-black text-xl font-semibold font-['Montserrat'] mt-[2px]">
+          {` ${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} Réalisations`}
+        </div>
       </div>
-      <div className='sm:hidden flex justify-between pr-5 relative z-20'>
-        <button type='button' onClick={() => {}} className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl justify-start items-center gap-2.5 inline-flex">
+
+      {/* Barre du haut (version mobile) */}
+      <div className="sm:hidden flex justify-between pr-5 relative z-20">
+        {/* Bouton pour ouvrir la sidebar de filtres (mobile) */}
+        <button
+          type="button"
+          onClick={() => setIsOpened(true)}
+          className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl flex items-center gap-2.5"
+        >
           <FilterIcon />
-          <div className="text-center text-white text-sm font-bold font-['Montserrat']">Filtres</div>
+          <div className="text-white text-sm font-bold font-['Montserrat']">
+            Filtres
+          </div>
         </button>
+
+        {/* Dropdown de tri (mobile) */}
         <ButtonDropdown
-          items={themes}
+          items={[
+            { key: 'desc', name: 'Les plus récents' },
+            { key: 'asc', name: 'Les plus anciens' },
+          ]}
           position="right"
+          // onSelect={(item:any) => {
+          //   console.log('Selected sort:', item);
+          // }}
           renderItem={(item) => (
-            <div className='py-1 px-4'> {item.name}</div>
+            <div className="py-1 px-4 cursor-pointer">{item.name}</div>
           )}
         >
           {(isOpen) => (
-            <button className="h-12 rounded-[10px] border-2 border-black justify-center items-center flex w-fit">
-              <div className="px-2 py-1.5 justify-center items-center gap-2 flex">
-                <div className='text-primary'> <img src={sortIcon} className='size-6' /> </div>
-                <div className="text-center text-black text-xl font-medium font-['Montserrat'] leading-tight tracking-tight">Trier</div>
-                <div className={`w-6 h-6 relative transition duration-200 ${isOpen ? "-rotate-180" : ""}`}><ArrowDownIcon /></div>
+            <button className="h-12 rounded-[10px] border-2 border-black flex items-center">
+              <div className="px-2 py-1.5 flex items-center gap-2">
+                <img src={sortIcon} className="size-6" alt="Sort Icon" />
+                <div className="text-black text-xl font-medium font-['Montserrat']">
+                  Trier
+                </div>
+                <div
+                  className={`w-6 h-6 transition duration-200 ${
+                    isOpen ? '-rotate-180' : ''
+                  }`}
+                >
+                  <ArrowDownIcon />
+                </div>
               </div>
             </button>
           )}
         </ButtonDropdown>
       </div>
-      <div className='sm:hidden px-5 font-semibold leading-[20px] pt-5'>
-        {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList?.length)} de ${itemsList?.length} Publicaciones`}
+
+      {/* Info text sur mobile */}
+      <div className="sm:hidden px-5 font-semibold pt-5">
+        {`${startIndex} - ${endIndex} de ??? réalisations`}
       </div>
-      <section className='flex flex-col gap-8 w-full relative z-10 my-5'>
-        <div className='grid sm:grid-cols-2 gap-4'>
-          {itemsList?.map((achievement: any) => (
-            <Link key={achievement.id} to={`/who-are-we/our-achievements/${achievement.slug}`}>
-              <AchievementCard key={achievement.id} achievement={achievement} />
-            </Link>
+
+      {/* Grille de cartes */}
+      <section className="flex flex-col gap-8 w-full relative z-10 my-5">
+        <div className="grid sm:grid-cols-2 gap-4">
+
+          {itemsList.map((achievement: any) => (
+              <Link key={achievement.id} to={`/who-are-we/our-achievements/${achievement.slug}`}>
+                <AchievementCard key={achievement.id} achievement={achievement} />
+              </Link>
           ))}
         </div>
 
-        <div className='flex justify-center'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>
+        {/* Pagination */}
+        <div className="flex justify-center">
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </section>
     </div>
-  )
+  );
 }

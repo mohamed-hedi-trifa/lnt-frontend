@@ -267,8 +267,8 @@ const EditTeamMembers = ({ location, params }: { location: any; params: any }) =
 
 
 
-
                 <Input label="Image" type="file" name="image" onChange={handleImageChange} />
+                <p className="   text-red-500 p-2 mx-2">Please note that all Team Members' photos must have the same dimensions</p>
                 <Button type="submit">Update Member</Button>
             </form>
 

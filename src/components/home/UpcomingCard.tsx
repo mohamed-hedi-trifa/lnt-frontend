@@ -1,20 +1,8 @@
-import { ArrowLeftCircleIcon, ArrowRightCircleIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import React, { useEffect, useState } from "react";
 
-type Event = {
-  image?: string;
-  title?: string;
-  content?: string;
-  date?: Date;
-  location?: string;
-  sub?: string;
-};
 
-type Props = {
-  event: Event;
-};
 
-export default function UpcomingEventCard({ event }: Props) {
+export default function UpcomingCard({ data, type }:  {data: any , type:string}) {
   const [remainingTime, setRemainingTime] = useState({
     days: 0,
     hours: 0,
@@ -24,7 +12,7 @@ export default function UpcomingEventCard({ event }: Props) {
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date().getTime();
-      const difference = new Date(event.date || new Date()).getTime() - now;
+      const difference = new Date(data.date || new Date()).getTime() - now;
 
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -38,12 +26,14 @@ export default function UpcomingEventCard({ event }: Props) {
     }, 1000);
 
     return () => clearInterval(interval); // Cleanup on unmount
-  }, [event.date]);
+  }, [data.date]);
 
   return (
     <div className="border rounded-lg overflow-hidden">
       <div className="w-full aspect-square">
-        <img src={event.image || ""} alt="" className="w-full h-full object-fill" />
+        <img 
+        src={`${process.env.GATSBY_API_URL}${data.image}`}
+         alt={data.title_en || data.title_fr} className="w-full h-full object-fill" />
       </div>
       <div className="mx-3 pb-14 md:pb-4">
         <div className="flex items-end">
@@ -61,13 +51,13 @@ export default function UpcomingEventCard({ event }: Props) {
           </div>
           <p className="font-bold text-sm">Restants</p>
         </div>
-        <h4 className="mt-3 text-lg font-bold">{event.title}</h4>
-        <p className="mt-2 text-sm">{event.content}</p>
-        <h4 className="mt-2 text-right font-bold text-sm">{event.sub}</h4>
+        <h4 className="mt-3 text-lg font-bold">{data.title_en || data.title_fr}</h4>
+        <p className="mt-2 text-sm">{data.card_description_en || data.card_description_fr}</p>
+        <h4 className="mt-2 text-right font-bold text-sm">{data.sub}</h4>
         <div className="h-px my-3 bg-slate-300"></div>
         <p className="text-center">
           <span className="text-primary font-semibold">Lieu: </span>
-          <span>{event.location}</span>
+          <span>{data.location_en || data.location_fr}</span>
         </p>
       </div>
     </div>

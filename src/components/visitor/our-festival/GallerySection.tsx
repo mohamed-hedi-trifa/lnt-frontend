@@ -18,7 +18,7 @@ const gallery = [
 const GallerySection = () => {
   return (
     <div className=' w-full   relative '>
-    <div className='abolute  left-0 w-1/2 h-full bg-[#0270A0]  '></div>
+    <div className='absolute  left-0 w-1/2 h-full bg-[#0270A0]  '></div>
 
      
       <div className='w-[80%] h-[80%] bg-[#F1F0E8] p-4 absolute top-[100px] left-[100px] '>

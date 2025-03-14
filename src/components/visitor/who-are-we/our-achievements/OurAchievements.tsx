@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import PageTitle from '../../../atoms/titles/PageTitle'
-import Sidebar from '../../../layout/Sidebar'
 import ImageHistoire from '../our-team/ImageHistoire'
-import achievementsHero from "../../../../assets/images/achievements-hero.jpg";
 import AchievementsCards from './AchievementsCards';
+import Sidebar from '../../../layout/Sidebar';
+
 import HeroSection from '../../HeroSection';
+import achievementsHero from '../../../../assets/images/achievements-hero.jpg';
+import PageTitle from '../../../atoms/titles/PageTitle';
 import PageParagraph from '../../../atoms/PageParagraph';
 import PageBody from '@/components/PageBody'
 import ButtonDropdown from '@/components/ButtonDropdown'
@@ -81,8 +82,10 @@ export default function OurAchievements() {
           <input type="text" placeholder="Recherche" />
         </div>
 
+        {/* Section Thèmes */}
         <div className="flex flex-col gap-5">
           <FilterTitle title="Thèmes" />
+
           <div className="flex flex-col gap-3">
             {displayedThemes.map((theme: any) => (
               <Checkbox
@@ -123,6 +126,7 @@ export default function OurAchievements() {
             <Checkbox label="Cette Semaine" />
             <Checkbox label="Ce Mois" />
             <Checkbox label="Cette Année" />
+
             <ButtonDropdown
             customDropdown={true}
               item={<DateRangeSelector  />}
@@ -135,10 +139,22 @@ export default function OurAchievements() {
         </div>
 
         <div className="flex justify-between">
-          <button className="bg-primary text-sm text-white px-[10px] py-2 rounded-xl font-semibold">
-            Appliquer les Filtres
+          <button
+            className="bg-primary text-sm text-white px-[10px] py-2 rounded-xl font-semibold"
+            onClick={() => setIsOpened(false)}
+          >
+            Appliquer
           </button>
-          <button className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]">
+          <button
+            className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]"
+            onClick={() => {
+              // Reset
+              // setSearchTerm('');
+              setSelectedThemes([]);
+              // setDateFilter(null);
+              // setVisibleCount(6);
+            }}
+          >
             Réinitialiser
           </button>
         </div>
@@ -146,87 +162,48 @@ export default function OurAchievements() {
     </aside>
   );
 
+  // Barre latérale droite (Réseaux sociaux / Newsletter)
   const RightSidebar = () => (
     <aside className="flex flex-col gap-6 sm:sticky top-[116px] h-fit px-5">
-      <div className="text-[#183354] text-xl font-bold font-['Montserrat'] capitalize leading-relaxed">
-        Suivez-nous
-      </div>
+      <div className="text-[#183354] text-xl font-bold leading-relaxed">Suivez-nous</div>
       <Line />
-      <div className="grid grid-cols-2 gap-1">
-        <Link
-          to="#"
-          className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex"
-        >
-          <div className="text-black">
-            <FacebookIcon />
+      <div className='grid grid-cols-2 gap-1'>
+            <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+              <div className='text-black'><FacebookIcon /></div>
+              <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">facebook</div>
+            </Link>
+            <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+              <div className='text-black'><XIcon /></div>
+              <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">X</div>
+            </Link>
+            <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+              <div className='text-black'><InstagramIcon /></div>
+              <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Instagram</div>
+            </Link>
+            <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+              <div className='text-black'><YoutubeIcon /></div>
+              <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Youtube</div>
+            </Link>
+            <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
+              <div className='text-black'><LinkedinIcon /></div>
+              <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Linkedin</div>
+            </Link>
           </div>
-          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">
-            facebook
-          </div>
-        </Link>
-        <Link
-          to="#"
-          className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex"
-        >
-          <div className="text-black">
-            <XIcon />
-          </div>
-          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">
-            X
-          </div>
-        </Link>
-        <Link
-          to="#"
-          className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex"
-        >
-          <div className="text-black">
-            <InstagramIcon />
-          </div>
-          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">
-            Instagram
-          </div>
-        </Link>
-        <Link
-          to="#"
-          className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex"
-        >
-          <div className="text-black">
-            <YoutubeIcon />
-          </div>
-          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">
-            Youtube
-          </div>
-        </Link>
-        <Link
-          to="#"
-          className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex"
-        >
-          <div className="text-black">
-            <LinkedinIcon />
-          </div>
-          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">
-            Linkedin
-          </div>
-        </Link>
-      </div>
+
       <NewsLetterSub2
         title="Ne manquez rien !"
-        paragraph="Inscrivez-vous à notre newsletter pour Recevez les dernières nouvelles sur nos réalisations et projets directement dans votre boîte mail"
+        paragraph="Inscrivez-vous à notre newsletter pour recevoir les dernières nouvelles sur nos réalisations et projets directement dans votre boîte mail"
       />
+
       <div className="h-[279.40px] flex-col justify-center gap-[25px] flex">
-        <div className="self-stretch h-[26.40px] text-[#183354] text-xl font-bold font-['Montserrat'] capitalize leading-relaxed">
-          Une Question ?
-        </div>
+        <div className="text-[#183354] text-xl font-bold leading-relaxed">Une Question ?</div>
         <Line />
-        <div className="w-[300px] text-black text-[15px] font-bold font-['Montserrat'] capitalize leading-normal">
-          Besoin de plus d'informations ? N'hésitez pas à nous contacter. Cliquez
-          sur le Bouton ci-dessous pour accéder à notre page de contact et poser
-          vos questions
+        <div className="w-[300px] text-black text-[15px] font-bold leading-normal">
+          Besoin de plus d'informations ? N'hésitez pas à nous contacter. Cliquez sur le Bouton
+          ci-dessous pour accéder à notre page de contact et poser vos questions.
         </div>
         <Button variant="primary" customClassnames="mx-auto">
-          <div className="text-white text-xl font-bold font-['Montserrat'] leading-tight">
-            Contactez-Nous
-          </div>
+          <div className="text-white text-xl font-bold">Contactez-Nous</div>
         </Button>
       </div>
     </aside>
@@ -234,50 +211,52 @@ export default function OurAchievements() {
 
   return (
     <main className="relative">
+      {/* Overlay mobile (quand la sidebar est ouverte) */}
       <div
         className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${
-          isOpened ? "opacity-50" : "opacity-0 pointer-events-none"
+          isOpened ? 'opacity-50' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setIsOpened(false)}
       />
+
+      {/* Hero Section */}
       <HeroSection
         imgSrc={achievementsHero}
         title="Nos Actions, Notre Impact"
         subTitle={
           <div>
-            <div>Découvrez les projets qui transforment Kerkennah :</div> des
-            initiatives locales qui protègent, valorisent et inspirent
+            <div>Découvrez les projets qui transforment Kerkennah :</div> des initiatives locales qui
+            protègent, valorisent et inspirent
           </div>
         }
       />
+
+      {/* Page Title */}
       <PageTitle title="Our Achievements" />
+
       <PageBody>
         <section className="w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10">
+          {/* If your layout's <Sidebar/> is needed, keep it. Otherwise remove */}
           <Sidebar />
-          <section className="w-fit flex flex-col gap-12">
+          <section className="w-fit flex flex-col gap-4">
             <PageParagraph>
-              Depuis sa création, l’Association Kratten du Développement Durable
-              de la Culture et du Loisir (AKDDCL) s'engage activement pour la
-              préservation de l'archipel de Kerkennah, en alliant le
-              développement durable, la protection de l’environnement et la
-              valorisation de la culture locale. Nous menons des initiatives
-              variées, allant du soutien aux pratiques de pêche durable aux
-              projets éducatifs et culturels, afin de créer un impact positif et
-              pérenne pour notre communauté. Nos actions, qu’il s’agisse
-              d’ateliers de transmission des savoir-faire traditionnels, de
-              festivals célébrant le patrimoine ou de programmes de
-              sensibilisation aux enjeux écologiques, contribuent à renforcer
-              l’identité et l’autonomie économique de notre île.
+              Depuis sa création, l’Association Kratten du Développement Durable de la Culture et
+              du Loisir (AKDDCL) s'engage activement pour la préservation de l'archipel de
+              Kerkennah, en alliant le développement durable, la protection de l’environnement et
+              la valorisation de la culture locale. Nous menons des initiatives variées, allant du
+              soutien aux pratiques de pêche durable aux projets éducatifs et culturels, afin de
+              créer un impact positif et pérenne pour notre communauté. Nos actions, qu’il
+              s’agisse d’ateliers de transmission des savoir-faire traditionnels, de festivals
+              célébrant le patrimoine ou de programmes de sensibilisation aux enjeux écologiques,
+              contribuent à renforcer l’identité et l’autonomie économique de notre île.
             </PageParagraph>
             <PageParagraph>
-              Chaque projet est réalisé en étroite collaboration avec nos
-              partenaires locaux et internationaux, ainsi qu’avec la communauté,
-              qui est au cœur de notre démarche. De plus, nous honorons les
-              anciens membres fondateurs dont la vision et le dévouement ont
-              permis d’établir les bases de cette mission essentielle. Leur
-              héritage continue de guider nos actions, garantissant ainsi la
-              pérennité et le dynamisme de Kerkennah pour les générations
-              futures.
+              Chaque projet est réalisé en étroite collaboration avec nos partenaires locaux et
+              internationaux, ainsi qu’avec la communauté, qui est au cœur de notre démarche. De
+              plus, nous honorons les anciens membres fondateurs dont la vision et le dévouement
+              ont permis d’établir les bases de cette mission essentielle. Leur héritage continue
+              de guider nos actions, garantissant ainsi la pérennité et le dynamisme de Kerkennah
+              pour les générations futures.
             </PageParagraph>
           </section>
         </section>
@@ -287,7 +266,7 @@ export default function OurAchievements() {
         <section className="flex flex-col sm:flex-row gap-5">
           <LeftSidebar />
           <section className="flex-1">
-            <AchievementsCards filter={{ themes: selectedThemes }} />
+            <AchievementsCards filter={{ themes: selectedThemes }} setIsOpened={setIsOpened} />
           </section>
           <RightSidebar />
         </section>

@@ -7,6 +7,7 @@ import Title from "@/components/atoms/titles/Title";
 import BlogList from "../../aire-marine/monitoring/marin/blog/BlogList";
 import Calendar from "@/assets/icons/Calendar";
 import Media from "../../Media";
+import PageParagraph from "@/components/atoms/PageParagraph";
 
 // Helper function to parse custom markdown-like syntax
 const parseContent = (content: any) => {
@@ -82,7 +83,7 @@ export default function AchievementDetailsContent({ location, params }: { locati
                     <h2 className="text-[36px] font-semibold ">{achievement.title_en || achievement.title_fr}</h2>
                     <div className="flex items-center gap-2 font-semibold text-sm">
                         {achievement.themes?.map((item: any) =>
-                            <div data-color="Primary" data-icon="None" data-size="md" data-style="Light" className="px-2.5 w-fit  py-1 bg-[#0270A0] rounded-md inline-flex justify-center items-center gap-4">
+                            <div data-color="Primary" data-icon="None" data-size="md" data-style="Light" className="px-2.5 w-fit  py-1 bg-[#0270A0] rounded-md inline-flex justify-center items-center gap-4 shadow-lg">
                                 <div className="justify-start text-white w-fit text-sm font-medium font-['Montserrat'] leading-tight">
                                     {item?.name_en || item?.name_fr}
                                 </div>
@@ -98,17 +99,22 @@ export default function AchievementDetailsContent({ location, params }: { locati
                             year: "numeric",
                         })}
                     </div>
+                    <img
+                        src={`${process.env.GATSBY_API_URL}${achievement.image}`}
+                        alt="achievement"
+                        className="max-h-[500px] max-w-[800px] object-cover rounded-md shadow-lg"
+                    />
                 </div>
 
 
-                <div className="mt-10 flex flex-col">
+                <div className="mt-10 flex flex-col gap-1">
                     {achievement?.content_items
                         ?.sort((a: any, b: any) => a.order - b.order)
                         .map((item: any) => (
                             <div key={item.id}>
                                 {item.language === language ? (
                                     item.type === "title" ? (
-                                        <Title customClassName="mb-2">{item.content}</Title>
+                                        <Title customClassName="mt-8" variant="pill" size="text-[24px]">{item.content} </Title>
                                     ) : item.type === "text" ? (
                                         // Apply the markdown parser to the text content
                                         <div
@@ -118,10 +124,11 @@ export default function AchievementDetailsContent({ location, params }: { locati
                                             }}
                                         />
                                     ) : item.type === "image" ? (
-                                        <div className="mb-2">
+                                        <div className="mb-2 flex justify-center">
                                             <img
                                                 src={`${process.env.GATSBY_API_URL}${item.file_path}`}
                                                 alt=""
+                                                className="max-h-[500px] max-w-[600px] object-cover rounded-md shadow-lg"
                                             />
                                         </div>
                                     ) : item.type === "pdf" ? (
@@ -144,17 +151,17 @@ export default function AchievementDetailsContent({ location, params }: { locati
                             </div>
                         ))}
                 </div>
-                <hr className="border-black mx-7 my-[32px]" />
-                <Title customClassName="!font-bold hidden lg:block" size="!text-[32px]">
-                    <span className="text-primary">Souvenirs</span> en Photos et Vidéos
-                </Title>
-                <Title customClassName="!font-bold block lg:hidden" size="!text-[28px]">
-                    <div className="flex flex-col">
-                        <div className="flex gap-2"><span className="text-primary">Souvenirs</span> en Photos et</div>
-                        <div className="flex justify-center">Vidéos</div>
+                <hr className="border-black mx-2 mt-10" />
+                <div className="flex items-center justify-center mx-16 py-10">
+                    <div className="text-center">
+                      <h1 className="text-[28px] sm:text-[36px] font-bold">
+                        <span className="text-[#0270A0]">Souvenirs</span> en Photos et Vidéos
+                      </h1>
                     </div>
-                </Title>
-                <Media mediaContent={achievement} />
+                </div>
+                <div className="mb-20">
+                    <Media mediaContent={achievement}  />
+                </div>
             </div>
         </div>
     );

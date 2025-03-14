@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import newsDeteails from '../../../../assets/images/newsDeteails.jpg'
 import NewsImage from '../../news/NewsImage';
-import { Breadcrumbs } from '@material-tailwind/react';
 import AchievementDetailsContent from './AchievementDetailsContent';
 import FollowUs from '../../news/FollowUs';
 import Question from '../../news/Question';
 import RelatedNews from '../../news/NewsDetails/RelatedNews';
+import Breadcrumbs from '../../../Breadcumbs'
+import HeroAcheivement from './HeroAcheivement';
 
 
 export default function AchievementDetails({ location, params }: { location: any; params: any }) {
@@ -40,11 +41,10 @@ export default function AchievementDetails({ location, params }: { location: any
         <div>
             <main className={`relative`}>
 
-                <div className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${isOpened ? "opacity-50" : "opacity-0 pointer-events-none"}`} onClick={() => setIsOpened(false)}></div>
-                <NewsImage imgSrc={newsDeteails} btnText="" paragraph="" date="" />
+            <HeroAcheivement/>
 
                 {/* <div className="max-w-[1223px] mx-auto mt-3 lg:mt-6 ml-5 sm:ml-0" > */}
-                <div className="max-w-[1223px] mx-auto mt-4 lg:mt-6  pl-6 sm:pl-0 ">
+                <div className="max-w-full mx-auto   pl-6 sm:pl-0 ">
                     <Breadcrumbs />
                 </div>
 

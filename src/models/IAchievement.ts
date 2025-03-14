@@ -1,4 +1,6 @@
-export default interface AchievemntI {
+import ITheme from "./ITheme";
+
+export default interface IAchievemnt {
     id?: number; // Assuming there's an ID field
     title_en: string;
     title_fr: string;
@@ -9,4 +11,5 @@ export default interface AchievemntI {
     status: string; // Change to an enum if it has fixed values
     created_at?: string;
     updated_at?: string;
+    themes: ITheme[]
 }

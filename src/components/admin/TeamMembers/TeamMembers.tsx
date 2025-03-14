@@ -61,6 +61,7 @@ export default function Blog() {
 
   return (
     <>
+      <p className=" text-2xl font-bold text-red-500 p-2 mx-2">Please note that all Team Members' photos must have the same dimensions</p>
       <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
         <div className="rounded-lg shadow-lg">
           <div className="flex justify-between items-center bg-gray-100 p-3 rounded-t-lg">
