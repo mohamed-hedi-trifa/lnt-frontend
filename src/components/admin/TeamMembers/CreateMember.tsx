@@ -166,7 +166,7 @@ const CreateMember: React.FC = () => {
             toast.success("Member created successfully");
             return response.data;
         } catch (error) {
-            let msg = "An error occurred while creating the post. Please try again.";
+            let msg = "An error occurred while creating the member. Please try again.";
             if (error instanceof AxiosError) {
                 msg = error?.response?.data?.message;
             }
@@ -195,10 +195,10 @@ const CreateMember: React.FC = () => {
         <div className="h-[calc(100vh-80px)] flex flex-col p-4">
             <div className="flex justify-between">
                 <div className="flex items-center gap-1">
-                    <Link className="" to="/admin/posts">
+                    <Link className="" to="/admin/team-members">
                         <ArrowLeftIcon className="h-5 w-5" />
                     </Link>
-                    <Title>Create New Post</Title>
+                    <Title>Create New Member</Title>
                 </div>
                 <Select divClassNames="!flex-row items-center gap-2" label="Language:" name="language" value={language} onChange={handleLanguageChange}>
                     <option value="en">English</option>
@@ -293,13 +293,14 @@ const CreateMember: React.FC = () => {
                     </>
                 )}
                 <Input label="Image" type="file" name="image" onChange={handleImageChange} />
+                <p className="   text-red-500 p-2 mx-2">Please note that all Team Members' photos must have the same dimensions</p>
                 <Button type="submit" disabled={isLoading} >
                     {isLoading ? (
                         <div className="w-fit mx-auto">
                             <ReactLoading type="spinningBubbles" color="white" height={25} width={25} />
                         </div>
                     ) : (
-                        "Create Blog"
+                        "Add Member"
                     )}
                 </Button>
             </form>
