@@ -7,43 +7,19 @@ import FilterIcon from '@/assets/icons/FilterIcon';
 import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
 import sortIcon from "@/assets/icons/sort-icon.png"
 import { Link } from 'gatsby';
-const CATEGORIES = [
-  {
-    id: 1,
-    name: "All themes"
-  },
-  {
-    id: 2,
-    name: "Conservation Marine"
-  },
-  {
-    id: 3,
-    name: "Tourisme Responsable"
-  },
-  {
-    id: 4,
-    name: "Peche Durable"
-  },
-  {
-    id: 5,
-    name: "Ecologie et Environmenet"
-  },
-  {
-    id: 6,
-    name: "Education et Formation"
-  }
-]
 
 
-export default function AchievementsCards() {
+export default function AchievementsCards({filter}:{filter?:{themes:number[]}}) {
+  const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [limit, setLimit] = useState(10); // Set the limit of posts per page
+  const [limit, setLimit] = useState(10);
+  const [themes, setThemes] = useState([]);
 
   const handleSearchChange = (e: any) => {
     setSearchQuery(e.target.value);
-    setCurrentPage(1); // Reset to first page on search
+    setCurrentPage(1);
   };
 
   const handlePageChange = (newPage: number) => {
@@ -54,10 +30,14 @@ export default function AchievementsCards() {
   const [loading, setLoading] = useState(true);
   const [itemsList, setItemsList] = useState([]);
 
-  function getPosts(query: any, page = currentPage) {
+  function getPosts(query: any, page = currentPage, themes:number[]) {
     setLoading(true);
     axios.get(`/api/get-active-achievements/${limit ? limit : ""}`, {
-      params: { query, page }
+      params: {
+        query: query,
+        themes: themes,
+        page: page,
+      }
     }).then(res => {
       setItemsList(res.data.data);
       console.log(res.data.data)
@@ -69,9 +49,23 @@ export default function AchievementsCards() {
     });
   }
 
+  function getThemes(){
+    axios.get('/api/theme').then(res=>{
+      setThemes(res.data);
+      console.log(res.data)
+    }).catch(err=>{
+      console.log(err)
+    });
+  }
+
+  useEffect(()=>{
+    getThemes();
+  },[]);
+
   useEffect(() => {
-    getPosts(searchQuery, currentPage);
-  }, [searchQuery, currentPage]);
+    getPosts(searchQuery, currentPage, filter?.themes || []);
+    console.log("fetching again")
+  }, [searchQuery, currentPage, filter]);
 
   if (loading) return "Loading..."
 
@@ -80,10 +74,10 @@ export default function AchievementsCards() {
     <div>
       <div className='hidden sm:flex justify-between relative z-20'>
         <ButtonDropdown
-          items={CATEGORIES}
+          items={themes}
           position="left"
           renderItem={(item) => (
-            <div className='py-1 px-4'> {item.name}</div>
+            <div className='py-1 px-4'> {item[`name_${lang}`]}</div>
           )}
         >
           {(isOpen) => (
@@ -97,15 +91,15 @@ export default function AchievementsCards() {
           )}
         </ButtonDropdown>
 
-        <div className="text-center text-black text-xl font-semibold font-['Montserrat'] leading-tight tracking-tight mt-[2px]"> {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} Publicaciones`}</div>
+        <div className="text-center text-black text-xl font-semibold font-['Montserrat'] leading-tight tracking-tight mt-[2px]"> {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList?.length)} de ${itemsList?.length} Publicaciones`}</div>
       </div>
       <div className='sm:hidden flex justify-between pr-5 relative z-20'>
-        <button type='button' onClick={() => setIsOpened(true)} className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl justify-start items-center gap-2.5 inline-flex">
+        <button type='button' onClick={() => {}} className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl justify-start items-center gap-2.5 inline-flex">
           <FilterIcon />
           <div className="text-center text-white text-sm font-bold font-['Montserrat']">Filtres</div>
         </button>
         <ButtonDropdown
-          items={CATEGORIES}
+          items={themes}
           position="right"
           renderItem={(item) => (
             <div className='py-1 px-4'> {item.name}</div>
@@ -123,11 +117,11 @@ export default function AchievementsCards() {
         </ButtonDropdown>
       </div>
       <div className='sm:hidden px-5 font-semibold leading-[20px] pt-5'>
-        {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} Publicaciones`}
+        {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList?.length)} de ${itemsList?.length} Publicaciones`}
       </div>
       <section className='flex flex-col gap-8 w-full relative z-10 my-5'>
         <div className='grid sm:grid-cols-2 gap-4'>
-          {itemsList.map((achievement: any) => (
+          {itemsList?.map((achievement: any) => (
             <Link key={achievement.id} to={`/who-are-we/our-achievements/${achievement.slug}`}>
               <AchievementCard key={achievement.id} achievement={achievement} />
             </Link>

@@ -7,7 +7,7 @@ interface CheckboxProps {
   onChange?: (checked: boolean) => void;
   color?: string;
   borderColor?: string;
-  nb?:string;
+  nb?:number;
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({

@@ -7,14 +7,15 @@ type Props = {
   item?:ReactNode;
   renderItem?: (item: any) => React.ReactNode;
   position?: "left" | "right";
+  customDropdown?:boolean;
 };
 
-function ButtonDropdown({ children, items = [], item, renderItem = (item) => item.label, position = "left" }: Props) {
+function ButtonDropdown({ children, items = [], item, renderItem = (item) => item.label, position = "left", customDropdown=false }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
  function handleClick(e:any){
-  if (e.target.closest(".rdrDateRangePickerWrapper")) {
+  if (e.target.closest(".rdrDateRangeWrapper")) {
     return;
   }
 setIsOpen(!isOpen)
@@ -40,7 +41,7 @@ setIsOpen(!isOpen)
         leaveFrom="translate-y-0 opacity-100"
         leaveTo="translate-y-[30px] opacity-0"
       >
-        <ul
+        {customDropdown ? <div>{renderItem(item)}</div> :  <ul
           className={`divide-y w-max max-w-[200px] p-2 rounded shadow-[1px_1px_5px_rgb(0,0,0,.3)] absolute top-full bg-white translate-y-[10px] list-none ${POSITIONS[position]}`}
         >
           {items && items.map((item, index) => (
@@ -49,7 +50,8 @@ setIsOpen(!isOpen)
             </li>
           ))}
           {item ? item : ""}
-        </ul>
+        </ul> }
+       
       </Transition>
     </button>
   );

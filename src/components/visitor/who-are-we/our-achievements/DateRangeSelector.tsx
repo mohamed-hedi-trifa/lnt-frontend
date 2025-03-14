@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DateRangePicker, DateRangePickerProps, Range, RangeKeyDict } from "react-date-range";
+import { DateRange, DateRangePicker, Range, RangeKeyDict } from "react-date-range";
 import "react-date-range/dist/styles.css"; // Main style file
 import "react-date-range/dist/theme/default.css"; // Theme CSS file
 
@@ -13,10 +13,9 @@ const DateRangeSelector = () => {
   ]);
 
   return (
-    <DateRangePicker
-      // onChange={(item: { selection: { startDate: Date; endDate: Date; key: string; }; }) => setState([item.selection])}
+    <DateRange
       onChange={(item: RangeKeyDict) => setState([item.selection])}
-      // showSelectionPreview={true}
+      displayMode="dateRange"
       moveRangeOnFirstSelection={false}
       ranges={state}
     />

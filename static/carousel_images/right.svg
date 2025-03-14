@@ -1,7 +1,7 @@
 <svg width="43" height="44" viewBox="0 0 43 44" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_2097_3772)">
 <rect x="-0.5" y="0.5" width="34" height="34" rx="9.5" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 38 0.5)" stroke="#016FA0"/>
-<path d="M22.8053 14.1248L19.3993 17.5308C18.9971 17.933 18.9971 18.5912 19.3993 18.9934L22.8053 22.3994" stroke="#016FA0" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.8053 14.1248L19.3993 17.5308C18.9971 17.933 18.9971 18.5912 19.3993 18.9934L22.8053 22.3994" stroke="#016FA0" strokeWidth="2" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
 </g>
 <defs>
 <filter id="filter0_d_2097_3772" x="0" y="0.5" width="43" height="43" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
