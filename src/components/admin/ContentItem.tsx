@@ -5,10 +5,11 @@ import axios from "axios";
 import Button from "../atoms/Button";
 import Textarea from "../atoms/inputs/Textarea";
 import Input from "../atoms/inputs/Input";
-import DragHandle from "./blog/DragHandle";
+
 import { ArrowUpTrayIcon, PhotoIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { DragHandle } from "@mui/icons-material";
 
 const ContentItem = ({
   id,

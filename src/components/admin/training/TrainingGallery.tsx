@@ -3,21 +3,21 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 
-const BlogGallery = ({ postId }: { postId: any }) => {
-    const [media, setMedia] = useState([]);
+const TrainingGallery = ({ trainingId }: { trainingId: any }) => {
+    const [media, setMedia] = useState("");
     const [mediaFile, setMediaFile] = useState(null);
     const [mediaType, setMediaType] = useState("image");
 
 
     useEffect(() => {
         fetchMedia();
-    }, [postId]);
+    }, [trainingId]);
 
 
     const fetchMedia = async () => {
         try {
-            const response = await axios.get(`/api/posts/${postId}/media`);
-        
+            const response = await axios.get(`/api/training/${trainingId}/media`);
+            console.log("API Response:", trainingId);
 
             if (Array.isArray(response.data)) {
                 setMedia(response.data);
@@ -35,25 +35,23 @@ const BlogGallery = ({ postId }: { postId: any }) => {
 
     const addMedia = async () => {
         const formDataToSend = new FormData();
-        formDataToSend.append("post_id", postId);
+        formDataToSend.append("training_id", trainingId);
         formDataToSend.append("media_type", mediaType);
-
-    
 
         if (mediaType === "image" && mediaFile) {
             formDataToSend.append("media_url", mediaFile);
         } else if (mediaType === "video" && mediaFile) {
             formDataToSend.append("video_id", mediaFile);
         }
-        console.log(mediaType);
+
         try {
-            const response = await axios.post("/api/posts/media", formDataToSend, {
+            const response = await axios.post("/api/add-training-media", formDataToSend, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
             setMedia((prevMedia) => [...(Array.isArray(prevMedia) ? prevMedia : []), response.data.data]);
             setMediaFile(null);
-               Swal.fire("Success", "Media added successfully", "success");
+               Swal.fire("Success", "Media updated successfully", "success");
         } catch (error) {
             console.error("Error adding media", error);
         }
@@ -74,7 +72,7 @@ const BlogGallery = ({ postId }: { postId: any }) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios
-                    .delete(`/api/posts/media/${id}`)
+                    .delete(`/api/remove-training-media/${id}`)
                     .then((res) => {
                         Swal.fire("Success", res.data.message, "success");
                         setMedia(media.filter((item) => item.id !== id));
@@ -92,7 +90,7 @@ const BlogGallery = ({ postId }: { postId: any }) => {
 
     return (
         <div className="p-6 max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4">Posts Gallery</h2>
+            <h2 className="text-2xl font-bold mb-4">Training Gallery</h2>
 
             {/* Add Media Form */}
             <div className="mb-6 border p-4 rounded-lg">
@@ -118,6 +116,7 @@ const BlogGallery = ({ postId }: { postId: any }) => {
                         type="text"
                         placeholder="Enter Video ID"
                         onChange={(e) => setMediaFile(e.target.value)}
+                        value={mediaFile}
                         className="w-full p-2 border rounded mb-2"
                     />
                 )}
@@ -164,4 +163,4 @@ const BlogGallery = ({ postId }: { postId: any }) => {
     );
 };
 
-export default BlogGallery;
+export default TrainingGallery;

@@ -1,4 +1,4 @@
-import Blog from "@/components/visitor/aire-marine/monitoring/marin/blog/Blog";
+import Blog from "@/components/visitor/aire-marine/monitoring/marin/species/Species";
 import { AMCPSidebarProvider } from "@/contexts/AMCPSidebarContext";
 import React from "react";
 

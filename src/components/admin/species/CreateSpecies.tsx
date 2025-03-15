@@ -24,9 +24,9 @@ interface FormData {
   type: string;
 }
 
-const CreatePost: React.FC = () => {
+const CreateSpecies: React.FC = () => {
   const [language, setLanguage] = useState<string>("en");
-  const [formData, setFormData] = useLocalStorage("blog-info", {
+  const [formData, setFormData] = useLocalStorage("species-info", {
     title_en: "",
     title_fr: "",
     subtitle_en: "",
@@ -60,9 +60,9 @@ const CreatePost: React.FC = () => {
       });
 
       if (result.isConfirmed) {
-        const created = await createPost();
+        const created = await createSpecies();
 
-        if (created) navigate(`/admin/posts/${created.slug}?lang=${lang}`);
+        if (created) navigate(`/admin/species/${created.slug}?lang=${lang}`);
       } else if (result.isDenied) {
         setLanguage(lang);
       }
@@ -146,7 +146,7 @@ const CreatePost: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  async function createPost(): Promise<{ slug: string } | null> {
+  async function createSpecies(): Promise<{ slug: string } | null> {
     if (!validateForm()) {
       return null;
     }
@@ -188,13 +188,13 @@ const CreatePost: React.FC = () => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post("/api/posts", formDataToSend, {
+      const response = await axios.post("/api/species", formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      // Swal.fire("Success", "Post created successfully", "success");
+      // Swal.fire("Success", "Species created successfully", "success");
       setFormData({
         title_en: "",
         title_fr: "",
@@ -205,7 +205,7 @@ const CreatePost: React.FC = () => {
         type: "marin",
       });
       setErrors({}); // Clear any previous errors
-      toast.success("Post created successfully");
+      toast.success("Species created successfully");
       return response.data;
     } catch (error) {
       let msg = "An error occurred while creating the post. Please try again.";
@@ -226,9 +226,9 @@ const CreatePost: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const created = await createPost();
+    const created = await createSpecies();
 
-    if (created) navigate("/admin/posts");
+    if (created) navigate("/admin/species");
   };
 
 
@@ -250,10 +250,10 @@ const CreatePost: React.FC = () => {
     <div className="h-[calc(100vh-80px)] flex flex-col p-4">
       <div className="flex justify-between">
         <div className="flex items-center gap-1">
-          <Link className="" to="/admin/posts">
+          <Link className="" to="/admin/species">
             <ArrowLeftIcon className="h-5 w-5" />
           </Link>
-          <Title>Create New Post</Title>
+          <Title>Create New Species</Title>
         </div>
         <Select divClassNames="!flex-row items-center gap-2" label="Language:" name="language" value={language} onChange={handleLanguageChange}>
           <option value="en">English</option>
@@ -397,7 +397,7 @@ const CreatePost: React.FC = () => {
               <ReactLoading type="spinningBubbles" color="white" height={25} width={25} />
             </div>
           ) : (
-            "Create Blog"
+            "Create Species"
           )}
         </Button>
       </form>
@@ -405,4 +405,4 @@ const CreatePost: React.FC = () => {
   );
 };
 
-export default CreatePost;
+export default CreateSpecies;

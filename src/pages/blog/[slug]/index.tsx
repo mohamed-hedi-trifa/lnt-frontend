@@ -1,8 +1,8 @@
 import React from 'react'
-import BlogDetail from '../../../components/blog/BlogDetail'
+import BlogDetail from '../../../components/species/SpeciesDetail'
 
 export default function index({ location, params }: { location: any, params: any }) {
     return (
-        <BlogDetail location={location} params={params} />
+        <SpeciesDetail location={location} params={params} />
     )
 }

@@ -104,7 +104,7 @@ export default function UpcomingEvents() {
     <section className="px-3 py-20">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-primary text-2xl sm:text-[40px] text-center font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
-          {dataType === "event" ? "Événements" : "Réalisation"}  à venir
+          {dataType === "event" ? "Événements à venir" : "Nos Réalisations"}  
         </h2>
         <article className="mt-10">
           <swiper-container ref={swiperRef} class="w-full mx-auto max-w-[360px] md:max-w-7xl" init="false">
@@ -144,7 +144,7 @@ export default function UpcomingEvents() {
             to={`/${dataType === "event" ? "event" : "who-are-we/our-achievements"}`}
             className="block w-fit mx-auto mt-4 md:-mt-4 px-5 py-4 text-white font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
           >
-            Voir tous les  {dataType === "event" ? "événements" : "réalisation"}
+            Voir tous   {dataType === "event" ? "les événements" : "nos réalisations"}
           </LangLink>
         </article>
       </div>

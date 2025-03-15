@@ -72,7 +72,8 @@ export default function SidebarAdmin() {
                             )}
                             {section === 'Air Marine et Côtière Protégée' && (
                                 <>
-                                    <Link to="/admin/posts" className="block p-4 text-gray-300 hover:bg-gray-700">Blog</Link>
+                                    <Link to="/admin/species" className="block p-4 text-gray-300 hover:bg-gray-700">Species</Link>
+                                    <Link to="/admin/training" className="block p-4 text-gray-300 hover:bg-gray-700">Training</Link>
                                 </>
                             )}
                             {section === 'Opportunités' && (
