@@ -11,10 +11,12 @@ import PopularEventType1 from './PopularEventType1';
 import TitleSectionEvent from './TitleSectionEvent';
 import PopularEventType2 from './PopularEventType2';
 import LeisureAndSportsActivities from './no-event/LeisureAndSportsActivities';
+import IEventType from '@/models/IEventType';
 
 export default function Events() {
+  const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
   const [events, setEvents] = useState([]);
-  const [eventTypes, setEventTypes] = useState([]);
+  const [eventTypes, setEventTypes] = useState<IEventType[]>([]);
 
   const fetchEvents = async () => {
     try {
@@ -39,29 +41,27 @@ export default function Events() {
     fetchEventTypes();
   }, []);
 
-  const renderEventSection = (displayPlace, defaultTitle) => {
-
-
-
-    const eventType = eventTypes.find(et => et.display_place === displayPlace);
+  const renderEventSection = (displayPlace:string, defaultTitle:string) => {
+    const eventType:IEventType|undefined = eventTypes.find(et => et.display_place === displayPlace);
 
     return (
       <div>
         <TitleSectionEvent
           headerName={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}
-          showButton={ eventType?.events?.length >0 ? true : false}
+          showButton={eventType ? (eventType?.events?.length > 0 ? true : false) : false}
         />
         {eventType ? (
           displayPlace === 'card3' ? (
-            <PopularEventType2 events={eventType.events} eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} />
+            <PopularEventType2 events={eventType.events} eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} language={lang} />
           ) : (
-            <PopularEventType1 events={eventType.events} eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} />
+            <PopularEventType1 events={eventType.events} eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} language={lang} />
           )
         ) : (
           displayPlace === 'card3' ? (
+            //@ts-ignore
             <LeisureAndSportsActivities event_title={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} />
           ) : (
-            <EmptyEvent1 />
+            <EmptyEvent1 event_title={eventType?.[`name_${lang}`] || ""} />
           )
 
 
@@ -76,7 +76,7 @@ export default function Events() {
 
   return (
     <main className="relative">
-      <EventImage events={events} />
+      <EventImage events={events} language={lang} />
 
       <section className="my-5 text-center max-w-7xl mx-auto w-full mt-20 px-5">
         <PageTitle title="Événements" />

@@ -7,6 +7,7 @@ import FilterIcon from '@/assets/icons/FilterIcon';
 import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
 import sortIcon from '@/assets/icons/sort-icon.png';
 import { Link } from 'gatsby';
+import EmptyAchievements from './EmptyAchievements';
 
 interface AchievementsCardsProps {
   filter: {
@@ -51,7 +52,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
           themes: themes,
           page: page,
           sortOrder: sortOrder,
-          dateFilter: filter.dateFilter, // pass the date filter
+          dateFilter: filter.dateFilter,
         },
       })
       .then((res) => {
@@ -160,16 +161,24 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
       </div>
 
       <section className="flex flex-col gap-8 w-full relative z-10 my-5">
-        <div className="grid sm:grid-cols-2 gap-4">
-          {itemsList.map((achievement: any) => (
-            <Link key={achievement.id} to={`/who-are-we/our-achievements/${achievement.slug}`}>
-              <AchievementCard key={achievement.id} achievement={achievement} />
-            </Link>
-          ))}
-        </div>
-        <div className="flex justify-center">
-          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
-        </div>
+        {itemsList.length === 0 ? (
+          <EmptyAchievements />
+        ) : (
+          <>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {itemsList.map((achievement: any) => (
+                <Link key={achievement.id} to={`/who-are-we/our-achievements/${achievement.slug}`}>
+                  <AchievementCard achievement={achievement} />
+                </Link>
+              ))}
+            </div>
+            {totalPages > 1 && (
+              <div className="flex justify-center">
+                <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+              </div>
+            )}
+          </>
+        )}
       </section>
     </div>
   );
