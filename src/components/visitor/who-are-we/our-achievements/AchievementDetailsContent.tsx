@@ -116,13 +116,15 @@ export default function AchievementDetailsContent({ location, params }: { locati
                                     item.type === "title" ? (
                                         <Title customClassName="mt-8" variant="pill" size="text-[24px]">{item.content} </Title>
                                     ) : item.type === "text" ? (
-                                        // Apply the markdown parser to the text content
-                                        <div
-                                            className="mb-4"
-                                            dangerouslySetInnerHTML={{
-                                                __html: parseContent(item.content),
-                                            }}
-                                        />
+                                        <PageParagraph>
+
+                                            <div
+                                                className="mb-4 ml-6"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: parseContent(item.content),
+                                                }}
+                                            />
+                                        </PageParagraph>
                                     ) : item.type === "image" ? (
                                         <div className="mb-2 flex justify-center">
                                             <img
