@@ -29,15 +29,15 @@ const parseContent = (content: string): string => {
   return linkParsed;
 };
 
-export default function Blog({ location, params }: { location: any; params: any }) {
-  const [blogPost, setBlogPost] = useState<any>(null);
+export default function Species({ location, params }: { location: any; params: any }) {
+  const [blogSpecies, setBlogSpecies] = useState<any>(null);
   const [language, setLanguage] = useState<string>("en");
 
   useEffect(() => {
     const slug = params.slug;
     if (slug) {
       axios
-        .get(`/api/posts/${slug}`)
+        .get(`/api/species/${slug}`)
         .then((res) => {
           res.data.content_items.forEach((item: any) => {
             if (item.type === "list") {
@@ -49,7 +49,7 @@ export default function Blog({ location, params }: { location: any; params: any 
             }
           });
 
-          setBlogPost(res.data);
+          setBlogSpecies(res.data);
 
           // Extraction de la langue depuis l'URL
           const searchParams = new URLSearchParams(location.search);
@@ -70,8 +70,8 @@ export default function Blog({ location, params }: { location: any; params: any 
     }
   }, [location, params.slug]);
 
-  console.log("-------------------- blogPost --------------------");
-  console.log(blogPost);
+  console.log("-------------------- blogSpecies --------------------");
+  console.log(blogSpecies);
 
   const dataTable = [
     {
@@ -87,14 +87,14 @@ export default function Blog({ location, params }: { location: any; params: any 
     // ... (ajouter d'autres éléments si nécessaire)
   ];
 
-  if (!blogPost) {
+  if (!blogSpecies) {
     return <div>Loading...</div>;
   }
 
   return (
     <div
       className="min-h-full bg-cover bg-center bg-fixed"
-      style={{ backgroundImage: `url(${process.env.GATSBY_API_URL}${blogPost.image})` }}
+      style={{ backgroundImage: `url(${process.env.GATSBY_API_URL}${blogSpecies.image})` }}
     >
       <img
         className="w-full object-cover h-[80vh]"
@@ -103,7 +103,7 @@ export default function Blog({ location, params }: { location: any; params: any 
       />
       <div className="flex justify-center pb-4">
         <SpeciesTitle
-          title={blogPost[`title_${language}`] || ""}
+          title={blogSpecies[`title_${language}`] || ""}
           width="w-[160px]"
           fontSize="text-[48px] md:text-[64px] text-start"
         />
@@ -115,7 +115,7 @@ export default function Blog({ location, params }: { location: any; params: any 
             <div className="grow w-full flex flex-col mx-auto shadow-helmi gap-4 rounded-[12px] bg-[rgba(255,255,255,0.8)]">
               {/* Sous-titre */}
               <SectionTitle2
-                title={blogPost[`subtitle_${language}`] || ""}
+                title={blogSpecies[`subtitle_${language}`] || ""}
                 width="w-full"
                 color="#000000"
                 fontSize="text-[28px] lg:text-[36px] text-center sm:text-start font-semibold italic"
@@ -123,16 +123,16 @@ export default function Blog({ location, params }: { location: any; params: any 
               />
 
               {/* Résumé */}
-              {blogPost[`summary_${language}`] && (
+              {blogSpecies[`summary_${language}`] && (
                 <div className="px-10 text-center sm:text-start">
                   <PageParagraph>
-                    {blogPost[`summary_${language}`]}
+                    {blogSpecies[`summary_${language}`]}
                   </PageParagraph>
                 </div>
               )}
 
               {/* Liste des items de type "list" */}
-              {blogPost.content_items
+              {blogSpecies.content_items
                 ?.filter((item: any) => item.language === language && item.type === "list")
                 .sort((a: any, b: any) => a.order - b.order)
                 .map((item: any) => (
@@ -140,7 +140,7 @@ export default function Blog({ location, params }: { location: any; params: any 
                 ))}
 
               {/* Autres contenus */}
-              {blogPost.content_items
+              {blogSpecies.content_items
                 ?.filter((item: any) => item.language === language && item.type !== "list")
                 .sort((a: any, b: any) => a.order - b.order)
                 .map((item: any) => {
@@ -205,7 +205,7 @@ export default function Blog({ location, params }: { location: any; params: any 
               </PageParagraph>
             </div>
           </div>
-          <Media mediaContent={blogPost}/>
+          <Media mediaContent={blogSpecies}/>
           <hr className="my-10 border-1 border-[#000000]" />
           <div className="text-center mx-20">
             <h1 className="text-[28px] sm:text-[36px] font-bold">
@@ -221,7 +221,7 @@ export default function Blog({ location, params }: { location: any; params: any 
           </PageParagraph>
           <Table data={dataTable} />
           <section className="border-t border-[#000000] mt-10 py-10">
-            <DecouvrezDautresEspeces currentBlog={blogPost}/>
+            <DecouvrezDautresEspeces currentBlog={blogSpecies}/>
           </section>
         </div>
       </div>

@@ -57,7 +57,7 @@ export default function TrainingDetails({ location, params }: { location: any; p
   useEffect(() => {
     if (slug) {
       axios
-        .get(`/api/posts/${slug}`)
+        .get(`/api/training/${slug}`)
         .then((res) => {
           setBlogPost(res.data);
 

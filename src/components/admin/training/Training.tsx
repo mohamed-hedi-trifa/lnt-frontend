@@ -5,13 +5,13 @@ import Swal from "sweetalert2";
 import ReactLoading from "react-loading";
 import { Link } from "gatsby";
 
-export default function Blog() {
+export default function Training() {
   const [loading, setLoading] = useState(true);
   const [itemsList, setItemsList] = useState([]);
 
-  function getBlogs() {
+  function getTraining() {
     axios
-      .get("/api/posts")
+      .get("/api/training")
       .then((res) => {
         setItemsList(res.data);
         setLoading(false);
@@ -21,7 +21,7 @@ export default function Blog() {
       });
   }
   useEffect(() => {
-    getBlogs();
+    getTraining();
     return;
   }, []);
 
@@ -39,10 +39,10 @@ export default function Blog() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`/api/posts/${item.id}`)
+          .delete(`/api/training/${item.id}`)
           .then((res) => {
             Swal.fire("Success", res.data.message, "success");
-            getBlogs();
+            getTraining();
           })
           .catch((err) => {
             if (err.response.data.status === 404) {
@@ -64,9 +64,9 @@ export default function Blog() {
       <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
         <div className="rounded-lg shadow-lg">
           <div className="flex justify-between items-center bg-gray-100 p-3 rounded-t-lg">
-            <h5 className="mb-3">Posts ( {itemsList.length} )</h5>
-            <Link to="/admin/posts/create" className="bg-blue-600 text-white p-2 rounded">
-              Create Post
+            <h5 className="mb-3">training ( {itemsList.length} )</h5>
+            <Link to="/admin/training/create" className="bg-blue-600 text-white p-2 rounded">
+              Create Training
             </Link>
           </div>
           <div className="p-5">
@@ -96,11 +96,11 @@ export default function Blog() {
                         <div className="pt-3 text-end sm:text-center col-span-1 sm:col-span-2">
                           <div className="grid grid-cols-12">
                             <div className="col-span-12 sm:col-span-6 flex justify-end sm:justify-center">
-                            <Link className="text-center" to={`/admin/posts/manage-posts/${item.slug}`}>
+                            <Link className="text-center" to={`/admin/training/manage-training/${item.slug}`}>
                                <MagnifyingGlassIcon className="block h-8 w-8 text-blue-600" aria-hidden="true" />
                               </Link>
 
-                              <Link className="text-center" to={`/admin/posts/${item.slug}`}>
+                              <Link className="text-center" to={`/admin/training/${item.slug}`}>
                                 <PencilSquareIcon className="block h-8 w-8 text-blue-600" aria-hidden="true" />
                               </Link>
                             </div>
@@ -124,7 +124,7 @@ export default function Blog() {
             ) : (
               <div className="flex flex-col gap-4 items-center justify-center text-center h-[25vh]">
                 <InboxIcon className="block h-20 w-20" aria-hidden="true" />
-                <h3 className="text-2xl font-bold">Theres no posts</h3>
+                <h3 className="text-2xl font-bold">Theres no training</h3>
               </div>
             )}
           </div>
