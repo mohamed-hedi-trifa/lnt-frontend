@@ -4,34 +4,40 @@ import React, { ReactNode, useRef, useState } from "react";
 type Props = {
   children: React.ReactNode | ((isOpen: boolean) => React.ReactNode);
   items?: any[];
-  item?:ReactNode;
+  item?: ReactNode;
   renderItem?: (item: any) => React.ReactNode;
+  onSelect?: (item: any) => void;
   position?: "left" | "right";
-  customDropdown?:boolean;
+  customDropdown?: boolean;
 };
 
-function ButtonDropdown({ children, items = [], item, renderItem = (item) => item.label, position = "left", customDropdown=false }: Props) {
+function ButtonDropdown({
+  children,
+  items = [],
+  item,
+  renderItem = (item) => item.label,
+  onSelect,
+  position = "left",
+  customDropdown = false,
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
- function handleClick(e:any){
-  if (e.target.closest(".rdrDateRangeWrapper")) {
-    return;
+  function handleClick(e: any) {
+    if (e.target.closest(".rdrDateRangeWrapper")) {
+      return;
+    }
+    setIsOpen(!isOpen);
   }
-setIsOpen(!isOpen)
- }
 
   return (
     <button className="relative" onClick={handleClick}>
       <div
-        className={`relative font-open font-normal capitalize transition duration-300 before:w-full before:h-[20px] before:absolute before:top-[95%] ${
-          isOpen ? "before:block" : "before:hidden"
-        }  `}
+        className={`relative font-open font-normal capitalize transition duration-300 before:w-full before:h-[20px] before:absolute before:top-[95%] ${isOpen ? "before:block" : "before:hidden"}`}
         ref={dropdownRef}
       >
         {typeof children === "function" ? children(isOpen) : children}
       </div>
-
       <Transition
         show={isOpen}
         enter="transition duration-300"
@@ -41,17 +47,27 @@ setIsOpen(!isOpen)
         leaveFrom="translate-y-0 opacity-100"
         leaveTo="translate-y-[30px] opacity-0"
       >
-        {customDropdown ? <div>{renderItem(item)}</div> :  <ul
-          className={`divide-y w-max max-w-[200px] p-2 rounded shadow-[1px_1px_5px_rgb(0,0,0,.3)] absolute top-full bg-white translate-y-[10px] list-none ${POSITIONS[position]}`}
-        >
-          {items && items.map((item, index) => (
-            <li key={index}>
-              {renderItem(item)}
-            </li>
-          ))}
-          {item ? item : ""}
-        </ul> }
-       
+        {customDropdown ? (
+          <div onClick={() => { if (onSelect && item) onSelect(item); setIsOpen(false); }}>
+            {renderItem(item)}
+          </div>
+        ) : (
+          <ul className={`divide-y w-max max-w-[200px] p-2 rounded shadow-[1px_1px_5px_rgb(0,0,0,.3)] absolute top-full bg-white translate-y-[10px] list-none ${POSITIONS[position]}`}>
+            {items && items.map((dropdownItem, index) => (
+              <li
+                key={index}
+                onClick={() => { if (onSelect) onSelect(dropdownItem); setIsOpen(false); }}
+              >
+                {renderItem(dropdownItem)}
+              </li>
+            ))}
+            {item ? (
+              <li onClick={() => { if (onSelect) onSelect(item); setIsOpen(false); }}>
+                {renderItem(item)}
+              </li>
+            ) : null}
+          </ul>
+        )}
       </Transition>
     </button>
   );

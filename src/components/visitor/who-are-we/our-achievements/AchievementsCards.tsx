@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import AchievementCard from './AchievementCard';
 import Pagination from '../../Pagination';
@@ -9,44 +9,27 @@ import sortIcon from '@/assets/icons/sort-icon.png';
 import { Link } from 'gatsby';
 
 interface AchievementsCardsProps {
-  filter:{
+  filter: {
     searchQuery?: string;
     themes?: number[];
-    dateFilter?: any; 
+    dateFilter?: string | null;
     sortOrder?: 'desc' | 'asc';
-  }
+  };
   setIsOpened: (val: boolean) => void;
 }
 
-export default function AchievementsCards({
-  filter,
-  setIsOpened,
-}: AchievementsCardsProps) {
+export default function AchievementsCards({ filter, setIsOpened }: AchievementsCardsProps) {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [limit] = useState<number>(10); // Limite d'éléments par page
+  const [limit] = useState<number>(10);
   const [loading, setLoading] = useState<boolean>(true);
   const [itemsList, setItemsList] = useState<any[]>([]);
+  const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
 
-  // Définir la fonction de tri ici (en fonction de la date)
-  function sortByDate(data: any[], order: 'desc' | 'asc'): any[] {
-    const sortedData = [...data].sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-
-      return order === 'desc'
-        ? dateB - dateA // le plus récent en premier
-        : dateA - dateB; // le plus ancien en premier
-    });
-    return sortedData;
-  }
-
-  // Petit helper pour éviter les erreurs si le tableau est undefined
   const resSafeLength = (arr: any[]) => (Array.isArray(arr) ? arr.length : 0);
-
-  const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
-  const [searchQuery, setSearchQuery] = useState('');
-  const [themes, setThemes] = useState([]);
+  const lang = window?.location?.pathname.startsWith('/fr/') ? 'fr' : 'en';
+  const [searchQuery, setSearchQuery] = useState(filter.searchQuery || '');
+  const [themes, setThemes] = useState<number[]>(filter.themes || []);
 
   const handleSearchChange = (e: any) => {
     setSearchQuery(e.target.value);
@@ -59,84 +42,72 @@ export default function AchievementsCards({
     }
   };
 
-  function getPosts(query: any, page = currentPage, themes:number[]) {
+  function getPosts(query: any, page = currentPage, themes: number[]) {
     setLoading(true);
-    axios.get(`/api/get-active-achievements/${limit ? limit : ""}`, {
-      params: {
-        query: query,
-        themes: themes,
-        page: page,
-      }
-    }).then(res => {
-      setItemsList(res.data.data);
-      console.log(res.data.data)
-      setTotalPages(res.data.last_page); // Get total pages from response
-      setLoading(false);
-    }).catch(err => {
-      // Swal.fire('Error', err?.response?.data?.message, "error");
-      setLoading(false);
-    });
+    axios
+      .get(`/api/get-active-achievements/${limit}`, {
+        params: {
+          query: query,
+          themes: themes,
+          page: page,
+          sortOrder: sortOrder,
+          dateFilter: filter.dateFilter, // pass the date filter
+        },
+      })
+      .then((res) => {
+        setItemsList(res.data.data);
+        setTotalPages(res.data.last_page);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
   }
 
-  function getThemes(){
-    axios.get('/api/theme').then(res=>{
-      setThemes(res.data);
-      console.log(res.data)
-    }).catch(err=>{
-      console.log(err)
-    });
+  function getThemes() {
+    axios
+      .get('/api/theme')
+      .then((res) => {
+        setThemes(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getThemes();
-  },[]);
+  }, []);
 
   useEffect(() => {
     getPosts(searchQuery, currentPage, filter?.themes || []);
-    console.log("fetching again")
-  }, [searchQuery, currentPage, filter]);
+  }, [searchQuery, currentPage, filter, sortOrder]);
 
-  if (loading) return "Loading..."
+  if (loading) return "Loading...";
 
-
-  // Indices pour l'affichage "X - Y de ..."
   const startIndex = (currentPage - 1) * limit + 1;
   const endIndex = Math.min(currentPage * limit, resSafeLength(itemsList));
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div>
-      {/* Barre du haut (version desktop) pour le tri */}
       <div className="hidden sm:flex justify-between relative z-20">
-        {/* Dropdown de tri (exemple minimaliste) */}
         <ButtonDropdown
           items={[
             { key: 'desc', name: 'Les plus récents' },
             { key: 'asc', name: 'Les plus anciens' },
           ]}
           position="left"
-          // onSelect={(item:any) => {
-          //   console.log('Selected sort:', item);
-          // }}
-          renderItem={(item) => (
-            <div className='py-1 px-4 cursor-pointer'> {item[`name_${lang}`]}</div>
-          )}
+          onSelect={(item: any) => {
+            setSortOrder(item.key);
+          }}
+          renderItem={(item) => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
         >
           {(isOpen) => (
             <button className="h-12 rounded-[10px] border-2 border-black flex items-center">
               <div className="px-2 py-1.5 flex items-center gap-2">
                 <img src={sortIcon} className="size-6" alt="Sort Icon" />
-                <div className="text-black text-xl font-medium font-['Montserrat']">
-                  Trier
-                </div>
-                <div
-                  className={`w-6 h-6 transition duration-200 ${
-                    isOpen ? '-rotate-180' : ''
-                  }`}
-                >
+                <div className="text-black text-xl font-medium font-['Montserrat']">Trier</div>
+                <div className={`w-6 h-6 transition duration-200 ${isOpen ? '-rotate-180' : ''}`}>
                   <ArrowDownIcon />
                 </div>
               </div>
@@ -145,50 +116,37 @@ export default function AchievementsCards({
         </ButtonDropdown>
 
         <div className="text-black text-xl font-semibold font-['Montserrat'] mt-[2px]">
-          {` ${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} Réalisations`}
+          {`${startIndex} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} Réalisations`}
         </div>
       </div>
 
-      {/* Barre du haut (version mobile) */}
       <div className="sm:hidden flex justify-between pr-5 relative z-20">
-        {/* Bouton pour ouvrir la sidebar de filtres (mobile) */}
         <button
           type="button"
           onClick={() => setIsOpened(true)}
           className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl flex items-center gap-2.5"
         >
           <FilterIcon />
-          <div className="text-white text-sm font-bold font-['Montserrat']">
-            Filtres
-          </div>
+          <div className="text-white text-sm font-bold font-['Montserrat']">Filtres</div>
         </button>
 
-        {/* Dropdown de tri (mobile) */}
         <ButtonDropdown
           items={[
             { key: 'desc', name: 'Les plus récents' },
             { key: 'asc', name: 'Les plus anciens' },
           ]}
           position="right"
-          // onSelect={(item:any) => {
-          //   console.log('Selected sort:', item);
-          // }}
-          renderItem={(item) => (
-            <div className="py-1 px-4 cursor-pointer">{item.name}</div>
-          )}
+          onSelect={(item: any) => {
+            setSortOrder(item.key);
+          }}
+          renderItem={(item) => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
         >
           {(isOpen) => (
             <button className="h-12 rounded-[10px] border-2 border-black flex items-center">
               <div className="px-2 py-1.5 flex items-center gap-2">
                 <img src={sortIcon} className="size-6" alt="Sort Icon" />
-                <div className="text-black text-xl font-medium font-['Montserrat']">
-                  Trier
-                </div>
-                <div
-                  className={`w-6 h-6 transition duration-200 ${
-                    isOpen ? '-rotate-180' : ''
-                  }`}
-                >
+                <div className="text-black text-xl font-medium font-['Montserrat']">Trier</div>
+                <div className={`w-6 h-6 transition duration-200 ${isOpen ? '-rotate-180' : ''}`}>
                   <ArrowDownIcon />
                 </div>
               </div>
@@ -197,29 +155,20 @@ export default function AchievementsCards({
         </ButtonDropdown>
       </div>
 
-      {/* Info text sur mobile */}
       <div className="sm:hidden px-5 font-semibold pt-5">
-        {`${startIndex} - ${endIndex} de ??? réalisations`}
+        {`${startIndex} - ${endIndex} de ${itemsList.length} réalisations`}
       </div>
 
-      {/* Grille de cartes */}
       <section className="flex flex-col gap-8 w-full relative z-10 my-5">
         <div className="grid sm:grid-cols-2 gap-4">
-
           {itemsList.map((achievement: any) => (
-              <Link key={achievement.id} to={`/who-are-we/our-achievements/${achievement.slug}`}>
-                <AchievementCard key={achievement.id} achievement={achievement} />
-              </Link>
+            <Link key={achievement.id} to={`/who-are-we/our-achievements/${achievement.slug}`}>
+              <AchievementCard key={achievement.id} achievement={achievement} />
+            </Link>
           ))}
         </div>
-
-        {/* Pagination */}
         <div className="flex justify-center">
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
+          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
         </div>
       </section>
     </div>

@@ -28,6 +28,7 @@ export default function OurAchievements() {
   const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
   const [themes, setThemes] = useState([]);
   const [selectedThemes, setSelectedThemes] = useState<any[]>([]);
+  const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null);
   const [isOpened, setIsOpened] = useState(false);
   const [showAllThemes, setShowAllThemes] = useState(false);
 
@@ -119,17 +120,34 @@ export default function OurAchievements() {
           </div>
         </div>
 
+        {/* Date Filter Section */}
         <div className="flex flex-col gap-5 relative z-50">
           <FilterTitle title="Date" />
           <div className="flex flex-col gap-3">
-            <Checkbox label="Aujourd'hui" />
-            <Checkbox label="Cette Semaine" />
-            <Checkbox label="Ce Mois" />
-            <Checkbox label="Cette Année" />
+            <Checkbox 
+              label="Aujourd'hui" 
+              checked={selectedDateFilter === 'today'}
+              onChange={(checked) => setSelectedDateFilter(checked ? 'today' : null)}
+            />
+            <Checkbox 
+              label="Cette Semaine" 
+              checked={selectedDateFilter === 'week'}
+              onChange={(checked) => setSelectedDateFilter(checked ? 'week' : null)}
+            />
+            <Checkbox 
+              label="Ce Mois" 
+              checked={selectedDateFilter === 'month'}
+              onChange={(checked) => setSelectedDateFilter(checked ? 'month' : null)}
+            />
+            <Checkbox 
+              label="Cette Année" 
+              checked={selectedDateFilter === 'year'}
+              onChange={(checked) => setSelectedDateFilter(checked ? 'year' : null)}
+            />
 
             <ButtonDropdown
-            customDropdown={true}
-              item={<DateRangeSelector  />}
+              customDropdown={true}
+              item={<DateRangeSelector />}
               position="left"
               renderItem={(item) => <div className="py-1">{item}</div>}
             >
@@ -148,11 +166,9 @@ export default function OurAchievements() {
           <button
             className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]"
             onClick={() => {
-              // Reset
-              // setSearchTerm('');
+              // Reset filters
               setSelectedThemes([]);
-              // setDateFilter(null);
-              // setVisibleCount(6);
+              setSelectedDateFilter(null);
             }}
           >
             Réinitialiser
@@ -168,39 +184,38 @@ export default function OurAchievements() {
       <div className="text-[#183354] text-xl font-bold leading-relaxed">Suivez-nous</div>
       <Line />
       <div className='grid grid-cols-2 gap-1'>
-            <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
-              <div className='text-black'><FacebookIcon /></div>
-              <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">facebook</div>
-            </Link>
-            <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
-              <div className='text-black'><XIcon /></div>
-              <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">X</div>
-            </Link>
-            <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
-              <div className='text-black'><InstagramIcon /></div>
-              <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Instagram</div>
-            </Link>
-            <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
-              <div className='text-black'><YoutubeIcon /></div>
-              <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Youtube</div>
-            </Link>
-            <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
-              <div className='text-black'><LinkedinIcon /></div>
-              <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Linkedin</div>
-            </Link>
-          </div>
+        <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
+          <div className='text-black'><FacebookIcon /></div>
+          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">facebook</div>
+        </Link>
+        <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
+          <div className='text-black'><XIcon /></div>
+          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">X</div>
+        </Link>
+        <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
+          <div className='text-black'><InstagramIcon /></div>
+          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Instagram</div>
+        </Link>
+        <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
+          <div className='text-black'><YoutubeIcon /></div>
+          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Youtube</div>
+        </Link>
+        <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
+          <div className='text-black'><LinkedinIcon /></div>
+          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Linkedin</div>
+        </Link>
+      </div>
 
       <NewsLetterSub2
         title="Ne manquez rien !"
         paragraph="Inscrivez-vous à notre newsletter pour recevoir les dernières nouvelles sur nos réalisations et projets directement dans votre boîte mail"
       />
 
-      <div className="h-[279.40px] flex-col justify-center gap-[25px] flex">
+      <div className="h-[279.40px] flex flex-col justify-center gap-[25px]">
         <div className="text-[#183354] text-xl font-bold leading-relaxed">Une Question ?</div>
         <Line />
         <div className="w-[300px] text-black text-[15px] font-bold leading-normal">
-          Besoin de plus d'informations ? N'hésitez pas à nous contacter. Cliquez sur le Bouton
-          ci-dessous pour accéder à notre page de contact et poser vos questions.
+          Besoin de plus d'informations ? N'hésitez pas à nous contacter. Cliquez sur le bouton ci-dessous pour accéder à notre page de contact et poser vos questions.
         </div>
         <Button variant="primary" customClassnames="mx-auto">
           <div className="text-white text-xl font-bold">Contactez-Nous</div>
@@ -225,8 +240,7 @@ export default function OurAchievements() {
         title="Nos Actions, Notre Impact"
         subTitle={
           <div>
-            <div>Découvrez les projets qui transforment Kerkennah :</div> des initiatives locales qui
-            protègent, valorisent et inspirent
+            <div>Découvrez les projets qui transforment Kerkennah :</div> des initiatives locales qui protègent, valorisent et inspirent
           </div>
         }
       />
@@ -236,27 +250,13 @@ export default function OurAchievements() {
 
       <PageBody>
         <section className="w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10">
-          {/* If your layout's <Sidebar/> is needed, keep it. Otherwise remove */}
           <Sidebar />
           <section className="w-fit flex flex-col gap-4">
             <PageParagraph>
-              Depuis sa création, l’Association Kratten du Développement Durable de la Culture et
-              du Loisir (AKDDCL) s'engage activement pour la préservation de l'archipel de
-              Kerkennah, en alliant le développement durable, la protection de l’environnement et
-              la valorisation de la culture locale. Nous menons des initiatives variées, allant du
-              soutien aux pratiques de pêche durable aux projets éducatifs et culturels, afin de
-              créer un impact positif et pérenne pour notre communauté. Nos actions, qu’il
-              s’agisse d’ateliers de transmission des savoir-faire traditionnels, de festivals
-              célébrant le patrimoine ou de programmes de sensibilisation aux enjeux écologiques,
-              contribuent à renforcer l’identité et l’autonomie économique de notre île.
+              Depuis sa création, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL) s'engage activement pour la préservation de l'archipel de Kerkennah, en alliant le développement durable, la protection de l’environnement et la valorisation de la culture locale. Nous menons des initiatives variées, allant du soutien aux pratiques de pêche durable aux projets éducatifs et culturels, afin de créer un impact positif et pérenne pour notre communauté. 
             </PageParagraph>
             <PageParagraph>
-              Chaque projet est réalisé en étroite collaboration avec nos partenaires locaux et
-              internationaux, ainsi qu’avec la communauté, qui est au cœur de notre démarche. De
-              plus, nous honorons les anciens membres fondateurs dont la vision et le dévouement
-              ont permis d’établir les bases de cette mission essentielle. Leur héritage continue
-              de guider nos actions, garantissant ainsi la pérennité et le dynamisme de Kerkennah
-              pour les générations futures.
+              Chaque projet est réalisé en étroite collaboration avec nos partenaires locaux et internationaux, ainsi qu’avec la communauté, qui est au cœur de notre démarche. De plus, nous honorons les anciens membres fondateurs dont la vision et le dévouement ont permis d’établir les bases de cette mission essentielle. Leur héritage continue de guider nos actions, garantissant ainsi la pérennité et le dynamisme de Kerkennah pour les générations futures.
             </PageParagraph>
           </section>
         </section>
@@ -266,7 +266,10 @@ export default function OurAchievements() {
         <section className="flex flex-col sm:flex-row gap-5">
           <LeftSidebar />
           <section className="flex-1">
-            <AchievementsCards filter={{ themes: selectedThemes }} setIsOpened={setIsOpened} />
+            <AchievementsCards 
+              filter={{ themes: selectedThemes, dateFilter: selectedDateFilter }} 
+              setIsOpened={setIsOpened} 
+            />
           </section>
           <RightSidebar />
         </section>
