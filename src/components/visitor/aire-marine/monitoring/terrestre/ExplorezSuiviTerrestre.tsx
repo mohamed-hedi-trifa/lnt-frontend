@@ -41,8 +41,8 @@ export default function ExplorezSuiviTerrestre() {
 
   return (
     <article className="">
-      <div className="text-justify  text-[18px] sm:text-[22px] font-semibold">
-        <p className="text-center text-[30px] sm:text-[36px]">
+      <div className="text-justify  text-[24px] sm:text-[32px] font-bold pb-4">
+        <p className="text-center text-[30px] sm:text-[32px]">
           <span className="text-[#0270A0]">Explorer</span> Les espéces de Notre Suivi Terrestre{" "}
         </p>
       </div>

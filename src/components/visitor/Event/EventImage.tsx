@@ -5,10 +5,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import eventImage1 from "../../../assets/images/eventImage.jpg";
-import eventImage2 from "../../../assets/images/FatmaB.png";
-import eventImage3 from "../../../assets/images/JamilK.png";
-import eventImage4 from "../../../assets/images/NajahH.png";
 import LocationIcon from "@/assets/icons/LocationIcon";
 
 export default function EventImage({ events, language="fr" }: { events: any, language:string }) {
@@ -68,6 +64,7 @@ export default function EventImage({ events, language="fr" }: { events: any, lan
     <div className="w-full relative">
       <Swiper
         modules={[Navigation, Thumbs]}
+        autoplay={{ delay: 7000, disableOnInteraction: false }}
         loop={true}
         spaceBetween={10}
         navigation={{
@@ -158,11 +155,11 @@ export default function EventImage({ events, language="fr" }: { events: any, lan
         </div>
 
         <div className="w-full h-full top-0 z-10 absolute flex items-center justify-between">
-          <button className="swiper-previous absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#0270A0] bg-opacity-70 py-14 px-2 rounded-r-xl hover:bg-opacity-90 transition duration-300">
+          <button className="swiper-previous absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#0270A0] bg-opacity-70 sm:py-14 px-2 py-8 rounded-r-xl hover:bg-opacity-90 transition duration-300">
             <ChevronLeftIcon className="text-white w-6 h-6" />
           </button>
 
-          <button className="swiper-nexxt absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#0270A0] bg-opacity-70 py-14 px-2 rounded-l-xl hover:bg-opacity-90 transition duration-300">
+          <button className="swiper-nexxt absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#0270A0] bg-opacity-70 sm:py-14 px-2 py-8 rounded-l-xl hover:bg-opacity-90 transition duration-300">
             <ChevronRightIcon className="text-white w-6 h-6" />
           </button>
         </div>

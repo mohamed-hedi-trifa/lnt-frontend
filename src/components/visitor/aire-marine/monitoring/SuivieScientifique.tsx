@@ -42,7 +42,7 @@ const ScientificTrackingContent = () => (
     </Title>
 
     <PageParagraph>
-      <div className="text-justify text-[18px] sm:text-[22px] font-semibold">
+      <div className="text-justify text-[18px] sm:text-[22px] font-medium">
         Nos efforts de suivi nous aident à mieux comprendre les défis environnementaux auxquels sont confrontés les écosystèmes uniques de Kerkennah. Les données collectées permettent de :
       </div>
     </PageParagraph>
@@ -134,8 +134,17 @@ export default function SuiviScientifique() {
           </section>
 
           <section className='border-t border-[#000000] mb-10'/>
+            <div className="text-justify  text-[18px] sm:text-[22px] font-bold pb-4">
+               <p className="text-center text-[30px] sm:text-[32px]">
+                 <span className="text-[#0270A0]">Explorer</span> Les espéces de Notre Suivi Marin{" "}
+               </p>
+            </div>
+            <div className="text-justify  text-[18px] sm:text-[22px] font-bold pb-10">
+              <p className="text-center text-[18px] sm:text-[20px]">Découvrez les trésors marins que nous préservons</p>
+            </div>
 
           <section className='flex items-start justify-center mb-20 '>
+            
             <div className='w-full flex items-center justify-center '>
                 <ContainerImageMarine images={images}/>
             </div>               

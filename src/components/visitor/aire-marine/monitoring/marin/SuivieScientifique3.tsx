@@ -49,7 +49,7 @@ export default function SuiviScientifique3() {
 
       <section className="px-4 sm:px-0">
         <div className="max-w-6xl mx-auto">
-          <section className="w-full flex flex-col sm:flex-row relative gap-4 md:gap-8 ms:py-10 pb-10">
+          <section className="w-full flex flex-col sm:flex-row relative gap-4 md:gap-8 md:py-10 pb-10">
             <AMCPSuiviScientifiqueSidebar />
 
             <section className="w-fit flex flex-col gap-8 ">
