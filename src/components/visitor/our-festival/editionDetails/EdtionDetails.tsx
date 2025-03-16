@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import Media from "../../Media";
 import Partners from "../../who-are-we/partners/Partners";
 import PastEditionsCarousel from "../PastEditionsCarousel";
+import LangLink from "@/components/LangLink";
 
 
 
@@ -160,8 +161,16 @@ export default function EditionDetails({ location, params }: { location: any; pa
                                 <p>Plongez dans l'histoire et les moments marquants des festivals passés qui ont marqué Kerkenah</p>
                             </div>
 
-                            <PastEditionsCarousel prevEditions={allPreviousEdition} />
                         </section>
+                            <PastEditionsCarousel prevEditions={allPreviousEdition} />
+
+                        <div className="flex items-center justify-center pt-6 pb-20">
+                                <LangLink to="/our-festival/previous/">
+                                  <button className="px-8 py-3 my-4  bg-[linear-gradient(to_right,#006E9F,#51ADC6,#006E9F)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right  text-white font-bold rounded-full shadow-lg">
+                                  <p className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">Voir Toutes les Éditions Précédentes </p>
+                                  </button>
+                                </LangLink>
+                        </div>    
              
 
 

@@ -23,9 +23,9 @@ export default function ShareButton() {
   const fullUrl = `${baseUrl}${currentPath}`; // Full URL including path
 
   return (
-    <div className="h-full w-full absolute top-0 left-0">
-      <div className="sticky top-0 h-screen flex items-center">
-        <div className='h-[92px]'>
+    <div className="h-full w-full absolute top-0 left-0 pointer-events-none">
+      <div className="sticky top-0 h-screen flex items-center pointer-events-none">
+        <div className='h-[92px] pointer-events-auto'>
           <Accordion open={open} className='bg-[#000000B2] w-[65px] text-white rounded-r-[10px] !p-0 !m-0' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <AccordionHeader onClick={() => setOpen(!open)} className="flex justify-center bg-transparent border-none shadow-none w-auto !text-center !p-0" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
               {open ? (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { Link } from 'gatsby';
 
 export default function EventsEditionCards({event}) {
     const formatDate = (eventDatetime) => {
@@ -62,7 +63,7 @@ export default function EventsEditionCards({event}) {
 
         {/* Button Section */}
         <div className="w-full text-start self-start mx-3">
-          <a href="/opportunities/category1/?lang=en">
+          <Link to={`/event/event-details/${event?.slug}`}>
             <button
               className="text-white sm:mb-0 mb-5 sm:text-xs font-medium self-start rounded-3xl bg-gradient-to-r from-[#51ADC6] to-[#006E9F] w-fit py-2 px-6 
               shadow-[0px_6px_12px_rgba(0,0,0,0.3)] 
@@ -71,7 +72,7 @@ export default function EventsEditionCards({event}) {
             >
               En savoir plus
             </button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
