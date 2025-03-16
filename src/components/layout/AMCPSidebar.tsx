@@ -74,7 +74,7 @@ const AMCPSidebar = () => {
 
   async function fetchResearches() {
     try {
-      const res = await axios.get("/api/posts");
+      const res = await axios.get("/api/species");
 
       const obj = res.data.reduce(
         (acc: any, el: any) => {

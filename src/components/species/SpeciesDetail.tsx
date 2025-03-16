@@ -26,7 +26,7 @@ function formatDate(dateString: string) {
   return date.toLocaleDateString("en-US", options);
 }
 
-export default function BlogDetail({ location, params }: { location: any; params: any }) {
+export default function SpeciesDetail({ location, params }: { location: any; params: any }) {
   const [blogPost, setBlogPost] = useState<any>(null);
   const [slug, setSlug] = useState<string | null>(null);
   const [language, setLanguage] = useState<string>("en");
@@ -39,7 +39,7 @@ export default function BlogDetail({ location, params }: { location: any; params
   useEffect(() => {
     if (slug) {
       axios
-        .get(`/api/posts/${slug}`)
+        .get(`/api/species/${slug}`)
         .then((res) => {
           setBlogPost(res.data);
 

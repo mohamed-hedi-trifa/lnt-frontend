@@ -4,14 +4,28 @@ import Swal from "sweetalert2";
 import { ArrowLeftIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Link } from "gatsby";
 import Title from "../../atoms/titles/Title";
-import BlogGallery from "./BlogGallery";
+import SpeciesGallery from "./SpeciesGallery";
+import Input from "../../atoms/inputs/Input";
+import Textarea from "@/components/atoms/inputs/Textarea";
+import Table from '@/components/visitor/who-are-we/rapports/Table';
+const dataTable = [
+  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
+  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
+  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
+  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
+  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
+  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
+];
 
-
-export default function ManageBlog({ params }: { params: any }) {
-  const [post, setpost] = useState<any>(null);
+export default function ManageSpecies({ params }: { params: any }) {
+  const [species, setspecies] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [slug, setSlug] = useState<string | null>(null);
   const [themeId, setThemeId] = useState("");
+  const [formData, setFormData] = useState({
+    title_en: "",
+    title_fr: "",
+  });
 
   useEffect(() => {
     if (params.slug) {
@@ -19,12 +33,20 @@ export default function ManageBlog({ params }: { params: any }) {
     }
   }, [params.slug]);
 
-  const getBlogs = async () => {
+  const getSpecies = async () => {
     try {
-      const res = await axios.get(`/api/posts/${slug}`);
-      setpost(res.data);
+      const res = await axios.get(`/api/species/${slug}`);
+      setspecies(res.data);
+
+      const blogSpecies: any = res.data;
+
+      setFormData({
+        title_en: blogSpecies.title_en ?? "",
+        title_fr: blogSpecies.title_fr ?? "",
+
+      });
     } catch (err) {
-      Swal.fire("Error", err.response?.data?.message || "Failed to fetch post", "error");
+      Swal.fire("Error", err.response?.data?.message || "Failed to fetch species", "error");
     } finally {
       setLoading(false);
     }
@@ -34,27 +56,27 @@ export default function ManageBlog({ params }: { params: any }) {
     if (!slug) return;
 
 
-    getBlogs();
+    getSpecies();
   }, [slug]);
 
   const handleAddTheme = (e: React.FormEvent) => {
     e.preventDefault();
 
 
-    if (post.themes.length >= 4) {
-      Swal.fire("Error", "A post can have a maximum of 4 themes.", "error");
+    if (species.themes.length >= 4) {
+      Swal.fire("Error", "A species can have a maximum of 4 themes.", "error");
       return;
     }
 
     axios
-      .post("/api/add-post-theme", {
-        post_id: post.id,
+      .post("/api/add-species-theme", {
+        species_id: species.id,
         theme_id: themeId,
       })
       .then((res) => {
         Swal.fire("Success", "Theme added successfully!", "success");
         setThemeId("");
-        getBlogs();
+        getSpecies();
       })
       .catch((err) => {
         Swal.fire("Error", err.response?.data?.message || "Failed to add theme", "error");
@@ -75,11 +97,11 @@ export default function ManageBlog({ params }: { params: any }) {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`/api/post/${post.id}/theme/${item.id}`)
+          .delete(`/api/species/${species.id}/theme/${item.id}`)
           .then((res) => {
-            Swal.fire("Deleted!", "The post has been removed from this post.", "success");
+            Swal.fire("Deleted!", "The species has been removed from this species.", "success");
             setThemeId("");
-            getBlogs();
+            getSpecies();
           })
           .catch((err) => {
             if (err.response.data.status === 404) {
@@ -93,28 +115,33 @@ export default function ManageBlog({ params }: { params: any }) {
     });
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div className="container mx-auto p-6">
       <div className="flex items-center gap-1">
-        <Link to="/admin/posts">
+        <Link to="/admin/species">
           <ArrowLeftIcon className="h-6 w-6" />
         </Link>
-        <Title>Edit Blog</Title>
+        <Title>Edit Species</Title>
       </div>
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <p className="text-xl text-gray-500">Loading...</p>
         </div>
-      ) : post ? (
+      ) : species ? (
         <div className="bg-white shadow-md rounded-lg p-6">
 
           <div className="mb-6">
             <h1 className="text-4xl font-extrabold mb-2">Manage Edition</h1>
             <p className="text-lg text-gray-600">
-              Title: <span className="font-semibold">{post.title_fr || post.title_en}</span>
+              Title: <span className="font-semibold">{species.title_fr || species.title_en}</span>
             </p>
             <p className="text-lg text-gray-600">
-              Type: <span className="font-semibold">{post.type}</span>
+              Type: <span className="font-semibold">{species.type}</span>
             </p>
           </div>
 
@@ -122,7 +149,7 @@ export default function ManageBlog({ params }: { params: any }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="border rounded-lg overflow-hidden shadow-sm">
               <img
-                src={`${process.env.GATSBY_API_URL}${post?.image}`}
+                src={`${process.env.GATSBY_API_URL}${species?.image}`}
                 alt="Affiche 1"
                 className="w-full h-48 object-cover"
               />
@@ -133,7 +160,7 @@ export default function ManageBlog({ params }: { params: any }) {
 
                 </h2>
                 <p className="text-primary ml-3">
-                  {post.subtitle_en_en || post.subtitle_en_fr}
+                  {species.subtitle_en_en || species.subtitle_en_fr}
                 </p>
                 <h2 className="text-2xl font-bold mb-1">
                   Summary :
@@ -141,7 +168,7 @@ export default function ManageBlog({ params }: { params: any }) {
                 </h2>
 
                 <p className="text-gray-700 ml-3">
-                  {post.summary_en || post.summary_fr}
+                  {species.summary_en || species.summary_fr}
                 </p>
               </div>
             </div>
@@ -150,11 +177,57 @@ export default function ManageBlog({ params }: { params: any }) {
 
           <hr className="my-6" />
 
+          <div >
+            {/* <h1 className="text-2xl font-bold mb-4">Recherche Et Connaissances</h1>
+            <div className="flex gap-16 w-full">
+              <Input
+                label="English Title"
+                type="text"
+                name="title_en"
+                value={formData.title_en}
+                onChange={handleChange}
+                customClassName=" w-[550px] p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              <Input
+                label="Frensh Title"
+                type="text"
+                name="title_fr"
+                value={formData.title_en}
+                onChange={handleChange}
+                customClassName=" w-[550px] p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              
+           </div> */}
+           <div className="flex flex-col items-center gap-5">
+
+            <span className='text-[28px] sm:text-[36px] font-bold'>
+              <p className='text-center'><span className='text-[#0270A0]'>Recherche</span> et Connaissances sur la Posidonie </p>
+            </span>
+
+            <div className='font-semibold text-[18px] sm:text-[20px]'>
+              <p className='text-center max-w-[800px] w-full'>La recherche scienntifique sue la Posidonie, plante emblématique de la
+                Méditerannée, est essentielle pour comprendre son roleécologique et les menaces
+                auxquelles, elle fait face. Cette section regroupedes rapports et des articles
+                détaillant les résultats des suivis scientifiques, les méthodologies utilisées,et les
+                recommendations pour préserver cet écosystémeclé dans l'archipelde
+                Kerkennah</p>
+
+            </div>
+
+            <Table data={dataTable} />
+
+          </div>
+
+              </div>
+
+          <hr className="my-6" />
+
           <div className="mb-6">
             <h2 className="text-2xl font-bold mb-4">Themes</h2>
-            {post.themes?.length > 0 ? (
+            {species.themes?.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {post.themes.map((item: any) => (
+                {species.themes.map((item: any) => (
                   <div key={item.id} className="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm justify-between">
                     <div className="flex items-center">
 
@@ -194,7 +267,7 @@ export default function ManageBlog({ params }: { params: any }) {
                 required
               >
                 <option value="">Select a theme</option>
-                {post.themesNotSelected?.map((theme: any) => (
+                {species.themesNotSelected?.map((theme: any) => (
                   <option key={theme.id} value={theme.id}>
                     {theme.name_en || theme_name_fr}
                   </option>
@@ -208,14 +281,14 @@ export default function ManageBlog({ params }: { params: any }) {
 
 
           <hr className="my-6" />
-          <BlogGallery postId={post.id} />
+          <SpeciesGallery speciesId={species.id} />
 
 
 
         </div>
       ) : (
         <div className="text-center text-gray-500">
-          <p>Post not found.</p>
+          <p>Species not found.</p>
         </div>
       )}
     </div>

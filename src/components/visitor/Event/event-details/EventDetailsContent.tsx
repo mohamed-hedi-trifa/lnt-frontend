@@ -4,7 +4,7 @@ import "./EventDetailsContent.css";
 
 import { navigate } from "gatsby";
 import Title from "@/components/atoms/titles/Title";
-import BlogList from "../../aire-marine/monitoring/marin/blog/BlogList";
+import BlogList from "../../aire-marine/monitoring/marin/species/BlogList";
 
 // Helper function to parse custom markdown-like syntax
 const parseContent = (content: any) => {

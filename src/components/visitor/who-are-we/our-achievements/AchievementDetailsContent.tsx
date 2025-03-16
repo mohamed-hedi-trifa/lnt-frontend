@@ -4,7 +4,7 @@ import "./AchievementDetailsContent.css";
 
 import { navigate } from "gatsby";
 import Title from "@/components/atoms/titles/Title";
-import BlogList from "../../aire-marine/monitoring/marin/blog/BlogList";
+import BlogList from "../../aire-marine/monitoring/marin/species/BlogList";
 import Calendar from "@/assets/icons/Calendar";
 import Media from "../../Media";
 import PageParagraph from "@/components/atoms/PageParagraph";

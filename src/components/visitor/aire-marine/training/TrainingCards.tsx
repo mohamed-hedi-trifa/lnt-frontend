@@ -54,7 +54,7 @@ export default function TrainingCards() {
 
     function getPosts(query: any, page = currentPage) {
         setLoading(true);
-        axios.get(`/api/get-active-posts/${limit ? limit : ""}`, {
+        axios.get(`/api/get-active-training/${limit ? limit : ""}`, {
             params: { query, page }
         }).then(res => {
             setItemsList(res.data.data);
@@ -124,7 +124,7 @@ export default function TrainingCards() {
         <section className='flex flex-col gap-8 w-full relative z-10 my-5 sm:my-10 col-span-1'>
 
             <div className='grid sm:grid-cols-2 gap-4 px-4 sm:px-0'>
-                {itemsList.map((achievement: any) => <TrainingCard key={achievement.id} post={achievement} />)}
+                {itemsList.map((training: any) => <TrainingCard key={training.id} training={training} />)}
             </div>
 
             <div className='flex justify-center px-4 sm:px-0'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>

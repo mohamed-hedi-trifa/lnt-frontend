@@ -13,7 +13,7 @@ import ItemsList from "../ItemsList";
 // ...
 import { v4 as uuidv4 } from "uuid";
 
-const EditPost = ({ location, params }: { location: any; params: any }) => {
+const EditSpecies = ({ location, params }: { location: any; params: any }) => {
   const searchParams = new URLSearchParams(location?.search);
   const paramLang = searchParams.get("lang");
 
@@ -38,27 +38,29 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
   }, [location]);
 
   useEffect(() => {
-    const fetchBlogPost = async () => {
+    const fetchBlogSpecies = async () => {
       if (!slug) return;
       try {
-        const response = await axios.get(`/api/posts/${slug}`);
-        const blogPost: any = response.data;
+        const response = await axios.get(`/api/species/${slug}`);
+        const blogSpecies: any = response.data;
+
+        console.log(response.data)
         // Sort content items by order
-        blogPost.content_items.sort((a: any, b: any) => a.order - b.order);
+        blogSpecies.content_items.sort((a: any, b: any) => a.order - b.order);
 
         // Set form data
         setFormData({
-          title_en: blogPost.title_en ?? "",
-          title_fr: blogPost.title_fr ?? "",
-          subtitle_en: blogPost.subtitle_en ?? "",
-          subtitle_fr: blogPost.subtitle_fr ?? "",
-          summary_en: blogPost.summary_en ?? "",
-          summary_fr: blogPost.summary_fr ?? "",
-          type: blogPost.type || "marin",
+          title_en: blogSpecies.title_en ?? "",
+          title_fr: blogSpecies.title_fr ?? "",
+          subtitle_en: blogSpecies.subtitle_en ?? "",
+          subtitle_fr: blogSpecies.subtitle_fr ?? "",
+          summary_en: blogSpecies.summary_en ?? "",
+          summary_fr: blogSpecies.summary_fr ?? "",
+          type: blogSpecies.type || "marin",
         });
 
         // parse any JSON content
-        const parsedContentItems = blogPost.content_items.map((item: any) => {
+        const parsedContentItems = blogSpecies.content_items.map((item: any) => {
           if (item.type === "list") {
             return { ...item, content: JSON.parse(item.content) };
           }
@@ -88,14 +90,14 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
 
         // If paramLang is invalid, fallback to whichever is populated
         if (!["en", "fr"].includes(paramLang || "")) {
-          setLanguage(blogPost.title_en ? "en" : "fr");
+          setLanguage(blogSpecies.title_en ? "en" : "fr");
         }
       } catch (error) {
-        console.error("Error fetching blog post:", error);
+        console.error("Error fetching species species:", error);
       }
     };
 
-    fetchBlogPost();
+    fetchBlogSpecies();
   }, [slug, paramLang]);
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -205,17 +207,18 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
       }
     });
 
+    console.log(formDataToSend)
     try {
-      const response = await axios.post(`/api/posts/${slug}`, formDataToSend, {
+      const response = await axios.post(`/api/species/${slug}`, formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (response.status === 200) {
-        Swal.fire("Success", "Blog updated successfully", "success");
-        navigate("/admin/posts");
+        Swal.fire("Success", "Species updated successfully", "success");
+        navigate("/admin/species");
       }
     } catch (error) {
-      console.error("Error updating blog:", error);
-      Swal.fire("Error", "Failed to update blog.", "error");
+      console.error("Error updating species:", error);
+      Swal.fire("Error", "Failed to update species.", "error");
     }
   };
 
@@ -223,10 +226,10 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
     <div className="h-[calc(100vh-80px)] flex flex-col p-4">
       <div className="flex justify-between">
         <div className="flex items-center gap-1">
-          <Link to="/admin/posts">
+          <Link to="/admin/species">
             <ArrowLeftIcon className="h-6 w-6" />
           </Link>
-          <Title>Edit Post</Title>
+          <Title>Edit Species</Title>
         </div>
         <Select
           divClassNames="!flex-row items-center gap-2"
@@ -391,10 +394,10 @@ const EditPost = ({ location, params }: { location: any; params: any }) => {
         </div>
 
         <Input label="Image" type="file" name="image" onChange={handleImageChange} />
-        <Button type="submit">Update Blog</Button>
+        <Button type="submit">Update Species</Button>
       </form>
     </div>
   );
 };
 
-export default EditPost;
+export default EditSpecies;
