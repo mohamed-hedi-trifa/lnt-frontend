@@ -22,6 +22,11 @@ interface FormData {
   summary_en: string;
   summary_fr: string;
   type: string;
+
+  title_research_knowledge_en: string;
+  title_research_knowledge_fr: string;
+  description_research_knowledge_en: string;
+  description_research_knowledge_fr: string;
 }
 
 const CreateSpecies: React.FC = () => {
@@ -34,6 +39,11 @@ const CreateSpecies: React.FC = () => {
     summary_en: "",
     summary_fr: "",
     type: "marin",
+    title_research_knowledge_en: "",
+    title_research_knowledge_fr: "",
+    description_research_knowledge_en: "",
+    description_research_knowledge_fr: "",
+
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -124,9 +134,20 @@ const CreateSpecies: React.FC = () => {
       if (!formData.summary_en) {
         newErrors.summary_en = "Summary is required.";
       }
+
+      if (!formData.title_research_knowledge_en) {
+        newErrors.title_research_knowledge_en = "subtitle is required.";
+      }
+      if (!formData.description_research_knowledge_en) {
+        newErrors.description_research_knowledge_en = "Summary is required.";
+      }
+
+
       if (englishItems.length === 0) {
         newErrors.items = "At least one content item is required.";
       }
+
+
     } else {
       if (!formData.title_fr) {
         newErrors.title_fr = "Title is required.";
@@ -137,9 +158,16 @@ const CreateSpecies: React.FC = () => {
       if (!formData.summary_fr) {
         newErrors.summary_fr = "summary_fr is required.";
       }
+      if (!formData.title_research_knowledge_fr) {
+        newErrors.title_research_knowledge_fr = "subtitle_fr is required.";
+      }
+      if (!formData.description_research_knowledge_fr) {
+        newErrors.description_research_knowledge_fr = "summary_fr is required.";
+      }
       if (frenchItems.length === 0) {
         newErrors.items = "At least one content item is required.";
       }
+
     }
 
     setErrors(newErrors);
@@ -203,6 +231,11 @@ const CreateSpecies: React.FC = () => {
         summary_en: "",
         summary_fr: "",
         type: "marin",
+        title_research_knowledge_en: "",
+        title_research_knowledge_fr: "",
+        description_research_knowledge_en: "",
+        description_research_knowledge_fr: "",
+
       });
       setErrors({}); // Clear any previous errors
       toast.success("Species created successfully");
@@ -213,7 +246,7 @@ const CreateSpecies: React.FC = () => {
         msg = error?.response?.data?.message;
       }
       setErrors((prevErrors) => ({
-        ...prevErrors,  
+        ...prevErrors,
         apiError: msg,
       })); // Set API error message
     } finally {
@@ -240,7 +273,7 @@ const CreateSpecies: React.FC = () => {
       type,
       language: language,
     };
-  
+
     const updatedItems = language === "en" ? [...englishItems] : [...frenchItems];
     updatedItems.push(newItem);
     language === "en" ? setEnglishItems(updatedItems) : setFrenchItems(updatedItems);
@@ -302,9 +335,8 @@ const CreateSpecies: React.FC = () => {
           <label className="block text-sm font-medium text-slate-500">Type</label>
           <div className="mt-2 flex space-x-4">
             <label
-              className={`flex items-center p-2 border rounded focus-within:ring-1 ring-sky-500 cursor-pointer duration-200 ${
-                formData.type === "marin" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
-              }`}
+              className={`flex items-center p-2 border rounded focus-within:ring-1 ring-sky-500 cursor-pointer duration-200 ${formData.type === "marin" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
+                }`}
             >
               <input
                 id="marin"
@@ -318,9 +350,8 @@ const CreateSpecies: React.FC = () => {
               <p className="ml-3 block text-sm font-medium text-gray-700">Marin</p>
             </label>
             <label
-              className={`flex items-center p-2 border rounded focus-within:ring-1 ring-sky-500 cursor-pointer duration-200 ${
-                formData.type === "terrestre" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
-              }`}
+              className={`flex items-center p-2 border rounded focus-within:ring-1 ring-sky-500 cursor-pointer duration-200 ${formData.type === "terrestre" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
+                }`}
             >
               <input
                 id="terrestre"
@@ -336,6 +367,46 @@ const CreateSpecies: React.FC = () => {
           </div>
         </div>
 
+        {language === "en" && (
+          <>
+
+            <Input label="title_research_knowledge_en" name="title_research_knowledge_en" value={formData.title_research_knowledge_en} onChange={handleChange} />
+            {errors.title_research_knowledge_en && <div className="text-red-500 text-sm">{errors.title_research_knowledge_en}</div>}
+
+          </>
+        )}
+        {language === "fr" && (
+          <>
+            <Input label="title_research_knowledge_fr" name="title_research_knowledge_fr" value={formData.title_research_knowledge_fr} onChange={handleChange} />
+            {errors.title_research_knowledge_fr && <div className="text-red-500 text-sm">{errors.title_research_knowledge_fr}</div>}
+
+          </>
+        )}
+
+        {language === "en" && (
+          <>
+            <Textarea label="description_research_knowledge_en" name="description_research_knowledge_en" value={formData.description_research_knowledge_en} onChange={handleChange} />
+            {errors.description_research_knowledge_en && <div className="text-red-500 text-sm">{errors.description_research_knowledge_en}</div>}
+          </>
+        )}
+        {language === "fr" && (
+          <>
+
+            <Textarea label="description_research_knowledge_fr" name="description_research_knowledge_fr" value={formData.description_research_knowledge_fr} onChange={handleChange} />
+            {errors.description_research_knowledge_fr && <div className="text-red-500 text-sm">{errors.description_research_knowledge_fr}</div>}
+          </>
+        )}
+
+
+
+
+        {language === "fr" && (
+          <>
+            <Textarea label="Summary" name="summary_fr" value={formData.summary_fr} onChange={handleChange} />
+            {errors.summary_fr && <div className="text-red-500 text-sm">{errors.summary_fr}</div>}
+          </>
+        )}
+
         <div className="text-slate-500 text-sm font-medium mb-2">Content</div>
 
         {(language === "en" && englishItems.length) || (language === "fr" && frenchItems.length) ? (
@@ -345,7 +416,7 @@ const CreateSpecies: React.FC = () => {
             setItems={language === "en" ? setEnglishItems : setFrenchItems}
             language={language}
             key={language}
-            route = "/api/content-items"
+            route="/api/content-items"
 
           />
         ) : (

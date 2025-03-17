@@ -73,19 +73,7 @@ export default function Species({ location, params }: { location: any; params: a
   console.log("-------------------- blogSpecies --------------------");
   console.log(blogSpecies);
 
-  const dataTable = [
-    {
-      title: "Posidonie_Kerkennah_Suivi.pdf",
-      date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés",
-      image: "/images/Pdf.png",
-    },
-    {
-      title: "Posidonie_Kerkennah_Suivi.pdf",
-      date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés",
-      image: "/images/Pdf.png",
-    },
-    // ... (ajouter d'autres éléments si nécessaire)
-  ];
+
 
   if (!blogSpecies) {
     return <div>Loading...</div>;
@@ -219,7 +207,7 @@ export default function Species({ location, params }: { location: any; params: a
               </p>
             </div>
           </PageParagraph>
-          <Table data={dataTable} />
+          <Table data={blogSpecies.researchKnowledge} />
           <section className="border-t border-[#000000] mt-10 py-10">
             <DecouvrezDautresEspeces currentBlog={blogSpecies}/>
           </section>

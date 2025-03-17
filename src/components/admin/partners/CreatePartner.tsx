@@ -104,15 +104,15 @@ const CreatePartner: React.FC = () => {
                 newErrors.name = "Name is required.";
             }
             if (!formData.description_en) {
-                newErrors.summary_en = "Summary is required.";
+                newErrors.description_en = "Description is required.";
             }
 
-        } else {
+        } else {    
             if (!formData.name) {
                 newErrors.title_fr = "Title is required.";
             }
             if (!formData.description_fr) {
-                newErrors.summary_fr = "Summary is required.";
+                newErrors.description_fr = "Description is required.";
             }
 
         }
@@ -218,27 +218,27 @@ const CreatePartner: React.FC = () => {
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col grow">
 
-                {language === "en" && (
-                    <>
-                        <Input label="Name" type="text" name="name" value={formData.name} onChange={handleChange} />
-                        {errors.name && <div className="text-red-500 text-sm">{errors.name}</div>}
+                    {language === "en" && (
+                        <>
+                            <Input label="Name" type="text" name="name" value={formData.name} onChange={handleChange} />
+                            {errors.name && <div className="text-red-500 text-sm">{errors.name}</div>}
 
-                        <Input label="Description" type="text" name="description_en" value={formData.description_en} onChange={handleChange} />
-                        {errors.description_en && <div className="text-red-500 text-sm">{errors.description_en}</div>}
+                            <Input label="Description" type="text" name="description_en" value={formData.description_en} onChange={handleChange} />
+                            {errors.description_en && <div className="text-red-500 text-sm">{errors.description_en}</div>}
 
-                        <Input label="Facebook Link" type="url" name="facebookLink" value={formData.facebookLink} onChange={handleChange} />
-                        {errors.facebookLink && <div className="text-red-500 text-sm">{errors.facebookLink}</div>}
+                            <Input label="Facebook Link" type="url" name="facebookLink" value={formData.facebookLink} onChange={handleChange} />
+                            {errors.facebookLink && <div className="text-red-500 text-sm">{errors.facebookLink}</div>}
 
-                        <Input label="Website Link" type="url" name="websiteLink" value={formData.websiteLink} onChange={handleChange} />
-                        {errors.websiteLink && <div className="text-red-500 text-sm">{errors.websiteLink}</div>}
+                            <Input label="Website Link" type="url" name="websiteLink" value={formData.websiteLink} onChange={handleChange} />
+                            {errors.websiteLink && <div className="text-red-500 text-sm">{errors.websiteLink}</div>}
 
-                        <Input label="LinkedIn Link" type="url" name="linkedInLink" value={formData.linkedInLink} onChange={handleChange} />
-                        {errors.linkedInLink && <div className="text-red-500 text-sm">{errors.linkedInLink}</div>}
+                            <Input label="LinkedIn Link" type="url" name="linkedInLink" value={formData.linkedInLink} onChange={handleChange} />
+                            {errors.linkedInLink && <div className="text-red-500 text-sm">{errors.linkedInLink}</div>}
 
-                        <Input label="Instagram Link" type="url" name="instagramLink" value={formData.instagramLink} onChange={handleChange} />
-                        {errors.instagramLink && <div className="text-red-500 text-sm">{errors.instagramLink}</div>}
-                    </>
-                )}
+                            <Input label="Instagram Link" type="url" name="instagramLink" value={formData.instagramLink} onChange={handleChange} />
+                            {errors.instagramLink && <div className="text-red-500 text-sm">{errors.instagramLink}</div>}
+                        </>
+                    )}
 
                 {language === "fr" && (
                     <>
