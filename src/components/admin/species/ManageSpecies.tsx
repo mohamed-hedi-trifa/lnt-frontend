@@ -8,14 +8,6 @@ import SpeciesGallery from "./SpeciesGallery";
 import Input from "../../atoms/inputs/Input";
 import Textarea from "@/components/atoms/inputs/Textarea";
 import Table from '@/components/visitor/who-are-we/rapports/Table';
-const dataTable = [
-  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
-  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
-  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
-  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
-  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
-  { title: "Posidonie_Kerkennah_Suivi.pdf", date: "Ce rapport résume les résultats du suivi écologique des herbiers de posidonie, incluant leur état de santé et les impacts environnementaux observés", image: "/images/Pdf.png" },
-];
 
 export default function ManageSpecies({ params }: { params: any }) {
   const [species, setspecies] = useState<any>(null);
@@ -199,27 +191,28 @@ export default function ManageSpecies({ params }: { params: any }) {
               />
               
            </div> */}
-           <div className="flex flex-col items-center gap-5">
+            <div className="flex flex-col items-center gap-5">
 
-            <span className='text-[28px] sm:text-[36px] font-bold'>
-              <p className='text-center'><span className='text-[#0270A0]'>Recherche</span> et Connaissances sur la Posidonie </p>
-            </span>
+              <span className='text-[28px] sm:text-[36px] font-bold'>
+                <p className='text-center'><span className='text-[#0270A0]'>Recherche</span> et Connaissances {species.title_research_knowledge_en || species.title_research_knowledge_fr}</p>
+              </span>
 
-            <div className='font-semibold text-[18px] sm:text-[20px]'>
-              <p className='text-center max-w-[800px] w-full'>La recherche scienntifique sue la Posidonie, plante emblématique de la
-                Méditerannée, est essentielle pour comprendre son roleécologique et les menaces
-                auxquelles, elle fait face. Cette section regroupedes rapports et des articles
-                détaillant les résultats des suivis scientifiques, les méthodologies utilisées,et les
-                recommendations pour préserver cet écosystémeclé dans l'archipelde
-                Kerkennah</p>
-
-            </div>
-
-            <Table data={dataTable} />
-
-          </div>
+              <div className='font-semibold text-[18px] sm:text-[20px]'>
+                <p className='text-center max-w-[800px] w-full'>
+                  {species.description_research_knowledge_en || species.description_research_knowledge_fr}
+                </p>
 
               </div>
+
+              <Table data={species.researchKnowledge} />
+              <Link to="research-knowledge">
+                <button type="submit" className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition duration-200">
+                  Update
+                </button>
+              </Link>
+            </div>
+
+          </div>
 
           <hr className="my-6" />
 
