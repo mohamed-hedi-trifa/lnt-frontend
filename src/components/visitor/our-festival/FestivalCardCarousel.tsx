@@ -1,5 +1,7 @@
 import React from "react";
 import PageParagraph2 from "@/components/atoms/PageParagraph2";
+import { Link } from "gatsby";
+import ButtonCard from "@/components/atoms/ButtonCard";
 
 interface CardProps {
   titre: string;
@@ -8,12 +10,13 @@ interface CardProps {
   date: string;
   image: string;
   year: string;
+  slug: string;
 }
 
-const FestivalCardCarousel: React.FC<CardProps> = ({ titre, description, lieu, date, image, year }) => {
+const FestivalCardCarousel: React.FC<CardProps> = ({ titre, description, lieu, date, image, year, slug }) => {
   return (
-    <div className="max-w-full  ">
-      <div className="flex flex-col sm:flex-row bg-white rounded-xl  overflow-hidden h-auto sm:h-[400px] ">
+    <div className="max-w-full max-h-full ">
+      <div className="flex flex-col sm:flex-row bg-white rounded-xl  overflow-hidden h-full sm:h-[400px] ">
         {/* Partie image */}
         <div className="shrink-0 sm:w-1/2 w-full h-64 sm:h-full relative">
           <img
@@ -44,9 +47,11 @@ const FestivalCardCarousel: React.FC<CardProps> = ({ titre, description, lieu, d
               <span className="font-bold text-[#0270A0]">Date: </span>{date}
             </div>
             <div className="flex justify-end">
-              <button className="px-6 py-2  bg-[linear-gradient(to_right,#006E9F,#51ADC6,#006E9F)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-lg text-white font-bold rounded-full ">
-                Explorer
-              </button>
+              <Link to={`/our-festival/previous/${slug}`}>
+                <ButtonCard variant="primary" >
+                   Explorer
+                </ButtonCard>
+              </Link>
             </div>
           </div>
         </div>

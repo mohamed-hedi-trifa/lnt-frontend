@@ -95,7 +95,7 @@ export default function LatestNews() {
           className="mt-4 flex justify-center w-full pt-10"
         >
           <Button variant="primary">
-          Voir tous les actualités
+          Voir toutes les Actualités
           </Button>
         </LangLink>
       </div>

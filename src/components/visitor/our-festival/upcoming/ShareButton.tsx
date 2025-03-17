@@ -41,7 +41,7 @@ export default function ShareButton() {
             </AccordionHeader>
 
             <AccordionBody className="p-0 text-white">
-              <div className='p-2 flex flex-col items-center gap-5 bg-[#D3CACA] py-3'>
+              <div className='p-2 flex flex-col items-center gap-5 bg-[rgba(255,255,255,0.37)] py-3'>
                 <Link to={shareToFacebook(fullUrl)} target="_blank" rel="noopener noreferrer">
                   <FacebookCircleIcon width="30px" height="30px" />
                 </Link>
