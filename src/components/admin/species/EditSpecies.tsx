@@ -27,6 +27,10 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
     summary_en: "",
     summary_fr: "",
     type: "marin",
+    title_research_knowledge_en: "",
+    title_research_knowledge_fr: "",
+    description_research_knowledge_en: "",
+    description_research_knowledge_fr: "",
   });
   const [englishItems, setEnglishItems] = useState<any[]>([]);
   const [frenshItems, setFrenshItems] = useState<any[]>([]);
@@ -57,6 +61,10 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
           summary_en: blogSpecies.summary_en ?? "",
           summary_fr: blogSpecies.summary_fr ?? "",
           type: blogSpecies.type || "marin",
+          title_research_knowledge_en: blogSpecies.title_research_knowledge_en ?? "",
+          title_research_knowledge_fr: blogSpecies.title_research_knowledge_fr ?? "",
+          description_research_knowledge_en: blogSpecies.description_research_knowledge_en ?? "",
+          description_research_knowledge_fr: blogSpecies.description_research_knowledge_fr ?? "",
         });
 
         // parse any JSON content
@@ -74,7 +82,7 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
             .map((item: any, index: number) => ({
               ...item,
               // ensure each item has an ID
-              id: item.id ? String(item.id) : uuidv4(), 
+              id: item.id ? String(item.id) : uuidv4(),
               order: index
             }))
         );
@@ -253,18 +261,32 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
               value={formData.title_en}
               onChange={handleChange}
             />
-              <Textarea
-                label="Subtitle"
-                name="subtitle_en"
-                value={formData.subtitle_en}
-                onChange={handleChange}
-              />
+            <Textarea
+              label="Subtitle"
+              name="subtitle_en"
+              value={formData.subtitle_en}
+              onChange={handleChange}
+            />
             <Textarea
               label="Summary"
               name="summary_en"
               value={formData.summary_en}
               onChange={handleChange}
             />
+
+            <Input
+              label="title_research_knowledge_en"
+              name="title_research_knowledge_en"
+              value={formData.title_research_knowledge_en}
+              onChange={handleChange}
+            />
+            <Textarea
+              label="description_research_knowledge_en"
+              name="description_research_knowledge_en"
+              value={formData.description_research_knowledge_en}
+              onChange={handleChange}
+            />
+
           </>
         )}
         {language === "fr" && (
@@ -288,6 +310,21 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
               value={formData.summary_fr}
               onChange={handleChange}
             />
+            <Input
+              label="title_research_knowledge_fr"
+              name="title_research_knowledge_fr"
+              value={formData.title_research_knowledge_fr}
+              onChange={handleChange}
+            />
+
+            <Textarea
+              label="description_research_knowledge_fr"
+              name="description_research_knowledge_fr"
+              value={formData.description_research_knowledge_fr}
+              onChange={handleChange}
+            />
+
+
           </>
         )}
 
@@ -296,9 +333,8 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
           <label className="block text-sm font-medium text-slate-500">Type</label>
           <div className="mt-2 flex space-x-4">
             <label
-              className={`flex items-center p-2 border rounded cursor-pointer duration-200 ${
-                formData.type === "marin" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
-              }`}
+              className={`flex items-center p-2 border rounded cursor-pointer duration-200 ${formData.type === "marin" ? "bg-indigo-100 hover:bg-indigo-200" : "bg-white hover:bg-slate-100"
+                }`}
             >
               <input
                 id="marin"
@@ -312,11 +348,10 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
               <p className="ml-3 block text-sm font-medium text-gray-700">Marin</p>
             </label>
             <label
-              className={`flex items-center p-2 border rounded cursor-pointer duration-200 ${
-                formData.type === "terrestre"
-                  ? "bg-indigo-100 hover:bg-indigo-200"
-                  : "bg-white hover:bg-slate-100"
-              }`}
+              className={`flex items-center p-2 border rounded cursor-pointer duration-200 ${formData.type === "terrestre"
+                ? "bg-indigo-100 hover:bg-indigo-200"
+                : "bg-white hover:bg-slate-100"
+                }`}
             >
               <input
                 id="terrestre"
@@ -339,7 +374,7 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
             handleItemContentChange={handleItemContentChange}
             items={language === "en" ? englishItems : frenshItems}
             setItems={language === "en" ? setEnglishItems : setFrenshItems} language={language}
-            key={language}         />
+            key={language} />
 
         ) : (
           <div className="shadow p-4">
