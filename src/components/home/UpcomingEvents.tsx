@@ -142,10 +142,10 @@ export default function UpcomingEvents() {
 
           <LangLink
             to={`/${dataType === "event" ? "event" : "who-are-we/our-achievements"}`}
-            className="block w-fit mx-auto mt-4 md:-mt-4 px-5 py-4 text-white font-semibold rounded-full bg-[linear-gradient(to_right,#50ACC6,#3344DC,#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
+            className="block w-fit mx-auto mt-4 md:-mt-4 px-5 py-4 text-white font-semibold rounded-full bg-[linear-gradient(to_right,#006E9F,#51ADC6,#006E9F)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
           >
-            Voir tous   {dataType === "event" ? "les événements" : "nos réalisations"}
-          </LangLink>
+            Voir  {dataType === "event" ? "tous les Événements" : "toutes Nos Réalisations"}
+          </LangLink> 
         </article>
       </div>
     </section>

@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes, ReactNode } from "react";
 
 const VARIANTS:any = {
-    primary:"text-lg w-fit  px-[26px] py-[10px] text-white font-semibold rounded-full bg-[linear-gradient(to_right,#006E9F,#51ADC6,#006E9F)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-lg",
+    primary:"text-lg w-fit  px-[26px] py-[10px] text-white font-semibold rounded-full bg-[linear-gradient(to_right,#006E9F,#51ADC6,#006E9F)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]",
     secondary:"text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
 }
 

@@ -188,9 +188,9 @@ function Navbar({ location }: { location: any }) {
             <div className="hidden md:inline h-8 w-px bg-white"></div>
             <LangLink
               to="/benevole"
-              className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full shadow-lg bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right"
+              className="hidden md:inline relative px-4 py-2 text-white text-sm font-semibold rounded-full shadow-[-1px_2px_5px_rgb(0,0,0,.3)] bg-[linear-gradient(to_right,_#50ACC6,_#00E676,_#50ACC6)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right"
             >
-              DEVENIR BÉNÉVOLE
+               DEVENIR BÉNÉVOLE
             </LangLink>
             <button className="flex items-center">
               <GlobeAltIcon className="h-8 w-8 text-white" />

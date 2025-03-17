@@ -23,9 +23,9 @@ export default function ShareButton() {
   const fullUrl = `${baseUrl}${currentPath}`; // Full URL including path
 
   return (
-    <div className="h-full w-full absolute top-0 left-0">
-      <div className="sticky top-0 h-screen flex items-center">
-        <div className='h-[92px]'>
+    <div className="h-full w-full absolute top-0 left-0 pointer-events-none">
+      <div className="sticky top-0 h-screen flex items-center pointer-events-none">
+        <div className='h-[92px] pointer-events-auto'>
           <Accordion open={open} className='bg-[#000000B2] w-[65px] text-white rounded-r-[10px] !p-0 !m-0' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <AccordionHeader onClick={() => setOpen(!open)} className="flex justify-center bg-transparent border-none shadow-none w-auto !text-center !p-0" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
               {open ? (
@@ -41,7 +41,7 @@ export default function ShareButton() {
             </AccordionHeader>
 
             <AccordionBody className="p-0 text-white">
-              <div className='p-2 flex flex-col items-center gap-5 bg-[#D3CACA] py-3'>
+              <div className='p-2 flex flex-col items-center gap-5 bg-[rgba(255,255,255,0.37)] py-3'>
                 <Link to={shareToFacebook(fullUrl)} target="_blank" rel="noopener noreferrer">
                   <FacebookCircleIcon width="30px" height="30px" />
                 </Link>

@@ -3,28 +3,28 @@ import { Link } from "gatsby";
 import LangLink from '@/components/LangLink';
 
 
-interface ImageAireMarineProps {
+interface ImagesFestival {
     title: string;
     description: string;
     imageUrl: string;
     path: string;
 }
 
-const ImageAireMarine: React.FC<ImageAireMarineProps> = ({ title, description, imageUrl, path }) => {
+const ImageAireMarine: React.FC<ImagesFestival> = ({ title, description, imageUrl, path }) => {
     return (
         <div
-            className=" max-w-[355px] lg:w-full lg:max-w-[616px] h-[200px] md:h-[297px] relative bg-cover rounded-[15px] flex items-center justify-center transition-all duration-500 group shadow-helmi"
-            style={{ backgroundImage: `url(${imageUrl})` }}
+            className=" max-w-[355px] lg:w-full lg:max-w-[616px] h-[200px] md:h-[260px] relative bg-cover rounded-[15px] flex items-center justify-center transition-all duration-500 group shadow-helmi "
+            style={{ backgroundImage: `url(${imageUrl})`  }}
         >
             
             <div className='h-full w-full absolute group-hover:bg-[rgba(0,0,0,0.4)] rounded-[15px]'></div>
 
             <div className="text-white flex flex-col md:flex items-start justify-center gap-4 sm:gap-6 px-4 sm:px-6 relative">
                 <div className="transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-5 flex flex-col gap-6">
-                    <p className="font-bold text-[20px] sm:text-[30px] transition-all drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] ">
+                    <p className="font-bold text-[20px] sm:text-[28px] transition-all drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] ">
                         {title}
                     </p>
-                    <p className="text-sm font-semibold text-[18px] sm:text-[28px] leading-[20px] sm:leading-[28px] md:leading-[32px] transition-all drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] ">
+                    <p className="text-sm font-semibold text-[18px] sm:text-[24px] leading-[20px] sm:leading-[28px] md:leading-[32px] transition-all drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] ">
                         {description}
                     </p>
                 </div>
@@ -38,7 +38,7 @@ const ImageAireMarine: React.FC<ImageAireMarineProps> = ({ title, description, i
                         <img
                             src="/images/aire_marines/arrow.svg"
                             alt=""
-                            className="absolute scale-110 md:scale-150 md:top-4 right-0 md:right-2 "
+                            className="absolute scale-110 md:scale-150 md:top-4 right-0 md:right-2   "
                             />
                     </div>
                     {/* Image becomes visible after height transition */}
