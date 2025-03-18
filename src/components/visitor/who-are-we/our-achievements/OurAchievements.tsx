@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import ImageHistoire from '../our-team/ImageHistoire'
 import AchievementsCards from './AchievementsCards';
 import Sidebar from '../../../layout/Sidebar';
-
 import HeroSection from '../../HeroSection';
 import achievementsHero from '../../../../assets/images/achievements-hero.jpg';
 import PageTitle from '../../../atoms/titles/PageTitle';
@@ -265,7 +264,7 @@ export default function OurAchievements() {
         <hr className="my-6 border-black" />
         <section className="flex flex-col sm:flex-row gap-5">
           <LeftSidebar />
-          <section className="flex-1">
+          <section className="flex-1 mx-4 sm:mx-0">
             <AchievementsCards 
               filter={{ themes: selectedThemes, dateFilter: selectedDateFilter }} 
               setIsOpened={setIsOpened} 
@@ -275,9 +274,9 @@ export default function OurAchievements() {
         </section>
       </section>
       <section className="max-w-6xl mx-auto my-10">
-        <hr className="border-black" />
-        <section className="flex items-start justify-center mb-20 mt-10">
-          <div className="w-full flex items-center justify-center">
+        <hr className="border-black max-w-7xl sm:mx-auto mx-4" />
+        <section className="flex items-start justify-center mb-20 ">
+          <div className="w-full flex items-center justify-center sm:mx-0 mx-4">
             <ImageHistoire />
           </div>
         </section>
