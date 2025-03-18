@@ -86,11 +86,11 @@ const CreatePartner: React.FC = () => {
         });
     };
 
-    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setImage(e.target.files[0]); // Store the file object
-        }
-    };
+        const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+            if (e.target.files) {
+                setImage(e.target.files[0]); // Store the file object
+            }
+        };
 
 
 

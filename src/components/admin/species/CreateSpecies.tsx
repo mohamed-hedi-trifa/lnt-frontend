@@ -370,14 +370,14 @@ const CreateSpecies: React.FC = () => {
         {language === "en" && (
           <>
 
-            <Input label="title_research_knowledge_en" name="title_research_knowledge_en" value={formData.title_research_knowledge_en} onChange={handleChange} />
+            <Input label="Title research knowledge" name="title_research_knowledge_en" value={formData.title_research_knowledge_en} onChange={handleChange} />
             {errors.title_research_knowledge_en && <div className="text-red-500 text-sm">{errors.title_research_knowledge_en}</div>}
 
           </>
         )}
         {language === "fr" && (
           <>
-            <Input label="title_research_knowledge_fr" name="title_research_knowledge_fr" value={formData.title_research_knowledge_fr} onChange={handleChange} />
+            <Input label="Title Research knowledge" name="title_research_knowledge_fr" value={formData.title_research_knowledge_fr} onChange={handleChange} />
             {errors.title_research_knowledge_fr && <div className="text-red-500 text-sm">{errors.title_research_knowledge_fr}</div>}
 
           </>
@@ -385,14 +385,14 @@ const CreateSpecies: React.FC = () => {
 
         {language === "en" && (
           <>
-            <Textarea label="description_research_knowledge_en" name="description_research_knowledge_en" value={formData.description_research_knowledge_en} onChange={handleChange} />
+            <Textarea label="Description research knowledge" name="description_research_knowledge_en" value={formData.description_research_knowledge_en} onChange={handleChange} />
             {errors.description_research_knowledge_en && <div className="text-red-500 text-sm">{errors.description_research_knowledge_en}</div>}
           </>
         )}
         {language === "fr" && (
           <>
 
-            <Textarea label="description_research_knowledge_fr" name="description_research_knowledge_fr" value={formData.description_research_knowledge_fr} onChange={handleChange} />
+            <Textarea label="Description research knowledge" name="description_research_knowledge_fr" value={formData.description_research_knowledge_fr} onChange={handleChange} />
             {errors.description_research_knowledge_fr && <div className="text-red-500 text-sm">{errors.description_research_knowledge_fr}</div>}
           </>
         )}

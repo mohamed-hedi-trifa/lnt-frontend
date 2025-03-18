@@ -59,6 +59,33 @@ export default function Theme() {
     return <ReactLoading type="spinningBubbles" color="white" height={25} width={25} />;
   }
 
+
+
+
+  const handleToggle = (item) => {
+    const updatedStatus = item.is_popular === "yes" ? "no" : "yes";
+
+    axios
+      .put(`/api/theme/is-popular/${item.slug}`, {
+        is_popular: updatedStatus,
+      })
+      .then((res) => {
+        Swal.fire("Success", res.data.message, "success");
+
+        // Update the local state only on success
+        setItemsList((prevItems) =>
+          prevItems.map((itm) =>
+            itm.id === item.id ? { ...itm, is_popular: updatedStatus } : itm
+          )
+        );
+      })
+      .catch((err) => {
+        Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
+      });
+  };
+
+
+
   return (
     <>
       <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
@@ -74,8 +101,9 @@ export default function Theme() {
               <>
                 <div className="mx-0 grid grid-cols-12 text-center break-all">
                   <div className="pb-3 hidden sm:block text-start col-span-1">ID</div>
+                  <div className="pb-3 text-start col-span-2">Image</div>
                   <div className="pb-3 text-start col-span-2">Name</div>
-          
+                  <div className="pb-3 text-start col-span-2">Is Popular</div>
                   <div className="pb-3 hidden sm:block text-end sm:text-center col-span-2">Actions</div>
                 </div>
                 <div className="divide-y">
@@ -83,10 +111,21 @@ export default function Theme() {
                     return (
                       <div key={item.id} className="mx-0 grid grid-cols-12 text-center break-all">
                         <div className="pt-3 hidden sm:block text-start col-span-1">{item.id}</div>
+                        <div className="pt-3 col-span-2">
+                          <img className="w-[70px] sm:w-[130px] md:w-[160px]" src={`${process.env.GATSBY_API_URL}${item.image}`} alt="" />
+                        </div>
                         <div className="pt-3 col-span-2 text-start">{item.name_en || item.name_fr}</div>
-                       
-                       
-           
+                        <div className="pt-3 col-span-2 text-start">
+                          <label className="toggle-switch">
+                            <input
+                              type="checkbox"
+                              name="is_popular"
+                              checked={item.is_popular === "yes"}
+                              onChange={() => handleToggle(item)}
+                            />;
+                            <span className="slider"></span>
+                          </label>
+                        </div>
                         <div className="pt-3 text-end sm:text-center col-span-1 sm:col-span-2">
                           <div className="grid grid-cols-12">
                             <div className="col-span-12 sm:col-span-6 flex justify-end sm:justify-center">
