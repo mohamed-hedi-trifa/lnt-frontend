@@ -27,9 +27,13 @@ const CreateTheme: React.FC = () => {
     });
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
+    const [image, setImage] = useState<File | null>(null);
     // Separate state for different language content items
-
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setImage(e.target.files[0]); // Store the file object
+        }
+    };
 
     const handleLanguageChange = async (e: ChangeEvent<HTMLSelectElement>) => {
         const lang = e.target.value;
@@ -106,6 +110,9 @@ const CreateTheme: React.FC = () => {
         }
 
 
+        if (image) {
+            formDataToSend.append("image", image); // Append the main image file
+        }
 
 
 
@@ -195,6 +202,8 @@ const CreateTheme: React.FC = () => {
                         />
                     </>
                 )}
+                     <Input label="Image" type="file" name="image" onChange={handleImageChange} />
+                     {errors.image && <div className="text-red-500 text-sm">{errors.image}</div>}
                 <Button type="submit" disabled={isLoading}>
                     {isLoading ? (
                         <div className="w-fit mx-auto">

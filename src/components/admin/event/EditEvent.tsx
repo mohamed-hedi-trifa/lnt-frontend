@@ -368,16 +368,16 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
 
                     {/* Map Picker */}
                     {formData.latitude ? (
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Select Location</label>
-                        <MapPicker
-                            onSelectLocation={handleSelectLocation}
-                            initialPosition={[formData.latitude, formData.longitude]} // Pass initial position
-                        />
-                    </div>
-  ) : (
-    <p>Loading...</p>
-  )}
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700">Select Location</label>
+                            <MapPicker
+                                onSelectLocation={handleSelectLocation}
+                                initialPosition={[formData.latitude, formData.longitude]} // Pass initial position
+                            />
+                        </div>
+                    ) : (
+                        <p>Loading...</p>
+                    )}
                     {/* Display Selected Latitude and Longitude (Optional) */}
                     <div className="mt-4">
                         <p>Selected Latitude: {formData.latitude}</p>

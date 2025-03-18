@@ -12,7 +12,7 @@ import Select from "../../atoms/inputs/Select";
 const EditTheme = ({ location, params }: { location: any; params: any }) => {
     const searchParams = new URLSearchParams(location?.search);
     const paramLang = searchParams.get("lang");
-
+    const [image, setImage] = useState<File | null>(null);
     const [slug, setSlug] = useState<string | null>(null);
     const [language, setLanguage] = useState<string>(paramLang === "fr" ? "fr" : "en");
     const [formData, setFormData] = useState({
@@ -53,6 +53,11 @@ const EditTheme = ({ location, params }: { location: any; params: any }) => {
         fetchTheme();
     }, [slug, paramLang]);
 
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.[0]) {
+            setImage(e.target.files[0]);
+        }
+    };
     const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setLanguage(e.target.value);
     };
@@ -77,7 +82,9 @@ const EditTheme = ({ location, params }: { location: any; params: any }) => {
         for (const key in formData) {
             formDataToSend.append(key, formData[key as keyof typeof formData] || "");
         }
-
+        if (image) {
+            formDataToSend.append("image", image);
+        }
 
 
 
@@ -148,9 +155,9 @@ const EditTheme = ({ location, params }: { location: any; params: any }) => {
                     </>
                 )}
 
-         
 
 
+                <Input label="Image" type="file" name="image" onChange={handleImageChange} />
 
 
 
