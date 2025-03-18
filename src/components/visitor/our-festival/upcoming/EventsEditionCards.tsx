@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Link } from 'gatsby';
 import ButtonCard from '@/components/atoms/ButtonCard';
+import PageParagraph2 from '@/components/atoms/PageParagraph2';
 
 export default function EventsEditionCards({ event }) {
   const formatDate = (eventDatetime) => {
@@ -24,7 +25,7 @@ export default function EventsEditionCards({ event }) {
         <h3 className="font-semibold sm:text-xl min-h-[29px]">
           {event.title_en || event.title_fr}
         </h3>
-
+        <PageParagraph2>
         <h3 className="font-normal text-[14px] mt-2 min-h-[55px] ">
           {event.description_en
             ? event.description_en.length > 120
@@ -36,6 +37,7 @@ export default function EventsEditionCards({ event }) {
               : event.description_fr
             : ""}
         </h3>
+        </PageParagraph2>
 
       </div>
 
@@ -46,18 +48,20 @@ export default function EventsEditionCards({ event }) {
         </div>
         <div className='mx-3'>
             {/* Location & Expiry Information */}
-            <div className="text-start sm:text-xs mt-3 font-medium">
-              <span className="text-[#0270A0] font-bold">Lieu :</span> {event.location_en || event.location_fr}
+            <div className="text-start text-[14px] mt-3 font-normal">
+              <span className="text-[#0270A0] font-bold text-[16px]">Lieu :</span> {event.location_en || event.location_fr}
             </div>
-            <div className="text-start sm:text-xs mt-1 font-medium pb-4">
-              <span className="text-[#0270A0] font-bold">Date :</span> {formatDate(event.event_start_at)}
+            <div className="text-starttext-[14px] mt-1 font-normal pb-4">
+              <span className="text-[#0270A0] font-bold text-[16px]">Date :</span> {formatDate(event.event_start_at)}
             </div>
             {/* Button Section */}
+            <div className='flex justify-center'>
             <Link to={`/event/event-details/${event?.slug}`}>
-              <ButtonCard variant="primary" >  
+              <ButtonCard variant="primary"  >  
                 En savoir plus
               </ButtonCard>
             </Link>
+            </div>
         </div>
 
       </div>

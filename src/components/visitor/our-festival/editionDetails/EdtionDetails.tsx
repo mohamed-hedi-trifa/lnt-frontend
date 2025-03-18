@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import previousEditionImage from '../../../../assets/images/editionDetails.jpg'
-
 import PageTitle from '@/components/atoms/titles/PageTitle';
-
-
 import PageParagraph from '@/components/atoms/PageParagraph';
 import EdtionEvent from './EdtionEvent';
 import axios from "axios";
@@ -12,9 +9,24 @@ import Media from "../../Media";
 import Partners from "../../who-are-we/partners/Partners";
 import PastEditionsCarousel from "../PastEditionsCarousel";
 import LangLink from "@/components/LangLink";
+import PageParagraph2 from "@/components/atoms/PageParagraph2";
+import Title from '@/components/atoms/titles/Title';
 
+interface SectionHeaderProps {
+  title: React.ReactNode;
+  text: string;
+}
 
-
+const SectionHeader = ({ title, text }: SectionHeaderProps) => (
+  <div className="flex flex-col items-center text-center justify-center py-10">
+    <Title size="text-2xl sm:text-[36px] pb-4">{title}</Title>
+    <PageParagraph2>
+      <p className="font-semibold text-lg sm:text-[20px] text-center max-w-4xl mx-auto">
+        {text}
+      </p>
+    </PageParagraph2>
+  </div>
+);
 
 export default function EditionDetails({ location, params }: { location: any; params: any }) {
     const searchParams = new URLSearchParams(location?.search);
@@ -74,7 +86,7 @@ export default function EditionDetails({ location, params }: { location: any; pa
                     <PageTitle title={`Éditions ${previousEdition?.year}`} />
 
                     <h2 className='text-[#0270A0] text-2xl pb-7 font-semibold'>{previousEdition?.name_en || previousEdition?.name_fr}</h2>
-                    <PageParagraph fontWeight="font-semibold" spacing="leading-[1.4]">{previousEdition?.description_en || previousEdition?.description_fr}</PageParagraph>
+                    <PageParagraph2 fontWeight="font-semibold" spacing="leading-[1.4]">{previousEdition?.description_en || previousEdition?.description_fr}</PageParagraph2>
 
                 </section>
 
@@ -86,7 +98,7 @@ export default function EditionDetails({ location, params }: { location: any; pa
 
                 </section>
                 <section >
-                    <h1 className='text-[#0270A0] text-3xl text-start font-bold max-w-7xl w-full mx-auto mb-10 '>Événements :</h1>
+                    <h1 className='text-[#0270A0] text-3xl sm:text-start font-bold max-w-7xl w-full mx-auto mb-10 px-5 '>Événements :</h1>
 
 
                     {previousEdition?.previousEvents.map((event: any, index: number) => (
@@ -108,17 +120,11 @@ export default function EditionDetails({ location, params }: { location: any; pa
                 {
                     (previousEdition?.images?.length > 0 || previousEdition?.videos?.length > 0) && (
                         <section className='flex-col text-center max-w-7xl w-full mx-auto justify-between px-5 h-fit my-10 mb-10'>
-                            <hr className='border-t my-20 border-[#000000]' />
-                            <div className='text-center my-10'>
-                                <span className='text-[28px] sm:text-[36px] font-bold'>
-                                    <span className='text-[#0270A0]'>Immersion Visuelle</span> <span>dans l'Édition {previousEdition?.year}</span>
-                                </span>
-                            </div>
-
-                            <div className='text-center text-[18px] sm:text-[20px] font-semibold leading-[30px] my-10'>
-                                <p>Revivez les moments forts du festival à travers nos photos et vidéos captivantes</p>
-                            </div>
-
+                            <hr className="border-t border-black mt-10" />
+                            <SectionHeader 
+                              title={<span><span className='text-[#0270A0]'>Immersion Visuelle</span> dans l'Édition {previousEdition?.year}</span>}
+                              text="Revivez les moments forts du festival à travers nos photos et vidéos captivantes"
+                            />
                             <Media mediaContent={previousEdition} />
                         </section>
                     )
@@ -126,51 +132,32 @@ export default function EditionDetails({ location, params }: { location: any; pa
 
 
                 <section className=' flex-col  text-center max-w-7xl w-full mx-auto justify-between   px-5 h-fit  my-10 mb-10'>
-                    <hr className='border-t my-20 border-[#000000]' />
-
-                    <div className=' flex items-center justify-center'>
-                        <span className='text-[28px] sm:text-[36px] font-bold text-center'>
-                            <span className='text-[#0270A0]'>Soutiens</span> <span>Officiels de cette Edition</span>
-                        </span>
-                    </div>
-
-                    <div className='text-center text-[18px] sm:text-[20px] font-semibold leading-[30px] my-6'>
-                        <p>Découvrez les organisations et entreprises qui, par leur soutien et leur collaboration</p>
-                        <p>rendent possible la célébration de notre patrimoine culturel, naturel et maritime</p>
-                        <p>Leur engagement est au soeur de la réussite de cette édition exceptionelle</p>
-                    </div>
-
-                    <div className='mt-12'>
-
-
-                        <Partners partners={previousEdition?.partners} />
-                    </div>
+                    <hr className="border-t border-black mt-10" />
+                    <SectionHeader 
+                      title={<span><span className='text-[#0270A0]'>Soutiens</span> Officiels de cette Edition {previousEdition?.year}</span>}
+                      text="Découvrez les organisations et entreprises qui, par leur soutien et leur collaboration rendent possible la célébration de notre patrimoine culturel, naturel et maritime Leur engagement est au soeur de la réussite de cette édition exceptionelle"
+                    />
+                    <Partners partners={previousEdition?.partners} />
                 </section>
 
        
-                        <section className='flex-col text-center max-w-7xl w-full mx-auto justify-between px-5 h-fit my-10 mb-10'>
-                            <hr className='mb-[50px] mt-[80px] border-black' />
-                            <div className='text-center mb-3'>
-                                <span className='text-[28px] sm:text-[36px] font-bold'>
-                                    <span className='text-[#0270A0]'>Découvrez </span>
-                                    <span>Nos Editions Precédentes </span>
-                                </span>
-                            </div>
+                        <section className='flex-col text-center max-w-7xl w-full mx-auto justify-between px-5 h-fit '>
+                            <hr className="border-t border-black mt-10" />
+                            <SectionHeader 
+                              title={<span><span className="text-[#0270A0]">Découvrez</span> Nos Autres Éditions Précédentes</span>}
+                              text="Plongez dans l'histoire et revivez les moments forts des éditions passées qui ont marqué Kerkenah"
+                            />
 
-                            <div className='text-center text-[18px] sm:text-[20px] font-semibold leading-[30px] mt-5 mb-10 max-w-[876px] mx-auto'>
-                                <p>Plongez dans l'histoire et les moments marquants des festivals passés qui ont marqué Kerkenah</p>
-                            </div>
-
-                        </section>
                             <PastEditionsCarousel prevEditions={allPreviousEdition} />
+                        </section>
 
-                        <div className="flex items-center justify-center pt-6 pb-20">
-                                <LangLink to="/our-festival/previous/">
-                                  <button className="px-8 py-3 my-4  bg-[linear-gradient(to_right,#006E9F,#51ADC6,#006E9F)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right  text-white font-bold rounded-full shadow-lg">
-                                  <p className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">Voir Toutes les Éditions Précédentes </p>
-                                  </button>
-                                </LangLink>
-                        </div>    
+                         <div className="flex items-center justify-center pt-2 pb-20 px-6">
+                           <LangLink to="/our-festival/previous/">
+                             <button className="px-8 py-3 my-4 bg-gradient-to-r from-[#006E9F] via-[#51ADC6] to-[#006E9F] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right text-white font-bold rounded-full shadow-md">
+                               Voir Toutes les Éditions Précédentes
+                             </button>
+                           </LangLink>
+                         </div> 
              
 
 

@@ -34,7 +34,7 @@ interface SectionHeaderProps {
 }
 
 const SectionHeader = ({ title, text }: SectionHeaderProps) => (
-  <div className="flex flex-col items-center justify-center py-10">
+  <div className="flex flex-col items-center text-center justify-center py-10">
     <Title size="text-2xl sm:text-[36px] pb-4">{title}</Title>
     <PageParagraph2>
       <p className="font-semibold text-lg sm:text-[20px] text-center max-w-3xl mx-auto">
@@ -133,7 +133,7 @@ export default function FestivalVenir() {
         </section>
       </div>
 
-      <div className="flex items-center justify-center pt-6 pb-20">
+      <div className="flex items-center justify-center pt-2 pb-20 px-6">
         <LangLink to="/our-festival/previous/">
           <button className="px-8 py-3 my-4 bg-gradient-to-r from-[#006E9F] via-[#51ADC6] to-[#006E9F] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right text-white font-bold rounded-full shadow-md">
             Voir Toutes les Éditions Précédentes
