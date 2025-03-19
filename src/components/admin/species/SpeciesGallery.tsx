@@ -92,7 +92,7 @@ const BlogGallery = ({ speciesId }: { speciesId: any }) => {
 
     return (
         <div className="p-6 max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4">Posts Gallery</h2>
+            <h2 className="text-2xl font-bold mb-4">Species Gallery</h2>
 
             {/* Add Media Form */}
             <div className="mb-6 border p-4 rounded-lg">

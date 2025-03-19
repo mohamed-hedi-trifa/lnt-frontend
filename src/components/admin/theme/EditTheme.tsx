@@ -110,10 +110,10 @@ const EditTheme = ({ location, params }: { location: any; params: any }) => {
         <div className="h-[calc(100vh-80px)] flex flex-col p-4">
             <div className="flex justify-between">
                 <div className="flex items-center gap-1">
-                    <Link to="/admin/posts">
+                    <Link to="/admin/theme">
                         <ArrowLeftIcon className="h-6 w-6" />
                     </Link>
-                    <Title>Edit Post</Title>
+                    <Title>Edit Theme</Title>
                 </div>
                 <Select
                     divClassNames="!flex-row items-center gap-2"

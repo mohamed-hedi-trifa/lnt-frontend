@@ -25,7 +25,7 @@ const FestivalCardCarousel: React.FC<CardProps> = ({
   return (
     <div className="max-w-full h-[600px] sm:h-[350px]">
       <div className="flex flex-col sm:flex-row bg-white rounded-xl overflow-hidden h-full">
-        <div className="shrink-0 sm:w-1/2 w-full h-64 sm:h-full relative">
+        <div className="shrink-0 sm:w-1/2 w-full h-60 sm:h-full relative">
           <img
             src={`${process.env.GATSBY_API_URL}${image}`}
             alt={titre}
@@ -39,7 +39,7 @@ const FestivalCardCarousel: React.FC<CardProps> = ({
           <div className="flex-grow">
             <h3 className="text-xl md:text-2xl font-bold mb-2">{titre}</h3>
             <PageParagraph2>
-              <h3 className="flex items-center font-normal text-gray-700 text-[14px] mt-5 min-h-[55px]">
+              <h3 className="flex items-center font-normal text-gray-700 text-[14px] mt-5 ">
                 {/* Version mobile */}
                 <span className="block sm:hidden">
                   {description

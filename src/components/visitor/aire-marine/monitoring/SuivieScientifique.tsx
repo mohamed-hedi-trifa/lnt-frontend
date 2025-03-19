@@ -8,9 +8,22 @@ import HeroSection from '../../HeroSection'
 import Image from '@/components/atoms/Image'
 import PageParagraph from '@/components/atoms/PageParagraph'
 
-/**
- * Section principale décrivant le suivi scientifique
- */
+
+interface SectionHeaderProps {
+  title: React.ReactNode;
+  text: string;
+}
+const SectionHeader = ({ title, text }: SectionHeaderProps) => (
+  <div className="flex flex-col items-center text-center justify-center py-10">
+    <Title size="text-2xl sm:text-[36px] pb-4">{title}</Title>
+    <PageParagraph>
+      <p className="font-semibold text-lg sm:text-[20px] text-center max-w-3xl mx-auto">
+        {text}
+      </p>
+    </PageParagraph>
+  </div>
+);
+
 const ScientificTrackingContent = () => (
   <section className="w-fit flex flex-col gap-6 mt-8 sm:mt-0">
     <PageParagraph>
@@ -133,15 +146,12 @@ export default function SuiviScientifique() {
             <ScientificTrackingContent />
           </section>
 
-          <section className='border-t border-[#000000] mb-10'/>
-            <div className="text-justify  text-[18px] sm:text-[22px] font-bold pb-4">
-               <p className="text-center text-[30px] sm:text-[32px]">
-                 <span className="text-[#0270A0]">Explorer</span> Les espéces de Notre Suivi Marin{" "}
-               </p>
-            </div>
-            <div className="text-justify  text-[18px] sm:text-[22px] font-bold pb-10">
-              <p className="text-center text-[18px] sm:text-[20px]">Découvrez les trésors marins que nous préservons</p>
-            </div>
+        
+          <hr className="border-t border-black mt-10" />
+          <SectionHeader 
+            title={<span><span className="text-primary">Découvrez</span> nos Projets de Suivi Détaillés</span>}
+            text="Nous avons développé des programmes de suivi spécialisés pour différentes composantes de l'environnement"
+          />
 
           <section className='flex items-start justify-center mb-20 '>
             

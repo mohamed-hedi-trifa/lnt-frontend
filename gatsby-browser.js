@@ -4,8 +4,11 @@
  * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/
  */
 
-import "./src/styles/global.css";
 import React from "react";
+import "swiper/css";
+import "react-toastify/dist/ReactToastify.css";
+import "./src/styles/global.css";
+
 import AdminLayout from "./src/components/admin/admin-layout/AdminLayout";
 import Layout from "./src/components/layout/Layout";
 // import { config } from "@fortawesome/fontawesome-svg-core"
@@ -15,11 +18,10 @@ import axios from "axios";
 import AdminPrivateRoute from "./src/components/auth/AdminPrivateRoute";
 import AuthProvider from "./src/contexts/AuthProvider";
 import { register } from "swiper/element/bundle";
-import "swiper/css";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 register();
+
 export function onClientEntry() {
   /* Prevents fontawesome auto css insertion */
   // config.autoAddCss = false
