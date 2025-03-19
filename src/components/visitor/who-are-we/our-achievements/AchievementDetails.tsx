@@ -27,8 +27,7 @@ export default function AchievementDetails({ location, params }: { location: any
   useEffect(() => {
     const slugAchievements = params.slug;
     getAchievements(slugAchievements);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]); // pour relancer si l'URL change
+  }, [location]); 
 
   const [isOpened, setIsOpened] = useState(false);
 

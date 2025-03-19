@@ -57,7 +57,7 @@ export default function CreateResearchKnowledge({ location, params }: { location
         if (result.isConfirmed) {
             const created = await createResearchKnowledge();
 
-            if (created) navigate(`/admin/species/manage-posts/${params.slug}/research-knowledge/?lang=${lang}`);
+            if (created) navigate(`/admin/species/manage-species/${params.slug}/research-knowledge/?lang=${lang}`);
         } else if (result.isDenied) {
             setLanguage(lang);
         }
@@ -170,7 +170,7 @@ export default function CreateResearchKnowledge({ location, params }: { location
 
         const created = await createResearchKnowledge();
 
-        if (created) navigate(`/admin/species/manage-posts/${params.slug}/research-knowledge/`);
+        if (created) navigate(`/admin/species/manage-species/${params.slug}/research-knowledge/`);
     };
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: string) => {
@@ -191,7 +191,7 @@ export default function CreateResearchKnowledge({ location, params }: { location
         <div className="h-[calc(100vh-80px)] flex flex-col p-4">
             <div className="flex justify-between">
                 <div className="flex items-center gap-1">
-                    <Link className="" to={`/admin/species/manage-posts/${params.slug}/research-knowledge/`}>
+                    <Link className="" to={`/admin/species/manage-species/${params.slug}/research-knowledge/`}>
                         <ArrowLeftIcon className="h-5 w-5" />
                     </Link>
                     <Title>Create New Research Knowledge</Title>

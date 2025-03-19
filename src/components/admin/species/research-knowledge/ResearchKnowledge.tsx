@@ -69,7 +69,7 @@ export default function ResearchKnowledge({ location, params }: { location: any;
                 <div className="rounded-lg shadow-lg">
                     <div className="flex justify-between items-center bg-gray-100 p-3 rounded-t-lg">
                         <h5 className="mb-3"> <div className="font-bold">
-                        {itemsList[0].title_en || itemsList[0].title_fr} : 
+                        {itemsList[0]?.title_en || itemsList[0]?.title_fr} : 
                             </div> Research & Knowledge ( {itemsList.length} )</h5>
                         <Link to="create" className="bg-blue-600 text-white p-2 rounded">
                             Create Research & Knowledge

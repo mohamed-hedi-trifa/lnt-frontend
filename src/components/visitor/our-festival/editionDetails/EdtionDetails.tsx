@@ -141,7 +141,7 @@ export default function EditionDetails({ location, params }: { location: any; pa
                 </section>
 
        
-                        <section className='flex-col text-center max-w-7xl w-full mx-auto justify-between px-5 h-fit '>
+                        <section className='flex-col  max-w-7xl w-full mx-auto justify-between px-5 h-fit '>
                             <hr className="border-t border-black mt-10" />
                             <SectionHeader 
                               title={<span><span className="text-[#0270A0]">Découvrez</span> Nos Autres Éditions Précédentes</span>}

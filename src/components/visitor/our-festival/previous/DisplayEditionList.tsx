@@ -22,8 +22,22 @@ export default function DisplayEditionList() {
   const [language, setLanguage] = useState('en'); // Langue par défaut
   const [filteredYears, setFilteredYears] = useState<number[]>([]); // Années filtrées
   const [isSidebarOpened, setIsSidebarOpened] = useState(false); // État d'ouverture de la sidebar
+  const formatDateRange = (startDate, endDate) => {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const isSameYear = start.getFullYear() === end.getFullYear();
+    const isSameMonth = start.getMonth() === end.getMonth() && isSameYear;
 
-  // Récupération de l'édition courante
+    if (isSameMonth) {
+      return `Du ${start.getDate()} au ${end.toLocaleDateString("fr-FR", options)}`;
+    } else if (isSameYear) {
+      return `Du ${start.getDate()} ${start.toLocaleDateString("fr-FR", { month: "long" })} au ${end.toLocaleDateString("fr-FR", options)}`;
+    } else {
+      return `Du ${start.toLocaleDateString("fr-FR", options)} au ${end.toLocaleDateString("fr-FR", options)}`;
+    }
+  };
+
   const getEdition = async () => {
     try {
       const res = await axios.get('/api/get-current-edition');
@@ -174,7 +188,7 @@ export default function DisplayEditionList() {
             {prevEditions?.map((edition, index) => (
               <PreviousEditionCard
                 key={index}
-                date={`${edition.start_date} - ${edition.end_date}`}
+                date={formatDateRange(edition.start_date, edition.end_date)}
                 description={language === 'en' ? edition.card_description_en : edition.card_description_fr}
                 titre={language === 'en' ? edition.name_en : edition.name_fr}
                 lieu={language === 'en' ? edition.place_en : edition.place_fr}

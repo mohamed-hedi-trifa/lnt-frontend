@@ -7,9 +7,17 @@ import AboutFestival from './AboutFestival';
 import DisplayEditionList from './DisplayEditionList';
 import UpcomingEdition from './UpcomingEdition';
 import Breadcrumbs from "@/components/Breadcumbs";
+import ContainerImageUpcomingEdition from './ContainerImageUpcomingEdition';
 
 export default function PreviousEdition() {
   const [isOpened, setIsOpened] = useState(false);
+  const images = [
+    {
+      title: 'Plongez dans le Suivi Marin',
+      description: 'Protégeons les trésors sous-marins',
+      imageUrl: '/images/marine_images/marine3.jpg',
+      path: '/protected-air-marine-coastal-areas/monitoring/marin'
+    },]
 
   return (
     <div className=''>
@@ -33,9 +41,9 @@ export default function PreviousEdition() {
           <section className="border-t border-gray-800 pt-10">
             <DisplayEditionList />
           </section>
-          <section className="my-10 text-center">
+          <section className="my-10 ">
             <hr className="border-gray-800 mb-8 mt-16" />
-            <UpcomingEdition />
+            <ContainerImageUpcomingEdition images={images} />
           </section>
         </div>
       </main>

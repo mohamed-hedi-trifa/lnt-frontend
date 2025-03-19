@@ -24,7 +24,7 @@ const PreviousEditionCard: React.FC<CardProps> = ({ titre, description, lieu, da
                 <img 
                     src={`${process.env.GATSBY_API_URL}${image}`} 
                     alt="Festival Image" 
-                    className="rounded-lg shadow-lg sm:w-[224px] w-full sm:h-full h-full" 
+                    className="rounded-lg shadow-lg sm:w-[224px] w-full sm:max-h-[240px] h-full" 
                 />
                 <span className="absolute text-[#0270A0] top-2 left-2 bg-white px-2 py-1 text-sm rounded-md font-semibold shadow-helmi">
                     Édition {year}
@@ -34,7 +34,11 @@ const PreviousEditionCard: React.FC<CardProps> = ({ titre, description, lieu, da
                 <h2 className="text-[16px] md:text-[20px] font-bold text-start">{titre}</h2>
                 <PageParagraph2 fontWeight="font-light" spacing="leading-[1.4]">
                      <p className="text-[14px] sm:text-[16px] text-gray-900 text-justify grow">
-                         {description}
+                          {description
+                         ? description.length > 120
+                           ? description.slice(0, description.lastIndexOf(" ", 120)) + "..."
+                           : description
+                         : ""}
                      </p>
                 </PageParagraph2>
                 <div className="bg-[#CBD5E1] h-[1px] w-[90%]" />
