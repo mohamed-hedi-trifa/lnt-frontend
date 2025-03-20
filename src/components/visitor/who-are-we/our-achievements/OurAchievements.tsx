@@ -12,16 +12,10 @@ import DateRangeSelector from '../../who-are-we/our-achievements/DateRangeSelect
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import Checkbox from '../../posts/Checkbox'
 import FilterTitle from '../../posts/FilterTitle'
-import FacebookIcon from '@/assets/icons/FacebookIcon'
 import { Link } from 'gatsby'
-import XIcon from '@/assets/icons/XIcon'
-import InstagramIcon from '@/assets/icons/InstagramIcon'
-import YoutubeIcon from '@/assets/icons/YoutubeIcon'
-import LinkedinIcon from '@/assets/icons/LinkedinIcon'
-import Button from '@/components/atoms/Button'
-import NewsLetterSub2 from '@/components/NewsLetterSub2'
-import Line from '@/components/atoms/Line'
 import axios from "axios";
+import FollowUsAchivement from './FollowUsAchivement';
+import QuestionAchivement from './QuestionAchivement';
 
 export default function OurAchievements() {
   const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
@@ -177,51 +171,7 @@ export default function OurAchievements() {
     </aside>
   );
 
-  // Barre latérale droite (Réseaux sociaux / Newsletter)
-  const RightSidebar = () => (
-    <aside className="flex flex-col gap-6 sm:sticky top-[116px] h-fit px-5">
-      <div className="text-[#183354] text-xl font-bold leading-relaxed">Suivez-nous</div>
-      <Line />
-      <div className='grid grid-cols-2 gap-1'>
-        <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
-          <div className='text-black'><FacebookIcon /></div>
-          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">facebook</div>
-        </Link>
-        <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
-          <div className='text-black'><XIcon /></div>
-          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">X</div>
-        </Link>
-        <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
-          <div className='text-black'><InstagramIcon /></div>
-          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Instagram</div>
-        </Link>
-        <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
-          <div className='text-black'><YoutubeIcon /></div>
-          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Youtube</div>
-        </Link>
-        <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
-          <div className='text-black'><LinkedinIcon /></div>
-          <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Linkedin</div>
-        </Link>
-      </div>
 
-      <NewsLetterSub2
-        title="Ne manquez rien !"
-        paragraph="Inscrivez-vous à notre newsletter pour recevoir les dernières nouvelles sur nos réalisations et projets directement dans votre boîte mail"
-      />
-
-      <div className="h-[279.40px] flex flex-col justify-center gap-[25px]">
-        <div className="text-[#183354] text-xl font-bold leading-relaxed">Une Question ?</div>
-        <Line />
-        <div className="w-[300px] text-black text-[15px] font-bold leading-normal">
-          Besoin de plus d'informations ? N'hésitez pas à nous contacter. Cliquez sur le bouton ci-dessous pour accéder à notre page de contact et poser vos questions.
-        </div>
-        <Button variant="primary" customClassnames="mx-auto">
-          <div className="text-white text-xl font-bold">Contactez-Nous</div>
-        </Button>
-      </div>
-    </aside>
-  );
 
   return (
     <main className="relative">
@@ -270,7 +220,10 @@ export default function OurAchievements() {
               setIsOpened={setIsOpened} 
             />
           </section>
-          <RightSidebar />
+          <section className="flex flex-col mx-4 gap-8" >
+          <FollowUsAchivement />
+          <QuestionAchivement />
+          </section>
         </section>
       </section>
       <section className="max-w-6xl mx-auto my-10">

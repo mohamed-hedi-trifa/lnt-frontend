@@ -1,33 +1,41 @@
 import { Link } from 'gatsby';
 import React from 'react';
+import ITraining from '@/models/ITraining';
+import formatDate from '@/lib/formatDate';
 
-function formatDate(date: Date) {
-  const options: Intl.DateTimeFormatOptions = { 
-      day: "numeric", 
-      month: "long", 
-      year: "numeric" 
-  };
-  return new Date(date).toLocaleDateString("en", options);
+
+interface TrainingCardProps {
+  training: ITraining
 }
 
-export default function TrainingCard({ training }:{training:any}) {
-    const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
-    console.log(training);
+export default function TrainingCard({ training }: TrainingCardProps) {
     return (
-        <Link to={`/protected-air-marine-coastal-areas/training/${training.slug}?lang=${lang}`} key={training.id} className='bg-white shadow-[0px_4px_4px_0px_#00000040] p-4 flex flex-col gap-4 rounded-xl hover:shadow-lg transition duration-300'>
-            {training?.image && <img src={`${process.env.GATSBY_API_URL}${training.image}`} alt={training.title_en || training.title_fr} className='w-full h-36 object-cover rounded-md' />}
+        <div className="bg-white shadow-helmi p-4 flex flex-col gap-4 rounded-xl min-h-[420px] h-full">
+            <img 
+                src={`${process.env.GATSBY_API_URL}${training.image}`} 
+                alt={training.title_en || training.title_fr} 
+                className='h-[240px] w-full object-cover rounded-md shadow-lg' 
+            />
             
-            <div className='flex gap-4'>
-                {training?.themes?.map((theme:string, index:number) => (
-                    <div key={index} className='bg-[#4B6BFB0D] text-[#006E9F] font-medium py-1 px-3 rounded-md w-fit'>
-                        {theme.name_en || theme.name_fr}
+            <div className="flex gap-4 flex-wrap">
+                {training.themes?.map((theme) => {
+                  const themeName = theme.name_fr || theme.name_en || 'N/A';
+                  return (
+                    <div
+                      key={theme.id}
+                      className="bg-[#4B6BFB0D] text-[#006E9F] text-sm font-medium py-1 px-3 rounded-md"
+                    >
+                      {themeName}
                     </div>
-                ))}
+                  );
+                })}
             </div>
             
-            <div className='text-xl font-semibold'>{training[`title_${lang}`]}</div>
-            <div className='text-[#97989F]'>{training.created_at ? formatDate(training.created_at) : ''}</div>
+            <div className="text-xl font-semibold">
+                {training.title_fr || training.title_en || 'No Title'}
+            </div>        
+            <div className='text-[#97989F] mt-auto'>{training.created_at ? formatDate(training.created_at) : ''}</div>
             
-        </Link>
+        </div>
     );
 }

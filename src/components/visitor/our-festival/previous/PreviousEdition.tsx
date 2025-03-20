@@ -13,10 +13,10 @@ export default function PreviousEdition() {
   const [isOpened, setIsOpened] = useState(false);
   const images = [
     {
-      title: 'Plongez dans le Suivi Marin',
-      description: 'Protégeons les trésors sous-marins',
-      imageUrl: '/images/marine_images/marine3.jpg',
-      path: '/protected-air-marine-coastal-areas/monitoring/marin'
+        title: 'Découvrez le Prochain Festival',
+        description: 'Restez informé des dates et du programme à venir',
+        imageUrl: '/images/Festival/UpcomingFestival.jpg',
+        path: '/our-festival/upcoming'
     },]
 
   return (

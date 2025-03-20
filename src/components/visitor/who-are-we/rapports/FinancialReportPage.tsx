@@ -9,6 +9,24 @@ import TabeFinancement from './TableFinancement';
 import PageParagraph from '../../../atoms/PageParagraph';
 import Swal from "sweetalert2";
 import HeroSection from '../../HeroSection';
+import Title from '../../../atoms/titles/Title';
+import PageParagraph2 from '../../../atoms/PageParagraph2';
+
+interface SectionHeaderProps {
+  title: React.ReactNode;
+  text: string;
+}
+
+const SectionHeader = ({ title, text }: SectionHeaderProps) => (
+  <div className="flex flex-col items-center text-center justify-center py-10">
+    <Title size="text-2xl sm:text-[36px] pb-4">{title}</Title>
+    <PageParagraph2>
+      <p className="font-semibold text-lg sm:text-[20px] text-center max-w-3xl mx-auto">
+        {text}
+      </p>
+    </PageParagraph2>
+  </div>
+);
 
 export default function FinancialReportPage() {
   const [loading, setLoading] = useState(true);
@@ -58,7 +76,7 @@ export default function FinancialReportPage() {
           <section className='w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10'>
             <Sidebar />
             {/* Remplacer w-fit par w-full pour que le container prenne toute la largeur */}
-            <section className='w-full flex flex-col gap-12 pb-10'>
+            <section className='w-full flex flex-col gap-12 '>
               <PageParagraph>
                 Notre association, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL), est profondément enracinée dans la préservation du patrimoine unique de Kerkennah et engagée dans le développement durable. Nos principes et valeurs guident chaque initiative, de la protection de l’environnement à l’inclusion sociale, et reflètent notre vision d’une communauté prospère et autonome.
               </PageParagraph>
@@ -66,21 +84,16 @@ export default function FinancialReportPage() {
             </section>
           </section>
 
-          <section className='border-t border-black flex flex-col gap-10 pb-10'>
-            <div className='flex flex-col'>
-              <PageTitle title={<div><span className='text-primary'>Sources</span> de financement</div>} color='text-black' />
-              <div className="text-xl font-medium text-center max-w-[850px] mx-auto">
-                <PageParagraph fontWeight="medium" spacing="normal">
-                  <div className='text-xl font-medium text-center max-w-[850px] mx-auto'>
-                    Découvrez les différentes contributions et partenariats financiers qui permettent de concrétiser nos projets et de soutenir nos actions en faveur du développement durable et culturel
-                  </div>
-                </PageParagraph>
-              </div>
-            </div>
+          
+          <hr className="border-t border-black mt-10" />
+          <SectionHeader 
+            title={<span><span className="text-primary">Sources</span> de financement</span>}
+            text="Découvrez les différentes contributions et partenariats financiers qui permettent de concrétiser nos projets et de soutenir nos actions en faveur du développement durable et culturel"
+          />
             <TabeFinancement data={financialSource} />
-          </section>
+          
 
-          <section className='border-t border-black pb-20'>
+          <section className='border-t border-black pb-20 mt-20'>
             <ImageHistoire />
           </section>
         </div>

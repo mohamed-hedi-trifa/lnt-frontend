@@ -173,7 +173,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
               ))}
             </div>
             {totalPages > 1 && (
-              <div className="flex justify-center">
+              <div className="flex justify-center px-4 sm:px-0">
                 <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
               </div>
             )}

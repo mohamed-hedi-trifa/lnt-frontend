@@ -11,20 +11,11 @@ import DateRangeSelector from '../../who-are-we/our-achievements/DateRangeSelect
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import Checkbox from '../../posts/Checkbox'
 import FilterTitle from '../../posts/FilterTitle'
-import ArrowDownIcon from '@/assets/icons/ArrowDownIcon'
-import FacebookIcon from '@/assets/icons/FacebookIcon'
 import { Link } from 'gatsby'
-import XIcon from '@/assets/icons/XIcon'
-import InstagramIcon from '@/assets/icons/InstagramIcon'
-import YoutubeIcon from '@/assets/icons/YoutubeIcon'
-import LinkedinIcon from '@/assets/icons/LinkedinIcon'
-import Button from '@/components/atoms/Button'
 import TrainingCards from './TrainingCards'
-import NewsLetterSub2 from '@/components/NewsLetterSub2'
-import Line from '@/components/atoms/Line'
-import FilterIcon from '@/assets/icons/FilterIcon'
-import sortIcon from "@/assets/icons/sort-icon.png"
-import path from 'path'
+import Question from '@/components/atoms/Question'
+import FollowUsTraining from './FollowUsTraining'
+import axios from "axios";
 
 
 
@@ -45,6 +36,21 @@ const images = [
 
 export default function Training() {
   const [isOpened, setIsOpened] = useState(false);
+  const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
+  const [themes, setThemes] = useState([]);
+  const [selectedThemes, setSelectedThemes] = useState<any[]>([]);
+  const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null);
+  const [showAllThemes, setShowAllThemes] = useState(false);
+
+  useEffect(() => {
+    console.log(selectedThemes);
+  }, [selectedThemes]);
+
+  function getThemes() {
+    axios.get("/api/theme").then((res) => {
+      setThemes(res.data);
+    });
+  }
 
   useEffect(() => {
     if (isOpened) {
@@ -52,9 +58,31 @@ export default function Training() {
     } else {
       document.querySelector("body")!.style.overflow = "visible";
     }
-  })
+  }, [isOpened]);
 
-  const LeftSidebar = () => <aside className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 sm:sticky sm:top-[116px] inset-0 p-5 transition duration-300 lg:translate-x-0 ${isOpened ? "translate-x-0" : "translate-x-[-100%]"}`} >
+  useEffect(() => {
+    getThemes();
+  }, []);
+
+  function handleThemeChange(themeId: string, isChecked: boolean) {
+    if (isChecked) {
+      setSelectedThemes((prev) => [...prev, themeId]);
+    } else {
+      setSelectedThemes((prev) => prev.filter((id) => id !== themeId));
+    }
+  }
+
+  // Decide how many to display
+  const displayedThemes = showAllThemes ? themes : themes.slice(0, 6);
+
+
+
+  const LeftSidebar = () => (
+  <aside 
+    className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 sm:sticky sm:top-[116px] inset-0 p-5 transition duration-300 lg:translate-x-0 
+    ${isOpened ? "translate-x-0" : "translate-x-[-100%]"
+    }`} 
+  >
     <div className='opacity-90 sm:opacity-100  bg-white flex flex-col p-[10px] gap-4 sm:gap-10 w-full sm:w-[320px] rounded-xl shadow-xl overflow-y-auto pointer-events-auto h-full'
       style={{
         boxShadow: "0px -8px 80px 0px rgba(0, 0, 0, 0.07), 0px -2.92px 29.2px 0px rgba(0, 0, 0, 0.05), 0px -1.42px 14.18px 0px rgba(0, 0, 0, 0.04), 0px -0.69px 6.95px 0px rgba(0, 0, 0, 0.03), 0px -0.27px 2.75px 0px rgba(0, 0, 0, 0.02)"
@@ -76,91 +104,98 @@ export default function Training() {
 
       {/* Thèmes */}
       <div className="flex flex-col gap-5">
-        <FilterTitle title="Thèmes" />
-        <div className="flex flex-col gap-3">
-          <Checkbox label="Tous les Thèmes" nb="120" />
-          <Checkbox label="Initiative scientifique" nb="35" />
-          <Checkbox label="Suivi scientifique" nb="28" />
-          <Checkbox label="Formation" nb="30" />
-          <Checkbox label="Événement culturel" nb="18" />
-          <Checkbox label="Activités sportives" nb="21" />
-          <button className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium">
-            + Afficher 10 de plus
+          <FilterTitle title="Thèmes" />
+
+          <div className="flex flex-col gap-3">
+            {displayedThemes.map((theme: any) => (
+              <Checkbox
+                key={theme.id}
+                label={theme[`name_${lang}`]}
+                checked={selectedThemes.includes(theme.id)}
+                onChange={(checked) => handleThemeChange(theme.id, checked)}
+              />
+            ))}
+
+            {themes.length > 6 && (
+              <>
+                {!showAllThemes && (
+                  <button
+                    className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium"
+                    onClick={() => setShowAllThemes(true)}
+                  >
+                    Afficher {themes.length - 6} de plus
+                  </button>
+                )}
+                {showAllThemes && (
+                  <button
+                    className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium"
+                    onClick={() => setShowAllThemes(false)}
+                  >
+                    Afficher moins
+                  </button>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Date Filter Section */}
+        <div className="flex flex-col gap-5 relative z-50">
+          <FilterTitle title="Date" />
+          <div className="flex flex-col gap-3">
+            <Checkbox 
+              label="Aujourd'hui" 
+              checked={selectedDateFilter === 'today'}
+              onChange={(checked) => setSelectedDateFilter(checked ? 'today' : null)}
+            />
+            <Checkbox 
+              label="Cette Semaine" 
+              checked={selectedDateFilter === 'week'}
+              onChange={(checked) => setSelectedDateFilter(checked ? 'week' : null)}
+            />
+            <Checkbox 
+              label="Ce Mois" 
+              checked={selectedDateFilter === 'month'}
+              onChange={(checked) => setSelectedDateFilter(checked ? 'month' : null)}
+            />
+            <Checkbox 
+              label="Cette Année" 
+              checked={selectedDateFilter === 'year'}
+              onChange={(checked) => setSelectedDateFilter(checked ? 'year' : null)}
+            />
+
+            <ButtonDropdown
+              customDropdown={true}
+              item={<DateRangeSelector />}
+              position="left"
+              renderItem={(item) => <div className="py-1">{item}</div>}
+            >
+              {(isOpen) => <Checkbox label="Configurer" />}
+            </ButtonDropdown>
+          </div>
+        </div>
+
+        <div className="flex justify-between">
+          <button
+            className="bg-primary text-sm text-white px-[10px] py-2 rounded-xl font-semibold"
+            onClick={() => setIsOpened(false)}
+          >
+            Appliquer
+          </button>
+          <button
+            className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]"
+            onClick={() => {
+              // Reset filters
+              setSelectedThemes([]);
+              setSelectedDateFilter(null);
+            }}
+          >
+            Réinitialiser
           </button>
         </div>
       </div>
-
-      {/* Date */}
-      <div className="flex flex-col gap-5 relative z-50">
-        <FilterTitle title="Date" />
-        <div className="flex flex-col gap-3">
-          <Checkbox label="Aujourd'hui" />
-          <Checkbox label="Cette Semaine" />
-          <Checkbox label="Ce Mois" />
-          <Checkbox label="Cette Année" />
-          <ButtonDropdown
-            item={<DateRangeSelector />}
-            position="left"
-            renderItem={(item) => (
-              <div className='py-1'>{item.name}</div>
-            )}
-          >
-            {(isOpen) => (
-              <Checkbox label="Configurer" />
-            )}
-          </ButtonDropdown>
-        </div>
-      </div>
-
-      {/* Actions */}
-      <div className="flex justify-between">
-        <button className="bg-primary text-sm text-white px-[10px] py-2 rounded-xl font-semibold">
-          Appliquer les Filtres
-        </button>
-        <button className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]">
-          Réinitialiser
-        </button>
-      </div>
-    </div>
-  </aside>;
-
-  const RightSidebar = () => <aside className={`flex flex-col gap-6 sm:sticky top-[116px] h-fit px-5`}>
-    <div className="text-[#183354] text-xl font-bold font-['Montserrat'] capitalize leading-relaxed">Suivez-nous</div>
-    <Line />
-
-    <div className='grid grid-cols-2 gap-1'>
-      <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
-        <div className='text-black'><FacebookIcon /></div>
-        <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">facebook</div>
-      </Link>
-      <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
-        <div className='text-black'><XIcon /></div>
-        <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">X</div>
-      </Link>
-      <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
-        <div className='text-black'><InstagramIcon /></div>
-        <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Instagram</div>
-      </Link>
-      <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
-        <div className='text-black'><YoutubeIcon /></div>
-        <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Youtube</div>
-      </Link>
-      <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl justify-start items-center gap-[15px] inline-flex">
-        <div className='text-black'><LinkedinIcon /></div>
-        <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Linkedin</div>
-      </Link>
-    </div>
-
-    <NewsLetterSub2 title="Restez Connectés !" paragraph="Inscrivez-vous à notre newsletter pour Recevez les infos sur nos prochaines formations et campements" />
-    <div className="h-[279.40px] flex-col justify-center gap-[25px] flex">
-      <div className="self-stretch h-[26.40px] text-[#183354] text-xl font-bold font-['Montserrat'] capitalize leading-relaxed">Une Question ?</div>
-      <Line />
-      <div className="w-[300px] text-black text-[15px] font-bold font-['Montserrat'] capitalize leading-normal">Besoin de plus d'informations ? N'hésitez pas à nous contacter. Cliquez sur le Bouton ci-dessous pour accéder à notre page de contact et poser vos questions</div>
-      <Button variant='primary' customClassnames='mx-auto'>
-        <div className="text-white text-xl font-bold font-['Montserrat'] leading-tight">Contactez-Nous</div>
-      </Button>
-    </div>
-  </aside>;
+    </aside>
+  );
 
   return (
     <main className={`relative`}>
@@ -190,11 +225,14 @@ export default function Training() {
         <section className="flex flex-col sm:flex-row gap-5">
           {/* Sidebar */}
           <LeftSidebar />
-
-          {/* Main content area (example placeholder) */}
-
-  <TrainingCards />
-          <RightSidebar />
+          <TrainingCards
+            filter={{ themes: selectedThemes, dateFilter: selectedDateFilter }} 
+            setIsOpened={setIsOpened}
+          />
+          <section className="flex flex-col mx-4 gap-8" >
+            <FollowUsTraining />
+            <Question />
+          </section>
         </section>
 
       </section>
