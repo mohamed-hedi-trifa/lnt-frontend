@@ -15,6 +15,8 @@ interface AchievementsCardsProps {
     themes?: number[];
     dateFilter?: string | null;
     sortOrder?: 'desc' | 'asc';
+    startDate?: Date | null;
+    endDate?: Date | null;
   };
   setIsOpened: (val: boolean) => void;
 }
@@ -26,7 +28,6 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
   const [loading, setLoading] = useState<boolean>(true);
   const [itemsList, setItemsList] = useState<any[]>([]);
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
-
   const resSafeLength = (arr: any[]) => (Array.isArray(arr) ? arr.length : 0);
   const lang = window?.location?.pathname.startsWith('/fr/') ? 'fr' : 'en';
   const [searchQuery, setSearchQuery] = useState(filter.searchQuery || '');
@@ -53,6 +54,8 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
           page: page,
           sortOrder: sortOrder,
           dateFilter: filter.dateFilter,
+          startDate: filter.startDate,
+          endDate: filter.endDate,
         },
       })
       .then((res) => {
@@ -81,7 +84,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
   }, []);
 
   useEffect(() => {
-    getPosts(searchQuery, currentPage, filter?.themes || []);
+    getPosts(searchQuery, currentPage, filter.themes || []);
   }, [searchQuery, currentPage, filter, sortOrder]);
 
   if (loading) return "Loading...";
@@ -117,7 +120,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
         </ButtonDropdown>
 
         <div className="text-black text-xl font-semibold font-['Montserrat'] mt-[2px]">
-          {`${startIndex} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} Réalisations`}
+          {`${startIndex} - ${endIndex} de ${itemsList.length} Réalisations`}
         </div>
       </div>
 

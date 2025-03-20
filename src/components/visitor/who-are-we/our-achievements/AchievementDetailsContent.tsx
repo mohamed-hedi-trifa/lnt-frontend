@@ -92,14 +92,14 @@ export default function AchievementDetailsContent({ location, params }: { locati
                 <div className="flex flex-col gap-5">
                     <h2 className="text-[36px] font-semibold ">{achievement.title_en || achievement.title_fr}</h2>
                     <div className="flex items-center gap-2 font-semibold text-sm">
-                        {achievement.themes?.map((item: any) =>
+                        {achievement?.themes.length > 0 ? achievement?.themes?.map((item: any) =>
                             <div data-color="Primary" data-icon="None" data-size="md" data-style="Light" className="px-2.5 w-fit  py-1 bg-[#0270A0] rounded-md inline-flex justify-center items-center gap-4 shadow-lg">
                                 <div className="justify-start text-white w-fit text-sm font-medium font-['Montserrat'] leading-tight">
                                     {item?.name_en || item?.name_fr}
                                 </div>
 
                             </div>
-                        )}
+                        ) :""}
                     </div>
                     <div className="flex items-center gap-2 font-semibold text-sm">
                         <Calendar />

@@ -48,7 +48,7 @@ function ButtonDropdown({
         leaveTo="translate-y-[30px] opacity-0"
       >
         {customDropdown ? (
-          <div onClick={() => { if (onSelect && item) onSelect(item); setIsOpen(false); }}>
+          <div onClick={() => { if (onSelect && item) onSelect(item); }}>
             {renderItem(item)}
           </div>
         ) : (
