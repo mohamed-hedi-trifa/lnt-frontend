@@ -27,6 +27,17 @@ interface FormData {
   title_research_knowledge_fr: string;
   description_research_knowledge_en: string;
   description_research_knowledge_fr: string;
+
+  scientific_name_en: string;
+  scientific_name_fr: string;
+  distribution_habitat_en: string;
+  distribution_habitat_fr: string;
+  size_morphology_en: string;
+  size_morphology_fr: string;
+  diet_en: string;
+  diet_fr: string;
+  conservation_status_en: string;
+  conservation_status_fr: string;
 }
 
 const CreateSpecies: React.FC = () => {
@@ -44,6 +55,17 @@ const CreateSpecies: React.FC = () => {
     description_research_knowledge_en: "",
     description_research_knowledge_fr: "",
 
+    scientific_name_en: "",
+    scientific_name_fr: "",
+    distribution_habitat_en: "",
+    distribution_habitat_fr: "",
+    size_morphology_en: "",
+    size_morphology_fr: "",
+    diet_en: "",
+    diet_fr: "",
+    conservation_status_en: "",
+    conservation_status_fr: "",
+
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -52,6 +74,7 @@ const CreateSpecies: React.FC = () => {
   const [englishItems, setEnglishItems] = useState<any[]>([]);
   const [frenchItems, setFrenchItems] = useState<any[]>([]);
   const [image, setImage] = useState<File | null>(null); // Separate state for the main image
+    const [displayCinButton, setdisplayCinButton] = useState('yes');
 
   const handleLanguageChange = async (e: ChangeEvent<HTMLSelectElement>) => {
     const lang = e.target.value;
@@ -190,6 +213,8 @@ const CreateSpecies: React.FC = () => {
       formDataToSend.append("image", image); // Append the main image file
     }
 
+
+
     const selectedItems = language === "en" ? englishItems : frenchItems;
 
     selectedItems.forEach((item, index) => {
@@ -204,6 +229,11 @@ const CreateSpecies: React.FC = () => {
             formDataToSend.append(`items[${index}][content][${listIndex}][imageFile]`, listItem.imageFile);
           }
         });
+      } if (item.type === "cin") {
+
+        formDataToSend.append(`items[${index}][content]`, "cin");
+
+      
       } else {
         formDataToSend.append(`items[${index}][content]`, item.content);
       }
@@ -235,6 +265,16 @@ const CreateSpecies: React.FC = () => {
         title_research_knowledge_fr: "",
         description_research_knowledge_en: "",
         description_research_knowledge_fr: "",
+        scientific_name_en: "",
+        scientific_name_fr: "",
+        distribution_habitat_en: "",
+        distribution_habitat_fr: "",
+        size_morphology_en: "",
+        size_morphology_fr: "",
+        diet_en: "",
+        diet_fr: "",
+        conservation_status_en: "",
+        conservation_status_fr: "",
 
       });
       setErrors({}); // Clear any previous errors
@@ -266,6 +306,10 @@ const CreateSpecies: React.FC = () => {
 
 
   const addNewItem = (type: string) => {
+    if(type === 'cin')
+      {
+        setdisplayCinButton("no")
+      }
     const newItem = {
       id: uuidv4(), // 👈 Must generate a unique id
       order: language === "en" ? englishItems.length : frenchItems.length,
@@ -294,11 +338,15 @@ const CreateSpecies: React.FC = () => {
         </Select>
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col grow">
+
+
+
         {language === "en" && (
           <>
             <Input label="Title" type="text" name="title_en" value={formData.title_en} onChange={handleChange} />
             {errors.title_en && <div className="text-red-500 text-sm">{errors.title_en}</div>}
           </>
+
         )}
         {language === "fr" && (
           <>
@@ -417,7 +465,9 @@ const CreateSpecies: React.FC = () => {
             language={language}
             key={language}
             route="/api/content-items"
-
+            handleChange={handleChange}
+            formData={formData}
+            setdisplayCinButton={setdisplayCinButton}
           />
         ) : (
           <div className="shadow p-4">There is no content currently, add new content by clicking one of the buttons below</div>
@@ -440,12 +490,17 @@ const CreateSpecies: React.FC = () => {
                 Text
               </Button>
             </div>
+            {
+              displayCinButton === 'yes' &&
+              (
             <div className="mb-1">
-              <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("list")}>
+              <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("cin")}>
                 <PlusIcon className="h-4 w-4" />
-                List
+                Cin
               </Button>
             </div>
+             )
+            }
             <div className="mb-1">
               <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("image")}>
                 <PlusIcon className="h-4 w-4" />

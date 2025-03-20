@@ -8,6 +8,8 @@ import UpcomingEventCard from "./UpcomingCard";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import LangLink from "../LangLink";
 import UpcomingCard from "./UpcomingCard";
+import { Link } from "gatsby";
+import AchievementCard from "../visitor/who-are-we/our-achievements/AchievementCard";
 type Kebab<T extends string, A extends string = ""> = T extends `${infer F}${infer R}`
   ? Kebab<R, `${A}${F extends Lowercase<F> ? "" : "-"}${Lowercase<F>}`>
   : A;
@@ -104,15 +106,22 @@ export default function UpcomingEvents() {
     <section className="px-3 py-20">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-primary text-2xl sm:text-[40px] text-center font-bold" style={{ textShadow: "2px 2px 2px rgb(0,0,0,.5)" }}>
-          {dataType === "event" ? "Événements à venir" : "Nos Réalisations"}  
+          {dataType === "event" ? "Événements à venir" : "Nos Réalisations"}
         </h2>
         <article className="mt-10">
           <swiper-container ref={swiperRef} class="w-full mx-auto max-w-[360px] md:max-w-7xl" init="false">
             {data?.map((item, index) => (
               <swiper-slide key={index} className="relative pb-10">
-                <UpcomingCard data={item} type={item.type} />
+                {dataType === "event" ? (
+                  <UpcomingCard data={item} type={item.type} />
+                ) : (
+                  <Link key={item.id} to={`/who-are-we/our-achievements/${item.slug}`}>
+                    <AchievementCard achievement={item} />
+                  </Link>
+                )}
               </swiper-slide>
             ))}
+
 
           </swiper-container>
           <div className="relative z-10 flex justify-between max-w-[300px] md:max-w-4xl mx-auto px-3 translate-y-[-90px] md:translate-y-0">
@@ -145,7 +154,7 @@ export default function UpcomingEvents() {
             className="block w-fit mx-auto mt-4 md:-mt-4 px-5 py-4 text-white font-semibold rounded-full bg-[linear-gradient(to_right,#006E9F,#51ADC6,#006E9F)] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right shadow-[-1px_2px_5px_rgb(0,0,0,.3)]"
           >
             Voir  {dataType === "event" ? "tous les Événements" : "toutes Nos Réalisations"}
-          </LangLink> 
+          </LangLink>
         </article>
       </div>
     </section>

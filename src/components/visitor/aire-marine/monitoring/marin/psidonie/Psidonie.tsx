@@ -67,6 +67,7 @@ export default function Psidonie() {
                                     content: "Ils capturent et stockent du carbone, contribuant ainsi à lutter contre le changement climatique."
                                 }]} />
 
+
                             <Etiquette
                                 image={'/suivi_icons/icon2.png'}
                                 titre={'Nom scientifique'}

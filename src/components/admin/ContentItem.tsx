@@ -18,7 +18,11 @@ const ContentItem = ({
   handleItemContentChange,
   item,
   idx,
-  route
+  language,
+  route,
+  handleChange,
+  formData,
+  setdisplayCinButton
 }: {
   id: string;
   idx: number;
@@ -26,7 +30,11 @@ const ContentItem = ({
   handleItemContentChange: (idx: number, e: any) => void;
   items: any[];
   setItems: (items: any[]) => void;
+  language: string;
   route: string;
+  handleChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  formData: any[];
+  setdisplayCinButton: any;
 }) => {
 
   const {
@@ -56,7 +64,7 @@ const ContentItem = ({
       }).then((result) => {
         if (result.isConfirmed) {
           axios
-          // .delete(`/api/content-items/${currItem.id}`)
+            // .delete(`/api/content-items/${currItem.id}`)
             .delete(`${route}/${currItem.id}`)
             .then(() => {
               const newItems = items.filter((_item, i) => i !== index);
@@ -97,6 +105,7 @@ const ContentItem = ({
                 });
               }
             });
+            
         }
       });
     } else {
@@ -104,6 +113,8 @@ const ContentItem = ({
       setItems(updated);
     }
   };
+
+  
 
   const handleListImageChange = (index: number, listIndex: number, e: any) => {
     const updatedItems = [...items];
@@ -206,6 +217,188 @@ const ContentItem = ({
           <Button type="button" onClick={() => addListItem(idx)} customClassnames="bg-primary hover:bg-primaryHover mt-2">
             Add Item
           </Button>
+        </div>
+      ) : item.type === "cin" ? (
+        <div className="col-span-10 p-2">
+          <div className="self-stretch p-5 rounded-xl  outline outline-1 outline-offset-[-1px] outline-black inline-flex flex-col justify-start items-start overflow-hidden">
+            <div className="self-stretch  flex flex-col justify-center items-start gap-3">
+              <div className="self-stretch flex flex-col justify-center items-start gap-2.5">
+                <div className="self-stretch inline-flex justify-start items-center gap-2.5">
+                  <img src="/icons/etiqueter.png" alt="" />
+                  <div className="flex-1 inline-flex flex-col justify-center items-center gap-[3px]">
+                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Nom scientifique</div>
+                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+                      {language === "en" && (
+                        <Textarea
+                          name="scientific_name_en"
+                          value={formData.scientific_name_en}
+                          className="swal2-textarea"
+                          onChange={handleChange}
+                          onInput={(e) => {
+                            e.target.style.height = "auto"; // Reset height to recalculate
+                            e.target.style.height = `${e.target.scrollHeight}px`; // Set to full content height
+                          }}
+                        />
+                      )}
+                      {language === "fr" && (
+                        <Textarea
+                          name="scientific_name_fr"
+                          value={formData.scientific_name_fr}
+                          className="swal2-textarea"
+                          onChange={handleChange}
+                          onInput={(e) => {
+                            e.target.style.height = "auto"; // Reset height to recalculate
+                            e.target.style.height = `${e.target.scrollHeight}px`; // Set to full content height
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
+              </div>
+              <div className="flex flex-col justify-center items-start gap-2.5">
+                <div className="inline-flex justify-center items-center gap-2.5">
+                  <img src="/icons/monde.png" alt="" />
+                  <div className="w-[665px] inline-flex flex-col justify-start items-start gap-[3px]">
+                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Répartition / Habitat</div>
+                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+                      {language === "en" && (
+                        <Textarea
+                          name="distribution_habitat_en"
+                          value={formData.distribution_habitat_en}
+                          className="swal2-textarea"
+                          onChange={handleChange}
+                          onInput={(e) => {
+                            e.target.style.height = "auto"; // Reset height to recalculate
+                            e.target.style.height = `${e.target.scrollHeight}px`; // Set to full content height
+                          }}
+                        />
+                      )}
+                      {language === "fr" && (
+                        <Textarea
+                          name="distribution_habitat_fr"
+                          value={formData.distribution_habitat_fr}
+                          className="swal2-textarea"
+                          onChange={handleChange}
+                          onInput={(e) => {
+                            e.target.style.height = "auto"; // Reset height to recalculate
+                            e.target.style.height = `${e.target.scrollHeight}px`; // Set to full content height
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
+              </div>
+              <div className="self-stretch flex flex-col justify-center items-start gap-2.5">
+                <div className="self-stretch inline-flex justify-start items-center gap-2.5">
+                  <img src="/icons/regle.png" alt="" />
+                  <div className="flex-1 inline-flex flex-col justify-start items-start gap-[3px]">
+                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Taille et Morphologie</div>
+                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+                      {language === "en" && (
+                        <Textarea
+                          name="size_morphology_en"
+                          value={formData.size_morphology_en}
+                          className="swal2-textarea"
+                          onChange={handleChange}
+                          onInput={(e) => {
+                            e.target.style.height = "auto"; // Reset height to recalculate
+                            e.target.style.height = `${e.target.scrollHeight}px`; // Set to full content height
+                          }}
+                        />
+                      )}
+                      {language === "fr" && (
+                        <Textarea
+                          name="size_morphology_fr"
+                          value={formData.size_morphology_fr}
+                          className="swal2-textarea"
+                          onChange={handleChange}
+                          onInput={(e) => {
+                            e.target.style.height = "auto"; // Reset height to recalculate
+                            e.target.style.height = `${e.target.scrollHeight}px`; // Set to full content height
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
+              </div>
+              <div className="self-stretch flex flex-col justify-center items-start gap-2.5">
+                <div className="self-stretch inline-flex justify-start items-center gap-2.5">
+                <img src="/icons/coutellerie.png" alt="" />
+                  <div className="flex-1 inline-flex flex-col justify-start items-start gap-[3px]">
+                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Régime alimentaire</div>
+                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+                    {language === "en" && (
+                        <Textarea
+                          name="diet_en"
+                          value={formData.diet_en}
+                          className="swal2-textarea"
+                          onChange={handleChange}
+                          onInput={(e) => {
+                            e.target.style.height = "auto"; // Reset height to recalculate
+                            e.target.style.height = `${e.target.scrollHeight}px`; // Set to full content height
+                          }}
+                        />
+                      )}
+                      {language === "fr" && (
+                        <Textarea
+                          name="diet_fr"
+                          value={formData.diet_fr}
+                          className="swal2-textarea"
+                          onChange={handleChange}
+                          onInput={(e) => {
+                            e.target.style.height = "auto"; // Reset height to recalculate
+                            e.target.style.height = `${e.target.scrollHeight}px`; // Set to full content height
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
+              </div>
+         
+              <div className="flex flex-col justify-center items-center gap-2.5">
+                <div className="w-[741px] inline-flex justify-center items-center gap-2.5">
+                  <img src="/icons/point-dexclamation.png" alt="" />
+                  <div className="flex-1 inline-flex flex-col justify-start items-start gap-[3px]">
+                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Statut de Conservation</div>
+                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+                      {language === "en" && (
+                        <Textarea
+                          name="conservation_status_en"
+                          value={formData.conservation_status_en}
+                          className="swal2-textarea"
+                          onChange={handleChange}
+                          onInput={(e) => {
+                            e.target.style.height = "auto"; // Reset height to recalculate
+                            e.target.style.height = `${e.target.scrollHeight}px`; // Set to full content height
+                          }}
+                        />
+                      )}
+                      {language === "fr" && (
+                        <Textarea
+                          name="conservation_status_fr"
+                          value={formData.conservation_status_fr}
+                          className="swal2-textarea"
+                          onChange={handleChange}
+                          onInput={(e) => {
+                            e.target.style.height = "auto"; // Reset height to recalculate
+                            e.target.style.height = `${e.target.scrollHeight}px`; // Set to full content height
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
         <div className="col-span-10 p-2">
