@@ -51,61 +51,9 @@ export default function ManageSpecies({ params }: { params: any }) {
     getSpecies();
   }, [slug]);
 
-  const handleAddTheme = (e: React.FormEvent) => {
-    e.preventDefault();
 
 
-    if (species.themes.length >= 4) {
-      Swal.fire("Error", "A species can have a maximum of 4 themes.", "error");
-      return;
-    }
 
-    axios
-      .post("/api/add-species-theme", {
-        species_id: species.id,
-        theme_id: themeId,
-      })
-      .then((res) => {
-        Swal.fire("Success", "Theme added successfully!", "success");
-        setThemeId("");
-        getSpecies();
-      })
-      .catch((err) => {
-        Swal.fire("Error", err.response?.data?.message || "Failed to add theme", "error");
-      });
-  };
-
-  const deleteTheme = (e: any, item: any) => {
-    e.preventDefault();
-
-    Swal.fire({
-      title: "Delete Theme",
-      text: `Are you sure to delete ${item.title_en || item.title_fr} ?`,
-      showDenyButton: true,
-      confirmButtonText: "Delete",
-      denyButtonText: `Cancel`,
-      confirmButtonColor: "#df4759",
-      denyButtonColor: "#d9e2ef",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .delete(`/api/species/${species.id}/theme/${item.id}`)
-          .then((res) => {
-            Swal.fire("Deleted!", "The species has been removed from this species.", "success");
-            setThemeId("");
-            getSpecies();
-          })
-          .catch((err) => {
-            if (err.response.data.status === 404) {
-              Swal.fire("Erreur", err.response.data.message, "error");
-            } else if (err.response.status === 401) {
-              Swal.fire("Error", err.response.data.message, "error");
-            }
-          });
-      } else if (result.isDenied) {
-      }
-    });
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -214,63 +162,9 @@ export default function ManageSpecies({ params }: { params: any }) {
 
           </div>
 
-          <hr className="my-6" />
+    
 
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold mb-4">Themes</h2>
-            {species.themes?.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {species.themes.map((item: any) => (
-                  <div key={item.id} className="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm justify-between">
-                    <div className="flex items-center">
-
-                      <div className="flex flex-col">
-                        <h3 className="text-xl font-medium">
-                          {item?.name_en || item?.name_fr}
-                        </h3>
-                      </div>
-
-                    </div>
-
-                    <div className="col-span-12 sm:col-span-6 flex justify-end sm:justify-center">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          deleteTheme(e, item);
-                        }}
-                      >
-                        <TrashIcon className="block h-8 w-8 text-red-600" aria-hidden="true" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500">No theme yet</p>
-            )}
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Add Theme</h2>
-            <form onSubmit={handleAddTheme} className="flex flex-col sm:flex-row items-center gap-4">
-              <select
-                value={themeId}
-                onChange={(e) => setThemeId(e.target.value)}
-                className="w-full sm:w-1/2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              >
-                <option value="">Select a theme</option>
-                {species.themesNotSelected?.map((theme: any) => (
-                  <option key={theme.id} value={theme.id}>
-                    {theme.name_en || theme_name_fr}
-                  </option>
-                ))}
-              </select>
-              <button type="submit" className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition duration-200">
-                Add Theme
-              </button>
-            </form>
-          </div>
+    
 
 
           <hr className="my-6" />

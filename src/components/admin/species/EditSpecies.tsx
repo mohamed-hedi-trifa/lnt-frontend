@@ -31,10 +31,23 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
     title_research_knowledge_fr: "",
     description_research_knowledge_en: "",
     description_research_knowledge_fr: "",
+
+    scientific_name_en: "",
+    scientific_name_fr: "",
+    distribution_habitat_en: "",
+    distribution_habitat_fr: "",
+    size_morphology_en: "",
+    size_morphology_fr: "",
+    diet_en: "",
+    diet_fr: "",
+    conservation_status_en: "",
+    conservation_status_fr: "",
   });
   const [englishItems, setEnglishItems] = useState<any[]>([]);
   const [frenshItems, setFrenshItems] = useState<any[]>([]);
   const [image, setImage] = useState<File | null>(null);
+
+  const [displayCinButton, setdisplayCinButton] = useState('yes');
 
   useEffect(() => {
     const slugParam = params.slug;
@@ -48,7 +61,7 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
         const response = await axios.get(`/api/species/${slug}`);
         const blogSpecies: any = response.data;
 
-        console.log(response.data)
+
         // Sort content items by order
         blogSpecies.content_items.sort((a: any, b: any) => a.order - b.order);
 
@@ -65,12 +78,28 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
           title_research_knowledge_fr: blogSpecies.title_research_knowledge_fr ?? "",
           description_research_knowledge_en: blogSpecies.description_research_knowledge_en ?? "",
           description_research_knowledge_fr: blogSpecies.description_research_knowledge_fr ?? "",
+
+
+
+          scientific_name_en: blogSpecies.scientific_name_en ?? "",
+          scientific_name_fr: blogSpecies.scientific_name_fr ?? "",
+          distribution_habitat_en: blogSpecies.distribution_habitat_en ?? "",
+          distribution_habitat_fr: blogSpecies.distribution_habitat_fr ?? "",
+
+          size_morphology_en: blogSpecies.size_morphology_en ?? "",
+          size_morphology_fr: blogSpecies.size_morphology_fr ?? "",
+          diet_en: blogSpecies.diet_en ?? "",
+          diet_fr: blogSpecies.diet_fr ?? "",
+          conservation_status_en: blogSpecies.conservation_status_en ?? "",
+          conservation_status_fr: blogSpecies.conservation_status_fr ?? "",
+
+
         });
 
         // parse any JSON content
         const parsedContentItems = blogSpecies.content_items.map((item: any) => {
-          if (item.type === "list") {
-            return { ...item, content: JSON.parse(item.content) };
+          if (item.type === "cin") {
+            setdisplayCinButton("no")
           }
           return item;
         });
@@ -158,6 +187,10 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
   // "Add new content item" logic
   const addNewItem = (type: string) => {
     const updatedItems = language === "en" ? [...englishItems] : [...frenshItems];
+    if(type === 'cin')
+    {
+      setdisplayCinButton("no")
+    }
     const newItem = {
       id: uuidv4(),
       order: updatedItems.length,
@@ -324,7 +357,6 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
               onChange={handleChange}
             />
 
-
           </>
         )}
 
@@ -372,9 +404,15 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
         {(language === "en" && englishItems.length) || (language === "fr" && frenshItems.length) ? (
           <ItemsList
             handleItemContentChange={handleItemContentChange}
-            items={language === "en" ? englishItems : frenshItems}
-            setItems={language === "en" ? setEnglishItems : setFrenshItems} language={language}
-            key={language} />
+            items={language === "en" ? englishItems : frenchItems}
+            setItems={language === "en" ? setEnglishItems : setFrenchItems}
+            language={language}
+            key={language}
+            route="/api/content-items"
+            handleChange={handleChange}
+            formData={formData}
+            setdisplayCinButton={setdisplayCinButton}
+          />
 
         ) : (
           <div className="shadow p-4">
@@ -401,14 +439,24 @@ const EditSpecies = ({ location, params }: { location: any; params: any }) => {
               <PlusIcon className="h-4 w-4" />
               Text
             </Button>
-            <Button
-              type="button"
-              customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center"
-              onClick={() => addNewItem("list")}
-            >
-              <PlusIcon className="h-4 w-4" />
-              List
-            </Button>
+
+
+            {
+              displayCinButton === 'yes' &&
+              (
+
+                <Button
+                  type="button"
+                  customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center"
+                  onClick={() => addNewItem("cin")}
+                >
+                  <PlusIcon className="h-4 w-4" />
+                  Cin
+                </Button>
+              )
+            }
+
+
             <Button
               type="button"
               customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center"

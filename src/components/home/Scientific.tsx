@@ -5,6 +5,48 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 
+type Color = {
+  image?: string;
+  title?: string;
+  description?: string;
+  importance?: string;
+  color1?: string;
+  color2?: string;
+  path?: string;
+};
+
+const colorsData: Color[] = [
+  {
+    color1: "#007C48",
+    color2: "#44D091",
+  },
+  {
+     color1: "#3344DC",
+    color2: "#50ACC6",
+
+  },
+  {
+   color1: "#DF2222",
+    color2: "#FDBDBD",
+    },
+  {
+  color1: "#00E676",
+    color2: "#50ACC6",
+
+  },
+  {
+  color1: "#F57C00",
+    color2: "#FFCA28",
+ 
+  },
+  {
+  
+    color1: "#006E9F",
+    color2: "#51ADC6",
+    
+  },
+];
+
 
 export default function Scientific() {
   const [researches, setResearches] = useState([]);
@@ -14,12 +56,13 @@ export default function Scientific() {
   const swiperThumbsRef = useRef<any>(null);
 
   const activeResearch = researches[activeIndex] || {
-    color1: "#000",
-    color2: "#000",
+    color1: colorsData[activeIndex].color1,
+    color2: colorsData[activeIndex].color2,
     title: "",
     description: "",
     importance: "",
   };
+
   console.log(activeResearch)
 
   function getSpecies() {
@@ -106,8 +149,8 @@ export default function Scientific() {
           <style>
             {`
     :root {
-      --active-research-color-1: ${activeResearch ? activeResearch.color1 : "#000"};
-      --active-research-color-2: ${activeResearch ? activeResearch.color2 : "#000"};
+      --active-research-color-1: ${activeResearch ? colorsData[activeIndex].color1 : "#007C48"};
+      --active-research-color-2: ${activeResearch ? colorsData[activeIndex].color2 : "#44D091"};
     }
   `}
           </style>
@@ -131,15 +174,15 @@ export default function Scientific() {
             {/* <h3 className="text-white text-4xl font-bold text-center mb-8">Suivi Marin</h3> */}
 
             <div className="relative w-fit ml-1 pl-3 pr-6 py-3 bg-black/50 after:absolute after:right-full after:top-0 after:bottom-0 after:w-1 after:bg-gradient-to-b after:from-[var(--active-research-color-1)] after:to-[var(--active-research-color-2)]">
-              <h3 className="font-bold text-xl text-white">{activeResearch.title_en}</h3>
+              <h3 className="font-bold text-xl text-white">{activeResearch.title_en || activeResearch.title_fr}</h3>
             </div>
             <div className="min-h-[350px] md:min-h-[250px]">
               <div className="w-fit max-w-[500px] mt-6 pl-3 pr-6 py-3 bg-black/50">
-                <h4 className="font-bold" style={{ color: activeResearch.color1 }}>
+                <h4 className="font-bold" style={{ color: colorsData[activeIndex].color1 }}>
                   Description:
                 </h4>
                 <p className="font-bold text-white text-sm">{activeResearch.description_en || activeResearch.description_fr}</p>
-                <h4 className="mt-4 font-bold capitalize" style={{ color: activeResearch.color1 }}>
+                <h4 className="mt-4 font-bold capitalize" style={{ color: colorsData[activeIndex].color1 }}>
                   Importance écologique:
                 </h4>
                 <p className="font-bold text-white text-sm">{activeResearch.ecological_importance_en || activeResearch.ecological_importance_fr}</p>

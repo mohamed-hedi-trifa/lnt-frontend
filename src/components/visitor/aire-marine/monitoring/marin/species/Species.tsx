@@ -171,6 +171,80 @@ export default function Species({ location, params }: { location: any; params: a
                           </a>
                         </div>
                       );
+                    case "cin":
+                      return (
+                        <div className="col-span-10 p-2 px-5">
+                          <div className="self-stretch p-5 rounded-xl  outline outline-1 outline-offset-[-1px] outline-black inline-flex flex-col justify-start items-start overflow-hidden">
+                            <div className="self-stretch  flex flex-col justify-center items-start gap-3">
+                              <div className="self-stretch flex flex-col justify-center items-start gap-2.5">
+                                <div className="self-stretch inline-flex justify-start items-center gap-2.5">
+                                  <img src="/icons/etiqueter.png" alt="" />
+                                  <div className="flex-1 inline-flex flex-col justify-center items-center gap-[3px]">
+                                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Nom scientifique</div>
+                                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+                                      {blogSpecies.scientific_name_en || blogSpecies.scientific_name_fr}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
+                              </div>
+                              <div className="flex flex-col justify-center items-start gap-2.5">
+                                <div className="inline-flex justify-center items-center gap-2.5">
+                                  <img src="/icons/monde.png" alt="" />
+                                  <div className="w-[665px] inline-flex flex-col justify-start items-start gap-[3px]">
+                                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Répartition / Habitat</div>
+                                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+
+                                      {blogSpecies.distribution_habitat_en || blogSpecies.distribution_habitat_fr}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
+                              </div>
+                              <div className="self-stretch flex flex-col justify-center items-start gap-2.5">
+                                <div className="self-stretch inline-flex justify-start items-center gap-2.5">
+                                  <img src="/icons/regle.png" alt="" />
+                                  <div className="flex-1 inline-flex flex-col justify-start items-start gap-[3px]">
+                                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Taille et Morphologie</div>
+                                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+
+                                      {blogSpecies.size_morphology_en || blogSpecies.size_morphology_fr}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
+                              </div>
+                              <div className="self-stretch flex flex-col justify-center items-start gap-2.5">
+                                <div className="self-stretch inline-flex justify-start items-center gap-2.5">
+                                  <img src="/icons/coutellerie.png" alt="" />
+                                  <div className="flex-1 inline-flex flex-col justify-start items-start gap-[3px]">
+                                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Régime alimentaire</div>
+                                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+
+                                      {blogSpecies.diet_en || blogSpecies.diet_fr}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
+                              </div>
+
+                              <div className="flex flex-col justify-center items-center gap-2.5">
+                                <div className="w-[741px] inline-flex justify-center items-center gap-2.5">
+                                  <img src="/icons/point-dexclamation.png" alt="" />
+                                  <div className="flex-1 inline-flex flex-col justify-start items-start gap-[3px]">
+                                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Statut de Conservation</div>
+                                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+
+
+                                      {blogSpecies.conservation_status_en || blogSpecies.conservation_status_fr}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )
                     default:
                       return null;
                   }
@@ -193,7 +267,7 @@ export default function Species({ location, params }: { location: any; params: a
               </PageParagraph>
             </div>
           </div>
-          <Media mediaContent={blogSpecies}/>
+          <Media mediaContent={blogSpecies} />
           <hr className="my-10 border-1 border-[#000000]" />
           <div className="text-center mx-20">
             <h1 className="text-[28px] sm:text-[36px] font-bold">
@@ -209,7 +283,7 @@ export default function Species({ location, params }: { location: any; params: a
           </PageParagraph>
           <Table data={blogSpecies.researchKnowledge} />
           <section className="border-t border-[#000000] mt-10 py-10">
-            <DecouvrezDautresEspeces currentBlog={blogSpecies}/>
+            <DecouvrezDautresEspeces currentBlog={blogSpecies} />
           </section>
         </div>
       </div>

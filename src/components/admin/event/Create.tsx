@@ -192,7 +192,7 @@ const CreateEvent: React.FC = () => {
 
         if (!formData.event_type_id) {
             newErrors.event_type_id = "Event type is required.";
-            console.log('sdfqsdfqsdfqdfsqd')
+            
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;

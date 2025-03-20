@@ -122,7 +122,7 @@ export default function Theme() {
                               name="is_popular"
                               checked={item.is_popular === "yes"}
                               onChange={() => handleToggle(item)}
-                            />;
+                            />
                             <span className="slider"></span>
                           </label>
                         </div>

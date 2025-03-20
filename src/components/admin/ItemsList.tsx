@@ -9,7 +9,25 @@ import {
 
 import ContentItem from "./ContentItem";
 
-const ItemsList = ({ handleItemContentChange, items, setItems, language, route }:{handleItemContentChange:(idx: number, e: any) => void, items:any[], setItems:(items:any[])=>void, language:string, route:string}) => {
+const ItemsList = ({
+  handleItemContentChange,
+  items,
+  setItems,
+  language,
+  route,
+  handleChange, // Add handleChange to props
+  formData,
+  setdisplayCinButton
+}: {
+  handleItemContentChange: (idx: number, e: any) => void;
+  items: any[];
+  setItems: (items: any[]) => void;
+  language: string;
+  route: string;
+  handleChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void; // Make it optional
+  formData: any[];
+  setdisplayCinButton: any;
+}) => {  
   // This function replaces onSortEnd from react-sortable-hoc
 // ItemsList.tsx
 const handleDragEnd = (event:any) => {
@@ -56,7 +74,11 @@ const handleDragEnd = (event:any) => {
               items={items}
               setItems={setItems}
               handleItemContentChange={handleItemContentChange}
+              language={language}
               route= {route}
+              handleChange={handleChange}
+              formData={formData}
+              setdisplayCinButton={setdisplayCinButton}
             />
           ))}
         </ul>
