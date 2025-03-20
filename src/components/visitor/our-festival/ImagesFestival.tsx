@@ -14,7 +14,12 @@ const ImageAireMarine: React.FC<ImagesFestival> = ({ title, description, imageUr
     return (
         <div
             className=" max-w-[355px] lg:w-full lg:max-w-[616px] h-[200px] md:h-[260px] relative bg-cover rounded-[15px] flex items-center justify-center transition-all duration-500 group shadow-helmi "
-            style={{ backgroundImage: `url(${imageUrl})`  }}
+            style={{
+                backgroundImage: `url(${imageUrl})`,
+                backgroundSize: 'cover',       
+                backgroundPosition: 'center',  
+                backgroundRepeat: 'no-repeat', 
+            }}
         >
             
             <div className='h-full w-full absolute group-hover:bg-[rgba(0,0,0,0.4)] rounded-[15px]'></div>

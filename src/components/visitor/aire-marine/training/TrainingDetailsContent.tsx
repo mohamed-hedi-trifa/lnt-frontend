@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./AchievementDetailsContent.css";
+import "./TrainingDetailsContent.css";
 
 import { navigate } from "gatsby";
 import Title from "@/components/atoms/titles/Title";
-import BlogList from "../../aire-marine/monitoring/marin/species/BlogList";
+import BlogList from "../monitoring/marin/species/BlogList";
 import Calendar from "@/assets/icons/Calendar";
 import Media from "../../Media";
 import PageParagraph from "@/components/atoms/PageParagraph";
@@ -41,8 +41,8 @@ const SectionHeader = ({ title}: SectionHeaderProps) => (
     <Title size="text-2xl sm:text-[36px] pb-4">{title}</Title>
   </div>
 );
-export default function AchievementDetailsContent({ location, params }: { location: any; params: any }) {
-    const [achievement, setAchievement] = useState<any>(null);
+export default function TrainingDetailsContent({ location, params }: { location: any; params: any }) {
+    const [training, setTraining] = useState<any>(null);
     const [slug, setSlug] = useState<string | null>(null);
     const [language, setLanguage] = useState<string>("en");
 
@@ -54,9 +54,9 @@ export default function AchievementDetailsContent({ location, params }: { locati
     useEffect(() => {
         if (slug) {
             axios
-                .get(`/api/achievements/${slug}`)
+                .get(`/api/training/${slug}`)
                 .then((res) => {
-                    setAchievement(res.data);
+                    setTraining(res.data);
 
 
                     const searchParams = new URLSearchParams(location.search);
@@ -70,7 +70,7 @@ export default function AchievementDetailsContent({ location, params }: { locati
                     }
                 })
                 .catch((err) => {
-                    console.error("Error fetching blog post:", err);
+                    console.error("Error fetching training", err);
 
                     navigate("/404");
                 });
@@ -81,7 +81,7 @@ export default function AchievementDetailsContent({ location, params }: { locati
         setLanguage(selectedLanguage);
     };
 
-    if (!achievement) {
+    if (!training) {
         return <div>Loading...</div>;
     }
 
@@ -90,9 +90,9 @@ export default function AchievementDetailsContent({ location, params }: { locati
             <div className="w-full px-8 text-start max-w-3xl mx-auto" dir={language === "ar" ? "rtl" : "ltr"}>
 
                 <div className="flex flex-col gap-5">
-                    <h2 className="text-[36px] font-semibold ">{achievement.title_en || achievement.title_fr}</h2>
+                    <h2 className="text-[36px] font-semibold ">{training.title_en || training.title_fr}</h2>
                     <div className="flex items-center gap-2 font-semibold text-sm">
-                        {achievement.themes?.map((item: any) =>
+                        {training.themes?.map((item: any) =>
                             <div data-color="Primary" data-icon="None" data-size="md" data-style="Light" className="px-2.5 w-fit  py-1 bg-[#0270A0] rounded-md inline-flex justify-center items-center gap-4 shadow-lg">
                                 <div className="justify-start text-white w-fit text-sm font-medium font-['Montserrat'] leading-tight">
                                     {item?.name_en || item?.name_fr}
@@ -103,22 +103,22 @@ export default function AchievementDetailsContent({ location, params }: { locati
                     </div>
                     <div className="flex items-center gap-2 font-semibold text-sm">
                         <Calendar />
-                        Le {new Date(achievement.date).toLocaleDateString("fr-FR", {
+                        Le {new Date(training.date).toLocaleDateString("fr-FR", {
                             day: "numeric",
                             month: "long",
                             year: "numeric",
                         })}
                     </div>
                     <img
-                        src={`${process.env.GATSBY_API_URL}${achievement.image}`}
-                        alt="achievement"
+                        src={`${process.env.GATSBY_API_URL}${training.image}`}
+                        alt="Training"
                         className="max-h-[500px] max-w-[800px] object-cover rounded-md shadow-lg"
                     />
                 </div>
 
 
                 <div className="mt-10 flex flex-col gap-1">
-                    {achievement?.content_items
+                    {training?.content_items
                         ?.sort((a: any, b: any) => a.order - b.order)
                         .map((item: any) => (
                             <div key={item.id}>
@@ -168,7 +168,7 @@ export default function AchievementDetailsContent({ location, params }: { locati
                     title={<span><span className="text-[#0270A0]">Souvenirs</span> en Photos et Vidéos</span>}
                  />
                 <div className="mb-20">
-                    <Media mediaContent={achievement}  />
+                    <Media mediaContent={training}  />
                 </div>
             </div>
         </div>

@@ -6,6 +6,9 @@ import FollowUs from '../../news/FollowUs';
 import Question from '../../news/Question';
 import AchievementDetailsContent from './AchievementDetailsContent';
 import RelatedAchievement from './RelatedAchievement';
+import FollowUsAchivement from './FollowUsAchivement';
+import QuestionAchivement from './QuestionAchivement';
+
 
 export default function AchievementDetails({ location, params }: { location: any; params: any }) {
   const searchParams = new URLSearchParams(location?.search);
@@ -40,15 +43,15 @@ export default function AchievementDetails({ location, params }: { location: any
         <Breadcrumbs />
       </div>
 
-      <section className="flex gap-20 sm:flex-row flex-col my-5 text-center max-w-7xl w-full mx-auto mt-20 px-5 h-fit">
-        <div className="sm:w-[2500px]">
+      <section className="flex justify-center gap-20 sm:flex-row flex-col my-5 text-center max-w-7xl w-full mx-auto mt-20 px-5 h-fit">
+        <div className="">
           {/* Détails de la réalisation */}
           <AchievementDetailsContent params={params} location={location} />
         </div>
 
-        <div className="h-full w-full md:col-span-1 col-span-2 flex flex-col gap-10">
-          <FollowUs />
-          <Question />
+        <div className="h-full md:col-span-1 col-span-2 flex flex-col gap-10 pb-10 sm:pb-0">
+          <FollowUsAchivement />
+          <QuestionAchivement />
 
           {/* --- Afficher ici les réalisations connexes --- */}
           {/* On passe la réalisation courante au composant RelatedAchievement */}
