@@ -53,8 +53,6 @@ export default function AchievementDetails({ location, params }: { location: any
           <FollowUsAchivement />
           <QuestionAchivement />
 
-          {/* --- Afficher ici les réalisations connexes --- */}
-          {/* On passe la réalisation courante au composant RelatedAchievement */}
           <RelatedAchievement currentAchievement={achievement} />
         </div>
       </section>

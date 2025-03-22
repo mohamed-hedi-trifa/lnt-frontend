@@ -16,7 +16,7 @@ export default function NewsDetails({ location, params }: { location: any; param
     const [news, setNews] = useState([]);
     const [moreEvents, setMoreNews] = useState([]);
     
-    const getNews = async (slugNews) => {
+    const getNews = async (slugNews: string) => {
       try {
         const response = await axios.get(`/api/news/${slugNews}`);
         setNews(response.data);
@@ -25,21 +25,10 @@ export default function NewsDetails({ location, params }: { location: any; param
       }
     };
   
-    // const getMoreNews = async (slugNews) => {
-    //   try {
-    //     const response = await axios.get(`/api/more-news/${slugNews}`);
-    //     setMoreNews(response.data);
-        
-  
-    //   } catch (error) {
-    //     console.error("Error fetching news types:", error);
-    //   }
-    // };
   
     useEffect(() => {
       const slugNews = params.slug;
       getNews(slugNews);
-    //   getMoreNews(slugNews);
   
     }, [location]);
 
@@ -53,17 +42,17 @@ export default function NewsDetails({ location, params }: { location: any; param
                 <NewsImage imgSrc={newsDeteails} btnText="" paragraph="" date="" />
 
                 {/* <div className="max-w-[1223px] mx-auto mt-3 lg:mt-6 ml-5 sm:ml-0" > */}
-                <div className="max-w-[1223px] mx-auto mt-4 lg:mt-6  pl-6 sm:pl-0 ">
-                    <Breadcrumbs />
-                </div>
+                <div className="max-w-full mx-auto pl-6 sm:pl-0">
+                  <Breadcrumbs />
+                 </div>
 
-                <section className='flex gap-20 sm:flex-row flex-col   my-5 text-center max-w-7xl w-full mx-auto   mt-20 px-5 h-fit  '>
+                <section className="flex justify-center gap-20 sm:flex-row flex-col my-5 text-center max-w-7xl w-full mx-auto mt-20 px-5 h-fit">
 
-                    <div className='sm:w-[2500px]'>
+                    <div className=''>
                         <NewsDetailsContent params={params} location={location} />
                     </div>
 
-                    <div className='h-full w-full md:col-span-1 col-span-2 flex flex-col gap-10'>
+                    <div className='h-full md:col-span-1 col-span-2 flex flex-col gap-20 pb-10 sm:pb-0'>
                         <FollowUs />
                         <Question />
                         <RelatedNews/>

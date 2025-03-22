@@ -10,7 +10,7 @@ export default function RelatedNews() {
         <div>
             <HeaderSection headerName="Actualités Connexes" />
 
-            <div className="divide-y divide-black divide w-full text-start">
+            <div className="divide-y divide-black divide w-full text-start max-w-[300px]">
                 <CardRelatedNews imgSrc={newsDeteails} title="Suivi Scientifique de l'Herbier de Posidonia à Kerkennah : Importance et Actions pour sa Conservation" date="17 Juillet 2022" />
                 <CardRelatedNews imgSrc={newsDeteails} title="Suivi Scientifique de l'Herbier de Posidonia à Kerkennah : Importance et Actions pour sa Conservation" date="17 Juillet 2022" />
 

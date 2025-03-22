@@ -1,79 +1,38 @@
 import React from 'react';
+import formatDate from '@/lib/formatDate';
+import INews from '@/models/INews';
 
-
-export default function NewsCard({ article }: { article: any }) {
-
-    return (
-        <>
-
-
-
-
-            <div className='sm:hidden '>
-                <div className="self-stretch p-4 bg-white rounded-xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline-1 outline-offset-[-1px] outline-[#e8e8ea] inline-flex flex-col justify-center items-center gap-4 overflow-hidden">
-                    <img className="w-[360px] h-60 rounded-md shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]"
-                        src={`${process.env.GATSBY_API_URL}${article?.image}`}
-                        alt={article.title_en || article.title_fr} />
-                    <div className="self-stretch p-2 flex flex-col justify-start items-start gap-5">
-                        <div className="self-stretch flex flex-col justify-start items-start gap-4">
-                            <div className="fles gap-4">
-
-                                {article.themes?.map((item: any) =>
-                                    <div data-color="Primary" data-icon="None" data-size="md" data-style="Light" className="px-2.5 py-1 bg-[#4b6bfb]/5 rounded-md inline-flex justify-center items-center gap-4">
-                                        <div className="justify-start text-[#006e9f] text-sm font-medium font-['Montserrat'] leading-tight">
-                                            {item?.name_en || item?.name_fr}
-                                        </div>
-
-                                    </div>
-                                )}
-                            </div>
-                            <div className="self-stretch justify-start text-[#181a2a] text-xl font-semibold font-['Montserrat'] leading-7 text-start">
-                                {article.title_en || article.title_fr}
-                            </div>
-                        </div>
-                        <div className="inline-flex justify-start items-center gap-5">
-                            <div className="justify-start text-[#97989f] text-base font-normal font-['Work_Sans'] leading-normal">Le {new Date(article.date).toLocaleDateString("fr-FR", {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric",
-                        })}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Larger Screens */}
-            <div className="hidden sm:inline-flex w-[392px] shadow-helmi p-4 bg-white rounded-xl outline-1 outline-offset-[-1px] outline-[#e8e8ea]  flex-col justify-center items-center gap-4 overflow-hidden">
-                <img className="w-[360px] h-60 rounded-md shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]"
-                    src={`${process.env.GATSBY_API_URL}${article?.image}`}
-                    alt={article.title_en || article.title_fr} />
-                <div className="self-stretch p-2 flex flex-col justify-start items-start gap-5">
-                    <div className="self-stretch flex flex-col justify-start items-start gap-4">
-                        <div className="flex gap-2">
-                            {article.themes?.map((item: any) =>
-
-                                <div data-color="Primary" data-icon="None" data-size="md" data-style="Light" className="px-2.5 py-1 bg-[#4b6bfb]/5 rounded-md inline-flex justify-center items-center gap-1">
-                                    <div className="justify-start text-[#006e9f] text-sm font-medium font-['Montserrat'] leading-tight">
-                                        {item?.name_en || item?.name_fr}
-                                    </div>
-                                </div>
-                            )}
-
-
-                        </div>
-                        <div className="self-stretch justify-start text-[#181a2a] text-xl font-semibold font-['Montserrat'] leading-7 text-start" >{article.title_en || article.title_fr}</div>
-                    </div>
-                    <div className="inline-flex justify-start items-center gap-5">
-                        <div className="justify-start text-[#97989f] text-base font-normal font-['Work_Sans'] leading-normal">Le {new Date(article.date).toLocaleDateString("fr-FR", {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric",
-                        })}</div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+interface NewsCardProps {
+  news: INews;
 }
 
-
+export default function NewsCard({ news }: NewsCardProps) {
+  const themesArray = Array.isArray(news.themes) ? news.themes : [];
+  
+  return (
+    <div className="bg-white shadow p-4 flex flex-col gap-4 rounded-xl w-[395px] min-h-[420px] h-full">
+      <img
+        src={`${process.env.GATSBY_API_URL}${news.image}`}
+        alt="news"
+        className="h-[240px] w-full object-cover rounded-md shadow-lg"
+      />
+      <div className="flex gap-4 flex-wrap">
+        {themesArray.map(theme => {
+          const themeName = theme.name_fr || theme.name_en || 'N/A';
+          return (
+            <div
+              key={theme.id}
+              className="bg-[#4B6BFB0D] text-[#006E9F] text-sm font-medium py-1 px-3 rounded-md"
+            >
+              {themeName}
+            </div>
+          );
+        })}
+      </div>
+      <div className="text-xl font-semibold">
+        {news.title_fr || news.title_en || 'No Title'}
+      </div>
+      <div className="text-[#97989F] mt-auto">{formatDate(news.date)}</div>
+    </div>
+  );
+}
