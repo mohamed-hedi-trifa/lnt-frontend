@@ -44,7 +44,8 @@ const MapPicker = ({ onSelectLocation, initialPosition, role } : {onSelectLocati
       whenCreated={setMap} 
       center={initialPosition} 
       zoom={10} 
-      style={{ height: "400px", width: "500px", zIndex: "2" }}
+      className="h-[300px] sm:w-[350px] w-[300px] z-10 rounded-lg shadow-helmi "     
+      // style={{ height: "300px", width: "350px", zIndex: "2", borderRadius: "10px", boxShadow: "0px -8px 80px 0px rgba(0, 0, 0, 0.07), 0px -2.92px 29.2px 0px rgba(0, 0, 0, 0.05), 0px -1.42px 14.18px 0px rgba(0, 0, 0, 0.04), 0px -0.69px 6.95px 0px rgba(0, 0, 0, 0.03), 0px -0.27px 2.75px 0px rgba(0, 0, 0, 0.02);" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

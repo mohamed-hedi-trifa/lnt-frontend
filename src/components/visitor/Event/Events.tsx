@@ -12,6 +12,8 @@ import TitleSectionEvent from './TitleSectionEvent';
 import PopularEventType2 from './PopularEventType2';
 import LeisureAndSportsActivities from './no-event/LeisureAndSportsActivities';
 import IEventType from '@/models/IEventType';
+import Question from '@/components/atoms/Question'
+
 
 export default function Events() {
   const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
@@ -91,9 +93,9 @@ export default function Events() {
           {renderEventSection('card2', 'Événements culturels')}
         </div>
 
-        <div className="flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10 sm:w-[300px]">
+        <div className="flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10 sm:w-[300px] mt-[51px]">
           <FollowUsEvent />
-          <QuestionEvent />
+          <Question />
         </div>
       </section>
 

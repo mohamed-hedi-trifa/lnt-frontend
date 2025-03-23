@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./EventDetailsContent.css";
-
+import PageParagraph2 from "@/components/atoms/PageParagraph2";
 import { navigate } from "gatsby";
 import Title from "@/components/atoms/titles/Title";
 import BlogList from "../../aire-marine/monitoring/marin/species/BlogList";
@@ -78,7 +78,7 @@ export default function EventDetailsContent({ location, params }: { location: an
 
 
 
-        <div className="mt-4 flex flex-col">
+        <div className="mt-4 flex flex-col gap-4">
           {event?.content_items
             ?.sort((a: any, b: any) => a.order - b.order)
             .map((item: any) => (
@@ -88,17 +88,21 @@ export default function EventDetailsContent({ location, params }: { location: an
                     <Title customClassName="mb-2">{item.content}</Title>
                   ) : item.type === "text" ? (
                     // Apply the markdown parser to the text content
-                    <div
-                      className="mb-4"
-                      dangerouslySetInnerHTML={{
-                        __html: parseContent(item.content),
-                      }}
-                    />
+                    <PageParagraph2>
+
+                      <div
+                        className="mb-4 ml-2"
+                        dangerouslySetInnerHTML={{
+                          __html: parseContent(item.content),
+                        }}
+                      />
+                    </PageParagraph2>
                   ) : item.type === "image" ? (
-                    <div className="mb-2">
+                    <div className="mb-2 flex justify-center">
                       <img
                         src={`${process.env.GATSBY_API_URL}${item.file_path}`}
                         alt=""
+                        className="w-full h-auto max-w-[600px] object-cover rounded-md shadow-lg"
                       />
                     </div>
                   ) : item.type === "pdf" ? (
