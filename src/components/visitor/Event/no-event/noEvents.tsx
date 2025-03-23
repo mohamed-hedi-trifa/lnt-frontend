@@ -9,6 +9,7 @@ import EventImage from '../EventImage'
 // import WorkshopsAndTrainings from './WorkshopsAndTrainings'
 import LeisureAndSportsActivities from './LeisureAndSportsActivities'
 import CulturalEvents from './CulturalEvents'
+import Question from '@/components/atoms/Question'
 
 
 export default function NoEvents() {
@@ -32,7 +33,7 @@ export default function NoEvents() {
 
         <div className='flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10  sm:w-[300px]'>
           <FollowUsEvent />
-          <QuestionEvent />
+          <Question />
 
         </div>
 
