@@ -1,9 +1,10 @@
+import { useTranslation } from '@/contexts/TranslationContext';
 import { Link } from 'gatsby';
 import React from 'react';
 
 
 export default function OpportunityCard({ opportunity }: { opportunity: any }) {
-    const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
+    const { t, lang } = useTranslation();
 
     const calculateDaysRemaining = (dueDate:any) => {
         if (!dueDate) return "N/A";

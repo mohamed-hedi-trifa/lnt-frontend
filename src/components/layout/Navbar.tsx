@@ -6,6 +6,7 @@ import LangLink from "../LangLink";
 import NavDropdown from "../NavDropdown";
 import MobileNavbar from "./MobileNavbar";
 import NavbarSearch from "@/components/layout/NavbarSearch";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 // Composant SubDropdown pour les dropdowns imbriqués
 function SubDropdown({ items }: { items: any[] }) {
@@ -56,7 +57,7 @@ function Navbar({ location }: { location: any }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [eventTypes, setEventTypes] = useState([]);
   const [items, setItems] = useState<any[]>([]);
-  const lang = location?.pathname.startsWith("/fr/") ? "fr" : "en";
+  const { t, lang } = useTranslation();
 
   // Gestion du scroll pour le changement de background
   useEffect(() => {

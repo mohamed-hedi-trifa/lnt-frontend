@@ -9,6 +9,7 @@ const IndexPage = () => {
         // Redirect if the language is supported
         const supportedLanguages = [`en`, `fr`]; // Add your supported languages here
         if (supportedLanguages.includes(langCode)) {
+            // @ts-ignore
             navigate(`/${langCode}`); // Redirect to the corresponding language page
         }
     }, []);

@@ -52,7 +52,7 @@ export default function OpportunityCards() {
     }, [searchQuery, currentPage]);
 
     if (loading) return "Loading..."
-    const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
+    
     return (
         <section className='flex flex-col  w-full relative z-10 my-5 sm:my-10 col-span-1'>
 

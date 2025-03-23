@@ -8,6 +8,7 @@ import recentArticle1 from '../../../../assets/images/recentArticle2.jpg'
 import recentArticle2 from '../../../../assets/images/recentArticle2.jpg'
 import NewsCard from '../../news/NewsCard';
 import EventsCard from '../EventsCard';
+import { useTranslation } from '@/contexts/TranslationContext';
 
 export default function EventsCards() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -48,7 +49,7 @@ export default function EventsCards() {
     }, [searchQuery, currentPage]);
 
     if (loading) return "Loading..."
-    const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
+    const { t, lang } = useTranslation();
     return (
         <section className='flex flex-col gap-8 w-full relative z-10 my-5 sm:my-10 col-span-1'>
 

@@ -15,9 +15,10 @@ import FilterTitle from '../../posts/FilterTitle';
 import axios from "axios";
 import FollowUsAchivement from './FollowUsAchivement';
 import QuestionAchivement from './QuestionAchivement';
+import { useTranslation } from '@/contexts/TranslationContext';
 
 export default function OurAchievements() {
-  const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
+  const { t, lang } = useTranslation();
   const [themes, setThemes] = useState([]);
   const [selectedThemes, setSelectedThemes] = useState<any[]>([]);
   const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null);

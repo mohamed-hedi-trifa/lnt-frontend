@@ -2,10 +2,11 @@ import React from 'react';
 import { format } from "date-fns";
 import { fr, enUS } from "date-fns/locale";
 import { Link } from 'gatsby';
+import { useTranslation } from '@/contexts/TranslationContext';
 
-export default function EventsCard({ event, custunCss, lang = "fr" }: { event: any, custunCss: string, lang: string }) {
+export default function EventsCard({ event, custunCss }: { event: any, custunCss: string}) {
 
-
+    const { t, lang } = useTranslation();
 
     const formattedDate = event?.event_start_at
         ? format(new Date(event.event_start_at),

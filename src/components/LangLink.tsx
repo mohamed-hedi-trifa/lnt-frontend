@@ -1,3 +1,4 @@
+import { useTranslation } from "@/contexts/TranslationContext";
 import { GatsbyLinkProps, Link } from "gatsby";
 import React from "react";
 
@@ -8,7 +9,7 @@ type Props = {
 };
 
 export default function LangLink({ to, children, ...props }: Props) {
-  const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
+  const { t, lang } = useTranslation();
 
   return (
     <Link to={`/${lang}${to}`} {...props}>

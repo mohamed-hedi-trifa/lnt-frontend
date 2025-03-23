@@ -7,6 +7,7 @@ import { Link } from 'gatsby';
 import recentArticle1 from '../../../../assets/images/recentArticle2.jpg'
 import recentArticle2 from '../../../../assets/images/recentArticle2.jpg'
 import EventsCard from '../EventsCard';
+import { useTranslation } from '@/contexts/TranslationContext';
 
 export default function EventsCards() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -47,29 +48,29 @@ export default function EventsCards() {
     }, [searchQuery, currentPage]);
 
     if (loading) return "Loading..."
-    const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
+    const { t, lang } = useTranslation();
     return (
         <section className='flex flex-col gap-8 w-full relative z-10 my-5 sm:my-10 col-span-1'>
 
             <div className='grid sm:grid-cols-2 gap-4 px-4 sm:px-0'>
                 {/* {itemsList.map((achievement:any)=><NewCard key={achievement.id} post={achievement} />)} */}
 
-                <Link to={`/event/category1?lang=${lang}`} >
-                    <EventsCard image={recentArticle1} custunCss="px-3"  title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" />
+                <Link to={`/event/category1?lang=${lang}`}>
+                    <EventsCard event={{ image: recentArticle1, title: "Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" }} custunCss="px-3" />
                 </Link>
 
-                <Link to={`/event/category2?lang=${lang}`} >
-                    <EventsCard image={recentArticle2} custunCss="px-3"  title="Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" />
+                <Link to={`/event/category2?lang=${lang}`}>
+                    <EventsCard event={{ image: recentArticle2, title: "Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" }} custunCss="px-3" />
                 </Link>
-                <Link to={`/event/category3?lang=${lang}`} >
 
-
-                    <EventsCard image={recentArticle1} custunCss="px-3"  title="Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" />
-
+                <Link to={`/event/category3?lang=${lang}`}>
+                    <EventsCard event={{ image: recentArticle1, title: "Formation sur les fondamentaux de la gestion des aires marines protégées (MPA) organisée par MedPAN en Turquie" }} custunCss="px-3" />
                 </Link>
-                <Link to={`/event/${"category4"}?lang=${lang}`} >
-                    <EventsCard image={recentArticle2} custunCss="px-3"  title="Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" />
+
+                <Link to={`/event/category4?lang=${lang}`}>
+                    <EventsCard event={{ image: recentArticle2, title: "Lancement d'une initiative scientifique pour protéger les tortues marines à Kerkennah" }} custunCss="px-3" />
                 </Link>
+
             </div>
 
             <div className='flex justify-center px-4 sm:px-0'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>

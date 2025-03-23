@@ -5,6 +5,7 @@ import DateRangeSelector from '../who-are-we/our-achievements/DateRangeSelector'
 import ButtonDropdown from '@/components/ButtonDropdown'
 import Checkbox from './Checkbox'
 import axios from 'axios'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 
 export default function LeftSidebar() {
@@ -14,7 +15,7 @@ export default function LeftSidebar() {
   const [showAllThemes, setShowAllThemes] = useState(false);
   const [isCustomDateRangeModified, setIsCustomDateRangeModified] = useState(false);
   const [themes, setThemes] = useState([]);
-  const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
+  const { t, lang } = useTranslation();
 
   const [selectedRange, setSelectedRange] = useState<{ startDate: Date; endDate: Date; key: string }>({
     startDate: new Date(),

@@ -13,10 +13,11 @@ import PopularEventType2 from './PopularEventType2';
 import LeisureAndSportsActivities from './no-event/LeisureAndSportsActivities';
 import IEventType from '@/models/IEventType';
 import Question from '@/components/atoms/Question'
+import { useTranslation } from '@/contexts/TranslationContext';
 
 
 export default function Events() {
-  const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
+  const { t, lang } = useTranslation();
   const [events, setEvents] = useState([]);
   const [eventTypes, setEventTypes] = useState<IEventType[]>([]);
 

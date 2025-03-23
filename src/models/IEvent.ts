@@ -12,6 +12,7 @@ export interface IEvent {
     longitude: number;
     status: string; // Consider using an enum if it has predefined values
     auth_id: number;
+    slug:string;
     event_type_id: number;
     created_at?: string;
     updated_at?: string;
