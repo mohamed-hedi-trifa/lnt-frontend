@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import InternshipApplicationForm from './InternshipApplicationForm';
+import InternshipApplicationForm from './InternshipApplicationFormModal';
+import InternshipApplicationFormModal from './InternshipApplicationFormModal';
 
 export default function JoinUs() {
-    const [isOpen, setIsOpen] = useState(false);
+    
+
+        const [modalShow, setModalShow] = useState(false);
 
     return (
         <div className='flex flex-col gap-6 items-center px-44'>
@@ -23,13 +26,13 @@ export default function JoinUs() {
             {/* Button to open the popup */}
             <button 
                 className="bg-[#0270A0] w-fit px-5 py-3 rounded-lg text-white font-semibold"
-                onClick={() => setIsOpen(true)}
+                onClick={() => { setModalShow(true) }}
             >
                 Faire une Demande de Stage
             </button>
 
        
-            <InternshipApplicationForm isOpen={isOpen} setIsOpen={setIsOpen} />
+            <InternshipApplicationFormModal show={modalShow} hide={() => { setModalShow(false);  }} />
         </div>
     );
 }

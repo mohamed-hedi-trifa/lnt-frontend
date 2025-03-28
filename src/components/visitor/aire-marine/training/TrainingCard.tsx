@@ -34,7 +34,7 @@ export default function TrainingCard({ training }: TrainingCardProps) {
             <div className="text-xl font-semibold">
                 {training.title_fr || training.title_en || 'No Title'}
             </div>        
-            <div className='text-[#97989F] mt-auto'>{training.created_at ? formatDate(training.created_at) : ''}</div>
+            <div className='text-[#97989F] mt-auto'>{training.created_at ? formatDate(training.date) : ''}</div>
             
         </div>
     );

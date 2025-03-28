@@ -44,7 +44,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
     }
   };
 
-  function getPosts(query: any, page = currentPage, themes: number[]) {
+  function getAchievements(query: any, page = currentPage, themes: number[]) {
     setLoading(true);
     axios
       .get(`/api/get-active-achievements/${limit}`, {
@@ -84,7 +84,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
   }, []);
 
   useEffect(() => {
-    getPosts(searchQuery, currentPage, filter.themes || []);
+    getAchievements(searchQuery, currentPage, filter.themes || []);
   }, [searchQuery, currentPage, filter, sortOrder]);
 
   if (loading) return <p className='w-full'>"Loading..."</p>;

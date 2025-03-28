@@ -18,6 +18,7 @@ interface FormData {
   title_en: string;
   title_fr: string;
   type: string;
+  date: Date;
 }
 
 const CreateTraining: React.FC = () => {
@@ -26,6 +27,7 @@ const CreateTraining: React.FC = () => {
     title_en: "",
     title_fr: "",
     type: "formation",
+    date: "",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -121,7 +123,9 @@ const CreateTraining: React.FC = () => {
         newErrors.items = "At least one content item is required.";
       }
     }
-
+    if (!formData.date) {
+      newErrors.date = "Date is required.";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -179,6 +183,7 @@ const CreateTraining: React.FC = () => {
         title_en: "",
         title_fr: "",
         type: "marin",
+        date: ""
       });
       setErrors({}); // Clear any previous errors
       toast.success("Post created successfully");
@@ -289,6 +294,9 @@ const CreateTraining: React.FC = () => {
           </div>
         </div>
 
+        <Input label="Date" type="date" name="date" value={formData.date} onChange={handleChange} />
+        {errors.date && <div className="text-red-500 text-sm">{errors.date}</div>}
+        
         <div className="text-slate-500 text-sm font-medium mb-2">Content</div>
 
         {(language === "en" && englishItems.length) || (language === "fr" && frenchItems.length) ? (

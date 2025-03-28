@@ -5,6 +5,7 @@ import SelectFieldOpportunity from "./SelectFieldOpportunity";
 import UploadIcon from "@/assets/icons/UploadIcon";
 import { toast } from "react-toastify";
 import useLocalStorage from "@/lib/useLocalStorage";
+import ModalOppourtunity from "@/components/ModalOppourtunity";
 
 interface FormData {
     first_name: string;
@@ -23,23 +24,19 @@ interface FormData {
     start_date_day: number;
     start_date_month: number;
     start_date_year: number;
-
     end_date_day: number;
     end_date_month: number;
     end_date_year: number;
 }
 
-const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => void }> = ({ isOpen, setIsOpen }) => {
-    if (!isOpen) return null;
-
+export default function InternshipApplicationFormModal({ show, hide }: { show: boolean, hide: () => void }) {
     const [isSuccess, setIsSuccess] = useState(false);
-    const [formData, setFormData] = useLocalStorage("submit-application", {
+    const [formData, setFormData] = useLocalStorage<FormData>("submit-application", {
         first_name: "",
         last_name: "",
         birth_day: 0,
         birth_month: 0,
         birth_year: 0,
-        birth_date: "",
         email: "",
         phone: "",
         address: "",
@@ -48,14 +45,12 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
         study_field: "",
         internship_type: "",
         desired_internship_field: "",
-        start_date_day: "",
-        start_date_month: "",
-        start_date_year: "",
-
-        end_date_day: "",
-        end_date_month: "",
-        end_date_year: "",
-
+        start_date_day: 0,
+        start_date_month: 0,
+        start_date_year: 0,
+        end_date_day: 0,
+        end_date_month: 0,
+        end_date_year: 0,
     });
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -63,7 +58,8 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
     const [cvFile, setCvFile] = useState<File | null>(null);
     const [cvFileName, setCvFileName] = useState<string>('');
     const [motivation_letter, setMotivation_letter] = useState<File | null>(null);
-    const [motivationLetterFileName, setmotivation_letterFileName] = useState<string>('');
+    const [motivationLetterFileName, setMotivationLetterFileName] = useState<string>('');
+
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -75,6 +71,10 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
     const handleCvFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const file = e.target.files[0];
+            if (file.size > 5 * 1024 * 1024) {
+                setErrors({ ...errors, cvFile: "Le fichier ne doit pas dépasser 5 Mo." });
+                return;
+            }
             setCvFile(file);
             setCvFileName(file.name);
         }
@@ -83,14 +83,17 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
     const handleMotivationLetterFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const file = e.target.files[0];
+            if (file.size > 5 * 1024 * 1024) {
+                setErrors({ ...errors, motivation_letter: "Le fichier ne doit pas dépasser 5 Mo." });
+                return;
+            }
             setMotivation_letter(file);
-            setmotivation_letterFileName(file.name);
+            setMotivationLetterFileName(file.name);
         }
     };
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
-
 
         if (!formData.first_name) newErrors.first_name = "Le nom est requis.";
         if (!formData.last_name) newErrors.last_name = "Le prénom est requis.";
@@ -122,7 +125,7 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
 
         // Append all form fields to FormData
         for (const key in formData) {
-            formDataToSend.append(key, formData[key as keyof FormData]);
+            formDataToSend.append(key, formData[key as keyof FormData].toString());
         }
 
         if (cvFile) {
@@ -144,7 +147,9 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
             setFormData({
                 first_name: "",
                 last_name: "",
-                birth_date: "",
+                birth_day: 0,
+                birth_month: 0,
+                birth_year: 0,
                 email: "",
                 phone: "",
                 address: "",
@@ -153,8 +158,12 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
                 study_field: "",
                 internship_type: "",
                 desired_internship_field: "",
-                start_date: "",
-                end_date: "",
+                start_date_day: 0,
+                start_date_month: 0,
+                start_date_year: 0,
+                end_date_day: 0,
+                end_date_month: 0,
+                end_date_year: 0,
             });
             setCvFile(null);
             setMotivation_letter(null);
@@ -174,19 +183,10 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999] px-10">
+        <ModalOppourtunity title="Formulaire de Demande de Stage" show={show} hide={hide}>
             {!isSuccess ? (
                 <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg w-[800px] max-h-[calc(100vh-60px)] overflow-y-auto relative">
-                    <button
-                        className="absolute top-4 right-10 text-gray-600 text-5xl"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        &times;
-                    </button>
 
-                    <h2 className="text-xl font-semibold mb-4 text-[#0270A0]">Formulaire de Demande de Stage</h2>
-
-                    <hr className="border-t-2 border-black" />
                     <div className="flex items-start flex-col mt-4 gap-5">
                         <h1 className="font-semibold text-lg">Informations Personnelles</h1>
 
@@ -542,33 +542,34 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
                     </div>
                 </form>
             ) : (
-                <div className="bg-[#feefef] p-6 rounded-lg shadow-lg w-[500px] flex flex-col gap-3 justify-between items-center">
-                    <div className="flex flex-col justify-between items-center gap-2">
-                        <img src="/icons/folderIcon.png" alt="" width={45} />
-                        <p className="font-semibold text-lg">
-                            <span className="text-[#0270A0]">Merci</span> pour votre demande !
-                        </p>
-                    </div>
+                <div className="w-full flex flex-col gap-3 justify-between items-center">
 
-                    <div className="text-sm flex flex-col gap-2 px-4">
-                        <p>
-                            Votre demande de stage a été envoyée avec succès. Nous l'examinerons avec attention et vous recontacterons si votre profil correspond à nos besoins.
-                        </p>
-                        <p>
-                            En attendant, n'hésitez pas à explorer nos autres opportunités ou à nous contacter pour toute question supplémentaire.
-                        </p>
-                    </div>
+                    <div className="bg-[#feefef] p-6 rounded-lg shadow-lg w-[500px] flex flex-col gap-3 justify-between items-center ">
+                        <div className="flex flex-col justify-between items-center gap-2">
+                            <img src="/icons/folderIcon.png" alt="" width={45} />
+                            <p className="font-semibold text-lg">
+                                <span className="text-[#0270A0]">Merci</span> pour votre demande !
+                            </p>
+                        </div>
 
-                    <button
-                        className="bg-[#0270A0] text-white py-2 px-4 rounded-lg font-semibold w-fit text-sm"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        Retour à la page des opportunités
-                    </button>
+                        <div className="text-sm flex flex-col gap-2 px-4">
+                            <p>
+                                Votre demande de stage a été envoyée avec succès. Nous l'examinerons avec attention et vous recontacterons si votre profil correspond à nos besoins.
+                            </p>
+                            <p>
+                                En attendant, n'hésitez pas à explorer nos autres opportunités ou à nous contacter pour toute question supplémentaire.
+                            </p>
+                        </div>
+
+                        <button
+                            className="bg-[#0270A0] text-white py-2 px-4 rounded-lg font-semibold w-fit text-sm"
+                            onClick={hide}
+                        >
+                            Retour à la page des opportunités
+                        </button>
+                    </div>
                 </div>
             )}
-        </div>
+        </ModalOppourtunity>
     );
 }
-
-export default InternshipApplicationForm;
