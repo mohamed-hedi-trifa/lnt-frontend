@@ -10,6 +10,7 @@ import AMCPSidebar from '@/components/layout/AMCPSidebar'
 import PageParagraph from '@/components/atoms/PageParagraph'
 import ContainerImageMarine from '../ContainerImageMarine'
 import TeamCard from '../../TeamCard'
+import Loader from '@/components/atoms/loader'
 
 
 const images = [
@@ -61,7 +62,7 @@ export default function AmcpTeam() {
                             <>
                                 {/* Show loading state if data is still being fetched */}
                                 {loading ? (
-                                    <p>Loading...</p>
+                                    <div className='flex justify-center items-center '> <Loader/> </div>
                                 ) : (
                                     <>
 
