@@ -15,7 +15,7 @@ export default function PopularEventType2({ events, eventTypeTitle, language = "
           return <NoEventsMessage  eventTypeTitle={eventTypeTitle}/>;
       }
 
-    const eventsData = events.slice(1, 4);
+    const eventsData = events.slice(0, 3);
 
 
     const formatEventDate = (dateString, language) => {

@@ -1,20 +1,13 @@
 import React from 'react'
-
-import eventImage2 from '../../../assets/images/eventImage2.jpg'
-import eventImage3 from '../../../assets/images/eventImage3.jpg'
-import eventImage4 from '../../../assets/images/eventImage4.jpg'
-
-
-
-
 import LocationIcon from '@/assets/icons/LocationIcon'
-import EmptyEvent1 from './EmptyEvent1'
 import NoEventsMessage from './NoEventsMessage'
+
+
 export default function PopularEventType1({ events, eventTypeTitle, language = "fr" }: { events: any, language: string, eventTypeTitle: string }) {
     if (!events || events.length === 0) {
         return <NoEventsMessage eventTypeTitle={eventTypeTitle} />;
     }
-    const eventsData = events.slice(1, 4);
+    const eventsData = events.slice(0, 3);
     const formatEventDate = (dateString, language) => {
         const date = new Date(dateString.replace(" ", "T")); // Convert to valid date format
 

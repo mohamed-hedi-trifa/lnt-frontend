@@ -71,6 +71,32 @@ export default function Opportunity() {
       hour12: false,
     })}`;
   };
+
+
+  const handleToggle = (item) => {
+    const updatedStatus = item.status === "visible" ? "hidden" : "visible"; 
+
+
+    axios
+      .put(`/api/opportunities/status/${item.slug}`, {
+        status: updatedStatus,
+      })
+      .then((res) => {
+        Swal.fire("Success", res.data.message, "success");
+
+        // Update the local state only on success
+        setItemsList((prevItems) =>
+          prevItems.map((itm) =>
+            itm.id === item.id ? { ...itm, status: updatedStatus } : itm 
+          )
+        );
+        
+      })
+      .catch((err) => {
+        Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
+      });
+  };
+
   return (
     <>
       <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
@@ -107,7 +133,17 @@ export default function Opportunity() {
                       </div>
                       <div className="col-span-2 text-start">{item.due_date}</div>
                       <div className="col-span-2 text-start">{item.location_en || item.location_fr}</div>
-                      <div className="col-span-1">{item.status == "visible" ? "Visible" : "Hidden"}</div>
+                      <div className="col-span-1">
+                        
+                      <label className="toggle-switch">
+                            <input
+                              type="checkbox"
+                              name="status"
+                              checked={item.status === "visible"}
+                              onChange={() => handleToggle(item)}
+                            />
+                            <span className="slider"></span>
+                          </label>                        </div>
 
                       {/* Actions - Ensures Icons Stay Inline */}
                       <div className="hidden sm:flex col-span-1 justify-end sm:justify-center gap-3">

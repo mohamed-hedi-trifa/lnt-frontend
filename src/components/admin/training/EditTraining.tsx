@@ -23,7 +23,8 @@ const EditTraining = ({ location, params }: { location: any; params: any }) => {
     title_en: "",
     title_fr: "",
     type: "campement",
-    status: ""
+    status: "",
+    date: ""
   });
   const [englishItems, setEnglishItems] = useState<any[]>([]);
   const [frenshItems, setFrenshItems] = useState<any[]>([]);
@@ -50,9 +51,10 @@ const EditTraining = ({ location, params }: { location: any; params: any }) => {
           title_fr: training.title_fr ?? "",
           type: training.type || "formation",
           status: training.status || "hidden",
+          date: training.date ?? "",
         });
 
-        
+
         // parse any JSON content
         const parsedContentItems = training.content_items.map((item: any) => {
           if (item.type === "list") {
@@ -87,7 +89,7 @@ const EditTraining = ({ location, params }: { location: any; params: any }) => {
           setLanguage(training.title_en ? "en" : "fr");
         }
       } catch (error) {
-        console.error("Error fetching blog post:", error);
+        console.error("Error fetching training post:", error);
       }
     };
 
@@ -206,12 +208,12 @@ const EditTraining = ({ location, params }: { location: any; params: any }) => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (response.status === 200) {
-        Swal.fire("Success", "Blog updated successfully", "success");
+        Swal.fire("Success", "Training updated successfully", "success");
         navigate("/admin/training");
       }
     } catch (error) {
-      console.error("Error updating blog:", error);
-      Swal.fire("Error", "Failed to update blog.", "error");
+      console.error("Error updating training:", error);
+      Swal.fire("Error", "Failed to update training.", "error");
     }
   };
 
@@ -281,8 +283,8 @@ const EditTraining = ({ location, params }: { location: any; params: any }) => {
             </label>
             <label
               className={`flex items-center p-2 border rounded cursor-pointer duration-200 ${formData.type === "campement"
-                  ? "bg-indigo-100 hover:bg-indigo-200"
-                  : "bg-white hover:bg-slate-100"
+                ? "bg-indigo-100 hover:bg-indigo-200"
+                : "bg-white hover:bg-slate-100"
                 }`}
             >
               <input
@@ -298,6 +300,20 @@ const EditTraining = ({ location, params }: { location: any; params: any }) => {
             </label>
           </div>
         </div>
+        <Input label="Date" type="date" name="date" value={formData.date} onChange={handleChange} />
+
+
+
+        <Select
+          name="status"
+          label="Status"
+          value={formData.status}
+          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+        >
+          <option value="hidden">Hidden</option>
+          <option value="visible">Visible</option>
+        </Select>
+
 
         <div className="text-sm text-slate-500 font-medium mb-2">Content</div>
 
@@ -361,7 +377,7 @@ const EditTraining = ({ location, params }: { location: any; params: any }) => {
         </div>
 
         <Input label="Image" type="file" name="image" onChange={handleImageChange} />
-        <Button type="submit">Update Blog</Button>
+        <Button type="submit">Update Training</Button>
       </form>
     </div>
   );
