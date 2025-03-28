@@ -1,6 +1,7 @@
 import { Link } from 'gatsby';
 import React from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import { useTranslation } from '@/contexts/TranslationContext';
 
 function formatDate(date: Date) {
   const options: Intl.DateTimeFormatOptions = { 
@@ -12,7 +13,7 @@ function formatDate(date: Date) {
 }
 
 export default function PostCard({ post }:{post:any}) {
-    const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
+    const { t, lang } = useTranslation();
     
     return (
         <Link to={`/blog/${post.slug}?lang=${lang}`} key={post.id} className='bg-white shadow-[0px_4px_4px_0px_#00000040] p-4 flex flex-col gap-4 rounded-xl hover:shadow-lg transition duration-300'>

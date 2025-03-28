@@ -3,10 +3,13 @@ import IAchievemnt from '@/models/IAchievement';
 import React from 'react';
 
 interface AchievementCardProps {
-  achievement: IAchievemnt
+  achievement: IAchievemnt;
 }
 
 export default function AchievementCard({ achievement }: AchievementCardProps) {
+  // Ensure themes is always an array
+  const themesArray = Array.isArray(achievement.themes) ? achievement.themes : [];
+
   return (
     <div className="bg-white shadow-helmi p-4 flex flex-col gap-4 rounded-xl min-h-[420px] h-full">
       {/* Adjust the image URL if needed for your backend */}
@@ -18,7 +21,7 @@ export default function AchievementCard({ achievement }: AchievementCardProps) {
 
       {/* Themes: flex-wrap so they wrap on new line if many */}
       <div className="flex gap-4 flex-wrap">
-        {achievement.themes?.map((theme) => {
+        {themesArray.map((theme) => {
           const themeName = theme.name_fr || theme.name_en || 'N/A';
           return (
             <div

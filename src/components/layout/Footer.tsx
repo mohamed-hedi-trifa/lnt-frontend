@@ -2,9 +2,10 @@ import { Link } from "gatsby";
 import React, { useEffect } from "react";
 import NewsLetterSub from "../NewsLetterSub";
 import LangLink from "../LangLink";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 export default function Footer() {
-  const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
+  const { t, lang } = useTranslation();
 
   return (
     <footer className="px-5 sm:px-3 py-10 lg:py-[65px] sm:mt-0 bg-gradient-to-r from-[#51ADC6] to-[#006E9F] relative z-50">

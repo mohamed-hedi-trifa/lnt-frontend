@@ -87,7 +87,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
     getAchievements(searchQuery, currentPage, filter.themes || []);
   }, [searchQuery, currentPage, filter, sortOrder]);
 
-  if (loading) return "Loading...";
+  if (loading) return <p className='w-full'>"Loading..."</p>;
 
   const startIndex = (currentPage - 1) * limit + 1;
   const endIndex = Math.min(currentPage * limit, resSafeLength(itemsList));

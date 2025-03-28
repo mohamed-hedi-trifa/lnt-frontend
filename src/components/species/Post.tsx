@@ -2,9 +2,10 @@ import { Link } from 'gatsby'
 import React from 'react'
 import './Post.css'
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
+import { useTranslation } from '@/contexts/TranslationContext';
 
 export default function Post({ post }: { post: any }) {
-  const lang = location?.pathname.startsWith("/fr/") ? "fr" : "en";
+  const { t, lang } = useTranslation();
   return (
     <Link to={`/blog/${post.slug}?lang=${lang}`} key={post.id} className="col-span-1 flex flex-col justify-between gap-4 bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 hover-scale">
       <section>

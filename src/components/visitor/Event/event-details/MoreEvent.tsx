@@ -1,12 +1,11 @@
 import React from 'react'
-import EventsCard from '../EventsCard'
 import { Link } from 'gatsby';
-import recentArticle1 from '../../../../assets/images/recentArticle2.jpg'
-import recentArticle2 from '../../../../assets/images/recentArticle2.jpg'
 import MoreEventCard from './MoreEventCard';
+import { useTranslation } from '@/contexts/TranslationContext';
+import { IEvent } from '@/models/IEvent';
 
 export default function MoreEvent({ moreEvents }: { moreEvents: any }) {
-    const lang = typeof window !== 'undefined' && location?.pathname.startsWith("/fr/") ? "fr" : "en";
+    const { t, lang } = useTranslation();
 
     
     return (
@@ -21,7 +20,7 @@ export default function MoreEvent({ moreEvents }: { moreEvents: any }) {
             <div className="flex justify-center gap-9 mt-8 sm:px-0 px-5 flex-col sm:flex-row">
 
                 {
-                    moreEvents.map((event) => (
+                    moreEvents.map((event:IEvent) => (
                         <Link to={`/event/${event.slug}?lang=${lang}`} key={event.id}>
                             <MoreEventCard event={event} custunCss="px-16" lang='en' />
                         </Link>

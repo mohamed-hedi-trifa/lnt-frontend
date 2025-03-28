@@ -3,6 +3,7 @@ import { SwiperOptions } from "swiper/types";
 import { Link } from "gatsby";
 import axios from "axios";
 import Swal from "sweetalert2";
+import IResearch from "@/models/IResearch";
 
 
 type Color = {
@@ -49,7 +50,7 @@ const colorsData: Color[] = [
 
 
 export default function Scientific() {
-  const [researches, setResearches] = useState([]);
+  const [researches, setResearches] = useState<IResearch[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<any>(null);
@@ -76,7 +77,10 @@ export default function Scientific() {
         setActiveIndex(0);
       })
       .catch((err) => {
+        if(err?.response)
         Swal.fire("Error", err.response.data.message, "error");
+      else
+      Swal.fire("Error", err.message, "error");
       });
   }
 
@@ -155,9 +159,11 @@ export default function Scientific() {
   `}
           </style>
           <div className="z-[-1] absolute inset-0">
+          {/* @ts-ignore */}
             <swiper-container ref={swiperRef} class="w-full h-full mx-auto" init="false">
-              {researches.map((research, index) => (
-                <swiper-slide key={research.id}>
+              {researches.map((research:any, index) => (
+              //@ts-ignore
+              <swiper-slide key={research.id}>
                   <img
                     src={`${process.env.GATSBY_API_URL}${research?.image}`}
                     alt={research.title_en || research.title_fr}
@@ -207,8 +213,10 @@ export default function Scientific() {
               ))}
             </div>
             <div className="md:hidden relative z-10 flex justify-between gap-4 mx-auto mt-6 px-">
+              {/* @ts-ignore */}
               <swiper-container ref={swiperThumbsRef} class="w-full h-full mx-auto" init="false">
                 {researches.map((research, index) => (
+                  // @ts-ignore
                   <swiper-slide key={research.title} class={`h-auto py-1 ${activeIndex === index ? "" : "opacity-75"}`}>
                     {/* <img src={research.image} className="w-full h-full object-cover" /> */}
                     <div

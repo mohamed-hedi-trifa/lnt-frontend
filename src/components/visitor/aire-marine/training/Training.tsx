@@ -16,6 +16,7 @@ import TrainingCards from './TrainingCards'
 import Question from '@/components/atoms/Question'
 import FollowUsTraining from './FollowUsTraining'
 import axios from "axios";
+import { useTranslation } from '@/contexts/TranslationContext'
 
 
 
@@ -36,7 +37,7 @@ const images = [
 
 export default function Training() {
   const [isOpened, setIsOpened] = useState(false);
-  const lang = window?.location?.pathname.startsWith("/fr/") ? "fr" : "en";
+  const { t, lang } = useTranslation();
   const [themes, setThemes] = useState([]);
   const [selectedThemes, setSelectedThemes] = useState<any[]>([]);
   const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null);
@@ -96,7 +97,7 @@ export default function Training() {
       <div className="flex flex-col gap-5">
         <FilterTitle title="Type d'activité" />
         <div className="flex flex-col gap-3">
-          <Checkbox label="Tous les types" nb="10" />
+          <Checkbox label="Tous les types" nb={10} />
           <Checkbox label="Formation" />
           <Checkbox label="Campement Scientifique" />
         </div>

@@ -47,8 +47,6 @@ function Navbar({ location }: { location: any }) {
   const [eventTypes, setEventTypes] = useState([]);
   const [items, setItems] = useState([]);
 
-  const lang = location?.pathname.startsWith("/fr/") ? "fr" : "en";
-
   // Handle scroll event
   useEffect(() => {
     const handleScroll = () => {
