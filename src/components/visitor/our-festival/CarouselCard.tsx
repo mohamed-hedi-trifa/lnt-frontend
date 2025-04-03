@@ -1,7 +1,6 @@
 import React, { useState, useEffect, ReactNode } from "react";
 import FestivalCardCarousel from "./FestivalCardCarousel";
 
-
 type festivalProperties={
   date: string
   description : string
@@ -13,7 +12,6 @@ type festivalProperties={
     
 }
 
-
 interface Props {
   cards: festivalProperties[];
   
@@ -23,30 +21,35 @@ const CarouselCard: React.FC<Props> = ({ cards }) => {
   const [thumbnailStart, setThumbnailStart] = useState(0);
   const [thumbnailsToShow, setThumbnailsToShow] = useState(10); // Default to 10 thumbnails
 
-  // Adjust the number of thumbnails displayed based on screen size
   const updateThumbnailCount = () => {
+    if (typeof window === "undefined") return;
+  
     let newThumbnailsToShow = 10; // Default for large screens
-
+  
     if (window.innerWidth <= 640) {
       newThumbnailsToShow = 4; // Small screens
     } else if (window.innerWidth <= 1024) {
       newThumbnailsToShow = 10; // Medium screens
     }
-
-    // Adjust thumbnailStart if necessary
+  
     if (thumbnailStart + newThumbnailsToShow > cards.length) {
       setThumbnailStart(Math.max(cards.length - newThumbnailsToShow, 0));
     }
+  
     setThumbnailsToShow(newThumbnailsToShow);
   };
+  
 
   useEffect(() => {
-    updateThumbnailCount(); // Initial check for screen size
-    window.addEventListener("resize", updateThumbnailCount); // Update on resize
-    return () => {
-      window.removeEventListener("resize", updateThumbnailCount); // Cleanup
-    };
+    if (typeof window !== "undefined") {
+      updateThumbnailCount(); // Initial check
+      window.addEventListener("resize", updateThumbnailCount); // Listen to resize
+      return () => {
+        window.removeEventListener("resize", updateThumbnailCount); // Cleanup
+      };
+    }
   }, [thumbnailStart, cards.length]);
+  
 
   useEffect(() => {
     // Reset to first image and thumbnail start when cards changes
@@ -94,13 +97,12 @@ const CarouselCard: React.FC<Props> = ({ cards }) => {
         {/* Main Image */}
         <div className="mx-4 ">
           {cards.length > 0 ? 
-          <FestivalCardCarousel 
-                      // key={cards[activeIndex % cards.length].}
-                      date={cards[activeIndex % cards.length].date}
-                      description={cards[activeIndex % cards.length].description}
-                      titre={cards[activeIndex % cards.length].titre}
-                      lieu={cards[activeIndex % cards.length].lieu}
-                      /> : (
+          <FestivalCardCarousel
+              // key={cards[activeIndex % cards.length].}
+              date={cards[activeIndex % cards.length].date}
+              description={cards[activeIndex % cards.length].description}
+              titre={cards[activeIndex % cards.length].titre}
+              lieu={cards[activeIndex % cards.length].lieu} image={""} year={""} slug={""}                      /> : (
                      <p className="text-center text-gray-500">No media to display</p>
           )}
         </div>

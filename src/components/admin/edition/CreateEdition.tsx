@@ -1,12 +1,11 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Link, navigate } from "gatsby";
-import ItemsList from "../ItemsList";
 import Input from "../../atoms/inputs/Input";
 import Textarea from "../../atoms/inputs/Textarea";
 import Button from "../../atoms/Button";
-import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Title from "../../atoms/titles/Title";
 import Select from "../../atoms/inputs/Select";
 import ReactLoading from "react-loading";
@@ -79,7 +78,7 @@ const CreateEdition: React.FC = () => {
 
             if (result.isConfirmed) {
                 const created = await createEdition();
-
+                // @ts-ignore
                 if (created) navigate(`/admin/edition/${created.slug}?lang=${lang}`);
             } else if (result.isDenied) {
                 setLanguage(lang);
@@ -101,7 +100,7 @@ const CreateEdition: React.FC = () => {
         if (e.target.files) {
             setImages((prevImages) => ({
                 ...prevImages,
-                [fieldName]: e.target.files[0], // Store the file for the respective field
+                [fieldName]: e?.target?.files[0]
             }));
         }
     };
@@ -249,7 +248,7 @@ const CreateEdition: React.FC = () => {
         e.preventDefault();
 
         const created = await createEdition();
-
+//@ts-ignore
         if (created) navigate("/admin/edition");
     };
 

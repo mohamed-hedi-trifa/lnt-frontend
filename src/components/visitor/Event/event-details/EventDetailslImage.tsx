@@ -6,11 +6,11 @@ import React, { useEffect, useState } from 'react'
 
 export default function EventDetailslImage({ event, language = "fr" }: { event: any, language: string }) {
 
-    const hasCoordinates = event.latitude && event.longitude;
+    const hasCoordinates = event?.latitude && event.longitude;
 
     // Construct the Google Maps URL
     const mapUrl = hasCoordinates
-        ? `https://www.google.com/maps?q=${event.latitude},${event.longitude}`
+        ? `https://www.google.com/maps?q=${event?.latitude},${event.longitude}`
         : "#";
 
 

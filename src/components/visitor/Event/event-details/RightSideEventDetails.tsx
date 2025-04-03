@@ -2,14 +2,11 @@ import React, { useRef, useEffect, useState } from "react";
 import { AnchorLink } from "gatsby-plugin-anchor-links";
 import { Link } from "gatsby";
 import { useLocation } from "@reach/router";
-import LocationMap from "../../LocationMap";
 import LocationIcon from "@/assets/icons/LocationIcon";
 import FacebookIconType2 from "@/assets/icons/FacebookIconType2";
-import InstagramIconType2 from "@/assets/icons/InstagramIconType2";
 import LinkdinType2 from "@/assets/icons/LinkdinType2";
 import XIconType2 from "@/assets/icons/XIconType2";
 import MapPicker from "@/components/MapPicker";
-import { Accordion, AccordionHeader, AccordionBody } from "@material-tailwind/react";
 import CopyIcon2 from "@/assets/icons/CopyIcon2";
 import CopyToClipboard from "@/components/atoms/CopyToClipboard";
 import LangLink from "@/components/LangLink";
@@ -19,26 +16,25 @@ const shareToTwitter = (url: string) => `https://twitter.com/intent/tweet?url=${
 const shareToLinkedIn = (url: string) => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
 
 export default function RightSideEventDetails({ event }: { event: any }) {
-  const composantRef = useRef(null);
   const location = useLocation();
   const currentPath = location.pathname;
   const baseUrl = process.env.GATSBY_APP_URL || "https://your-default-site.com";
   const fullUrl = `${baseUrl}${currentPath}`;
 
-  const hasCoordinates = event.latitude && event.longitude;
+  const hasCoordinates = event?.latitude && event.longitude;
   const mapUrl = hasCoordinates
-    ? `https://www.google.com/maps?q=${event.latitude},${event.longitude}`
+    ? `https://www.google.com/maps?q=${event?.latitude},${event.longitude}`
     : "#";
 
-  const [initialPosition, setInitialPosition] = useState(null);
+  const [initialPosition, setInitialPosition] = useState<any>(null);
 
   useEffect(() => {
     if (event?.latitude != null && event?.longitude != null) {
-      setInitialPosition([event.latitude, event.longitude]);
+      setInitialPosition([event?.latitude, event?.longitude]);
     }
   }, [event?.latitude, event?.longitude]);
 
-  const handleSelectLocation = (lat, lng) => {
+  const handleSelectLocation = (lat:any, lng:any) => {
     return;
   };
 

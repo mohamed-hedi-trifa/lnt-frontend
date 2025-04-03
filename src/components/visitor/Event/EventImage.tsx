@@ -6,16 +6,18 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import LocationIcon from "@/assets/icons/LocationIcon";
+import { useTranslation } from "@/contexts/TranslationContext";
 
-export default function EventImage({ events, language="fr" }: { events: any, language:string }) {
+export default function EventImage({ events }: { events: any, language:string }) {
+  const {lang:language} = useTranslation();
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0 });
 
-  const eventsData = events.slice(0, 4);
+  const eventsData = events?.slice(0, 4);
 
   // Function to calculate the time left until the event
-  const calculateTimeLeft = (eventDate) => {
+  const calculateTimeLeft = (eventDate:any) => {
     const now = new Date().getTime();
     const eventTime = new Date(eventDate.replace(" ", "T")).getTime();
     const timeDifference = eventTime - now;
@@ -31,10 +33,10 @@ export default function EventImage({ events, language="fr" }: { events: any, lan
     }
   };
 
-  const formatEventDate = (dateString, language) => {
+  const formatEventDate = (dateString:any, language:any) => {
     const date = new Date(dateString.replace(" ", "T")); // Convert to valid date format
   
-    const options = {
+    const options:any = {
       weekday: "long",
       day: "numeric",  
       month: "long",   
@@ -75,7 +77,7 @@ export default function EventImage({ events, language="fr" }: { events: any, lan
         className="shadow-lg"
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
       >
-        {eventsData.map((event, index) => (
+        {eventsData?.map((event:any, index:any) => (
           <SwiperSlide key={index} className="relative text-start h-[412px] sm:h-[607px] bg-cover bg-center transition-all duration-500 ease-in-out w-full">
             <div className="relative text-start h-[412px] sm:h-[607px] bg-cover bg-center transition-all duration-500 ease-in-out w-full"></div>
             <img
@@ -144,7 +146,7 @@ export default function EventImage({ events, language="fr" }: { events: any, lan
 
         <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 z-20">
           <div className="flex sm:gap-5 gap-3 bg-black/50 w-fit sm:px-3 px-2 sm:py-2 py-1 rounded-xl">
-            {eventsData.map((_, idx) => (
+            {eventsData?.map((_:any, idx:number) => (
               <div
                 key={idx}
                 className={`sm:w-3 w-3 sm:h-3 h-3 rounded-full transition-all duration-500 ease-in-out

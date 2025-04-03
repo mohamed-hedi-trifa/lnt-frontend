@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import EventImage from '../EventImage'
 import PageTitle from '@/components/atoms/titles/PageTitle'
-
-
 import DisplaySportEventList from './DisplaySportEventList';
 import FollowUsEvent from '../FollowUsEvent';
 import QuestionEvent from '../QuestionEvent';
+import EventImage from '../EventImage';
 
 
 export default function SportEvents() {
@@ -23,7 +21,7 @@ export default function SportEvents() {
         <main className={`relative`}>
 
             <div className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${isOpened ? "opacity-50" : "opacity-0 pointer-events-none"}`} onClick={() => setIsOpened(false)}></div>
-                <EventImage />
+                <EventImage events={undefined} language={''} />
             <section className="my-5 text-center max-w-7xl mx-auto w-full  mt-20 px-5 ">
                 <PageTitle title='Activités de loisirs et sportives' />
 

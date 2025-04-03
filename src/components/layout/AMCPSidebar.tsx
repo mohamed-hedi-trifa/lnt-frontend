@@ -7,12 +7,10 @@ import axios from "axios";
 
 type SidebarItemProps = { item: any; basePath?: string; depth?: number };
 
-// Recursive component for each menu item
 function SidebarItem({ item, basePath = "/en", depth = 0 }: SidebarItemProps) {
-  const [open, setOpen] = useState(window?.location?.pathname?.includes(item.path));
+  const initialOpen = typeof window !== "undefined" ? window.location.pathname.includes(item.path) : false;
+  const [open, setOpen] = useState(initialOpen);
   const hasSubmenu = Array.isArray(item.items) && item.items.length > 0;
-
-  // Determine classes based on depth
   const circleSize = depth === 0 ? "h-6 w-6" : "h-4 w-4";
   const circleColor = depth === 0 ? "bg-primary" : "bg-white";
   const iconColor = depth === 0 ? "text-white" : "text-primary";
@@ -23,19 +21,14 @@ function SidebarItem({ item, basePath = "/en", depth = 0 }: SidebarItemProps) {
   return (
     <li className="flex flex-col relative">
       <div className={`flex relative items-center gap-2 cursor-pointer ${itemMargin}`} onClick={() => hasSubmenu && setOpen(!open)}>
-        {/* Horizontal line connecting icon if depth > 0 */}
         {depth > 0 && <span className="absolute left-[-0.7rem] top-1/2 -translate-y-1/2 w-4 h-[2px] bg-white"></span>}
-
-        {/* Circle Icon */}
         <div className={`${circleSize} rounded-full ${circleColor} flex justify-center items-center shrink-0 transition-transform duration-300`}>
           <ChevronRightIcon className={`${iconSize} ${iconColor} transform transition-transform duration-300 ${open ? "rotate-90" : ""}`} />
         </div>
-
         <Link className={labelClasses} to={item.path && depth === 2 ? item.path : item.path ? basePath + item.path : "#"}>
           {item.label}
         </Link>
       </div>
-
       {hasSubmenu && (
         <div
           className="relative pl-8 mt-2 flex flex-col gap-4 overflow-hidden transition-all duration-300 ease-in-out"
@@ -51,7 +44,7 @@ function SidebarItem({ item, basePath = "/en", depth = 0 }: SidebarItemProps) {
                   key={subIndex}
                   item={subItem}
                   basePath={basePath}
-                  depth={depth + 1} // Increase depth for sub-level
+                  depth={depth + 1}
                 />
               ))}
             </ul>
@@ -69,17 +62,14 @@ function SidebarItem({ item, basePath = "/en", depth = 0 }: SidebarItemProps) {
 
 const AMCPSidebar = () => {
   const { opened, setOpened } = useSidebar();
-
   const [researches, setResearches] = useState<{ marin: any; terrestre: any }>({ marin: [], terrestre: [] });
 
   async function fetchResearches() {
     try {
       const res = await axios.get("/api/species");
-
       const obj = res.data.reduce(
         (acc: any, el: any) => {
           acc[el.type].push(el);
-
           return acc;
         },
         {
@@ -87,7 +77,6 @@ const AMCPSidebar = () => {
           terrestre: [],
         }
       );
-
       setResearches(obj);
     } catch (err) {
       console.log(err);
@@ -108,24 +97,16 @@ const AMCPSidebar = () => {
       label: el.title_en || el.title_fr,
       path: "/protected-air-marine-coastal-areas/monitoring/terrestre/" + el.slug,
     }));
-    // arr[1].items![0].items = marin;
-    // arr[1].items![1].items = terrestre;
-
     arr[1].items![0] = { ...arr[1].items![0], items: marin };
     arr[1].items![1] = { ...arr[1].items![1], items: terrestre };
-
     return arr;
   }, [researches]);
-
-  console.log(items);
 
   return (
     <div className="mx-auto sticky top-[65px] sm:top-[120px] h-[100px] sm:h-fit w-[296px] sm:w-[366px] shrink-0 z-20">
       <div className="h-fit">
         <div
-          className={`flex flex-col ${
-            opened ? "gap-6" : "gap-0"
-          } sm:gap-8 transition-all duration-300 p-4 sm:p-8 py-2 sm:py-12 rounded-3xl sm:rounded-[20px] text-white shadow-helmi`}
+          className={`flex flex-col ${opened ? "gap-6" : "gap-0"} sm:gap-8 transition-all duration-300 p-4 sm:p-8 py-2 sm:py-12 rounded-3xl sm:rounded-[20px] text-white shadow-helmi`}
           style={{ background: "linear-gradient(90deg, #51ADC6 0%, #006E9F 100%)" }}
         >
           <section className="flex justify-between w-full items-center">
@@ -139,7 +120,6 @@ const AMCPSidebar = () => {
               </button>
             </div>
           </section>
-
           <ul className={`flex flex-col gap-8 overflow-hidden transition-all duration-300 ${opened ? "h-[320px] sm:h-fit" : "h-0 sm:h-fit"}`}>
             {items.map((item: any, index: number) => (
               <SidebarItem key={index} item={item} basePath="/en" depth={0} />
@@ -175,32 +155,7 @@ const defaultItems = [
       {
         label: "Suivi Marin",
         path: "/protected-air-marine-coastal-areas/monitoring/marin",
-        items: [
-          // {
-          //   label: "Posidonie",
-          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/posidonie",
-          // },
-          // {
-          //   label: "Grande Nacre",
-          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/grande-nacre",
-          // },
-          // {
-          //   label: "Poulpe",
-          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/poulpe",
-          // },
-          // {
-          //   label: "Eponge Marine",
-          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/eponge-marine",
-          // },
-          // {
-          //   label: "Torture Marine",
-          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/Tortue-marine",
-          // },
-          // {
-          //   label: "Avifaune",
-          //   path: "/protected-air-marine-coastal-areas/monitoring/marin/avifaune",
-          // },
-        ],
+        items: [],
       },
       {
         label: "Suivi Terrestre",

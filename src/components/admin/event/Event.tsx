@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import ReactLoading from "react-loading";
 import { Link } from "gatsby";
-import { EyeIcon } from "@heroicons/react/24/solid";
 
 export default function Event() {
   const [loading, setLoading] = useState(true);

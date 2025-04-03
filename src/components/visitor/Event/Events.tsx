@@ -1,212 +1,281 @@
+import LocationIcon from '@/assets/icons/LocationIcon';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import PageTitle from '@/components/atoms/titles/PageTitle';
-import PageParagraph from '@/components/atoms/PageParagraph';
-import EventImage from './EventImage';
-import FollowUsEvent from './FollowUsEvent';
-import QuestionEvent from './QuestionEvent';
-import NoEvents from './no-event/noEvents';
-import EmptyEvent1 from './EmptyEvent1';
-import PopularEventType1 from './PopularEventType1';
-import TitleSectionEvent from './TitleSectionEvent';
-import PopularEventType2 from './PopularEventType2';
-import LeisureAndSportsActivities from './no-event/LeisureAndSportsActivities';
-import IEventType from '@/models/IEventType';
 
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+export default function EventDetailslImage({ event, language = "fr" }: { event: any; language: string }) {
+  const hasCoordinates = event?.latitude && event?.longitude;
+  const mapUrl = hasCoordinates
+    ? `https://www.google.com/maps?q=${event?.latitude},${event?.longitude}`
+    : "#";
 
+  if (event || event?.event_start_at || event?.event_end_at) {
+    console.error("Invalid event data:", event);
+    return <p className="text-[#7E7E7E] font-semibold">Date and time not available</p>;
+  }
 
-export default function Events() {
-  const { t, lang } = useTranslation();
-  const [events, setEvents] = useState([]);
-  const [eventTypes, setEventTypes] = useState<IEventType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const startDate = new Date(event?.event_start_at.replace(" ", "T"));
+  const endDate = new Date(event?.event_end_at.replace(" ", "T"));
 
-  const fetchEvents = async () => {
-    try {
-      const response = await axios.get('/api/events');
-      setEvents(response.data);
-    } catch (error) {
-      console.error('Error fetching events:', error);
-      setError('Failed to load events. Please try again later.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  if (isNaN(startDate.getTime())) {
+    console.error("Invalid start date:", event?.event_start_at);
+    return <p className="text-[#7E7E7E] font-semibold">Invalid start date</p>;
+  }
+  if (isNaN(endDate.getTime())) {
+    console.error("Invalid end date:", event?.event_end_at);
+    return <p className="text-[#7E7E7E] font-semibold">Invalid end date</p>;
+  }
 
-  const fetchEventTypes = async () => {
-    try {
-      const response = await axios.get('/api/active-event-type');
-      setEventTypes(response.data);
-    } catch (error) {
-      console.error('Error fetching event types:', error);
-      setError('Failed to load event types. Please try again later.');
-    }
-  };
+  const formattedDate = new Intl.DateTimeFormat(language === "fr" ? "fr-FR" : "en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(startDate);
+
+  const formattedTime = new Intl.DateTimeFormat(language === "fr" ? "fr-FR" : "en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  }).format(startDate);
+
+  const formattedEndTime = new Intl.DateTimeFormat(language === "fr" ? "fr-FR" : "en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  }).format(endDate);
+
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        await Promise.all([fetchEvents(), fetchEventTypes()]);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setError('Failed to load data. Please try again later.');
-      } finally {
-        setIsLoading(false);
+    const eventDate = new Date(event?.event_start_at.replace(" ", "T")).getTime();
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const timeDifference = eventDate - now;
+      if (timeDifference > 0) {
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        setTimeLeft({ days, hours, minutes });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0 });
       }
     };
-    
-    fetchData();
-  }, []);
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, [event?.event_start_at]);
 
-  const renderEventSection = (displayPlace: string, defaultTitle: string) => {
-    if (isLoading) {
-      return (
-        <div className="w-full">
-          <Skeleton height={40} width={200} className="mb-4" />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(3)].map((_, index) => (
-              <div key={index} className="space-y-2">
-                <Skeleton height={200} />
-                <Skeleton height={20} width="80%" />
-                <Skeleton height={15} width="60%" />
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-    }
-
-    const eventType = eventTypes.find(eventType => eventType.display_place === displayPlace);
-
-    console.log(eventType?.events)
-    return (
-      <div>
-        <TitleSectionEvent
-          headerName={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}
-          showButton={eventType ? (eventType?.events?.length > 0 ? true : false) : false}
-        />
-        {eventType ? (
-          displayPlace === 'card3' ? (
-            <PopularEventType2 
-              events={eventType.events} 
-              eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} 
-              language={lang} 
-            />
-          ) : (
-            <PopularEventType1 
-              events={eventType.events} 
-              eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} 
-              language={lang} 
-            />
-          )
-        ) : (
-          displayPlace === 'card3' ? (
-            <LeisureAndSportsActivities 
-              event_title={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} 
-            />
-          ) : (
-            <EmptyEvent1 event_title={eventType?.[`name_${lang}`] || ""} />
-          )
-        )}
-      </div>
-    );
+  const generateGoogleCalendarUrl = (event:any) => {
+    const { event_start_at, event_end_at, title_en, title_fr, description_en, description_fr, location } = event;
+    const title = title_en || title_fr;
+    const description = description_en || description_fr;
+    const startDateString = new Date(event_start_at.replace(" ", "T")).toISOString().replace(/-|:|\.\d\d\d/g, "");
+    const endDateString = new Date(event_end_at.replace(" ", "T")).toISOString().replace(/-|:|\.\d\d\d/g, "");
+    return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+      title
+    )}&dates=${startDateString}/${endDateString}&details=${encodeURIComponent(
+      description
+    )}&location=${encodeURIComponent(location)}`;
   };
 
-
-  if (isLoading) {
-    return (
-      <main className="relative">
-        {/* Loading skeleton for the hero image */}
-        <div className="w-full h-96">
-          <Skeleton height="100%" />
-        </div>
-
-        {/* Loading skeleton for the title section */}
-        <section className="my-5 text-center max-w-7xl mx-auto w-full mt-20 px-5">
-          <Skeleton height={40} width={200} className="mx-auto" />
-          <Skeleton count={3} className="mt-4" />
-        </section>
-
-        {/* Loading skeleton for the main content */}
-        <section className="flex gap-20 flex-col sm:flex-row my-5 text-center max-w-7xl w-full mx-auto justify-between mt-20 px-5 h-fit">
-          <div className="h-full w-full space-y-20">
-            {[...Array(2)].map((_, index) => (
-              <div key={index}>
-                <Skeleton height={40} width={300} className="mb-6" />
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i} className="space-y-2">
-                      <Skeleton height={200} />
-                      <Skeleton height={20} width="80%" />
-                      <Skeleton height={15} width="60%" />
-                    </div>
-                  ))}
+  return (
+    <>
+      <div className="relative text-start sm:block hidden">
+        <img
+          className="w-full object-cover h-[301px] sm:h-[607px]"
+          src={`${process.env.GATSBY_API_URL}${event?.image}`}
+          alt={event?.title_en || event?.title_fr}
+        />
+        <div className="absolute bg-[rgba(0,0,0,0.2)] h-full w-full top-0 left-0"></div>
+        <div className="absolute left-[40px] bottom-[40px] right-[60px] sm:bottom-[70px] sm:left-[70px] text-white max-w-lg flex flex-col gap-3 sm:gap-6">
+          <div className="flex flex-col gap-5">
+            <h2
+              className="font-bold text-5xl"
+              style={{ textShadow: "2px 5px rgba(0, 0, 0, 0.5)" }}
+            >
+              {event?.title_en || event?.title_fr}
+            </h2>
+            <h4
+              className="text-2xl italic"
+              style={{ textShadow: "3px 3px rgba(0, 0, 0, 0.3)" }}
+            >
+              {event?.description_en || event?.description_fr}
+            </h4>
+            <div className="flex items-center sm:gap-4 gap-2">
+              <div className="flex flex-col items-center">
+                <div
+                  className="sm:text-3xl text-xl font-bold text-white"
+                  style={{ textShadow: "0px 0px 10px #00FFFF" }}
+                >
+                  {timeLeft.days}
+                </div>
+                <div
+                  className="font-semibold text-[#00FFFF] sm:text-lg text-sm"
+                  style={{ textShadow: "0px 0px 10px #00FFFF" }}
+                >
+                  Jours
                 </div>
               </div>
-            ))}
-          </div>
-
-          <div className="flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10 sm:w-[300px]">
-            <Skeleton height={300} />
-            <Skeleton height={200} />
-          </div>
-        </section>
-
-        {/* Loading skeleton for the bottom section */}
-        <section className="rounded-xl shadow-helmi mb-10 bg-[rgba(255, 255, 255, 0.40)]">
-          <div className='my-5 py-10 text-center max-w-7xl w-full mx-auto justify-between mt-20 px-5 h-fit'>
-            <Skeleton height={40} width={400} className="mx-auto mb-6" />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="space-y-2">
-                  <Skeleton height={150} />
-                  <Skeleton height={20} width="80%" />
+              <div
+                className="w-1 sm:h-16 h-11 bg-[#00FFFF] shadow-lg"
+                style={{ boxShadow: "0px 0px 20px #00FFFF" }}
+              ></div>
+              <div className="flex flex-col items-center">
+                <div
+                  className="sm:text-3xl text-xl font-bold text-white"
+                  style={{ textShadow: "0px 0px 20px #00FFFF" }}
+                >
+                  {timeLeft.hours}
                 </div>
-              ))}
+                <div
+                  className="font-bold text-[#00FFFF] sm:text-lg text-sm"
+                  style={{ textShadow: "0px 0px 20px #00FFFF" }}
+                >
+                  Heures
+                </div>
+              </div>
+              <div
+                className="w-1 sm:h-16 h-11 bg-[#00FFFF] shadow-lg"
+                style={{ boxShadow: "0px 0px 20px #00FFFF" }}
+              ></div>
+              <div className="flex flex-col items-center">
+                <div
+                  className="sm:text-3xl text-xl font-bold text-white"
+                  style={{ textShadow: "0px 0px 20px #00FFFF" }}
+                >
+                  {timeLeft.minutes}
+                </div>
+                <div
+                  className="font-bold text-[#00FFFF] sm:text-lg text-sm"
+                  style={{ textShadow: "0px 0px 20px #00FFFF" }}
+                >
+                  Minutes
+                </div>
+              </div>
             </div>
           </div>
-        </section>
-      </main>
-    );
-  }
-
-  if (!events || events.length === 0) {
-    return <NoEvents />;
-  }
-
-  return (
-    <main className="relative">
-      <EventImage events={events} language={lang} />
-
-      <section className="my-5 text-center max-w-7xl mx-auto w-full mt-20 px-5">
-        <PageTitle title="Événements" />
-        <PageParagraph fontWeight="font-semibold" spacing="leading-[1.4]">
-          Bienvenue dans notre espace dédié aux événements qui rythment la vie culturelle, éducative et sportive de l'archipel de Kerkennah. Qu'il s'agisse d'ateliers inspirants, de festivals mémorables ou d'activités sportives, chaque événement est une opportunité de célébrer la diversité et la richesse de notre communauté.
-        </PageParagraph>
-      </section>
-
-      <section className="flex gap-20 flex-col sm:flex-row my-5 text-center max-w-7xl w-full mx-auto justify-between mt-20 px-5 h-fit">
-        <div className="h-full w-full">
-          {renderEventSection('card1', 'Ateliers et Formations')}
-          {renderEventSection('card2', 'Événements culturels')}
         </div>
-
-        <div className="flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10 sm:w-[300px] mt-[51px]">
-          <FollowUsEvent />
-          <Question />
+        <div className="absolute bottom-[40px] bg-white right-[60px] w-[400px] flex flex-col gap-3 sm:gap-6 px-5 py-7 rounded-xl">
+          <div className="flex flex-col gap-5 max-w-xs">
+            <div className="flex flex-col gap-1">
+              <h1 className="font-bold text-xl">Date & Heure</h1>
+              <p className="text-[#7E7E7E] font-semibold">
+                {language === "fr" ? (
+                  <>
+                    {formattedDate}, de {formattedTime} à {formattedEndTime}
+                  </>
+                ) : (
+                  <>
+                    {formattedDate}, from {formattedTime} to {formattedEndTime}
+                  </>
+                )}
+              </p>
+            </div>
+            <div className="flex flex-col text-[#7E7E7E] gap-1">
+              <h1 className="font-bold text-xl text-black">Lieu</h1>
+              <p className="font-semibold">
+                {event?.location_en || event?.location_fr}
+              </p>
+              <a
+                href={mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex gap-2 font-semibold ${
+                  !hasCoordinates ? "pointer-events-none opacity-50" : ""
+                }`}
+                aria-disabled={!hasCoordinates}
+              >
+                <span className="text-[#0270A0]">
+                  <LocationIcon />
+                </span>
+                Voir la carte
+              </a>
+            </div>
+          </div>
+          <button
+            onClick={() => window.open(generateGoogleCalendarUrl(event), "_blank")}
+            className="bg-[#0270A0] w-full px-5 py-3 rounded-lg text-white font-semibold"
+          >
+            Ajouter à votre calendrier
+          </button>
         </div>
-      </section>
-
-      <section className="rounded-xl shadow-helmi mb-10 bg-[rgba(255, 255, 255, 0.40)]">
-        <div className='my-5 py-10 text-center max-w-7xl w-full mx-auto justify-between mt-20 px-5 h-fit'>
-          {renderEventSection('card3', 'Loisirs et Activités Sportives')}
+      </div>
+      <div className="relative text-start sm:hidden block">
+        <img
+          className="w-full object-cover h-[301px] sm:h-[607px]"
+          src={event?.image}
+        />
+        <div className="absolute bg-[rgba(0,0,0,0.2)] h-full w-full top-0 left-0"></div>
+        <div className="absolute px-3 left-[40px] bottom-[20px] right-[60px] sm:bottom-[70px] sm:left-[70px] text-white max-w-lg flex flex-col">
+          <div className="flex flex-col gap-3 items-center">
+            <h2
+              className="font-bold text-3xl text-center"
+              style={{ textShadow: "2px 5px rgba(0, 0, 0, 0.5)" }}
+            >
+              {event?.title}
+            </h2>
+            <h4
+              className="text-xl italic text-center font-semibold"
+              style={{ textShadow: "3px 3px rgba(0, 0, 0, 0.3)" }}
+            >
+              {event?.description}
+            </h4>
+            <div className="flex items-center sm:gap-4 gap-2">
+              <div className="flex flex-col items-center">
+                <div
+                  className="sm:text-3xl text-xl font-bold text-white"
+                  style={{ textShadow: "0px 0px 10px #00FFFF" }}
+                >
+                  20
+                </div>
+                <div
+                  className="font-semibold text-[#00FFFF] sm:text-lg text-sm"
+                  style={{ textShadow: "0px 0px 10px #00FFFF" }}
+                >
+                  Jours
+                </div>
+              </div>
+              <div
+                className="w-1 sm:h-16 h-11 bg-[#00FFFF] shadow-lg"
+                style={{ boxShadow: "0px 0px 20px #00FFFF" }}
+              ></div>
+              <div className="flex flex-col items-center">
+                <div
+                  className="sm:text-3xl text-xl font-bold text-white"
+                  style={{ textShadow: "0px 0px 20px #00FFFF" }}
+                >
+                  05
+                </div>
+                <div
+                  className="font-bold text-[#00FFFF] sm:text-lg text-sm"
+                  style={{ textShadow: "0px 0px 20px #00FFFF" }}
+                >
+                  Heures
+                </div>
+              </div>
+              <div
+                className="w-1 sm:h-16 h-11 bg-[#00FFFF] shadow-lg"
+                style={{ boxShadow: "0px 0px 20px #00FFFF" }}
+              ></div>
+              <div className="flex flex-col items-center">
+                <div
+                  className="sm:text-3xl text-xl font-bold text-white"
+                  style={{ textShadow: "0px 0px 20px #00FFFF" }}
+                >
+                  30
+                </div>
+                <div
+                  className="font-bold text-[#00FFFF] sm:text-lg text-sm"
+                  style={{ textShadow: "0px 0px 20px #00FFFF" }}
+                >
+                  Minutes
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </>
   );
 }

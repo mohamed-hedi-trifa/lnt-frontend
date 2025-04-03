@@ -7,13 +7,12 @@ export default function NewsLetterSub() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    
-    if (window.location.hash === "#Newsletter" && inputRef.current) {
+    if (typeof window !== "undefined" && window.location.hash === "#Newsletter" && inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
 
-  const subscribe = (e) => {
+  const subscribe = (e:any) => {
     e.preventDefault();
     const data = new FormData();
     data.append("email", email);
@@ -45,7 +44,7 @@ export default function NewsLetterSub() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
-          ref={inputRef} 
+          ref={inputRef}
           className="w-full px-4 py-2 rounded text-sm shadow-[-1px_2px_5px_rgb(0,0,0,.4)]"
         />
         <EnvelopeIcon className="h-5 w-5 absolute right-2 text-gray-500" />

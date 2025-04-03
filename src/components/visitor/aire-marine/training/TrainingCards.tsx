@@ -25,7 +25,7 @@ export default function TrainingCards({ filter, setIsOpened }: TrainingCardsProp
     const [limit, setLimit] = useState(10); 
     const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
     const resSafeLength = (arr: any[]) => (Array.isArray(arr) ? arr.length : 0);
-    const lang = window?.location?.pathname.startsWith('/fr/') ? 'fr' : 'en';
+    
     const [themes, setThemes] = useState<number[]>(filter.themes || []);
     const [loading, setLoading] = useState<boolean>(true);
     const [itemsList, setItemsList] = useState<any[]>([]);

@@ -18,7 +18,7 @@ const redIcon = new L.Icon({
 
 
 const LocationMap = ({ event }: { event: any }) => {
-  const latitude = event.latitude;
+  const latitude = event?.latitude;
   const longitude = parseFloat(event.longitude);
 
   console.log(event)
