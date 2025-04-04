@@ -2,7 +2,7 @@ import { InboxIcon, PencilSquareIcon, TrashIcon, MagnifyingGlassIcon } from "@he
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import ReactLoading from "react-loading";
+// import ReactLoading from "react-loading";
 import { Link } from "gatsby";
 import "./species.css"
 import EditIsPopularModal from "./EditIsPopularModal";
@@ -60,7 +60,7 @@ export default function Species() {
     });
   };
   if (loading) {
-    return <ReactLoading type="spinningBubbles" color="white" height={25} width={25} />;
+    return   "Loading...";
   }
 
   const handleToggle = (item) => {

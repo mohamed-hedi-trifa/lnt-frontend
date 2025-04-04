@@ -10,10 +10,21 @@ function classNames(...classes: any) {
 export default function AdminNavbar() {
   const { setUser } = useAuthContext();
 
+<<<<<<< HEAD
   const logoutSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     if (typeof window !== 'undefined') {
       localStorage.removeItem('token');
+=======
+    const { setUser } = useAuthContext();
+    const logoutSubmit = (e: any) => {
+        e.preventDefault();
+        if (typeof window !== "undefined") {
+        localStorage.removeItem('token');
+        }
+        setUser(null);
+        navigate("/");
+>>>>>>> 36fb0d2e58af9cadc5024f16f8cb2d03af8ac74b
     }
     setUser(null);
     navigate('/');

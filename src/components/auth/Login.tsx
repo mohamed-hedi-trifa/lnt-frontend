@@ -42,7 +42,15 @@ export default function Login() {
 
         axios.post('/api/login', data).then(res => {
             setUser(res.data.user)
+<<<<<<< HEAD
             localStorage.setItem("token", res.data.token);
+=======
+            if (typeof window !== "undefined")
+            {
+                     localStorage.setItem("token", res.data.token)
+            }
+       
+>>>>>>> 36fb0d2e58af9cadc5024f16f8cb2d03af8ac74b
             Swal.fire("Success", res.data.message, "success").then(() => {
                 //@ts-ignore
                 navigate("/admin");
@@ -59,11 +67,9 @@ export default function Login() {
         })
 
     }
-    // if (loading) {
-    //     return (
-    //         <ReactLoading />
-    //     )
-    // }
+    if (loading) {
+        return   "Loading...";
+    }
 
     return (
         <>

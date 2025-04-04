@@ -1,7 +1,7 @@
 import { InboxIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import ReactLoading from "react-loading";
+// import ReactLoading from "react-loading";
 import Post from './Post';
 import Swal from 'sweetalert2';
 
@@ -28,16 +28,7 @@ export default function Posts({ limit, searchQuery, currentPage, setTotalPages, 
     }, [searchQuery, currentPage]);
 
     if (loading) {
-        return (
-            <div className='flex items-center justify-center h-screen'>
-                <ReactLoading
-                    type="spinningBubbles"
-                    color="rgb(20,184,166)"
-                    height={50}
-                    width={50}
-                />
-            </div>
-        );
+        return   "Loading...";
     }
 
     return (

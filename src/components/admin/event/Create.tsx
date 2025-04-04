@@ -8,6 +8,7 @@ import Button from "../../atoms/Button";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Title from "../../atoms/titles/Title";
 import Select from "../../atoms/inputs/Select";
+// import ReactLoading from "react-loading";
 import { toast } from "react-toastify";
 import useLocalStorage from "@/lib/useLocalStorage";
 import { v4 as uuidv4 } from "uuid";
@@ -290,6 +291,7 @@ const CreateEvent: React.FC = () => {
     setFormData({ ...formData, latitude: lat, longitude: lng });
   };
 
+<<<<<<< HEAD
   return (
     <div className="h-[calc(100vh-80px)] flex flex-col p-4">
       <div className="flex justify-between">
@@ -298,6 +300,214 @@ const CreateEvent: React.FC = () => {
             <ArrowLeftIcon className="h-5 w-5" />
           </Link>
           <Title>Create New Event</Title>
+=======
+    const [eventTypes, setEventTypes] = useState([]);
+
+    const getEventType = async () => {
+        try {
+            const response = await axios.get("/api/event-type/");
+            setEventTypes(response.data);
+        } catch (error) {
+            console.error("Error fetching event types:", error);
+        }
+    };
+
+    useEffect(() => {
+        getEventType();
+    }, []);
+
+    const handleSelectLocation = (lat, lng) => {
+        setFormData({ ...formData, latitude: lat, longitude: lng });
+      };
+    return (
+        <div className="h-[calc(100vh-80px)] flex flex-col p-4">
+            <div className="flex justify-between">
+                <div className="flex items-center gap-1">
+                    <Link className="" to="/admin/events">
+                        <ArrowLeftIcon className="h-5 w-5" />
+                    </Link>
+                    <Title>Create New Event</Title>
+                </div>
+                <Select divClassNames="!flex-row items-center gap-2" label="Language:" name="language" value={language} onChange={handleLanguageChange}>
+                    <option value="en">English</option>
+                    <option value="fr">French</option>
+                </Select>
+            </div>
+            <form onSubmit={handleSubmit} className="flex flex-col grow">
+                {language === "en" && (
+                    <>
+                        <Input label="Title" type="text" name="title_en" value={formData.title_en} onChange={handleChange} />
+                        {errors.title_en && <div className="text-red-500 text-sm">{errors.title_en}</div>}
+
+                        <Input label="Description" type="text" name="description_en" value={formData.description_en} onChange={handleChange} />
+                        {errors.description_en && <div className="text-red-500 text-sm">{errors.description_en}</div>}
+
+                        <Input label="Card Description" type="text" name="card_description_en" value={formData.card_description_en} onChange={handleChange} />
+                        {errors.card_description_en && <div className="text-red-500 text-sm">{errors.card_description_en}</div>}
+
+                        <Input label="Event Date & Time" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
+                        {errors.event_start_at && <div className="text-red-500 text-sm">{errors.event_start_at}</div>}
+
+                        <Input label="Event Date & Time" type="datetime-local" name="event_end_at" value={formData.event_end_at} onChange={handleChange} />
+                        {errors.event_end_at && <div className="text-red-500 text-sm">{errors.event_end_at}</div>}
+
+                        <Input label="Location" type="text" name="location_en" value={formData.location_en} onChange={handleChange} />
+                        {errors.location_en && <div className="text-red-500 text-sm">{errors.location_en}</div>}
+                        <Select
+
+                            label="Event type:"
+                            name="event_type_id"
+                            value={formData.event_type_id}
+                            onChange={(e) => setFormData({ ...formData, event_type_id: e.target.value })}
+                        >
+                            <option value="">Select Event Type</option>
+                            {eventTypes.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.name_en}
+                                </option>
+                            ))}
+
+                        </Select>
+                        {errors.event_type_id && <div className="text-red-500 text-sm">{errors.event_type_id}</div>}
+                    </>
+                )}
+
+                {language === "fr" && (
+                    <>
+                        <Input label="Titre" type="text" name="title_fr" value={formData.title_fr} onChange={handleChange} />
+                        {errors.title_fr && <div className="text-red-500 text-sm">{errors.title_fr}</div>}
+
+                        <Input label="Description" type="text" name="description_fr" value={formData.description_fr} onChange={handleChange} />
+                        {errors.description_fr && <div className="text-red-500 text-sm">{errors.description_fr}</div>}
+
+                        <Input label="Card Description" type="text" name="card_description_fr" value={formData.card_description_fr} onChange={handleChange} />
+                        {errors.card_description_fr && <div className="text-red-500 text-sm">{errors.card_description_fr}</div>}
+
+                        <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_start_at" value={formData.event_start_at} onChange={handleChange} />
+                        {errors.event_start_at && <div className="text-red-500 text-sm">{errors.event_start_at}</div>}
+
+                        <Input label="Date et Heure de l'Événement" type="datetime-local" name="event_end_at" value={formData.event_end_at} onChange={handleChange} />
+                        {errors.event_end_at && <div className="text-red-500 text-sm">{errors.event_end_at}</div>}
+
+                        <Input label="Lieu" type="text" name="location_fr" value={formData.location_fr} onChange={handleChange} />
+                        {errors.location_fr && <div className="text-red-500 text-sm">{errors.location_fr}</div>}
+
+                        <Select
+                            label="Event type:"
+                            name="event_type_id"
+                            value={formData.event_type_id}
+                            onChange={(e) => setFormData({ ...formData, event_type_id: e.target.value })}
+                        >
+                            <option value="">Select Event Type</option>
+                            {eventTypes.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.name_fr}
+                                </option>
+                            ))}
+
+                        </Select>
+                        {errors.event_type_id && <div className="text-red-500 text-sm">{errors.event_type_id}</div>}
+                    </>
+                )}
+                <input
+                    type="hidden"
+                    name="latitude"
+                    value={formData.latitude || "34.823808"}
+                    onChange={handleChange}
+                />
+                <input
+                    type="hidden"
+                    name="longitude"
+                    value={formData.longitude || "11.250386"}
+                    onChange={handleChange}
+                />
+
+                {/* Map Picker */}
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Select Location</label>
+                    <MapPicker onSelectLocation={handleSelectLocation} initialPosition={[34.829198, 11.258197]}/>
+                </div>
+
+                {/* Display Selected Latitude and Longitude (Optional) */}
+                <div className="mt-4">
+                    <p>Selected Latitude: {formData.latitude}</p>
+                    <p>Selected Longitude: {formData.longitude}</p>
+                </div>
+
+                {/* Error Messages */}
+                {errors.latitude && <div className="text-red-500 text-sm">{errors.latitude}</div>}
+                {errors.longitude && <div className="text-red-500 text-sm">{errors.longitude}</div>}
+
+
+
+
+
+
+                <div className="text-slate-500 text-sm font-medium mb-2">Content</div>
+
+                {(language === "en" && englishItems.length) || (language === "fr" && frenchItems.length) ? (
+                    <ItemsList
+                        handleItemContentChange={handleItemContentChange}
+                        items={language === "en" ? englishItems : frenchItems}
+                        setItems={language === "en" ? setEnglishItems : setFrenchItems}
+                        language={language}
+                        key={language}
+                        route="/api/event-content-items"
+                    />
+                ) : (
+                    <div className="shadow p-4">There is no content currently, add new content by clicking one of the buttons below</div>
+                )}
+
+                {errors.items && <div className="text-red-500 text-sm">{errors.items}</div>}
+                {errors.apiError && <div className="text-red-500 text-sm">{errors.apiError}</div>}
+
+                <div className="mt-4 px-8 flex justify-between">
+                    <section className="flex gap-2">
+                        <div className="mb-1">
+                            <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("title")}>
+                                <PlusIcon className="h-4 w-4" />
+                                Title
+                            </Button>
+                        </div>
+                        <div className="mb-1">
+                            <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("text")}>
+                                <PlusIcon className="h-4 w-4" />
+                                Text
+                            </Button>
+                        </div>
+                        <div className="mb-1">
+                            <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("list")}>
+                                <PlusIcon className="h-4 w-4" />
+                                List
+                            </Button>
+                        </div>
+                        <div className="mb-1">
+                            <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("image")}>
+                                <PlusIcon className="h-4 w-4" />
+                                Image
+                            </Button>
+                        </div>
+                        <div className="mb-1">
+                            <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("pdf")}>
+                                <PlusIcon className="h-4 w-4" />
+                                PDF
+                            </Button>
+                        </div>
+                    </section>
+                </div>
+
+                <Input label="Image" type="file" name="image" onChange={handleImageChange} />
+                <Button type="submit" disabled={isLoading}>
+                    {isLoading ? (
+                        <div className="w-fit mx-auto">
+    Loading...
+                        </div>
+                    ) : (
+                        "Create Event"
+                    )}
+                </Button>
+            </form>
+>>>>>>> 36fb0d2e58af9cadc5024f16f8cb2d03af8ac74b
         </div>
         <Select
           divClassNames="!flex-row items-center gap-2"

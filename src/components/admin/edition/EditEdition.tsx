@@ -244,7 +244,7 @@ const EditEdition = ({ location, params }: { location: any; params: any }) => {
                 <Button type="submit" disabled={isLoading}>
                     {isLoading ? (
                         <div className="w-fit mx-auto">
-                            <ReactLoading type="spinningBubbles" color="white" height={25} width={25} />
+                            Loading...
                         </div>
                     ) : (
                         "Create Edition"

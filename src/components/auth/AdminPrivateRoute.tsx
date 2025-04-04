@@ -46,9 +46,7 @@ function AdminPrivateRoute({ children }: { children: ReactNode }) {
     })
 
     if (loading) {
-        return (
-            <ReactLoading />
-        )
+        return   "Loading...";
     }
     if (!Authenticated) {
         navigate('/login')

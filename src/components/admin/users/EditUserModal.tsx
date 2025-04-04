@@ -64,9 +64,7 @@ export default function EditUserModal({ toedit, show, hide }: { toedit: IUser, s
     }
 
     if (loading) {
-        return (
-            <ReactLoading />
-        );
+        return   "Loading...";
     }
 
     return (

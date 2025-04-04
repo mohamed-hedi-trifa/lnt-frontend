@@ -156,49 +156,52 @@ export default function EventDetailslImage({ event, language = "fr" }: { event: 
             </div>
           </div>
         </div>
-        <div className="absolute bottom-[40px] bg-white right-[60px] w-[400px] flex flex-col gap-3 sm:gap-6 px-5 py-7 rounded-xl">
-          <div className="flex flex-col gap-5 max-w-xs">
-            <div className="flex flex-col gap-1">
-              <h1 className="font-bold text-xl">Date & Heure</h1>
-              <p className="text-[#7E7E7E] font-semibold">
-                {language === "fr" ? (
-                  <>
-                    {formattedDate}, de {formattedTime} à {formattedEndTime}
-                  </>
-                ) : (
-                  <>
-                    {formattedDate}, from {formattedTime} to {formattedEndTime}
-                  </>
-                )}
-              </p>
-            </div>
-            <div className="flex flex-col text-[#7E7E7E] gap-1">
-              <h1 className="font-bold text-xl text-black">Lieu</h1>
-              <p className="font-semibold">
-                {event?.location_en || event?.location_fr}
-              </p>
-              <a
-                href={mapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex gap-2 font-semibold ${
-                  !hasCoordinates ? "pointer-events-none opacity-50" : ""
-                }`}
-                aria-disabled={!hasCoordinates}
-              >
-                <span className="text-[#0270A0]">
-                  <LocationIcon />
-                </span>
-                Voir la carte
-              </a>
-            </div>
-          </div>
-          <button
-            onClick={() => window.open(generateGoogleCalendarUrl(event), "_blank")}
-            className="bg-[#0270A0] w-full px-5 py-3 rounded-lg text-white font-semibold"
-          >
-            Ajouter à votre calendrier
-          </button>
+      );
+    }
+
+    const eventType = eventTypes.find(eventType => eventType.display_place === displayPlace);
+
+    console.log(eventType?.events)
+    return (
+      <div>
+        <TitleSectionEvent
+          headerName={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}
+          showButton={eventType ? (eventType?.events?.length > 0 ? true : false) : false}
+        />
+        {eventType ? (
+          displayPlace === 'card3' ? (
+            <PopularEventType2 
+              events={eventType.events} 
+              eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} 
+              language={lang} 
+            />
+          ) : (
+            <PopularEventType1 
+              events={eventType.events} 
+              eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} 
+              language={lang} 
+            />
+          )
+        ) : (
+          displayPlace === 'card3' ? (
+            <LeisureAndSportsActivities  
+              event_title={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} 
+            />
+          ) : (
+            <EmptyEvent1 event_title={eventType?.[`name_${lang}`] || ""} />
+          )
+        )}
+      </div>
+    );
+  };
+
+
+  if (isLoading) {
+    return (
+      <main className="relative">
+        {/* Loading skeleton for the hero image */}
+        <div className="w-full h-96">
+          <Skeleton height="100%" />
         </div>
       </div>
       <div className="relative text-start sm:hidden block">
