@@ -29,18 +29,6 @@ interface FormData {
 }
 
 const BenevoleForm: React.FC = () => {
-<<<<<<< HEAD
-
-    const [isFormFilled, setIsFormFilled] = useState<boolean>(false);
-    
-    useEffect(() => {
-      if (typeof window !== "undefined") {
-        const stored = localStorage.getItem("isFormFilled");
-        setIsFormFilled(stored === "true");
-      }
-    }, []);
-    
-=======
     const [isFormFilled, setIsFormFilled] = useState<boolean>(() => {
         if (typeof window !== "undefined")
         {
@@ -48,7 +36,6 @@ const BenevoleForm: React.FC = () => {
         }
         return false
       });
->>>>>>> 36fb0d2e58af9cadc5024f16f8cb2d03af8ac74b
     const [formData, setFormData] = useLocalStorage("benevole-form", {
         first_name: "",
         last_name: "",

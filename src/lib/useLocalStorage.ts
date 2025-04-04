@@ -10,14 +10,6 @@ const useLocalStorage = (key: string, defaultValue: any) => {
     if (typeof window === "undefined") return;
 
     try {
-<<<<<<< HEAD
-      const value = localStorage.getItem(prefixedKey);
-
-      if (value && value !== "undefined") {
-        setLocalStorageValue(JSON.parse(value));
-      } else {
-        localStorage.setItem(prefixedKey, JSON.stringify(defaultValue));
-=======
       if (typeof window !== "undefined") {
         const value = localStorage.getItem(prefixedKey);
 
@@ -33,7 +25,6 @@ const useLocalStorage = (key: string, defaultValue: any) => {
             localStorage.setItem(prefixedKey, JSON.stringify(defaultValue));
           return defaultValue;
         }
->>>>>>> 36fb0d2e58af9cadc5024f16f8cb2d03af8ac74b
       }
     } catch (error) {
       localStorage.setItem(prefixedKey, JSON.stringify(defaultValue));
