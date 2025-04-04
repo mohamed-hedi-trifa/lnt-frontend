@@ -7,7 +7,6 @@ export default function EventDetails({ params }: { params: any }) {
     const [event, setEvent] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [slug, setSlug] = useState<string | null>(null);
-    const [events, setEvents] = useState([]);
     const [partnerId, setPartnerId] = useState("");
 
     useEffect(() => {
@@ -20,7 +19,7 @@ export default function EventDetails({ params }: { params: any }) {
         try {
             const res = await axios.get(`/api/get-event/${slug}`);
             setEvent(res.data);
-        } catch (err) {
+        } catch (err:any) {
             Swal.fire("Error", err.response?.data?.message || "Failed to fetch event", "error");
         } finally {
             setLoading(false);

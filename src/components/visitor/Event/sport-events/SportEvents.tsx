@@ -21,7 +21,7 @@ export default function SportEvents() {
         <main className={`relative`}>
 
             <div className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${isOpened ? "opacity-50" : "opacity-0 pointer-events-none"}`} onClick={() => setIsOpened(false)}></div>
-                <EventImage events={undefined} language={''} />
+                <EventImage events={[]} language={''} />
             <section className="my-5 text-center max-w-7xl mx-auto w-full  mt-20 px-5 ">
                 <PageTitle title='Activités de loisirs et sportives' />
 

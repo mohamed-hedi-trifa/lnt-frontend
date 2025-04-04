@@ -326,7 +326,7 @@ const CreateNews: React.FC = () => {
                         setItems={language === "en" ? setEnglishItems : setFrenchItems}
                         language={language}
                         key={language}
-                        route="/api/event-content-items" formData={[]} setdisplayCinButton={undefined}                    />
+                        route="/api/event-content-items" formData={[]}                    />
                 ) : (
                     <div className="shadow p-4">There is no content currently, add new content by clicking one of the buttons below</div>
                 )}

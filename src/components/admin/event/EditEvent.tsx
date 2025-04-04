@@ -368,7 +368,6 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
             key={language}
             route="/api/event-content-items"
             formData={[]}
-            setdisplayCinButton={undefined}
           />
         ) : (
           <div className="shadow p-4">

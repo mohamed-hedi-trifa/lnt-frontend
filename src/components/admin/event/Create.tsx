@@ -12,7 +12,8 @@ import Select from "../../atoms/inputs/Select";
 import { toast } from "react-toastify";
 import useLocalStorage from "@/lib/useLocalStorage";
 import { v4 as uuidv4 } from "uuid";
-import MapPicker from "../../MapPicker";
+import loadable from "@loadable/component";
+const MapPicker = loadable(() => import("@/components/MapPicker"), { ssr: false });
 
 interface FormData {
   title_en: string;
@@ -391,13 +392,12 @@ const CreateEvent: React.FC = () => {
 
                 {(language === "en" && englishItems.length) || (language === "fr" && frenchItems.length) ? (
                     <ItemsList
-                        handleItemContentChange={handleItemContentChange}
-                        items={language === "en" ? englishItems : frenchItems}
-                        setItems={language === "en" ? setEnglishItems : setFrenchItems}
-                        language={language}
-                        key={language}
-                        route="/api/event-content-items"
-                    />
+            handleItemContentChange={handleItemContentChange}
+            items={language === "en" ? englishItems : frenchItems}
+            setItems={language === "en" ? setEnglishItems : setFrenchItems}
+            language={language}
+            key={language}
+            route="/api/event-content-items" formData={[]}                    />
                 ) : (
                     <div className="shadow p-4">There is no content currently, add new content by clicking one of the buttons below</div>
                 )}
