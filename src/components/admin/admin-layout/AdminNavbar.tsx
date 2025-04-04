@@ -14,7 +14,9 @@ export default function AdminNavbar() {
     const { setUser } = useAuthContext();
     const logoutSubmit = (e: any) => {
         e.preventDefault();
+        if (typeof window !== "undefined") {
         localStorage.removeItem('token');
+        }
         setUser(null);
         navigate("/");
     }

@@ -69,14 +69,7 @@ export default function Users() {
 
     }
     if (loading) {
-        return (
-            <ReactLoading
-                type="spinningBubbles"
-                color="white"
-                height={25}
-                width={25}
-            />
-        )
+        return   "Loading...";
     }
 
     return (

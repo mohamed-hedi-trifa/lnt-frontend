@@ -106,7 +106,7 @@ export default function Events() {
           )
         ) : (
           displayPlace === 'card3' ? (
-            <LeisureAndSportsActivities 
+            <LeisureAndSportsActivities  
               event_title={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} 
             />
           ) : (

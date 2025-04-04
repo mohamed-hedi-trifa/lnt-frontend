@@ -9,7 +9,7 @@ import Button from "../../atoms/Button";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Title from "../../atoms/titles/Title";
 import Select from "../../atoms/inputs/Select";
-import ReactLoading from "react-loading";
+// import ReactLoading from "react-loading";
 import { toast } from "react-toastify";
 import useLocalStorage from "@/lib/useLocalStorage";
 import { v4 as uuidv4 } from "uuid";
@@ -375,7 +375,7 @@ const CreateNews: React.FC = () => {
                 <Button type="submit" disabled={isLoading}>
                     {isLoading ? (
                         <div className="w-fit mx-auto">
-                            <ReactLoading type="spinningBubbles" color="white" height={25} width={25} />
+                              Loading...
                         </div>
                     ) : (
                         "Create News"

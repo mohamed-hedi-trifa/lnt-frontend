@@ -8,17 +8,21 @@ const useLocalStorage = (key: string, defaultValue: any) => {
   const prefixedKey = PREFIX + key;
   const [localStorageValue, setLocalStorageValue] = useState(() => {
     try {
-      const value = localStorage.getItem(prefixedKey);
-      // If value is already present in
-      // localStorage then return it
+      if (typeof window !== "undefined") {
+        const value = localStorage.getItem(prefixedKey);
 
-      // Else set default value in
-      // localStorage and then return it
-      if (value && value !== "undefined") {
-        return JSON.parse(value);
-      } else {
-        localStorage.setItem(prefixedKey, JSON.stringify(defaultValue));
-        return defaultValue;
+        // If value is already present in
+        // localStorage then return it
+
+        // Else set default value in
+        // localStorage and then return it
+        if (value && value !== "undefined") {
+          return JSON.parse(value);
+        } else {
+          if (typeof window !== "undefined")
+            localStorage.setItem(prefixedKey, JSON.stringify(defaultValue));
+          return defaultValue;
+        }
       }
     } catch (error) {
       localStorage.setItem(prefixedKey, JSON.stringify(defaultValue));
