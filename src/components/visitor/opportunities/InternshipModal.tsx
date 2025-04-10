@@ -6,7 +6,7 @@ import UploadIcon from "@/assets/icons/UploadIcon";
 import { toast } from "react-toastify";
 import useLocalStorage from "@/lib/useLocalStorage";
 import ModalOppourtunity from "@/components/ModalOppourtunity";
-
+import './OtherDocument.css'
 interface FormData {
     first_name: string;
     last_name: string;
@@ -16,21 +16,9 @@ interface FormData {
     email: string;
     phone: string;
     address: string;
-    educational_institution: string;
-    education_level: string;
-    study_field: string;
-    internship_type: string;
-    desired_internship_field: string;
-    start_date_day: number;
-    start_date_month: number;
-    start_date_year: number;
-    end_date_day: number;
-    end_date_month: number;
-    end_date_year: number;
-    opportunity_id: number;
 }
 
-export default function InternshipApplicationFormModal({ show, hide,  opportunityId = ""  }: { show: boolean, hide: () => void,  opportunityId: number | ""  }) {
+export default function JobOfferModal({ show, hide }: { show: boolean, hide: () => void }) {
     const [isSuccess, setIsSuccess] = useState(false);
     const [formData, setFormData] = useLocalStorage<FormData>("submit-application", {
         first_name: "",
@@ -41,18 +29,7 @@ export default function InternshipApplicationFormModal({ show, hide,  opportunit
         email: "",
         phone: "",
         address: "",
-        educational_institution: "",
-        education_level: "",
-        study_field: "",
-        internship_type: "",
-        desired_internship_field: "",
-        start_date_day: 0,
-        start_date_month: 0,
-        start_date_year: 0,
-        end_date_day: 0,
-        end_date_month: 0,
-        end_date_year: 0,
-        opportunity_id: opportunityId,
+
     });
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -61,7 +38,8 @@ export default function InternshipApplicationFormModal({ show, hide,  opportunit
     const [cvFileName, setCvFileName] = useState<string>('');
     const [motivation_letter, setMotivation_letter] = useState<File | null>(null);
     const [motivationLetterFileName, setMotivationLetterFileName] = useState<string>('');
-
+    const [otherDocuments, setOtherDocuments] = useState<File[]>([]);
+    const [otherDocumentNames, setOtherDocumentNames] = useState<string[]>([]);
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -70,6 +48,32 @@ export default function InternshipApplicationFormModal({ show, hide,  opportunit
         });
     };
 
+    const handleOtherDocumentsChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const files = Array.from(e.target.files);
+
+            // Validate each file
+            const validFiles = files.filter(file => {
+                if (file.size > 5 * 1024 * 1024) {
+                    toast.error(`Le fichier ${file.name} dépasse la taille maximale de 5 Mo.`);
+                    return false;
+                }
+                if (!file.type.includes('pdf')) {
+                    toast.error(`Le fichier ${file.name} doit être un PDF.`);
+                    return false;
+                }
+                return true;
+            });
+
+            setOtherDocuments(prev => [...prev, ...validFiles]);
+            setOtherDocumentNames(prev => [...prev, ...validFiles.map(file => file.name)]);
+        }
+    };
+
+    const removeOtherDocument = (index: number) => {
+        setOtherDocuments(prev => prev.filter((_, i) => i !== index));
+        setOtherDocumentNames(prev => prev.filter((_, i) => i !== index));
+    };
     const handleCvFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const file = e.target.files[0];
@@ -103,13 +107,6 @@ export default function InternshipApplicationFormModal({ show, hide,  opportunit
         if (!formData.email) newErrors.email = "L'adresse e-mail est requise.";
         if (!formData.phone) newErrors.phone = "Le numéro de téléphone est requis.";
         if (!formData.address) newErrors.address = "L'adresse est requise.";
-        if (!formData.educational_institution) newErrors.educational_institution = "L'établissement d'enseignement est requis.";
-        if (!formData.education_level) newErrors.education_level = "Le niveau d'études est requis.";
-        if (!formData.study_field) newErrors.study_field = "Le domaine d'études est requis.";
-        if (!formData.internship_type) newErrors.internship_type = "Le type de stage est requis.";
-        if (!formData.desired_internship_field) newErrors.desired_internship_field = "Le domaine de stage souhaité est requis.";
-        if (!formData.start_date_day || !formData.start_date_month || !formData.start_date_year) newErrors.start_date = "La date de début est requise.";
-        if (!formData.end_date_day || !formData.end_date_month || !formData.end_date_year) newErrors.end_date = "La date de fin est requise.";
         if (!cvFileName) newErrors.cvFile = "Le CV est requis.";
 
         setErrors(newErrors);
@@ -137,9 +134,13 @@ export default function InternshipApplicationFormModal({ show, hide,  opportunit
             formDataToSend.append("motivation_letter", motivation_letter);
         }
 
+        otherDocuments.forEach((file, index) => {
+            formDataToSend.append(`other_documents[${index}]`, file);
+        });
+
         setIsLoading(true);
         try {
-            const response = await axios.post("/api/submit-application", formDataToSend, {
+            const response = await axios.post("/api/opportunity/job-offer", formDataToSend, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -155,18 +156,6 @@ export default function InternshipApplicationFormModal({ show, hide,  opportunit
                 email: "",
                 phone: "",
                 address: "",
-                educational_institution: "",
-                education_level: "",
-                study_field: "",
-                internship_type: "",
-                desired_internship_field: "",
-                start_date_day: 0,
-                start_date_month: 0,
-                start_date_year: 0,
-                end_date_day: 0,
-                end_date_month: 0,
-                end_date_year: 0,
-                opportunity_id: opportunityId,
             });
             setCvFile(null);
             setMotivation_letter(null);
@@ -186,9 +175,9 @@ export default function InternshipApplicationFormModal({ show, hide,  opportunit
     };
 
     return (
-        <ModalOppourtunity title="Formulaire de Demande de Stage" show={show} hide={hide}>
+        <ModalOppourtunity title="Soumettez Votre Candidature" show={show} hide={hide}>
             {!isSuccess ? (
-                <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg w-[800px] max-h-[calc(100vh-60px)] overflow-y-auto relative">
+                <form onSubmit={handleSubmit} className="bg-white px-6 rounded-lg shadow-lg w-[800px] max-h-[calc(100vh-60px)] overflow-y-auto relative">
 
                     <div className="flex items-start flex-col mt-4 gap-5">
                         <h1 className="font-semibold text-lg">Informations Personnelles</h1>
@@ -301,49 +290,6 @@ export default function InternshipApplicationFormModal({ show, hide,  opportunit
                             {errors.address && <div className="text-red-500 text-sm">{errors.address}</div>}
                         </div>
                     </div>
-
-                    <hr className="border-t-2 border-black mt-5" />
-                    <div className="flex items-start flex-col mt-4 gap-5">
-                        <h1 className="font-semibold text-lg">Informations Académiques</h1>
-
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Établissement d'enseignement"
-                                id="educational_institution"
-                                name="educational_institution"
-                                value={formData.educational_institution}
-                                onChange={handleChange}
-                                required
-                                width="500px"
-                            />
-                            {errors.educational_institution && <div className="text-red-500 text-sm">{errors.educational_institution}</div>}
-                        </div>
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Niveau d'études"
-                                id="education_level"
-                                name="education_level"
-                                value={formData.education_level}
-                                onChange={handleChange}
-                                required
-                                width="500px"
-                            />
-                            {errors.education_level && <div className="text-red-500 text-sm">{errors.education_level}</div>}
-                        </div>
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Domaine d'études"
-                                id="study_field"
-                                name="study_field"
-                                value={formData.study_field}
-                                onChange={handleChange}
-                                required
-                                width="500px"
-                            />
-                            {errors.study_field && <div className="text-red-500 text-sm">{errors.study_field}</div>}
-                        </div>
-                    </div>
-
                     <hr className="border-t-2 border-black mt-5" />
                     <div className="flex items-start flex-col mt-4 gap-5">
                         <h1 className="font-semibold text-lg">Stage Recherché</h1>
@@ -466,6 +412,7 @@ export default function InternshipApplicationFormModal({ show, hide,  opportunit
                             {errors.end_date && <div className="text-red-500 text-sm">{errors.end_date}</div>}
                         </div>
                     </div>
+                    
 
                     <hr className="border-t-2 border-black mt-5" />
                     <div className="flex items-start flex-col mt-4">
@@ -525,6 +472,8 @@ export default function InternshipApplicationFormModal({ show, hide,  opportunit
                                 </label>
                             </div>
                         </div>
+
+                 
                     </div>
 
                     <hr className="border-t-2 border-black mt-5" />
