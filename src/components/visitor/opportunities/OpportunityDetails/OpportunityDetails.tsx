@@ -6,7 +6,11 @@ import RightSideOpportunityDetails from './RightSideOpportunityDetails';
 import OpportunityDetailsContent from './OpportunityDetailsContent';
 import JoinUs from '../JoinUs';
 import OtherOppertunities from './OtherOppertunities';
-import CandidateApplicationForm from './CandidateApplicationFormModal';
+
+import JobOfferModal from '../JobOfferModal';
+import CallForTrenderModal from '../CallForTrenderModal';
+import InternshipModal from '../InternshipModal';
+import InternshipApplicationFormModal from '../InternshipApplicationFormModal';
 
 export default function OpportunityDetails({ location, params }: { location: any; params: any }) {
     const [modalShow, setModalShow] = useState(false);
@@ -18,13 +22,14 @@ export default function OpportunityDetails({ location, params }: { location: any
 
 
 
-    const [opportunity, setEvent] = useState([]);
+    const [opportunity, setOpportunity] = useState([]);
     const [moreOpportunities, setMoreOpportunities] = useState([]);
 
     const getOpportunity = async (slugOpportunity) => {
         try {
             const response = await axios.get(`/api/opportunities/${slugOpportunity}`);
-            setEvent(response.data);
+            setOpportunity(response.data);
+
         } catch (error) {
             console.error("Error fetching opportunity types:", error);
         }
@@ -62,7 +67,7 @@ export default function OpportunityDetails({ location, params }: { location: any
                     </div>
 
                     <div className='flex flex-col h-full w-full sm:col-span-1  gap-10'>
-                        <RightSideOpportunityDetails opportunity={opportunity} language={language}/>
+                        <RightSideOpportunityDetails opportunity={opportunity} language={language} />
 
 
 
@@ -70,16 +75,26 @@ export default function OpportunityDetails({ location, params }: { location: any
 
                 </section>
                 <div className=' text-center mt-5'>
-                    <button className="bg-[#006E9F] w-fit px-7 py-2 rounded-lg text-white font-semibold shadow-lg"       onClick={() => { setModalShow(true) }}>Postuler Maintenant</button>
+                    <button className="bg-[#006E9F] w-fit px-7 py-2 rounded-lg text-white font-semibold shadow-lg"
+                        onClick={() => { setModalShow(true) }}>Postuler Maintenant</button>
                 </div>
 
 
+                {opportunity.type === 'job-offer' && (
+                    <JobOfferModal show={modalShow} hide={() => setModalShow(false)} />
+                )}
+                {opportunity.type === 'call-for-tender' && (
+                    <CallForTrenderModal show={modalShow} hide={() => setModalShow(false)} />
+                )}
+                {opportunity.type === 'internship' && (
+                    <InternshipApplicationFormModal show={modalShow} hide={() => setModalShow(false)} opportunityId={opportunity.id}/>
+                )}
 
-                <CandidateApplicationForm opportunity={opportunity} show={modalShow} hide={() => { setModalShow(false);  }} />
+
                 <section className=' flex-col  text-center max-w-7xl w-full mx-auto justify-between   px-5 h-fit  my-10 '>
 
                     <hr className="border-black mb-8" />
-                    <OtherOppertunities  moreOpportunities={moreOpportunities}/>
+                    <OtherOppertunities moreOpportunities={moreOpportunities} />
                 </section>
             </main>
         </div>

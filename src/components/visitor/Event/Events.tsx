@@ -12,7 +12,7 @@ import TitleSectionEvent from './TitleSectionEvent';
 import PopularEventType2 from './PopularEventType2';
 import LeisureAndSportsActivities from './no-event/LeisureAndSportsActivities';
 import IEventType from '@/models/IEventType';
-
+import { useTranslation } from "@/contexts/TranslationContext";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -198,7 +198,7 @@ export default function Events() {
 
         <div className="flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10 sm:w-[300px] mt-[51px]">
           <FollowUsEvent />
-          <Question />
+          <QuestionEvent />
         </div>
       </section>
 

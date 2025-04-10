@@ -34,7 +34,8 @@ interface FormData {
 
 
 
-const CreateEvent: React.FC = () => {
+const 
+CreateEvent: React.FC = () => {
     const [language, setLanguage] = useState<string>("en");
     const [formData, setFormData] = useLocalStorage("event-info", {
 
