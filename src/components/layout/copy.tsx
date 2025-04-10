@@ -7,7 +7,6 @@ import NavDropdown from "../NavDropdown";
 import MobileNavbar from "./MobileNavbar";
 import NavbarSearch from "@/components/layout/NavbarSearch";
 
-// SubDropdown Component for nested dropdowns
 function SubDropdown({ items }: { items: any[] }) {
   return (
     <div className="absolute top-0 left-full mt-0 ml-0 pl-1 hidden group-hover:block min-w-[150px]">
@@ -41,35 +40,30 @@ function SubDropdown({ items }: { items: any[] }) {
   );
 }
 
-// Navbar Component
 function Navbar({ location }: { location: any }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [eventTypes, setEventTypes] = useState([]);
   const [items, setItems] = useState([]);
 
-  // Handle scroll event
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > window.innerHeight - 100);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (typeof window !== "undefined") {
+      const handleScroll = () => {
+        setIsScrolled(window.scrollY > window.innerHeight - 100);
+      };
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
   }, []);
 
-  // Fetch event types from API
   useEffect(() => {
     const fetchEventTypes = async () => {
       try {
         const response = await axios.get("/api/event-type");
         setEventTypes(response.data);
-
-        // Transform event types into the required structure
-        const transformedEventTypes = response.data.map((event) => ({
+        const transformedEventTypes = response.data.map((event:any) => ({
           label: event.name_en || event.name_fr,
           path: `/events/${event.slug}`,
         }));
-
-        // Update the "Événements" section with dynamic event types
         const updatedItems = [
           {
             label: "Qui Sommes-Nous",
@@ -113,7 +107,7 @@ function Navbar({ location }: { location: any }) {
             label: "Événements",
             path: "/en/event",
             underlineClassName: "w-[100px]",
-            items: transformedEventTypes, // Dynamic event types
+            items: transformedEventTypes,
           },
           {
             label: "Opportunités",
@@ -126,13 +120,11 @@ function Navbar({ location }: { location: any }) {
           },
           { label: "Contact", path: "/contact", underlineClassName: "w-[55px]" },
         ];
-
         setItems(updatedItems);
       } catch (error) {
         console.error("Error fetching event types:", error);
       }
     };
-
     fetchEventTypes();
   }, []);
 
@@ -207,8 +199,7 @@ function Navbar({ location }: { location: any }) {
                         <ArrowDown className={`size-3.5 duration-[0.4s] ${isOpen ? "-rotate-180" : ""}`} />
                       </div>
                       <div
-                        className={`${item.underlineClassName || "w-[100px]"
-                          } absolute bottom-0 h-[3px] translate-y-1.5 bg-gradient-to-r from-[#3344DC] to-[#50ACC6] opacity-0 group-hover/dropdown:opacity-100 transition-all duration-500`}
+                        className={`${item.underlineClassName || "w-[100px]"} absolute bottom-0 h-[3px] translate-y-1.5 bg-gradient-to-r from-[#3344DC] to-[#50ACC6] opacity-0 group-hover/dropdown:opacity-100 transition-all duration-500`}
                       ></div>
                     </Link>
                   )}
@@ -220,8 +211,7 @@ function Navbar({ location }: { location: any }) {
                 >
                   <span style={{ textShadow: "0px 4px 4px rgb(0,0,0,.4)" }}>{item.label}</span>
                   <div
-                    className={`${item.underlineClassName || "w-[100px]"
-                      } absolute bottom-0 h-[3px] translate-y-1.5 bg-gradient-to-r from-[#3344DC] to-[#50ACC6] opacity-0 group-hover:opacity-100 transition-all duration-500`}
+                    className={`${item.underlineClassName || "w-[100px]"} absolute bottom-0 h-[3px] translate-y-1.5 bg-gradient-to-r from-[#3344DC] to-[#50ACC6] opacity-0 group-hover:opacity-100 transition-all duration-500`}
                   ></div>
                 </LangLink>
               )}
@@ -235,7 +225,6 @@ function Navbar({ location }: { location: any }) {
 
 export default Navbar;
 
-// ArrowDown Component
 function ArrowDown(props: { className?: string }) {
   return (
     <svg viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>

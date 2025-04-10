@@ -9,30 +9,36 @@ const FestivalCarousel: React.FC<Props> = ({ switcher }) => {
   const [thumbnailStart, setThumbnailStart] = useState(0);
   const [thumbnailsToShow, setThumbnailsToShow] = useState(10); // Default to 10 thumbnails
 
-  // Adjust the number of thumbnails displayed based on screen size
   const updateThumbnailCount = () => {
+    if (typeof window === "undefined") return;
+  
     let newThumbnailsToShow = 10; // Default for large screens
-
+  
     if (window.innerWidth <= 640) {
       newThumbnailsToShow = 4; // Small screens
     } else if (window.innerWidth <= 1024) {
       newThumbnailsToShow = 10; // Medium screens
     }
-
-    // Adjust thumbnailStart if necessary
+  
     if (thumbnailStart + newThumbnailsToShow > switcher.length) {
       setThumbnailStart(Math.max(switcher.length - newThumbnailsToShow, 0));
     }
+  
     setThumbnailsToShow(newThumbnailsToShow);
   };
+  
 
   useEffect(() => {
-    updateThumbnailCount(); // Initial check for screen size
-    window.addEventListener("resize", updateThumbnailCount); // Update on resize
-    return () => {
-      window.removeEventListener("resize", updateThumbnailCount); // Cleanup
-    };
+    if (typeof window !== "undefined") {
+      updateThumbnailCount(); // Initial screen size check
+  
+      window.addEventListener("resize", updateThumbnailCount);
+      return () => {
+        window.removeEventListener("resize", updateThumbnailCount);
+      };
+    }
   }, [thumbnailStart, switcher.length]);
+  
 
   useEffect(() => {
     // Reset to first image and thumbnail start when switcher changes

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -21,8 +21,7 @@ const ContentItem = ({
   language,
   route,
   handleChange,
-  formData,
-  setdisplayCinButton
+  formData
 }: {
   id: string;
   idx: number;
@@ -32,9 +31,8 @@ const ContentItem = ({
   setItems: (items: any[]) => void;
   language: string;
   route: string;
-  handleChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleChange?: (e: any) => void;
   formData: any[];
-  setdisplayCinButton: any;
 }) => {
 
   const {

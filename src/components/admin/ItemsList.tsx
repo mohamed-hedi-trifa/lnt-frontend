@@ -16,17 +16,15 @@ const ItemsList = ({
   language,
   route,
   handleChange, // Add handleChange to props
-  formData,
-  setdisplayCinButton
+  formData
 }: {
   handleItemContentChange: (idx: number, e: any) => void;
   items: any[];
   setItems: (items: any[]) => void;
   language: string;
   route: string;
-  handleChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void; // Make it optional
+  handleChange?: (e: any) => void; // Make it optional
   formData: any[];
-  setdisplayCinButton: any;
 }) => {  
   // This function replaces onSortEnd from react-sortable-hoc
 // ItemsList.tsx
@@ -78,7 +76,6 @@ const handleDragEnd = (event:any) => {
               route= {route}
               handleChange={handleChange}
               formData={formData}
-              setdisplayCinButton={setdisplayCinButton}
             />
           ))}
         </ul>

@@ -29,7 +29,6 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
   const [itemsList, setItemsList] = useState<any[]>([]);
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
   const resSafeLength = (arr: any[]) => (Array.isArray(arr) ? arr.length : 0);
-  const lang = window?.location?.pathname.startsWith('/fr/') ? 'fr' : 'en';
   const [searchQuery, setSearchQuery] = useState(filter.searchQuery || '');
   const [themes, setThemes] = useState<number[]>(filter.themes || []);
 

@@ -1,26 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, navigate } from "gatsby";
-import Title from "@/components/atoms/titles/Title";
 import Breadcrumbs from "@/components/Breadcumbs";
-import Line from "@/components/atoms/Line";
-import FacebookIcon from "@/assets/icons/FacebookIcon";
-import XIcon from "@/assets/icons/XIcon";
-import InstagramIcon from "@/assets/icons/InstagramIcon";
-import YoutubeIcon from "@/assets/icons/YoutubeIcon";
-import LinkedinIcon from "@/assets/icons/LinkedinIcon";
-import NewsLetterSub2 from "@/components/NewsLetterSub2";
-import Button from "@/components/atoms/Button";
-import PageParagraph from "@/components/atoms/PageParagraph";
-import parseContent from "@/lib/parseContent";
-import formatDate from "@/lib/formatDate";
-import ImageGallery from "../../ImageGallery";
-import Media from "../../Media";
-import TrainingDetailsContent from "./trainingDetailsContent";
 import RelatedTrainings from "./RelatedTrainings";
 import FollowUsTraining from "./FollowUsTraining";
 import Question from "@/components/atoms/Question";
 import HeroTraining from "./HeroTraining";
+import TrainingDetailsContent from "./TrainingDetailsContent";
 
 
 

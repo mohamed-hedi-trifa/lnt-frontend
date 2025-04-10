@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 // import ReactLoading from "react-loading";
 import { Link } from "gatsby";
-import { EyeIcon } from "@heroicons/react/24/solid";
 
 export default function Opportunity() {
   const [loading, setLoading] = useState(true);
@@ -73,7 +72,7 @@ export default function Opportunity() {
   };
 
 
-  const handleToggle = (item) => {
+  const handleToggle = (item:any) => {
     const updatedStatus = item.status === "visible" ? "hidden" : "visible"; 
 
 
@@ -85,8 +84,8 @@ export default function Opportunity() {
         Swal.fire("Success", res.data.message, "success");
 
         // Update the local state only on success
-        setItemsList((prevItems) =>
-          prevItems.map((itm) =>
+        setItemsList((prevItems:any) =>
+          prevItems.map((itm:any) =>
             itm.id === item.id ? { ...itm, status: updatedStatus } : itm 
           )
         );

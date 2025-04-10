@@ -14,6 +14,11 @@ export interface IEvent {
     auth_id: number;
     slug:string;
     event_type_id: number;
+    event_end_at:string;
+    location:string;
+    event_start_at:string;
+    description:string;
+    title:string;
     created_at?: string;
     updated_at?: string;
 }

@@ -1,12 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Link, navigate } from "gatsby";
-import ItemsList from "../ItemsList";
 import Input from "../../atoms/inputs/Input";
-import Textarea from "../../atoms/inputs/Textarea";
 import Button from "../../atoms/Button";
-import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Title from "../../atoms/titles/Title";
 import Select from "../../atoms/inputs/Select";
 // import ReactLoading from "react-loading";
@@ -51,7 +49,7 @@ const CreateEventType: React.FC = () => {
 
             if (result.isConfirmed) {
                 const created = await createPreviousEvent();
-
+// @ts-ignore
                 if (created) navigate(`/admin/event-type/${created.slug}?lang=${lang}`);
             } else if (result.isDenied) {
                 setLanguage(lang);
@@ -154,7 +152,7 @@ const CreateEventType: React.FC = () => {
         e.preventDefault();
  
         const created = await createPreviousEvent();
-      
+    //@ts-ignore
         if (created) navigate("/admin/event-type");
     };
 
