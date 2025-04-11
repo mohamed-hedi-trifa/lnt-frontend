@@ -2,7 +2,7 @@ import { InboxIcon, PencilSquareIcon, TrashIcon, MagnifyingGlassIcon } from "@he
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import ReactLoading from "react-loading";
+// import ReactLoading from "react-loading";
 import { Link } from "gatsby";
 
 export default function Training() {
@@ -56,7 +56,7 @@ export default function Training() {
     });
   };
   if (loading) {
-    return <ReactLoading type="spinningBubbles" color="white" height={25} width={25} />;
+    return   "Loading...";
   }
 
   return (
@@ -92,7 +92,7 @@ export default function Training() {
                           <div className="font-bold">{item.title_en || item.title_fr}</div>{" "}
                         </div>
                         <div className="pt-3 col-span-2 text-start">{item.type}</div>
-                        <div className="pt-3 col-span-2">{item.status == 1 ? "active" : "hidden"}</div>
+                        <div className="pt-3 col-span-2">{item.status == "visible" ? "active" : "hidden"}</div>
                         <div className="pt-3 text-end sm:text-center col-span-1 sm:col-span-2">
                           <div className="grid grid-cols-12">
                             <div className="col-span-12 sm:col-span-6 flex justify-end sm:justify-center">

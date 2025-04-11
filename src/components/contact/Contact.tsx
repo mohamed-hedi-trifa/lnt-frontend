@@ -2,7 +2,7 @@ import React, { useState, FormEvent } from "react";
 
 import axios, { AxiosError } from "axios";
 import { Link } from "gatsby";
-import ReactLoading from "react-loading";
+// import ReactLoading from "react-loading";
 import Swal from "sweetalert2";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/solid";

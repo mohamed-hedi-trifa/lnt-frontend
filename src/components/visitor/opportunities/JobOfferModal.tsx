@@ -5,7 +5,8 @@ import SelectFieldOpportunity from "./SelectFieldOpportunity";
 import UploadIcon from "@/assets/icons/UploadIcon";
 import { toast } from "react-toastify";
 import useLocalStorage from "@/lib/useLocalStorage";
-
+import ModalOppourtunity from "@/components/ModalOppourtunity";
+import './OtherDocument.css'
 interface FormData {
     first_name: string;
     last_name: string;
@@ -15,46 +16,19 @@ interface FormData {
     email: string;
     phone: string;
     address: string;
-    educational_institution: string;
-    education_level: string;
-    study_field: string;
-    internship_type: string;
-    desired_internship_field: string;
-    start_date_day: number;
-    start_date_month: number;
-    start_date_year: number;
-
-    end_date_day: number;
-    end_date_month: number;
-    end_date_year: number;
 }
 
-const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => void }> = ({ isOpen, setIsOpen }) => {
-    if (!isOpen) return null;
-
+export default function JobOfferModal({ show, hide }: { show: boolean, hide: () => void }) {
     const [isSuccess, setIsSuccess] = useState(false);
-    const [formData, setFormData] = useLocalStorage("submit-application", {
+    const [formData, setFormData] = useLocalStorage<FormData>("submit-application", {
         first_name: "",
         last_name: "",
         birth_day: 0,
         birth_month: 0,
         birth_year: 0,
-        birth_date: "",
         email: "",
         phone: "",
         address: "",
-        educational_institution: "",
-        education_level: "",
-        study_field: "",
-        internship_type: "",
-        desired_internship_field: "",
-        start_date_day: "",
-        start_date_month: "",
-        start_date_year: "",
-
-        end_date_day: "",
-        end_date_month: "",
-        end_date_year: "",
 
     });
 
@@ -63,7 +37,9 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
     const [cvFile, setCvFile] = useState<File | null>(null);
     const [cvFileName, setCvFileName] = useState<string>('');
     const [motivation_letter, setMotivation_letter] = useState<File | null>(null);
-    const [motivationLetterFileName, setmotivation_letterFileName] = useState<string>('');
+    const [motivationLetterFileName, setMotivationLetterFileName] = useState<string>('');
+    const [otherDocuments, setOtherDocuments] = useState<File[]>([]);
+    const [otherDocumentNames, setOtherDocumentNames] = useState<string[]>([]);
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -72,9 +48,39 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
         });
     };
 
+    const handleOtherDocumentsChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const files = Array.from(e.target.files);
+
+            // Validate each file
+            const validFiles = files.filter(file => {
+                if (file.size > 5 * 1024 * 1024) {
+                    toast.error(`Le fichier ${file.name} dépasse la taille maximale de 5 Mo.`);
+                    return false;
+                }
+                if (!file.type.includes('pdf')) {
+                    toast.error(`Le fichier ${file.name} doit être un PDF.`);
+                    return false;
+                }
+                return true;
+            });
+
+            setOtherDocuments(prev => [...prev, ...validFiles]);
+            setOtherDocumentNames(prev => [...prev, ...validFiles.map(file => file.name)]);
+        }
+    };
+
+    const removeOtherDocument = (index: number) => {
+        setOtherDocuments(prev => prev.filter((_, i) => i !== index));
+        setOtherDocumentNames(prev => prev.filter((_, i) => i !== index));
+    };
     const handleCvFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const file = e.target.files[0];
+            if (file.size > 5 * 1024 * 1024) {
+                setErrors({ ...errors, cvFile: "Le fichier ne doit pas dépasser 5 Mo." });
+                return;
+            }
             setCvFile(file);
             setCvFileName(file.name);
         }
@@ -83,14 +89,17 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
     const handleMotivationLetterFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const file = e.target.files[0];
+            if (file.size > 5 * 1024 * 1024) {
+                setErrors({ ...errors, motivation_letter: "Le fichier ne doit pas dépasser 5 Mo." });
+                return;
+            }
             setMotivation_letter(file);
-            setmotivation_letterFileName(file.name);
+            setMotivationLetterFileName(file.name);
         }
     };
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
-
 
         if (!formData.first_name) newErrors.first_name = "Le nom est requis.";
         if (!formData.last_name) newErrors.last_name = "Le prénom est requis.";
@@ -98,13 +107,6 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
         if (!formData.email) newErrors.email = "L'adresse e-mail est requise.";
         if (!formData.phone) newErrors.phone = "Le numéro de téléphone est requis.";
         if (!formData.address) newErrors.address = "L'adresse est requise.";
-        if (!formData.educational_institution) newErrors.educational_institution = "L'établissement d'enseignement est requis.";
-        if (!formData.education_level) newErrors.education_level = "Le niveau d'études est requis.";
-        if (!formData.study_field) newErrors.study_field = "Le domaine d'études est requis.";
-        if (!formData.internship_type) newErrors.internship_type = "Le type de stage est requis.";
-        if (!formData.desired_internship_field) newErrors.desired_internship_field = "Le domaine de stage souhaité est requis.";
-        if (!formData.start_date_day || !formData.start_date_month || !formData.start_date_year) newErrors.start_date = "La date de début est requise.";
-        if (!formData.end_date_day || !formData.end_date_month || !formData.end_date_year) newErrors.end_date = "La date de fin est requise.";
         if (!cvFileName) newErrors.cvFile = "Le CV est requis.";
 
         setErrors(newErrors);
@@ -122,7 +124,7 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
 
         // Append all form fields to FormData
         for (const key in formData) {
-            formDataToSend.append(key, formData[key as keyof FormData]);
+            formDataToSend.append(key, formData[key as keyof FormData].toString());
         }
 
         if (cvFile) {
@@ -132,9 +134,13 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
             formDataToSend.append("motivation_letter", motivation_letter);
         }
 
+        otherDocuments.forEach((file, index) => {
+            formDataToSend.append(`other_documents[${index}]`, file);
+        });
+
         setIsLoading(true);
         try {
-            const response = await axios.post("/api/submit-application", formDataToSend, {
+            const response = await axios.post("/api/opportunity/job-offer", formDataToSend, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -144,17 +150,12 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
             setFormData({
                 first_name: "",
                 last_name: "",
-                birth_date: "",
+                birth_day: 0,
+                birth_month: 0,
+                birth_year: 0,
                 email: "",
                 phone: "",
                 address: "",
-                educational_institution: "",
-                education_level: "",
-                study_field: "",
-                internship_type: "",
-                desired_internship_field: "",
-                start_date: "",
-                end_date: "",
             });
             setCvFile(null);
             setMotivation_letter(null);
@@ -174,19 +175,10 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999] px-10">
+        <ModalOppourtunity title="Soumettez Votre Candidature" show={show} hide={hide}>
             {!isSuccess ? (
-                <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg w-[800px] max-h-[calc(100vh-60px)] overflow-y-auto relative">
-                    <button
-                        className="absolute top-4 right-10 text-gray-600 text-5xl"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        &times;
-                    </button>
+                <form onSubmit={handleSubmit} className="bg-white px-6 rounded-lg shadow-lg w-[800px] max-h-[calc(100vh-60px)] overflow-y-auto relative">
 
-                    <h2 className="text-xl font-semibold mb-4 text-[#0270A0]">Formulaire de Demande de Stage</h2>
-
-                    <hr className="border-t-2 border-black" />
                     <div className="flex items-start flex-col mt-4 gap-5">
                         <h1 className="font-semibold text-lg">Informations Personnelles</h1>
 
@@ -300,171 +292,6 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
                     </div>
 
                     <hr className="border-t-2 border-black mt-5" />
-                    <div className="flex items-start flex-col mt-4 gap-5">
-                        <h1 className="font-semibold text-lg">Informations Académiques</h1>
-
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Établissement d'enseignement"
-                                id="educational_institution"
-                                name="educational_institution"
-                                value={formData.educational_institution}
-                                onChange={handleChange}
-                                required
-                                width="500px"
-                            />
-                            {errors.educational_institution && <div className="text-red-500 text-sm">{errors.educational_institution}</div>}
-                        </div>
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Niveau d'études"
-                                id="education_level"
-                                name="education_level"
-                                value={formData.education_level}
-                                onChange={handleChange}
-                                required
-                                width="500px"
-                            />
-                            {errors.education_level && <div className="text-red-500 text-sm">{errors.education_level}</div>}
-                        </div>
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Domaine d'études"
-                                id="study_field"
-                                name="study_field"
-                                value={formData.study_field}
-                                onChange={handleChange}
-                                required
-                                width="500px"
-                            />
-                            {errors.study_field && <div className="text-red-500 text-sm">{errors.study_field}</div>}
-                        </div>
-                    </div>
-
-                    <hr className="border-t-2 border-black mt-5" />
-                    <div className="flex items-start flex-col mt-4 gap-5">
-                        <h1 className="font-semibold text-lg">Stage Recherché</h1>
-
-                        <div className="flex gap-2 flex-col items-start">
-                            <label className="font-semibold text-sm">
-                                Type de stage <span className="text-[#FF0000]">*</span>
-                            </label>
-                            <SelectFieldOpportunity
-                                id="internship_type"
-                                name="internship_type"
-                                value={formData.internship_type}
-                                onChange={handleChange}
-                                required
-                                options={["Stage d'Initiation", "Stage PFA (Projet de Fin d'Année)", "Stage PFE (Projet de Fin d'Études)", "Stage Professionnel", "Stage de Recherche", "Autre"]}
-                                placeholder="Sélectionnez un type de stage"
-                                width="500px"
-                            />
-                            {errors.internship_type && <div className="text-red-500 text-sm">{errors.internship_type}</div>}
-                        </div>
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Domaine de stage souhaité"
-                                id="desired_internship_field"
-                                name="desired_internship_field"
-                                value={formData.desired_internship_field}
-                                onChange={handleChange}
-                                required
-                                width="500px"
-                            />
-                            {errors.desired_internship_field && <div className="text-red-500 text-sm">{errors.desired_internship_field}</div>}
-                        </div>
-                        <div className="flex flex-col items-start gap-2">
-                            <label className="font-semibold text-sm">
-                                Période souhaitée <span className="text-[#FF0000]">*</span>
-                            </label>
-                            <div className="flex gap-4 items-center ml-3">
-                                <label className="font-semibold text-sm mr-4">Date de Début :</label>
-                                <SelectFieldOpportunity
-                                    id="start_date_day"
-                                    name="start_date_day"
-                                    value={formData.start_date_day}
-                                    onChange={handleChange}
-                                    required
-                                    options={Array.from({ length: 31 }, (_, i) => (i + 1).toString())}
-                                    placeholder="JJ"
-                                    width="90px"
-                                    height="28px"
-                                />
-                                <SelectFieldOpportunity
-                                    id="start_date_month"
-                                    name="start_date_month"
-                                    value={formData.start_date_month}
-                                    onChange={handleChange}
-                                    required
-                                    options={[
-                                        'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
-                                    ]}
-                                    valueoptions={[
-                                        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
-                                    ]}
-                                    placeholder="MM"
-                                    width="100px"
-                                    height="28px"
-                                />
-                                <SelectFieldOpportunity
-                                    id="start_date_year"
-                                    name="start_date_year"
-                                    value={formData.start_date_year}
-                                    onChange={handleChange}
-                                    required
-                                    options={Array.from({ length: 30 }, (_, i) => (2023 + i).toString())}
-                                    placeholder="AAA"
-                                    width="100px"
-                                    height="28px"
-                                />
-                            </div>
-                            {errors.start_date && <div className="text-red-500 text-sm">{errors.start_date}</div>}
-                            <div className="flex gap-4 items-center ml-3">
-                                <label className="font-semibold text-sm mr-4">Date de Fin :</label>
-                                <SelectFieldOpportunity
-                                    id="end_date_day"
-                                    name="end_date_day"
-                                    value={formData.end_date_day}
-                                    onChange={handleChange}
-                                    required
-                                    options={Array.from({ length: 31 }, (_, i) => (i + 1).toString())}
-                                    placeholder="JJ"
-                                    width="90px"
-                                    height="28px"
-                                />
-                                <SelectFieldOpportunity
-                                    id="end_date_month"
-                                    name="end_date_month"
-                                    value={formData.end_date_month}
-                                    onChange={handleChange}
-                                    required
-                                    options={[
-                                        'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
-                                    ]}
-                                    valueoptions={[
-                                        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
-                                    ]}
-                                    placeholder="MM"
-                                    width="100px"
-                                    height="28px"
-                                />
-                                <SelectFieldOpportunity
-                                    id="end_date_year"
-                                    name="end_date_year"
-                                    value={formData.end_date_year}
-                                    onChange={handleChange}
-                                    required
-                                    options={Array.from({ length: 30 }, (_, i) => (2023 + i).toString())}
-                                    placeholder="AAA"
-                                    width="100px"
-                                    height="28px"
-                                />
-                            </div>
-                            {errors.end_date && <div className="text-red-500 text-sm">{errors.end_date}</div>}
-                        </div>
-                    </div>
-
-                    <hr className="border-t-2 border-black mt-5" />
                     <div className="flex items-start flex-col mt-4">
                         <h1 className="font-semibold text-lg mb-2">Documents à Joindre</h1>
 
@@ -522,6 +349,51 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
                                 </label>
                             </div>
                         </div>
+
+                        <div className="flex flex-col items-start gap-2 mt-2">
+                            <label className="font-semibold text-sm">
+                                Autres documents (optionnel)
+                            </label>
+                            <div className="relative w-full max-w-sm">
+                                <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD] border-dashed">
+                                    <UploadIcon />
+                                    <span className="text-gray-700 ml-2 font-medium">
+                                        Ajouter d'autres documents
+                                    </span>
+                                    <input
+                                        type="file"
+                                        id="other_documents"
+                                        name="other_documents"
+                                     
+                                        onChange={handleOtherDocumentsChange}
+                                        className="hidden"
+                                        multiple
+                                    />
+                                </label>
+                            </div>
+
+                            {/* Display the list of uploaded documents */}
+                            {otherDocumentNames.length > 0 && (
+                                <div className="w-full mt-2 space-y-2">
+                                    {otherDocumentNames.map((name, index) => (
+                                        <div key={index} className="flex items-center justify-between bg-gray-100 p-2 rounded">
+                                            <span className="text-sm truncate max-w-xs">{name}</span>
+                                            <button
+                                                type="button"
+                                                onClick={() => removeOtherDocument(index)}
+                                                className="text-red-500 hover:text-red-700"
+                                            >
+                                                ×
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            <p className="text-xs text-gray-500">
+                                Vous pouvez ajouter plusieurs documents PDF (5 Mo maximum par fichier)
+                            </p>
+                        </div>
                     </div>
 
                     <hr className="border-t-2 border-black mt-5" />
@@ -542,33 +414,34 @@ const InternshipApplicationForm: React.FC<{ isOpen: boolean; setIsOpen: (isOpen:
                     </div>
                 </form>
             ) : (
-                <div className="bg-[#feefef] p-6 rounded-lg shadow-lg w-[500px] flex flex-col gap-3 justify-between items-center">
-                    <div className="flex flex-col justify-between items-center gap-2">
-                        <img src="/icons/folderIcon.png" alt="" width={45} />
-                        <p className="font-semibold text-lg">
-                            <span className="text-[#0270A0]">Merci</span> pour votre demande !
-                        </p>
-                    </div>
+                <div className="w-full flex flex-col gap-3 justify-between items-center">
 
-                    <div className="text-sm flex flex-col gap-2 px-4">
-                        <p>
-                            Votre demande de stage a été envoyée avec succès. Nous l'examinerons avec attention et vous recontacterons si votre profil correspond à nos besoins.
-                        </p>
-                        <p>
-                            En attendant, n'hésitez pas à explorer nos autres opportunités ou à nous contacter pour toute question supplémentaire.
-                        </p>
-                    </div>
+                    <div className="bg-[#feefef] p-6 rounded-lg shadow-lg w-[500px] flex flex-col gap-3 justify-between items-center ">
+                        <div className="flex flex-col justify-between items-center gap-2">
+                            <img src="/icons/folderIcon.png" alt="" width={45} />
+                            <p className="font-semibold text-lg">
+                                <span className="text-[#0270A0]">Merci</span> pour votre demande !
+                            </p>
+                        </div>
 
-                    <button
-                        className="bg-[#0270A0] text-white py-2 px-4 rounded-lg font-semibold w-fit text-sm"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        Retour à la page des opportunités
-                    </button>
+                        <div className="text-sm flex flex-col gap-2 px-4">
+                            <p>
+                                Votre demande de stage a été envoyée avec succès. Nous l'examinerons avec attention et vous recontacterons si votre profil correspond à nos besoins.
+                            </p>
+                            <p>
+                                En attendant, n'hésitez pas à explorer nos autres opportunités ou à nous contacter pour toute question supplémentaire.
+                            </p>
+                        </div>
+
+                        <button
+                            className="bg-[#0270A0] text-white py-2 px-4 rounded-lg font-semibold w-fit text-sm"
+                            onClick={hide}
+                        >
+                            Retour à la page des opportunités
+                        </button>
+                    </div>
                 </div>
             )}
-        </div>
+        </ModalOppourtunity>
     );
 }
-
-export default InternshipApplicationForm;

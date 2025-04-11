@@ -2,9 +2,8 @@ import { InboxIcon, MagnifyingGlassIcon, PencilSquareIcon, TrashIcon } from "@he
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import ReactLoading from "react-loading";
+// import ReactLoading from "react-loading";
 import { Link } from "gatsby";
-import { EyeIcon } from "@heroicons/react/24/solid";
 
 export default function Event() {
   const [loading, setLoading] = useState(true);
@@ -57,7 +56,7 @@ export default function Event() {
     });
   };
   if (loading) {
-    return <ReactLoading type="spinningBubbles" color="white" height={25} width={25} />;
+    return  <div>Loading...</div>
   }
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);

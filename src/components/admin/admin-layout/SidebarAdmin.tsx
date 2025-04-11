@@ -85,6 +85,15 @@ export default function SidebarAdmin() {
                                 <>
                                     <Link to="/admin/internship-application" className="block p-4 text-gray-300 hover:bg-gray-700">Internship Application</Link>
                                     <Link to="/admin/benevole" className="block p-4 text-gray-300 hover:bg-gray-700">Benevole</Link>
+                                    <Link to="/admin/call-for-tender" className="block p-4 text-gray-300 hover:bg-gray-700">
+                                        <div className='w-full flex items-center justify-between'>
+                                            <span>Call For tender</span>
+                                            <div className='w-7 h-7 bg-yellow-500 z-10 rounded-full flex justify-center items-center'>
+                                                <span className='z-20 text-black font-bold'>1</span>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                    <Link to="/admin/job-offer" className="block p-4 text-gray-300 hover:bg-gray-700">Job Offer</Link>
                                 </>
                             )}
                         </AccordionBody>

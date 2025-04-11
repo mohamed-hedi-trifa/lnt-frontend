@@ -30,7 +30,6 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
   const [itemsList, setItemsList] = useState<any[]>([]);
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
   const resSafeLength = (arr: any[]) => (Array.isArray(arr) ? arr.length : 0);
-  const lang = window?.location?.pathname.startsWith('/fr/') ? 'fr' : 'en';
   const [searchQuery, setSearchQuery] = useState(filter.searchQuery || '');
   const [themes, setThemes] = useState<number[]>(filter.themes || []);
 
@@ -45,7 +44,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
     }
   };
 
-  function getPosts(query: any, page = currentPage, themes: number[]) {
+  function getAchievements(query: any, page = currentPage, themes: number[]) {
     setLoading(true);
     axios
       .get(`/api/get-active-achievements/${limit}`, {
@@ -85,7 +84,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
   }, []);
 
   useEffect(() => {
-    getPosts(searchQuery, currentPage, filter.themes || []);
+    getAchievements(searchQuery, currentPage, filter.themes || []);
   }, [searchQuery, currentPage, filter, sortOrder]);
 
   if (loading) return <div className='flex justify-center items-center pt-40'> <Loader/> </div> ;

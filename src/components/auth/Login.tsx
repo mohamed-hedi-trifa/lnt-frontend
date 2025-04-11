@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import { Link, navigate } from 'gatsby'
 import { useAuthContext } from '../../contexts/AuthProvider';
-import ReactLoading from 'react-loading'
 
 export default function Login() {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         axios.get('/api/user/status').then(res => {
             Swal.fire("", "You are already logged in", "warning").then(() => {
+                //@ts-ignore
                 navigate('/admin')
             })
         }).catch(err => {
@@ -42,8 +42,13 @@ export default function Login() {
 
         axios.post('/api/login', data).then(res => {
             setUser(res.data.user)
-            localStorage.setItem("token", res.data.token)
+            if (typeof window !== "undefined")
+            {
+                     localStorage.setItem("token", res.data.token)
+            }
+       
             Swal.fire("Success", res.data.message, "success").then(() => {
+                //@ts-ignore
                 navigate("/admin");
             })
 
@@ -58,11 +63,9 @@ export default function Login() {
         })
 
     }
-    // if (loading) {
-    //     return (
-    //         <ReactLoading />
-    //     )
-    // }
+    if (loading) {
+        return   "Loading...";
+    }
 
     return (
         <>

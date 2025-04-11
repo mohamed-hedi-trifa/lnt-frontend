@@ -25,7 +25,6 @@ const colorsData: Color[] = [
   {
      color1: "#3344DC",
     color2: "#50ACC6",
-
   },
   {
    color1: "#DF2222",
@@ -34,18 +33,15 @@ const colorsData: Color[] = [
   {
   color1: "#00E676",
     color2: "#50ACC6",
-
   },
   {
   color1: "#F57C00",
     color2: "#FFCA28",
- 
   },
   {
   
     color1: "#006E9F",
     color2: "#51ADC6",
-    
   },
 ];
 

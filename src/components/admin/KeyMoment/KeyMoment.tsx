@@ -2,7 +2,7 @@ import { InboxIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outl
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import ReactLoading from "react-loading";
+// import ReactLoading from "react-loading";
 import { Link } from "gatsby";
 
 export default function KeyMoment() {
@@ -56,7 +56,7 @@ export default function KeyMoment() {
     });
   };
   if (loading) {
-    return <ReactLoading type="spinningBubbles" color="white" height={25} width={25} />;
+    return   "Loading...";
   }
 
   return (
