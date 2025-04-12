@@ -11,7 +11,11 @@ import Table from "@/components/visitor/who-are-we/rapports/Table";
 import DecouvrezDautresEspeces from "./DecouvrezDautresEspeces";
 import Media from "@/components/visitor/Media";
 import AMCPSuiviScientifiqueSidebar from "@/components/layout/AMCPSuiviScientifiqueSidebar";
+<<<<<<< HEAD
+import TableSpecies from "./TableSpecies";
+=======
 import Loader from "@/components/atoms/loader";
+>>>>>>> ad6c1dd28e008d2e58a570222f8a49649258528d
 
 
 // Fonction utilitaire pour parser le contenu markdown
@@ -278,11 +282,11 @@ export default function Species({ location, params }: { location: any; params: a
           <PageParagraph>
             <div className="mx-28 pt-4 font-semibold text-[18px] sm:text-[20px]">
               <p className="mb-[30px] text-center">
-                La recherche scientifique sur la Posidonie, plante emblématique de la Méditerranée, est essentielle pour comprendre son rôle écologique et les menaces auxquelles elle fait face. Cette section regroupe des rapports et des articles détaillant les résultats des suivis scientifiques, les méthodologies utilisées, et les recommandations pour préserver cet écosystème clé dans l'archipel de Kerkennah.
+                {blogSpecies.description_research_knowledge_en || blogSpecies.description_research_knowledge_fr }
               </p>
             </div>
           </PageParagraph>
-          <Table data={blogSpecies.researchKnowledge} />
+          <TableSpecies data={blogSpecies.researchKnowledge} />
           <section className="border-t border-[#000000] mt-10 py-10">
             <DecouvrezDautresEspeces currentBlog={blogSpecies} />
           </section>

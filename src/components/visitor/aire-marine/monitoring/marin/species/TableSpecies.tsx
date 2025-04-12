@@ -1,6 +1,7 @@
 import React from "react";
 
-const Table: React.FC<{ data: { title: string; date: string; pdf_link: string }[] }> = ({ data }) => {
+const TableSpecies: React.FC<{ data: { title: string; date: string; pdf_link: string }[] }> = ({ data }) => {
+    console.table(data)
   return (
     <div className="overflow-x-auto shadow-helmi flex justify-center">
       <table className="w-full  border-collapse shadow-helmi mx-auto">
@@ -10,7 +11,7 @@ const Table: React.FC<{ data: { title: string; date: string; pdf_link: string }[
               <span className="text-[16px]">Titre</span>
             </th>
             <th className="px-4 py-2">
-              <span className="text-[16px]">Date</span>
+              <span className="text-[16px]">Sujet</span>
             </th>
           </tr>
         </thead>
@@ -30,12 +31,12 @@ const Table: React.FC<{ data: { title: string; date: string; pdf_link: string }[
                 >
                   <img src="/images/Pdf.png" alt="item" className="w-[40px] h-[45px] object-cover" />
                   <span className="text-[12px] md:text-[16px] ml-[16px] text-[#0270A0] underline">
-                    {item.title}.pdf
+                    {item.title_en || item.title_fr }.pdf
                   </span>
                 </a>
               </td>
               <td className="text-[14px] md:text-[16px] border-l-2 px-4 py-2">
-                <span className="underline text-[16px] font-bold">{item.date}</span>
+                <span className="text-[16px] font-bold">{item.description_en || item.description_fr}</span>
               </td>
             </tr>
           ))}
@@ -45,4 +46,4 @@ const Table: React.FC<{ data: { title: string; date: string; pdf_link: string }[
   );
 };
 
-export default Table;
+export default TableSpecies;

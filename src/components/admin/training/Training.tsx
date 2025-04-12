@@ -56,9 +56,31 @@ export default function Training() {
     });
   };
   if (loading) {
-    return   "Loading...";
+    return "Loading...";
   }
+  const handleToggle = (item) => {
+    const updatedStatus = item.status === "visible" ? "hidden" : "visible";
 
+
+    axios
+      .put(`/api/training/status/${item.slug}`, {
+        status: updatedStatus,
+      })
+      .then((res) => {
+        Swal.fire("Success", res.data.message, "success");
+
+        // Update the local state only on success
+        setItemsList((prevItems) =>
+          prevItems.map((itm) =>
+            itm.id === item.id ? { ...itm, status: updatedStatus } : itm
+          )
+        );
+
+      })
+      .catch((err) => {
+        Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
+      });
+  };
   return (
     <>
       <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
@@ -77,7 +99,7 @@ export default function Training() {
                   <div className="pb-3 text-start col-span-2">Image</div>
                   <div className="pb-3 text-start col-span-5 sm:col-span-3">Title</div>
                   <div className="pb-3 text-start col-span-2">Type</div>
-                  <div className="pb-3 col-span-2">Status</div>
+                  <div className="pb-3 col-span-2">is_visible</div>
                   <div className="pb-3 hidden sm:block text-end sm:text-center col-span-2">Actions</div>
                 </div>
                 <div className="divide-y">
@@ -92,12 +114,24 @@ export default function Training() {
                           <div className="font-bold">{item.title_en || item.title_fr}</div>{" "}
                         </div>
                         <div className="pt-3 col-span-2 text-start">{item.type}</div>
-                        <div className="pt-3 col-span-2">{item.status == "visible" ? "active" : "hidden"}</div>
+                        <div className="pt-3 col-span-2">
+                          <label className="toggle-switch">
+                            <input
+                              type="checkbox"
+                              name="status"
+                              checked={item.status === "visible"}
+                              onChange={() => handleToggle(item)}
+                            />
+                            <span className="slider"></span>
+                          </label>
+                        </div>
+
+
                         <div className="pt-3 text-end sm:text-center col-span-1 sm:col-span-2">
                           <div className="grid grid-cols-12">
                             <div className="col-span-12 sm:col-span-6 flex justify-end sm:justify-center">
-                            <Link className="text-center" to={`/admin/training/manage-training/${item.slug}`}>
-                               <MagnifyingGlassIcon className="block h-8 w-8 text-blue-600" aria-hidden="true" />
+                              <Link className="text-center" to={`/admin/training/manage-training/${item.slug}`}>
+                                <MagnifyingGlassIcon className="block h-8 w-8 text-blue-600" aria-hidden="true" />
                               </Link>
 
                               <Link className="text-center" to={`/admin/training/${item.slug}`}>
