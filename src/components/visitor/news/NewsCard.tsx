@@ -10,7 +10,7 @@ export default function NewsCard({ news }: NewsCardProps) {
   const themesArray = Array.isArray(news.themes) ? news.themes : [];
   
   return (
-    <div className="bg-white shadow p-4 flex flex-col gap-4 rounded-xl w-[395px] min-h-[420px] h-full">
+    <div className="bg-white shadow-helmi p-4 flex flex-col gap-4 rounded-xl w-[395px] min-h-[420px] h-full">
       <img
         src={`${process.env.GATSBY_API_URL}${news.image}`}
         alt="news"
