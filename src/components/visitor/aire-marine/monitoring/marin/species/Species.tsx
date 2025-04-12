@@ -11,6 +11,7 @@ import Table from "@/components/visitor/who-are-we/rapports/Table";
 import DecouvrezDautresEspeces from "./DecouvrezDautresEspeces";
 import Media from "@/components/visitor/Media";
 import AMCPSuiviScientifiqueSidebar from "@/components/layout/AMCPSuiviScientifiqueSidebar";
+import Loader from "@/components/atoms/loader";
 
 
 // Fonction utilitaire pour parser le contenu markdown
@@ -76,7 +77,7 @@ export default function Species({ location, params }: { location: any; params: a
 
 
   if (!blogSpecies) {
-    return <div>Loading...</div>;
+    return <div className='flex justify-center items-center pt-40'> <Loader/> </div>;
   }
 
   return (

@@ -3,6 +3,7 @@ import axios from "axios";
 import "./BlogDetail.css";
 import Title from "../atoms/titles/Title";
 import { navigate } from "gatsby";
+import Loader from "../atoms/loader";
 
 // Helper function to parse custom markdown-like syntax
 const parseContent = (content: any) => {
@@ -68,7 +69,7 @@ export default function SpeciesDetail({ location, params }: { location: any; par
   };
 
   if (!blogPost) {
-    return <div>Loading...</div>;
+    return <div className='flex justify-center items-center pt-40'> <Loader/> </div>;
   }
 
   return (

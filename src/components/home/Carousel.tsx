@@ -9,6 +9,7 @@ import 'swiper/css/autoplay';
 import 'swiper/css/free-mode';
 
 import './Carousel.css';
+import Loader from '../atoms/loader';
 
 interface SlideItem {
   image: string;
@@ -54,7 +55,7 @@ const Carousel = ({ slides }: { slides: SlideItem[] }) => {
           ))}
         </Swiper>
       ) : (
-          <p>Loading...</p>
+        <div className='flex justify-center items-center pt-40'> <Loader/> </div>
         )}
       </div>
     </div>

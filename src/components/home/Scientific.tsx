@@ -4,6 +4,7 @@ import { Link } from "gatsby";
 import axios from "axios";
 import Swal from "sweetalert2";
 import IResearch from "@/models/IResearch";
+import Loader from "../atoms/loader";
 
 
 type Color = {
@@ -140,9 +141,7 @@ export default function Scientific() {
   return (
     <>
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <p className="text-xl text-gray-500">Loading...</p>
-        </div>
+        <div className='flex justify-center items-center pb-20'> <Loader/> </div>
       ) : (
 
         <section className="relative px-3 py-10 bg-cover">

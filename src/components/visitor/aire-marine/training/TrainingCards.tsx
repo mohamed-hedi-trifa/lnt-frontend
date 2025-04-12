@@ -7,6 +7,7 @@ import FilterIcon from '@/assets/icons/FilterIcon';
 import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
 import sortIcon from "@/assets/icons/sort-icon.png"
 import { Link } from 'gatsby';
+import Loader from '@/components/atoms/loader';
 
 interface TrainingCardsProps {
   filter: {
@@ -82,7 +83,7 @@ export default function TrainingCards({ filter, setIsOpened }: TrainingCardsProp
       getPosts(searchQuery, currentPage, filter?.themes || []);
     }, [searchQuery, currentPage, filter, sortOrder]);
   
-    if (loading) return  <p className='w-full'>"Loading..."</p>;
+    if (loading) return  <div className='flex justify-center sm:pt-40 w-full'> <Loader/> </div>;
   
     const startIndex = (currentPage - 1) * limit + 1;
     const endIndex = Math.min(currentPage * limit, resSafeLength(itemsList));
