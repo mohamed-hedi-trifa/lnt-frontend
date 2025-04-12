@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const PREFIX = "akddcl-";
 
 const useLocalStorage = (key: string, defaultValue: any) => {
-  // Create state variable to store
-  // localStorage value in state
   const prefixedKey = PREFIX + key;
-  const [localStorageValue, setLocalStorageValue] = useState(() => {
+  const [localStorageValue, setLocalStorageValue] = useState(defaultValue);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
     try {
       if (typeof window !== "undefined") {
         const value = localStorage.getItem(prefixedKey);
@@ -26,22 +28,20 @@ const useLocalStorage = (key: string, defaultValue: any) => {
       }
     } catch (error) {
       localStorage.setItem(prefixedKey, JSON.stringify(defaultValue));
-      return defaultValue;
     }
-  });
+  }, [prefixedKey]);
 
-  // this method update our localStorage and our state
   const setLocalStorageStateValue = (valueOrFn: any) => {
-    let newValue;
-    if (typeof valueOrFn === "function") {
-      const fn = valueOrFn;
-      newValue = fn(localStorageValue);
-    } else {
-      newValue = valueOrFn;
+    const newValue =
+      typeof valueOrFn === "function" ? valueOrFn(localStorageValue) : valueOrFn;
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem(prefixedKey, JSON.stringify(newValue));
     }
-    localStorage.setItem(prefixedKey, JSON.stringify(newValue));
+
     setLocalStorageValue(newValue);
   };
+
   return [localStorageValue, setLocalStorageStateValue];
 };
 

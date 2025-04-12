@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ServiceCard from './services/ServiceCard';
+import Loader from '../atoms/loader';
 
 interface Service {
     id: number;
@@ -38,7 +39,7 @@ export default function ServicesVisitor({ lang }: { lang: string }) {
         getServices();
     }, []);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div className='flex justify-center items-center pt-40'> <Loader/> </div>;
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

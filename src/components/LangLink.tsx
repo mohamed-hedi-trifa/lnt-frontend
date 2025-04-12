@@ -1,5 +1,5 @@
 import { useTranslation } from "@/contexts/TranslationContext";
-import { GatsbyLinkProps, Link } from "gatsby";
+import { Link } from "gatsby";
 import React from "react";
 
 type Props = {

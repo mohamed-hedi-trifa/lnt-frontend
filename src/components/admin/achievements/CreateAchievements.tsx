@@ -1,10 +1,9 @@
-import React, { useState, ChangeAchievement, FormAchievement, useEffect } from "react";
+import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Link, navigate } from "gatsby";
 import ItemsList from "../ItemsList";
 import Input from "../../atoms/inputs/Input";
-import Textarea from "../../atoms/inputs/Textarea";
 import Button from "../../atoms/Button";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Title from "../../atoms/titles/Title";
@@ -22,9 +21,6 @@ interface FormData {
     date: Date;
 }
 
-
-
-
 const CreateAchievement: React.FC = () => {
     const [language, setLanguage] = useState<string>("en");
     const [formData, setFormData] = useLocalStorage("event-info", {
@@ -39,12 +35,11 @@ const CreateAchievement: React.FC = () => {
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-
     const [englishItems, setEnglishItems] = useState<any[]>([]);
     const [frenchItems, setFrenchItems] = useState<any[]>([]);
     const [image, setImage] = useState<File | null>(null);
 
-    const handleLanguageChange = async (e: ChangeAchievement<HTMLSelectElement>) => {
+    const handleLanguageChange = async (e: any) => {
         const lang = e.target.value;
         if (
             (lang === "en" && (formData.title_fr || frenchItems.length > 0)) ||
@@ -62,7 +57,7 @@ const CreateAchievement: React.FC = () => {
 
             if (result.isConfirmed) {
                 const created = await createAchievement();
-
+// @ts-ignore
                 if (created) navigate(`/admin/achievements/${created.slug}?lang=${lang}`);
             } else if (result.isDenied) {
                 setLanguage(lang);
@@ -72,7 +67,7 @@ const CreateAchievement: React.FC = () => {
         }
     };
 
-    const handleChange = (e: ChangeAchievement<HTMLInputElement | HTMLTextAreaElement | HTMLInputElement>) => {
+    const handleChange = (e: any) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -80,7 +75,7 @@ const CreateAchievement: React.FC = () => {
         });
     };
 
-    const handleImageChange = (e: ChangeAchievement<HTMLInputElement>) => {
+    const handleImageChange = (e: any) => {
         if (e.target.files) {
             setImage(e.target.files[0]); // Store the file object
         }
@@ -224,11 +219,11 @@ const CreateAchievement: React.FC = () => {
         return null;
     }
 
-    const handleSubmit = async (e: FormAchievement) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
 
         const created = await createAchievement();
-
+// @ts-ignore
         if (created) navigate("/admin/achievements");
     };
 
@@ -309,8 +304,7 @@ const CreateAchievement: React.FC = () => {
                         setItems={language === "en" ? setEnglishItems : setFrenchItems}
                         language={language}
                         key={language}
-                        route="/api/event-content-items"
-                    />
+                        route="/api/event-content-items" formData={[]} />
                 ) : (
                     <div className="shadow p-4">There is no content currently, add new content by clicking one of the buttons below</div>
                 )}

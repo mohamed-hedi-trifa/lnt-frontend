@@ -4,6 +4,7 @@ import { Link } from "gatsby";
 import axios from "axios";
 import Swal from "sweetalert2";
 import IResearch from "@/models/IResearch";
+import Loader from "../atoms/loader";
 
 
 type Color = {
@@ -24,7 +25,6 @@ const colorsData: Color[] = [
   {
      color1: "#3344DC",
     color2: "#50ACC6",
-
   },
   {
    color1: "#DF2222",
@@ -33,18 +33,15 @@ const colorsData: Color[] = [
   {
   color1: "#00E676",
     color2: "#50ACC6",
-
   },
   {
   color1: "#F57C00",
     color2: "#FFCA28",
- 
   },
   {
   
     color1: "#006E9F",
     color2: "#51ADC6",
-    
   },
 ];
 
@@ -144,9 +141,7 @@ export default function Scientific() {
   return (
     <>
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <p className="text-xl text-gray-500">Loading...</p>
-        </div>
+        <div className='flex justify-center items-center pb-20'> <Loader/> </div>
       ) : (
 
         <section className="relative px-3 py-10 bg-cover">

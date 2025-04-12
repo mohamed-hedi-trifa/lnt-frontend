@@ -2,10 +2,10 @@
 import OpportunityDetails from '@/components/visitor/opportunities/OpportunityDetails/OpportunityDetails'
 import React from 'react'
 
-export default function index() {
+export default function index({location, params}:{location:any, params:any}) {
     return (
       <div>
-    <OpportunityDetails  />
+    <OpportunityDetails location={location} params={params}  />
       </div>
     
     )

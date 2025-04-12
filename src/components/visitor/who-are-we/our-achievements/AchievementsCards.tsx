@@ -8,6 +8,7 @@ import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
 import sortIcon from '@/assets/icons/sort-icon.png';
 import { Link } from 'gatsby';
 import EmptyAchievements from './EmptyAchievements';
+import Loader from '@/components/atoms/loader';
 
 interface AchievementsCardsProps {
   filter: {
@@ -29,7 +30,6 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
   const [itemsList, setItemsList] = useState<any[]>([]);
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
   const resSafeLength = (arr: any[]) => (Array.isArray(arr) ? arr.length : 0);
-  const lang = window?.location?.pathname.startsWith('/fr/') ? 'fr' : 'en';
   const [searchQuery, setSearchQuery] = useState(filter.searchQuery || '');
   const [themes, setThemes] = useState<number[]>(filter.themes || []);
 
@@ -87,7 +87,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
     getAchievements(searchQuery, currentPage, filter.themes || []);
   }, [searchQuery, currentPage, filter, sortOrder]);
 
-  if (loading) return <p className='w-full'>"Loading..."</p>;
+  if (loading) return <div className='flex justify-center items-center pt-40'> <Loader/> </div> ;
 
   const startIndex = (currentPage - 1) * limit + 1;
   const endIndex = Math.min(currentPage * limit, resSafeLength(itemsList));

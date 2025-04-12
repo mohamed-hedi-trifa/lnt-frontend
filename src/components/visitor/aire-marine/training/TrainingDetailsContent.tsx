@@ -7,6 +7,7 @@ import Calendar from "@/assets/icons/Calendar";
 import Media from "../../Media";
 import PageParagraph from "@/components/atoms/PageParagraph";
 import "./TrainingDetailsContent.css";
+import Loader from "@/components/atoms/loader";
 
 // --- Helpers ---
 
@@ -85,7 +86,7 @@ export default function TrainingDetailsContent({ location, params }: TrainingDet
   }, [slug, location.search]);
 
   if (!training) {
-    return <div className="w-full text-center py-10">Loading...</div>;
+    return <div className='flex justify-center items-center '> <Loader/> </div>;
   }
 
   return (

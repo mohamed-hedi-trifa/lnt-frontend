@@ -6,9 +6,9 @@ import { useTranslation } from '@/contexts/TranslationContext';
 
 export default function EventsCard({ event, custunCss }: { event: any, custunCss: string}) {
 
-    const { t, lang } = useTranslation();
+        const { t, lang } = useTranslation();
 
-    const formattedDate = event?.event_start_at
+        const formattedDate = event?.event_start_at
         ? format(new Date(event.event_start_at),
             lang === "fr" ? "d MMMM yyyy 'à' HH:mm" : "MMMM d, yyyy 'at' HH:mm",
             { locale: lang === "fr" ? fr : enUS }
@@ -43,9 +43,9 @@ export default function EventsCard({ event, custunCss }: { event: any, custunCss
                 </div>
 
                 <button className="text-white sm:text-xs font-medium self-center rounded-3xl bg-gradient-to-r from-[#51ADC6] to-[#006E9F] w-fit max-w-md sm:py-2 py-[6px] px-6 sm:px-4 
- shadow-[0px_6px_12px_rgba(0,0,0,0.3)] 
- hover:shadow-[0px_10px_20px_rgba(0,0,0,0.4)] 
- hover:opacity-90 transition duration-300 ease-in-out">
+                    shadow-[0px_6px_12px_rgba(0,0,0,0.3)] 
+                    hover:shadow-[0px_10px_20px_rgba(0,0,0,0.4)] 
+                    hover:opacity-90 transition duration-300 ease-in-out">
                     En savoir plus
                 </button>
             </div>

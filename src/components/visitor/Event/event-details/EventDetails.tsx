@@ -5,16 +5,14 @@ import axios from "axios";
 import EventDetailsContent from './EventDetailsContent';
 import RightSideEventDetails from './RightSideEventDetails';
 import MoreEvent from './MoreEvent';
+import { IEvent } from '@/models/IEvent';
 
 export default function EventDetails({ location, params }: { location: any; params: any }) {
-  const searchParams = new URLSearchParams(location?.search);
-  const paramLang = searchParams.get("lang");
-
   
-  const [event, setEvent] = useState([]);
+  const [event, setEvent] = useState<IEvent>();
   const [moreEvents, setMoreEvents] = useState([]);
   
-  const getEvent = async (slugEvent) => {
+  const getEvent = async (slugEvent:any) => {
     try {
       const response = await axios.get(`/api/events/${slugEvent}`);
       setEvent(response.data);
@@ -23,7 +21,7 @@ export default function EventDetails({ location, params }: { location: any; para
     }
   };
 
-  const getMoreEvents = async (slugEvent) => {
+  const getMoreEvents = async (slugEvent:any) => {
     try {
       const response = await axios.get(`/api/more-events/${slugEvent}`);
       setMoreEvents(response.data);
@@ -47,9 +45,6 @@ export default function EventDetails({ location, params }: { location: any; para
 
       <EventDetailslImage event={event} />
 
-
-
-
       <section className='flex sm:gap-20 gap-12 flex-col sm:grid sm:grid-cols-3    my-5 text-center max-w-7xl w-full mx-auto justify-between  sm:mt-20 mt-10 px-5 h-fit   '>
 
         <div className='h-full w-full sm:col-span-2' >
@@ -58,10 +53,7 @@ export default function EventDetails({ location, params }: { location: any; para
         </div>
 
         <div className='flex flex-col h-full w-full sm:col-span-1  gap-10'>
-          <RightSideEventDetails event={event}/>
-
-
-
+          <RightSideEventDetails location={location} event={event}/>
         </div>
 
       </section>
