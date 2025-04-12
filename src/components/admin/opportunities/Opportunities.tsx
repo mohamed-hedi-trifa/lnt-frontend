@@ -57,7 +57,7 @@ export default function Opportunity() {
     });
   };
   if (loading) {
-    return   "Loading...";
+    return "Loading...";
   }
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
@@ -74,7 +74,7 @@ export default function Opportunity() {
 
 
   const handleToggle = (item) => {
-    const updatedStatus = item.status === "visible" ? "hidden" : "visible"; 
+    const updatedStatus = item.status === "visible" ? "hidden" : "visible";
 
 
     axios
@@ -87,10 +87,10 @@ export default function Opportunity() {
         // Update the local state only on success
         setItemsList((prevItems) =>
           prevItems.map((itm) =>
-            itm.id === item.id ? { ...itm, status: updatedStatus } : itm 
+            itm.id === item.id ? { ...itm, status: updatedStatus } : itm
           )
         );
-        
+
       })
       .catch((err) => {
         Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
@@ -116,7 +116,7 @@ export default function Opportunity() {
                   <div className="text-start col-span-3">Title</div> {/* Reduced from 5 to 4 */}
                   <div className="text-start col-span-2">Due Date</div>
                   <div className="text-start col-span-2">Location</div>
-                  <div className="col-span-1">Status</div> {/* Reduced from 2 to 1 */}
+                  <div className="col-span-1">is_visible</div> {/* Reduced from 2 to 1 */}
                   <div className="hidden sm:block text-end col-span-1">Actions</div>
                 </div>
 
@@ -134,16 +134,17 @@ export default function Opportunity() {
                       <div className="col-span-2 text-start">{item.due_date}</div>
                       <div className="col-span-2 text-start">{item.location_en || item.location_fr}</div>
                       <div className="col-span-1">
-                        
-                      <label className="toggle-switch">
-                            <input
-                              type="checkbox"
-                              name="status"
-                              checked={item.status === "visible"}
-                              onChange={() => handleToggle(item)}
-                            />
-                            <span className="slider"></span>
-                          </label>                        </div>
+
+                        <label className="toggle-switch">
+                          <input
+                            type="checkbox"
+                            name="status"
+                            checked={item.status === "visible"}
+                            onChange={() => handleToggle(item)}
+                          />
+                          <span className="slider"></span>
+                        </label>
+                      </div>
 
                       {/* Actions - Ensures Icons Stay Inline */}
                       <div className="hidden sm:flex col-span-1 justify-end sm:justify-center gap-3">

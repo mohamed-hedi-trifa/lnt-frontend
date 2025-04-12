@@ -57,7 +57,7 @@ export default function News() {
     });
   };
   if (loading) {
-    return   "Loading...";
+    return "Loading...";
   }
 
   const handleUpdatePopularStatus = (id: number, isPopular: string) => {
@@ -71,7 +71,29 @@ export default function News() {
         Swal.fire("Error", err.response?.data?.message || "Failed to update popular status", "error");
       });
   };
+  const handleToggle = (item) => {
+    const updatedStatus = item.status === "visible" ? "hidden" : "visible";
 
+
+    axios
+      .put(`/api/news/status/${item.slug}`, {
+        status: updatedStatus,
+      })
+      .then((res) => {
+        Swal.fire("Success", res.data.message, "success");
+
+        // Update the local state only on success
+        setItemsList((prevItems) =>
+          prevItems.map((itm) =>
+            itm.id === item.id ? { ...itm, status: updatedStatus } : itm
+          )
+        );
+
+      })
+      .catch((err) => {
+        Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
+      });
+  };
   return (
     <>
       <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
@@ -90,7 +112,7 @@ export default function News() {
                   <div className="text-start col-span-2">Image</div>
                   <div className="text-start col-span-3">Title</div>
                   <div className="text-start col-span-2">Date</div>
-                  <div className="col-span-1">Status</div>
+                  <div className="col-span-1">is_visible</div>
                   <div className="col-span-1">Popular</div> {/* New Column */}
                   <div className="hidden sm:block text-end col-span-1">Actions</div>
                 </div>
@@ -111,7 +133,16 @@ export default function News() {
                       </div>
                       <div className="col-span-2 text-start">{item.date}</div>
                       <div className="col-span-1">
-                        {item.status == "visible" ? "Visible" : "Hidden"}
+
+                        <label className="toggle-switch">
+                          <input
+                            type="checkbox"
+                            name="status"
+                            checked={item.status === "visible"}
+                            onChange={() => handleToggle(item)}
+                          />
+                          <span className="slider"></span>
+                        </label>
                       </div>
                       <div className="col-span-1">
                         <select

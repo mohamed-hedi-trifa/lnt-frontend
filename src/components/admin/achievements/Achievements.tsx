@@ -57,9 +57,31 @@ export default function Achievements() {
     });
   };
   if (loading) {
-    return   <div>Loading...</div>
+    return <div>Loading...</div>
   }
+  const handleToggle = (item) => {
+    const updatedStatus = item.status === "visible" ? "hidden" : "visible";
 
+
+    axios
+      .put(`/api/achievement/status/${item.slug}`, {
+        status: updatedStatus,
+      })
+      .then((res) => {
+        Swal.fire("Success", res.data.message, "success");
+
+        // Update the local state only on success
+        setItemsList((prevItems) =>
+          prevItems.map((itm) =>
+            itm.id === item.id ? { ...itm, status: updatedStatus } : itm
+          )
+        );
+
+      })
+      .catch((err) => {
+        Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
+      });
+  };
   return (
     <>
       <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
@@ -76,10 +98,10 @@ export default function Achievements() {
                 <div className="grid grid-cols-12 items-center text-center border-b font-bold py-2 bg-gray-100">
                   <div className="hidden sm:block text-start col-span-1">ID</div>
                   <div className="text-start col-span-2">Image</div>
-                  <div className="text-start col-span-3">Title</div> 
+                  <div className="text-start col-span-3">Title</div>
                   <div className="text-start col-span-2">Date</div>
-        
-                  <div className="col-span-1">Status</div> 
+
+                  <div className="col-span-1">is_visible</div>
                   <div className="hidden sm:block text-end col-span-1">Actions</div>
                 </div>
 
@@ -95,8 +117,17 @@ export default function Achievements() {
                         {item.title_en || item.title_fr}
                       </div>
                       <div className="col-span-2 text-start">{item.date}</div>
-                      <div className="col-span-1">{item.status == "visible" ? "Visible" : "Hidden"}</div>
-
+                      <div className="col-span-1">
+                        <label className="toggle-switch">
+                          <input
+                            type="checkbox"
+                            name="status"
+                            checked={item.status === "visible"}
+                            onChange={() => handleToggle(item)}
+                          />
+                          <span className="slider"></span>
+                        </label>
+                      </div>
                       {/* Actions - Ensures Icons Stay Inline */}
                       <div className="hidden sm:flex col-span-1 justify-end sm:justify-center gap-3">
                         <Link to={`/admin/achievements/manage-achievement/${item.slug}`}>

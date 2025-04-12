@@ -184,7 +184,29 @@ export default function Species() {
   
   
 
+  const handleToggleStatus = (item) => {
+    const updatedStatus = item.status > 0 ? 0 : 1;
 
+
+    axios
+      .put(`/api/species/status/${item.slug}`, {
+        status: updatedStatus,
+      })
+      .then((res) => {
+        Swal.fire("Success", res.data.message, "success");
+
+        // Update the local state only on success
+        setItemsList((prevItems) =>
+          prevItems.map((itm) =>
+            itm.id === item.id ? { ...itm, status: updatedStatus } : itm
+          )
+        );
+
+      })
+      .catch((err) => {
+        Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
+      });
+  };
   return (
     <>
       <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
@@ -203,7 +225,7 @@ export default function Species() {
                   <div className="pb-3 text-start col-span-2">Image</div>
                   <div className="pb-3 text-start col-span-2 sm:col-span-2">Title</div>
                   <div className="pb-3 text-start col-span-2">Type</div>
-                  <div className="pb-3 col-span-2">Status</div>
+                  <div className="pb-3 col-span-2">is_visible</div>
                   <div className="pb-3 col-span-2">is_popular</div>
                   <div className="pb-3 hidden sm:block text-end sm:text-center col-span-2">Actions</div>
                 </div>
@@ -219,7 +241,17 @@ export default function Species() {
                           <div className="font-bold">{item.title_en || item.title_fr}</div>{" "}
                         </div>
                         <div className="pt-3 col-span-2 text-start">{item.type}</div>
-                        <div className="pt-3 col-span-2">{item.status == 1 ? "active" : "hidden"}</div>
+                        <div className="pt-3 col-span-2">                      
+                        <label className="toggle-switch">
+                          <input
+                            type="checkbox"
+                            name="status"
+                            checked={item.status > 0}
+                            onChange={() => handleToggleStatus(item)}
+                          />
+                          <span className="slider"></span>
+                        </label>
+                      </div>
                         <div className="pt-3 col-span-2">
 
                           <label className="toggle-switch">

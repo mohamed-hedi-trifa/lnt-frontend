@@ -57,7 +57,7 @@ export default function Event() {
     });
   };
   if (loading) {
-    return  <div>Loading...</div>
+    return <div>Loading...</div>
   }
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
@@ -70,6 +70,30 @@ export default function Event() {
       minute: "2-digit",
       hour12: false,
     })}`;
+  };
+
+  const handleToggle = (item) => {
+    const updatedStatus = item.status === "visible" ? "hidden" : "visible";
+
+
+    axios
+      .put(`/api/event/status/${item.slug}`, {
+        status: updatedStatus,
+      })
+      .then((res) => {
+        Swal.fire("Success", res.data.message, "success");
+
+        // Update the local state only on success
+        setItemsList((prevItems) =>
+          prevItems.map((itm) =>
+            itm.id === item.id ? { ...itm, status: updatedStatus } : itm
+          )
+        );
+
+      })
+      .catch((err) => {
+        Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
+      });
   };
   return (
     <>
@@ -90,7 +114,7 @@ export default function Event() {
                   <div className="text-start col-span-3">Title</div> {/* Reduced from 5 to 4 */}
                   <div className="text-start col-span-2">Date</div>
                   <div className="text-start col-span-2">Location</div>
-                  <div className="col-span-1">Status</div> {/* Reduced from 2 to 1 */}
+                  <div className="col-span-1">is_visible</div> {/* Reduced from 2 to 1 */}
                   <div className="hidden sm:block text-end col-span-1">Actions</div>
                 </div>
 
@@ -107,7 +131,18 @@ export default function Event() {
                       </div>
                       <div className="col-span-2 text-start">{formatDateTime(item.event_start_at)}</div>
                       <div className="col-span-2 text-start">{item.location_en || item.location_fr}</div>
-                      <div className="col-span-1">{item.status == "visible" ? "Visible" : "Hidden"}</div>
+                      <div className="col-span-1">
+
+                        <label className="toggle-switch">
+                          <input
+                            type="checkbox"
+                            name="status"
+                            checked={item.status === "visible"}
+                            onChange={() => handleToggle(item)}
+                          />
+                          <span className="slider"></span>
+                        </label>
+                      </div>
 
                       {/* Actions - Ensures Icons Stay Inline */}
                       <div className="hidden sm:flex col-span-1 justify-end sm:justify-center gap-3">
