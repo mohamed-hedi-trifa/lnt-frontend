@@ -25,44 +25,54 @@ export default function RecentArticle() {
 
       <div className="flex flex-col sm:flex-row justify-between gap-1 mt-10 font-montserrat">
         {/* Article en vedette */}
-        <div className="relative sm:w-[52.67%] w-full h-[416px] sm:h-[560px]">
+        {/* <div className="relative sm:w-[52.67%] w-full h-[416px] sm:h-[560px]"> */}
+        <div className="w-[444.97px] h-[600px] relative bg-gradient-to-b from-black/0 to-black/70 rounded-md ">
           <img
             className="w-full h-full object-cover rounded-xl"
             src={`${process.env.GATSBY_API_URL}${featuredArticle?.image}`}
             alt={featuredArticle?.title_en || featuredArticle?.title_fr}
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 rounded-xl" />
-          <div className="absolute left-8 sm:left-10 bottom-8 sm:bottom-10 text-white max-w-3xl flex flex-col gap-5">
-            {featuredArticle?.themes?.map((theme, idx) => (
-              <button
-                key={idx}
-                type="button"
-                className="rounded bg-white/30 text-white font-semibold py-2 px-3 text-sm"
-              >
-                {theme?.name_en || theme?.name_fr}
-              </button>
-            ))}
-            <div className="text-base font-extrabold drop-shadow text-white">
-              {featuredArticle?.title_en || featuredArticle?.title_fr}
+          <div className="absolute left-8 sm:left-10 bottom-8 sm:bottom-10 text-white max-w-[380.97px] flex flex-col gap-5">
+
+            <div className="flex gap-3 max-w-[404.97px] flex-wrap ">
+
+              {featuredArticle?.themes?.map((theme, idx) => (
+
+
+                <div className="px-2.5 py-1 bg-white/30 rounded-[3px] inline-flex justify-center items-center gap-2.5 w-fit">
+                  <div className="justify-center text-white text-sm font-semibold font-['Montserrat'] leading-tight w-fit">  {theme?.name_en || theme?.name_fr}</div>
+                </div>
+              ))}
+
+
+
             </div>
+
+
+            <div className="  justify-center text-white text-xl font-bold font-['Montserrat'] capitalize leading-9">
+              {featuredArticle?.card_description_en || featuredArticle?.card_description_fr}
+            </div>
+
             <div className="flex items-center gap-2">
-              <img src={Calendar} alt="calendar" className="w-6 h-6" />
-              <span className="uppercase font-light text-sm">
-                {new Date(featuredArticle?.created_at).toLocaleDateString("fr-FR", {
+              <Calendar />
+              <div className="w-40 justify-center text-white text-sm font-semibold font-['Montserrat'] uppercase">
+                Le  {new Date(featuredArticle?.created_at).toLocaleDateString("fr-FR", {
                   day: "numeric",
                   month: "long",
                   year: "numeric",
                 })}
-              </span>
+              </div>
+
             </div>
           </div>
         </div>
 
         {/* Autres articles */}
-        <div className="flex flex-col sm:w-[45.67%] w-full gap-4 mt-10 sm:mt-0">
+        <div className="flex flex-col sm:w-[45.67%] w-full gap-2 mt-10 sm:mt-0">
           {otherArticles.map((article, index) => (
             <div key={article.id || index} className="flex items-center justify-center overflow-hidden h-1/3 gap-2">
-              <div className="flex flex-col flex-grow py-2 sm:p-3 gap-2 justify-between text-start">
+              {/* <div className="flex flex-col flex-grow py-2 sm:p-3 gap-2 justify-between text-start">
                 {article.themes?.map((theme, idx) => (
                   <button
                     key={idx}
@@ -76,7 +86,7 @@ export default function RecentArticle() {
                   {article.title_en || article.title_fr}
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 text-sm mt-1">
-                  <img src={Calendar} alt="calendar" className="w-6 h-6" />
+                  <Calendar />
                   <span>
                     {new Date(article.created_at).toLocaleDateString("fr-FR", {
                       day: "numeric",
@@ -85,10 +95,34 @@ export default function RecentArticle() {
                     })}
                   </span>
                 </div>
+              </div> */}
+              <div className="flex flex-col justify-start  gap-3">
+                <div className=" flex flex-col justify-start items-start gap-3">
+                  {article.themes?.slice(0, 2).map((theme, idx) => (
+                    <div className="px-2.5 bg-[#0270A0]  py-1 bg-Chart-1 rounded-md inline-flex justify-center items-center gap-1">
+                      <div className="justify-start text-white text-sm font-semibold font-['Montserrat'] leading-tight"> {theme?.name_en || theme?.name_fr}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="self-stretch inline-flex justify-center items-center gap-2.5">
+                  <div className="w-52 h-20 justify-center text-black text-base font-semibold font-['Montserrat'] capitalize leading-relaxed">
+                    {article.card_description_en || article.card_description_fr}
+                  </div>
+                </div>
+                <div className=" relative flex items-center">
+                  <Calendar />
+                  <div className="w-44  left-[22.03px] top-0 absolute justify-center text-neutral-400 text-base font-normal font-['Montserrat'] leading-normal">
+                    {new Date(article.created_at).toLocaleDateString("fr-FR", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </div>
+                </div>
               </div>
               <img
                 src={`${process.env.GATSBY_API_URL}${article.image}`}
-                className="object-cover rounded-xl max-w-[46%] sm:w-40 sm:h-40 h-full"
+                className="object-cover rounded-xl max-w-[46%] sm:w-40  h-full"
                 alt={article.title_en || article.title_fr}
               />
             </div>

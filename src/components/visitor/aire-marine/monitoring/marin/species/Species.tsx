@@ -11,11 +11,11 @@ import Table from "@/components/visitor/who-are-we/rapports/Table";
 import DecouvrezDautresEspeces from "./DecouvrezDautresEspeces";
 import Media from "@/components/visitor/Media";
 import AMCPSuiviScientifiqueSidebar from "@/components/layout/AMCPSuiviScientifiqueSidebar";
-<<<<<<< HEAD
+
 import TableSpecies from "./TableSpecies";
-=======
 import Loader from "@/components/atoms/loader";
->>>>>>> ad6c1dd28e008d2e58a570222f8a49649258528d
+
+
 
 
 // Fonction utilitaire pour parser le contenu markdown
@@ -263,11 +263,11 @@ export default function Species({ location, params }: { location: any; params: a
           <div className="flex items-center justify-center mx-16 py-10">
             <div className="text-center">
               <h1 className="text-[28px] sm:text-[36px] font-bold">
-                <span className="text-[#0270A0]">Immersion visuelle</span> dans l'écosystème de la Posidonie
+                <span className="text-[#0270A0]">Immersion visuelle</span> dans l'écosystème de { blogSpecies.title_fr || blogSpecies.title_en }
               </h1>
               <PageParagraph>
                 <p className="text-[20px] font-semibold mt-4 mx-20 text-center">
-                  Découvrez la richesse visuelle de la posidonie à travers des images captivantes et des vidéos éducatives
+                  Découvrez la richesse visuelle de { blogSpecies.title_fr || blogSpecies.title_en } à travers des images captivantes et des vidéos éducatives
                 </p>
               </PageParagraph>
             </div>
@@ -276,7 +276,7 @@ export default function Species({ location, params }: { location: any; params: a
           <hr className="my-10 border-1 border-[#000000]" />
           <div className="text-center mx-20">
             <h1 className="text-[28px] sm:text-[36px] font-bold">
-              <span className="text-[#0270A0]">Recherche</span> et Connaissances sur la Posidonie
+              <span className="text-[#0270A0]">Recherche</span> et Connaissances sur { blogSpecies.title_fr || blogSpecies.title_en }
             </h1>
           </div>
           <PageParagraph>
