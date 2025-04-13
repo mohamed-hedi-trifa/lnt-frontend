@@ -1,28 +1,37 @@
-import { ArrowLeftCircleIcon, ArrowRightCircleIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import React, { useEffect, useState } from "react";
+import React from 'react';
+import formatDate from '@/lib/formatDate';
+import INews from '@/models/INews';
 
-type News = {
-  image?: string;
-  title?: string;
-  category?: string;
-  date?: Date;
-};
+interface NewsCardProps {
+  news: INews;
+}
 
-type Props = {
-  news: News;
-};
-
-export default function NewsCard({ news }: Props) {
+export default function NewsCard({ news }: NewsCardProps) {
+  const themesArray = Array.isArray(news.themes) ? news.themes : [];
   return (
-    <div className="max-w-[400px] mx-auto flex flex-col shadow-helmi rounded-lg overflow-hidden">
-      <div className="aspect-[10/7] m-2 rounded-lg overflow-hidden shadow-md">
-        <img src={news.image || ""} alt="" className="w-full h-full object-fill" />
-      </div>
+    <div className=" bg-white shadow-helmi p-4 flex flex-col gap-4 rounded-2xl w-[350px] min-h-[420px] h-full">
+      <img
+        src={`${process.env.GATSBY_API_URL}${news.image}`}
+        alt="news"
+        className="h-[240px] w-full object-cover rounded-md shadow-lg"
+      />
       <div className="flex flex-col grow mx-3 pb-14 md:pb-4">
-        <p className="mt-3 w-fit px-2 py-1 rounded-lg bg-blue-50 text-blue-800 text-sm font-medium ">{news.category}</p>
-        <h4 className="mt-2 mb-4 font-bold">{news.title}</h4>
+      <div className="flex gap-4 flex-wrap">
+      {themesArray.map(theme => {
+          const themeName = theme.name_fr || theme.name_en || 'N/A';
+          return (
+            <div
+              key={theme.id}
+              className="bg-[#4B6BFB0D] text-[#006E9F] text-sm font-medium py-1 px-3 rounded-md"
+            >
+              {themeName}
+            </div>
+          );
+        })}
+      </div>
+        <h4 className="mt-2 mb-4 font-bold">{news.title_fr || news.title_en || 'No Title'}</h4>
         <h4 className="mt-auto font-medium text-sm text-slate-500">
-          Le {new Date(news.date || "").toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+          {formatDate(news.date)}
         </h4>
       </div>
     </div>

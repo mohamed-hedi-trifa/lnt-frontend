@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import NewsCard from "../visitor/news/NewsCard";
+import NewsCard from "./NewsCard";
 import LangLink from "../LangLink";
 import Button from "../atoms/Button";
+import { Link } from 'gatsby';
+
 
 export default function LatestNews() {
   const [news, setNews] = useState<any[]>([]);
@@ -25,7 +27,7 @@ export default function LatestNews() {
 
   return (
     <section className="relative px-3 py-20">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <h2
           className="text-center md:text-left text-primary text-2xl font-bold"
           style={{ textShadow: "2px 2px 2px rgb(0,0,0,.33)" }}
@@ -40,7 +42,9 @@ export default function LatestNews() {
         {!loading && !error && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5 mx-2">
             {news.slice(0, 9).map((item, index) => (
-              <NewsCard key={index} news={item} />
+                        <Link key={item.id} to={`/news/${item.slug}`}>
+                          <NewsCard key={index} news={item} />
+                        </Link>
             ))}
           </div>
         )}
