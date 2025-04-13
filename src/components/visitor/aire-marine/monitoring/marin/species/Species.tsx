@@ -11,11 +11,8 @@ import Table from "@/components/visitor/who-are-we/rapports/Table";
 import DecouvrezDautresEspeces from "./DecouvrezDautresEspeces";
 import Media from "@/components/visitor/Media";
 import AMCPSuiviScientifiqueSidebar from "@/components/layout/AMCPSuiviScientifiqueSidebar";
-<<<<<<< HEAD
 import TableSpecies from "./TableSpecies";
-=======
 import Loader from "@/components/atoms/loader";
->>>>>>> ad6c1dd28e008d2e58a570222f8a49649258528d
 
 
 // Fonction utilitaire pour parser le contenu markdown
