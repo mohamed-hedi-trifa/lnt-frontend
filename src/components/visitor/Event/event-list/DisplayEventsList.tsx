@@ -43,7 +43,6 @@ export default function DisplayEventsList({ lang = "fr", eventTypeSlug , eventTy
             </button>
 
           </div>
-          <div className='sm:hidden px-5 font-semibold leading-[20px] pt-5 text-start'>1 - 12 de 150 Publication</div>
 
           {/* {
             eventTypeSlug && eventTypeSlug.length > 0 ? (

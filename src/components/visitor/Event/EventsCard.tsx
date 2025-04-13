@@ -28,8 +28,8 @@ export default function EventsCard({ event}: { event: any}) {
     return (
         <>
             {/* Mobile View */}
-            <div className='flex sm:hidden flex-col bg-white shadow-helmi gap-4 items-start rounded-2xl sm:min-h-[432px] sm:pb-0 pb-5 '>
-                <img className="w-full h-[170px] object-cover rounded-t-md"
+            <div className='flex sm:hidden flex-col bg-white shadow-helmi gap-4 items-start rounded-xl sm:min-h-[432px] sm:pb-0 pb-5 '>
+                <img className="w-full sm:h-[222px] h-[202px] object-cover rounded-t-md"
                     src={`${process.env.GATSBY_API_URL}${event?.image}`}
                     alt={event?.title_en || event?.title_fr || event?.id} />
                 <div className='sm:py-5 sm:px-4 pt-3 sm:pt-0  px-6 text-start w-full sm:w-fit'>
