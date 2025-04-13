@@ -12,9 +12,9 @@ import DecouvrezDautresEspeces from "./DecouvrezDautresEspeces";
 import Media from "@/components/visitor/Media";
 import AMCPSuiviScientifiqueSidebar from "@/components/layout/AMCPSuiviScientifiqueSidebar";
 
+
 import TableSpecies from "./TableSpecies";
 import Loader from "@/components/atoms/loader";
-
 
 
 

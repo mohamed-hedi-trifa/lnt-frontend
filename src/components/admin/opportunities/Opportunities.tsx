@@ -73,8 +73,10 @@ export default function Opportunity() {
 
 
 
+
   const handleToggle = (item) => {
     const updatedStatus = item.status === "visible" ? "hidden" : "visible";
+
 
 
     axios
@@ -86,9 +88,11 @@ export default function Opportunity() {
 
         // Update the local state only on success
 
+
         setItemsList((prevItems:any) =>
           prevItems.map((itm:any) =>
             itm.id === item.id ? { ...itm, status: updatedStatus } : itm 
+
 
           )
         );
