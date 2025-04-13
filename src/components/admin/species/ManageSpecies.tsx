@@ -8,6 +8,7 @@ import SpeciesGallery from "./SpeciesGallery";
 import Input from "../../atoms/inputs/Input";
 import Textarea from "@/components/atoms/inputs/Textarea";
 import Table from '@/components/visitor/who-are-we/rapports/Table';
+import TableSpecies from "@/components/visitor/aire-marine/monitoring/marin/species/TableSpecies";
 
 export default function ManageSpecies({ params }: { params: any }) {
   const [species, setspecies] = useState<any>(null);
@@ -152,7 +153,8 @@ export default function ManageSpecies({ params }: { params: any }) {
 
               </div>
 
-              <Table data={species.researchKnowledge} />
+
+              <TableSpecies data={species.researchKnowledge} />
               <Link to="research-knowledge">
                 <button type="submit" className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition duration-200">
                   Update

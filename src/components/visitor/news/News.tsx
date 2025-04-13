@@ -38,7 +38,7 @@ export default function News() {
         date="LE 4 OCTOBRE 2024" 
       />
 
-      <section className="my-5 text-center max-w-7xl mx-auto mt-20 px-5">
+      <section className="my-5 text-center sm:max-w-[1282px] max-w-7xl mx-auto mt-20 px-5">
         <PageTitle title="Actualités" />
         <PageParagraph fontWeight="font-semibold" spacing="leading-[1.4]">
           Découvrez toutes les actualités de l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL). À travers cette page, restez informé des dernières initiatives, des projets en cours, des événements marquants, et des actions menées pour préserver et valoriser le patrimoine naturel et culturel de l’archipel de Kerkennah. Que ce soit des actualités scientifiques, culturelles, ou associatives, chaque article reflète notre engagement envers un avenir durable et solidaire. Explorez, partagez, et plongez au cœur de nos réalisations et de nos ambitions.

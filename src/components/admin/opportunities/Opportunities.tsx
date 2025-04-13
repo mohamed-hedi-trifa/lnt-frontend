@@ -72,8 +72,11 @@ export default function Opportunity() {
   };
 
 
-  const handleToggle = (item:any) => {
-    const updatedStatus = item.status === "visible" ? "hidden" : "visible"; 
+
+
+  const handleToggle = (item) => {
+    const updatedStatus = item.status === "visible" ? "hidden" : "visible";
+
 
 
     axios
@@ -84,9 +87,13 @@ export default function Opportunity() {
         Swal.fire("Success", res.data.message, "success");
 
         // Update the local state only on success
+
+
         setItemsList((prevItems:any) =>
           prevItems.map((itm:any) =>
             itm.id === item.id ? { ...itm, status: updatedStatus } : itm 
+
+
           )
         );
 

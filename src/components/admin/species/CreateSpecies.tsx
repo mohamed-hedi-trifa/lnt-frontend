@@ -316,6 +316,7 @@ const CreateSpecies: React.FC = () => {
       content: type === "list" ? [{ text: "", image: "" }] : "",
       type,
       language: language,
+      isNew:true
     };
 
     const updatedItems = language === "en" ? [...englishItems] : [...frenchItems];

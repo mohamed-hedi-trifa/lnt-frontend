@@ -1,4 +1,5 @@
 
+import Calendar from '@/assets/icons/Calendar';
 import React from 'react'
 
 export default function PopularNewsCard({ article }: { article: any }) {
@@ -22,10 +23,10 @@ export default function PopularNewsCard({ article }: { article: any }) {
 
                     </div>
                     <div className="sm:text-sm sm:leading-6 font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-                        {article.title_en || article.title_fr}
+                        {article.card_description_en || article.card_description_fr}
                     </div>
                     <div className="flex gap-2 text-white  items-center">
-                        <CalendarIcon />
+   <Calendar/>
                         <span className="uppercase font-light text-xs">
                             {new Date(article.created_at).toLocaleDateString("fr-FR", {
                                 day: "numeric",
