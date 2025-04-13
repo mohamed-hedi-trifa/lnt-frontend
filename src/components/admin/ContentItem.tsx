@@ -50,7 +50,7 @@ const ContentItem = ({
   };
 
   const deleteItem = (currItem: any, index: any) => {
-    if (currItem.id) {
+    if (!currItem.isNew) {
       Swal.fire({
         title: "delete item",
         text: "are you sure to delete this item ?",
