@@ -154,8 +154,11 @@ export default function TrainingCards({ filter, setIsOpened }: TrainingCardsProp
                   </Link>
                 ))}
             </div>
-
-            <div className='flex justify-center px-4 sm:px-0'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>
+              {totalPages > 1 && (
+                <div className="flex justify-center px-4 sm:px-0">
+                  <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+                </div>
+              )}
         </section>
       </section>
     )

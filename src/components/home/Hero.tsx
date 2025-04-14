@@ -1,6 +1,4 @@
 import React from "react";
-import NewsLetterSub from "../NewsLetterSub";
-
 export default function Hero() {
   return (
     <div className="grid h-screen">

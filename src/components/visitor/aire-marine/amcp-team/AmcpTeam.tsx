@@ -24,7 +24,7 @@ const images = [
         title :'Revivez Nos Expériences Scientifiques',
         description : 'Découvrez les formations et campements déjà organisés',
         imageUrl: '/images/aire_marines/marine4.jpg',
-        path: '/protected-air-marine-coastal-areas/monitoring'
+        path: '/protected-air-marine-coastal-areas/training/'
     }
 ]
 

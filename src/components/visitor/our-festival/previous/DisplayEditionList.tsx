@@ -54,7 +54,7 @@ export default function DisplayEditionList() {
       const res = await axios.get('/api/previous-editions-pagination', {
         params: {
           page,
-          per_page: 10,
+          per_page: 6,
           sort_by: sortCriteria,
           order: sortOrder,
           language,
@@ -201,9 +201,11 @@ export default function DisplayEditionList() {
           </div>
 
           {/* Pagination */}
-          <div className="flex justify-center py-6">
-            <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
-          </div>
+            {totalPages > 1 && (
+              <div className="flex justify-center px-4 sm:px-0">
+                <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+              </div>
+            )}
         </div>
 
         {/* Colonne complémentaire */}
