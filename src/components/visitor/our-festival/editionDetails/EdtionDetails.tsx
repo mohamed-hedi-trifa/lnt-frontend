@@ -105,7 +105,7 @@ export default function EditionDetails({ location, params }: { location: any; pa
                         <div
                             key={event.id}
                             className={index % 2 === 1 ? "bg-[#EFEFEF]" : "bg-transparent"}
-                            style={{ marginBottom: "20px" }} // Add space between each event
+                            style={{ marginBottom: "20px" }} 
                         >
                             <div className='flex-col text-center max-w-7xl w-full mx-auto justify-between px-5 pt-8 pb-10'>
                                 <EdtionEvent event={event} />

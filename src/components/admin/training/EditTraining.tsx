@@ -152,6 +152,7 @@ const EditTraining = ({ location, params }: { location: any; params: any }) => {
       content: type === "list" ? [{ text: "", image: "" }] : "",
       type,
       language,
+      isNew:true,
     };
     updatedItems.push(newItem);
     language === "en" ? setEnglishItems(updatedItems) : setFrenshItems(updatedItems);

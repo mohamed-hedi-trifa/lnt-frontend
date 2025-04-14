@@ -165,7 +165,7 @@ const ContentItem = ({
                 className="w-32 h-32 object-cover"
               />
             ) : (
-              <PhotoIcon className="text-slate-400 !text-[8rem]" />
+              <PhotoIcon className="text-slate-400 !text-[8rem] h-56" />
             ))}
           <div className="mx-2 relative z-[20] flex max-[450px]:flex-col gap-3 items-center">
             <label
