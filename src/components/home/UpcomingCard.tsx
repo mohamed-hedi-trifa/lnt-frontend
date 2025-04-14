@@ -4,29 +4,63 @@ import { fr, enUS } from "date-fns/locale";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { Link } from "gatsby";
 
-
 type UpcomingCardProps = {
   data: any;
   type: string;
 };
 
 export default function UpcomingCard({ data, type }: UpcomingCardProps) {
+  const { t, lang } = useTranslation();
+  // État pour le temps restant
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0 });
 
+  // Calcul du format de date à afficher
+  const formattedDate = data.event_start_at
+    ? format(
+        new Date(data.event_start_at),
+        lang === "fr" ? "d MMMM yyyy 'à' HH:mm" : "MMMM d, yyyy 'at' HH:mm",
+        { locale: lang === "fr" ? fr : enUS }
+      )
+    : lang === "fr"
+    ? "Date non disponible"
+    : "Date not available";
 
-          const { t, lang } = useTranslation();
-  
-          const formattedDate = data.event_start_at
-          ? format(new Date(data.event_start_at),
-              lang === "fr" ? "d MMMM yyyy 'à' HH:mm" : "MMMM d, yyyy 'at' HH:mm",
-              { locale: lang === "fr" ? fr : enUS }
-          )
-          : lang === "fr" ? "Date non disponible" : "Date not available";
-  const [remainingTime, setRemainingTime] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-  });
+  // Fonction qui calcule le temps restant
+  const calculateTimeLeft = (eventDate: string) => {
+    const now = new Date().getTime();
+    // Remplacer l'espace par 'T' pour être sûr d'avoir un format date valide
+    const eventTime = new Date(eventDate.replace(" ", "T")).getTime();
+    const timeDifference = eventTime - now;
 
+    if (timeDifference > 0) {
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      return { days, hours, minutes };
+    } else {
+      return { days: 0, hours: 0, minutes: 0 };
+    }
+  };
+
+  // Mettre à jour le compteur à chaque rendu et à intervalles réguliers
+  useEffect(() => {
+    // Mise à jour immédiate
+    setTimeLeft(calculateTimeLeft(data.event_start_at));
+
+    // Mise à jour à chaque minute (ou seconde)
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft(data.event_start_at));
+    }, 60000); // toutes les 60s
+
+    // Nettoyage de l'intervalle au démontage
+    return () => clearInterval(timer);
+  }, [data.event_start_at]);
+
+  // Fonction utilitaire pour tronquer la description
   const truncateText = (text: string, limit = 120): string => {
     if (!text) return "";
     if (text.length <= limit) return text;
@@ -35,26 +69,9 @@ export default function UpcomingCard({ data, type }: UpcomingCardProps) {
     return text.slice(0, cutIndex) + "...";
   };
 
-  const descriptionText = data.card_description_en || data.card_description_fr || "";
+  const descriptionText =
+    data.card_description_en || data.card_description_fr || "";
   const truncatedDescription = truncateText(descriptionText, 120);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = new Date(data.date || new Date()).getTime() - now;
-
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((difference / (1000 * 60)) % 60);
-        setRemainingTime({ days, hours, minutes });
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [data.date]);
 
   return (
     <div className="border rounded-lg overflow-hidden h-[480px] w-[380px] flex flex-col shadow-lg">
@@ -80,13 +97,13 @@ export default function UpcomingCard({ data, type }: UpcomingCardProps) {
               </div>
               <div className="grid grid-cols-[40px_40px_40px] w-fit text-sm">
                 <p className="flex items-center justify-center w-8 aspect-square mx-auto rounded-lg bg-slate-200">
-                  {remainingTime.days}
+                  {timeLeft.days}
                 </p>
                 <p className="flex items-center justify-center w-8 aspect-square mx-auto rounded-lg bg-slate-200">
-                  {remainingTime.hours}
+                  {timeLeft.hours}
                 </p>
                 <p className="flex items-center justify-center w-8 aspect-square mx-auto rounded-lg bg-slate-200">
-                  {remainingTime.minutes}
+                  {timeLeft.minutes}
                 </p>
               </div>
             </div>
@@ -94,7 +111,9 @@ export default function UpcomingCard({ data, type }: UpcomingCardProps) {
           </div>
 
           {/* Titre */}
-          <h4 className="mt-3 text-lg font-bold">{data.title_en || data.title_fr}</h4>
+          <h4 className="mt-3 text-lg font-bold">
+            {data.title_en || data.title_fr}
+          </h4>
 
           {/* Description tronquée */}
           <p className="mt-2 text-sm">{truncatedDescription}</p>
@@ -103,7 +122,7 @@ export default function UpcomingCard({ data, type }: UpcomingCardProps) {
           <h4 className="mt-2 text-right font-bold text-sm">{data.sub}</h4>
         </div>
 
-        {/* Lieu */}
+        {/* Lieu / Date */}
         <div>
           <div className="h-px bg-slate-300 my-3"></div>
           <p className="text-center text-sm">

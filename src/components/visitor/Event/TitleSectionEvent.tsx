@@ -3,10 +3,10 @@ import React from 'react'
 
 export default function TitleSectionEvent({ headerName, showButton = true }: { headerName: string, showButton: boolean }) {
     return (
-        <div className='flex  flex-col justify-start items-start w-full mt-10'>
+        <div className='flex  flex-col justify-start items-start w-full '>
 
             <div className="rounded-sm font-bold transform py-2 w-full flex flex-wrap items-center justify-between gap-2">
-                <div className="sm:text-2xl text-xl min-w-0 break-words flex-1 text-start">
+                <div className="text-[#183354] text-xl font-bold leading-relaxed text-start ">
                     {headerName}
                 </div>
                 {showButton && (

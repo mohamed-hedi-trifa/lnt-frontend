@@ -1,64 +1,50 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import FilterIcon from '@/assets/icons/FilterIcon';
+import EventsideBar from '../EventsideBar';
+import TrainingSessionsCards from './TrainingSessionsCards';
+import FollowUsEvent from '../FollowUsEvent';
+import QuestionEvent from '../QuestionEvent';
+import Question from '@/components/atoms/Question';
 
-import ButtonDropdown from '@/components/ButtonDropdown'
-import sortIcon from "@/assets/icons/sort-icon.png"
-import FilterIcon from '@/assets/icons/FilterIcon'
-import ArrowDownIcon from '@/assets/icons/ArrowDownIcon'
+interface DisplayEventsListProps {
+  lang: string;
+  eventTypeSlug: string;
+  eventTypeName: string;
+}
 
-
-import EventsideBar from '../EventsideBar'
-import TrainingSessionsCards from './TrainingSessionsCards'
-import NoEventsMessage from '../NoEventsMessage'
-
-export default function DisplayEventsList({ lang = "fr", eventTypeSlug , eventTypeName}: { lang: string, eventTypeSlug: string , eventTypeName: string}) {
-
-
-
-
+export default function DisplayEventsList({ lang, eventTypeSlug, eventTypeName }: DisplayEventsListProps) {
   const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
-    if (isOpened) {
-      document.querySelector("body")!.style.overflow = "hidden";
-    } else {
-      document.querySelector("body")!.style.overflow = "visible";
-    }
-  })
-
-
+    document.body.style.overflow = isOpened ? 'hidden' : 'visible';
+  }, [isOpened]);
 
   return (
-    <div className='w-full '>
-
-
-
-      <div className='flex justify-between gap-5 '>
+    <div className="max-w-[1400px] mx-auto">
+      <div className="flex flex-col sm:flex-row gap-5">
         <EventsideBar isOpened={isOpened} setIsOpened={setIsOpened} />
 
-        <section className="flex-1">
-          <div className='sm:hidden flex justify-between  relative z-20'>
-            <button type='button' onClick={() => setIsOpened(true)} className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl justify-start items-center gap-2.5 inline-flex">
+        <section className="flex-1 mx-4 sm:mx-0">
+          {/* Bouton affiché sur mobile pour ouvrir le sidebar */}
+          <div className="sm:hidden flex justify-between relative z-20">
+            <button
+              type="button"
+              onClick={() => setIsOpened(true)}
+              className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl inline-flex items-center gap-2.5"
+            >
               <FilterIcon />
-              <div className="text-center text-white text-sm font-bold font-['Montserrat']">Filtres</div>
+              <div className="text-center text-white text-sm font-bold">Filtres</div>
             </button>
-
           </div>
 
-          {/* {
-            eventTypeSlug && eventTypeSlug.length > 0 ? (
-              <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug} />
-            ) : (
-              <NoEventsMessage eventTypeTitle={eventTypeName} />
-            )
-          } */}
-                  <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug} />
-
-
-
-
+          <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug} />
         </section>
-      </div>
 
+        <div className="flex flex-col mx-4 gap-8">
+          <FollowUsEvent />
+          <Question />
+        </div>
+      </div>
     </div>
-  )
+  );
 }

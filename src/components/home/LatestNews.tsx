@@ -13,7 +13,7 @@ export default function LatestNews() {
 
   useEffect(() => {
     axios
-      .get("/api/recent-news") // Ajustez l'URL et le paramètre 'limit' selon votre API
+      .get("/api/recent-news") 
       .then((res) => {
         setNews(res.data);
         setLoading(false);

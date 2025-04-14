@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import Breadcrumbs from '../../../Breadcumbs';
 import HeroAcheivement from './HeroAcheivement';
-import FollowUs from '../../news/FollowUs';
-import Question from '../../news/Question';
 import AchievementDetailsContent from './AchievementDetailsContent';
 import RelatedAchievement from './RelatedAchievement';
 import FollowUsAchivement from './FollowUsAchivement';
-import QuestionAchivement from './QuestionAchivement';
+import Question from '@/components/atoms/Question';
 
 
 export default function AchievementDetails({ location, params }: { location: any; params: any }) {
@@ -51,7 +49,7 @@ export default function AchievementDetails({ location, params }: { location: any
 
         <div className="h-full md:col-span-1 col-span-2 flex flex-col gap-10 pb-10 sm:pb-0">
           <FollowUsAchivement />
-          <QuestionAchivement />
+          <Question />
 
           <RelatedAchievement currentAchievement={achievement} />
         </div>
