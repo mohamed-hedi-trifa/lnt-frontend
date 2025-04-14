@@ -1,93 +1,75 @@
-import React, { useEffect, useState } from 'react'
-import axios from "axios"
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Pagination from '../../Pagination';
-import { Link } from 'gatsby';
 import EventsCard from '../EventsCard';
 import NoEventsMessage from '../NoEventsMessage';
 
-export default function TrainingSessionsCards({ lang = "fr", eventTypeSlug }: { lang: string, eventTypeSlug: string }) {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [limit, setLimit] = useState(10); // Set the limit of posts per page
+interface TrainingSessionsCardsProps {
+  lang: string;
+  eventTypeSlug: string;
+}
 
-    const handleSearchChange = (e: any) => {
-        setSearchQuery(e.target.value);
-        setCurrentPage(1); // Reset to first page on search
-    };
+export default function TrainingSessionsCards({ lang, eventTypeSlug }: TrainingSessionsCardsProps) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 10; // Nombre d'éléments par page
+  const [loading, setLoading] = useState(true);
+  const [itemsList, setItemsList] = useState<any[]>([]);
 
-    const handlePageChange = (newPage: number) => {
-        if (newPage > 0 && newPage <= totalPages) {
-            setCurrentPage(newPage);
-        }
-    };
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
 
-    const [loading, setLoading] = useState(true);
-    const [itemsList, setItemsList] = useState<any[]>([]);
-
-    // Modify getEvents function to include eventTypeSlug in the API call
-    function getEvents(query: string, page = currentPage, eventTypeSlug = eventTypeSlug) {
-        setLoading(true);
-
-
-
-        // Construct the parameters for the API request
-        const params: any = { query, page, limit };
-
-        // Ensure eventTypeSlug is passed to the API
-        if (eventTypeSlug) {
-            params.eventTypeSlug = eventTypeSlug; // Include eventTypeSlug if it's provided
-        }
-
-        console.log(params);  // Debugging log to check params
-
-        // Send the GET request with the params
-        axios.get("/api/get-active-events/10", { params })
-            .then(res => {
-                setItemsList(res.data.data);
-                setTotalPages(res.data.last_page);
-                setLoading(false);
-                console.log(itemsList);
-            })
-            .catch(err => {
-                setLoading(false);
-                console.error(err);
-                if (err.response && err.response.data.error) {
-                    alert(err.response.data.error);
-                }
-            });
+  const handlePageChange = (newPage: number) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      setCurrentPage(newPage);
     }
+  };
 
-    useEffect(() => {
-        if (eventTypeSlug) {
-            getEvents(searchQuery, currentPage, eventTypeSlug);
-        }
-    }, [searchQuery, currentPage, eventTypeSlug]);
+  const getEvents = async (query: string, page: number, eventTypeSlug: string) => {
+    setLoading(true);
+    try {
+      const params = { query, page, limit, eventTypeSlug };
+      const res = await axios.get('/api/get-active-events/10', { params });
+      setItemsList(res.data.data);
+      setTotalPages(res.data.last_page);
+    } catch (err: any) {
+      console.error(err);
+      if (err.response && err.response.data.error) {
+        alert(err.response.data.error);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    if (loading) return "Loading...";
+  useEffect(() => {
+    if (eventTypeSlug) {
+      getEvents(searchQuery, currentPage, eventTypeSlug);
+    }
+  }, [searchQuery, currentPage, eventTypeSlug]);
 
-    return (
-        <section className='flex flex-col gap-8 w-full relative z-10 my-5 sm:my-10 col-span-1'>
+  if (loading) return <div>Loading...</div>;
 
+  return (
+    <section className="flex flex-col gap-8 w-full relative z-10 my-5">
+      {itemsList && itemsList.length > 0 ? (
+        <div className="grid sm:grid-cols-2 gap-5 ">
+          {itemsList.map((event: any) => (
+            <EventsCard key={event.id} event={event} custunCss="px-3" lang={lang} />
+          ))}
+        </div>
+      ) : (
+        <NoEventsMessage eventTypeTitle={eventTypeSlug} />
+      )}
 
-
-            {
-                itemsList && itemsList.length > 0 ? (
-                    <div className="grid sm:grid-cols-2 gap-4 px-4 sm:px-0">
-                        {itemsList.map((event: any) => (
-                            <EventsCard key={event.id} event={event} custunCss="px-3" lang={lang} />
-                        ))}
-                    </div>
-                ) : (
-                    <NoEventsMessage eventTypeTitle="eventTypeName" />
-                )
-            }
-
-
-
-            <div className='flex justify-center px-4 sm:px-0'>
-                <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
-            </div>
-        </section>
-    );
+      {totalPages > 1 && (
+        <div className="flex justify-center px-4 sm:px-0">
+          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+        </div>
+      )}
+    </section>
+  );
 }

@@ -1,15 +1,26 @@
 import React from 'react';
 import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { fr, enUS } from "date-fns/locale";
 import { Link } from 'gatsby';
 import ButtonCard from '@/components/atoms/ButtonCard';
 import PageParagraph2 from '@/components/atoms/PageParagraph2';
+import { useTranslation } from '@/contexts/TranslationContext';
+
 
 export default function EventsEditionCards({ event }) {
   const formatDate = (eventDatetime) => {
     const date = new Date(eventDatetime);
     return format(date, "dd MMMM yyyy 'à' HH'h'mm", { locale: fr });
   };
+  const { t, lang } = useTranslation();
+  
+  const formattedDate = event?.event_start_at
+  ? format(new Date(event.event_start_at),
+      lang === "fr" ? "d MMMM yyyy 'à' HH:mm" : "MMMM d, yyyy 'at' HH:mm",
+      { locale: lang === "fr" ? fr : enUS }
+  )
+  : lang === "fr" ? "Date non disponible" : "Date not available";
+  
 
   return (
     <div className="flex flex-col bg-white rounded-xl pb-5 h-full w-[300px] shadow-helmi">
@@ -52,7 +63,7 @@ export default function EventsEditionCards({ event }) {
               <span className="text-[#0270A0] font-bold text-[16px]">Lieu :</span> {event.location_en || event.location_fr}
             </div>
             <div className="text-starttext-[14px] mt-1 font-normal pb-4">
-              <span className="text-[#0270A0] font-bold text-[16px]">Date :</span> {formatDate(event.event_start_at)}
+              <span className="text-[#0270A0] font-bold text-[16px]">Date :</span> {formattedDate}
             </div>
             {/* Button Section */}
             <div className='flex justify-center'>

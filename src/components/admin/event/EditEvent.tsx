@@ -421,7 +421,7 @@ const EditEvent = ({ location, params }: { location: any; params: any }) => {
         </div>
 
         <Input label="Image" type="file" name="image" onChange={handleImageChange} />
-        <Button type="submit">Update Blog</Button>
+        <Button type="submit">Update Event</Button>
       </form>
     </div>
   );

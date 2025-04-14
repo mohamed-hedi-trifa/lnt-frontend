@@ -10,6 +10,7 @@ import PreviousEditionCard from './PreviousEditionCard';
 import Pagination from '../../Pagination';
 import FollowUsPreviousEdition from './FollowUsPreviousEdition';
 import QuestionEvent from '../../Event/QuestionEvent';
+import Question from '@/components/atoms/Question';
 
 export default function DisplayEditionList() {
   const [edition, setEdition] = useState([]);
@@ -208,7 +209,7 @@ export default function DisplayEditionList() {
         {/* Colonne complémentaire */}
         <div className="md:col-span-3 flex flex-col gap-6">
           <FollowUsPreviousEdition />
-          <QuestionEvent />
+          <Question />
         </div>
       </div>
     </div>

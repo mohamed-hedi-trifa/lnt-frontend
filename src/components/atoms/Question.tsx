@@ -13,11 +13,13 @@ export default function Question() {
          <div className="w-[300px] text-black text-[15px] font-bold leading-normal text-start">
            Besoin de plus d'informations ? N'hésitez pas à nous contacter. Cliquez sur le bouton ci-dessous pour accéder à notre page de contact et poser vos questions.
          </div>
-         <LangLink to='/contact' > 
-          <Button variant="primary" >
-            <div className="text-white text-xl font-bold">Contactez-Nous</div>
-          </Button>
-         </LangLink>
+         <div className="flex justify-center">
+          <LangLink to='/contact' > 
+           <Button variant="primary" >
+             <div className="text-white text-xl font-bold">Contactez-Nous</div>
+           </Button>
+          </LangLink>
+         </div>
         </div>
       </div>
     )

@@ -14,8 +14,8 @@ import Checkbox from '../../posts/Checkbox';
 import FilterTitle from '../../posts/FilterTitle';
 import axios from "axios";
 import FollowUsAchivement from './FollowUsAchivement';
-import QuestionAchivement from './QuestionAchivement';
 import { useTranslation } from '@/contexts/TranslationContext';
+import Question from '@/components/atoms/Question';
 
 export default function OurAchievements() {
   const { t, lang } = useTranslation();
@@ -221,7 +221,7 @@ export default function OurAchievements() {
           </section>
           <section className="flex flex-col mx-4 gap-8">
             <FollowUsAchivement />
-            <QuestionAchivement />
+            <Question />
           </section>
         </section>
       </section>
