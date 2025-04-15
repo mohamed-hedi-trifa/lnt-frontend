@@ -9,6 +9,7 @@ import { Link } from 'gatsby';
 
 import Pagination from '../Pagination';
 import OpportunityCard from './OpportunityCard';
+import NoOpportunityMessage from './NoOpportunityMessage';
 
 export default function OpportunityCards() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -54,18 +55,21 @@ export default function OpportunityCards() {
     if (loading) return "Loading..."
     
     return (
-        <section className='flex flex-col  w-full relative z-10 my-5 sm:my-10 col-span-1'>
-
-            <div className='grid sm:grid-cols-2 gap-4 px-4 sm:px-0'>
-           
-                {itemsList.map((opportunity) => (
-             
-                        <OpportunityCard opportunity={opportunity} />
-                 
-                ))}
-            </div>
-
-            <div className='flex justify-center px-4 sm:px-0 mt-5'><Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} /></div>
+        <section className='flex flex-col gap-8 w-full relative z-10 my-5 justify-center items-center'>
+                {itemsList && itemsList.length > 0 ? (
+                        <div className="grid sm:grid-cols-2 gap-5 ">
+                          {itemsList.map((opportunity: any) => (
+                            <OpportunityCard opportunity={opportunity} />
+                          ))}
+                        </div>
+                      ) : (
+                        <NoOpportunityMessage/>
+                      )}
+            {totalPages > 1 && (
+              <div className="flex justify-center px-4 sm:px-0">
+                <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+              </div>
+            )}        
         </section>
     )
 }

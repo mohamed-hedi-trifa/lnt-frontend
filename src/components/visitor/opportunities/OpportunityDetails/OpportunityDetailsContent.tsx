@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-
 import { navigate } from "gatsby";
 import Title from "@/components/atoms/titles/Title";
 import BlogList from "../../aire-marine/monitoring/marin/species/BlogList";
+import PageParagraph2 from "@/components/atoms/PageParagraph2";
+import PdfIcon from "@/assets/icons/PdfIcon.png";
 
-// Helper function to parse custom markdown-like syntax
+
 const parseContent = (content: any) => {
     if (!content) return "";
 
-    // Replace **bold** with <strong>bold</strong>
     const boldParsed = content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-
-    // Detect URLs and convert them to clickable links
     const linkParsed = boldParsed.replace(
         /(https?:\/\/[^\s]+)/g,
         '<a href="$1" class="markdown-link" target="_blank" rel="noopener noreferrer">$1</a>'
@@ -87,18 +84,20 @@ export default function OpportunityDetailsContent({ location, params }: { locati
                                     item.type === "title" ? (
                                         <Title customClassName="mb-2">{item.content}</Title>
                                     ) : item.type === "text" ? (
-                                        // Apply the markdown parser to the text content
-                                        <div
-                                            className="mb-4"
-                                            dangerouslySetInnerHTML={{
-                                                __html: parseContent(item.content),
-                                            }}
-                                        />
+                                        <PageParagraph2>
+                                            <div
+                                                className="mb-4"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: parseContent(item.content),
+                                                }}
+                                            />
+                                         </PageParagraph2>
                                     ) : item.type === "image" ? (
-                                        <div className="mb-2">
+                                        <div className="mb-2 flex justify-center">
                                             <img
                                                 src={`${process.env.GATSBY_API_URL}${item.file_path}`}
                                                 alt=""
+                                                className="w-full h-auto max-w-[600px] object-cover rounded-md shadow-lg"
                                             />
                                         </div>
                                     ) : item.type === "pdf" ? (
@@ -106,8 +105,13 @@ export default function OpportunityDetailsContent({ location, params }: { locati
                                             <a
                                                 download
                                                 href={`${process.env.GATSBY_API_URL}${item.file_path}`}
-                                            >
-                                                Download Pdf
+                                               
+                                            >  
+                                                <div className="my-10 flex items-center">
+                                                 <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
+                                                 <p className="ml-4 font-semibold text-xl">{item.file_path}</p>
+                                                </div>
+                                                
                                             </a>
                                         </div>
                                     ) : item.type === 'list' ? (

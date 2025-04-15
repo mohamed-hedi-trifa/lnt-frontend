@@ -1,9 +1,19 @@
 import React from 'react';
+import { Link } from "gatsby";
 import FacebookIconType2 from '@/assets/icons/FacebookIconType2';
-import InstagramIconType2 from '@/assets/icons/InstagramIconType2';
 import LinkdinType2 from '@/assets/icons/LinkdinType2';
 import XIconType2 from '@/assets/icons/XIconType2';
+import CopyIcon2 from "@/assets/icons/CopyIcon2";
+import CopyToClipboard from "@/components/atoms/CopyToClipboard";
+import LangLink from "@/components/LangLink";
+import { AnchorLink } from "gatsby-plugin-anchor-links";import loadable from "@loadable/component";
 
+const shareToFacebook = (url: string) =>
+    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+const shareToTwitter = (url: string) =>
+    `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`;
+const shareToLinkedIn = (url: string) =>
+    `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
 export default function RightSideOpportunityDetails({ opportunity, language }: { opportunity: any, language: string }) {
 
     function formatDateToMonthYear(date: Date | string | undefined): string {
@@ -28,10 +38,14 @@ export default function RightSideOpportunityDetails({ opportunity, language }: {
         };
 
         const month = monthNames[language as keyof typeof monthNames][dateObj.getMonth()];  // Get the month name
-        const year = dateObj.getFullYear(); // Get the full year
+        const year = dateObj.getFullYear(); 
 
-        return `${month} ${year}`; // Return the formatted string
+        return `${month} ${year}`; 
     }
+    const currentPath = location.pathname;
+    const baseUrl = process.env.GATSBY_APP_URL || "https://your-default-site.com";
+    const fullUrl = `${baseUrl}${currentPath}`;
+
 
     return (
         <div className='flex flex-col justify-start gap-2 items-start'>
@@ -74,26 +88,51 @@ export default function RightSideOpportunityDetails({ opportunity, language }: {
             </div>
 
             <div className="font-bold text-start mt-2">
-                Restez informé(e) des prochains événements !
+                Restez informé(e) des prochains opportunities !
             </div>
-            <div className="text-[#0270A0] underline font-semibold">
-                Abonnez-vous à notre Newsletter
-            </div>
-            <div className="font-bold text-start mt-2">
-                Vous avez une question sur cet événement ?
-            </div>
-            <div className="text-[#0270A0] underline font-semibold">
-                Contactez-nous !
-            </div>
-            <div className="font-bold text-start mt-2">
-                Partager avec vos amis
-            </div>
-            <div className="flex gap-2">
-                <FacebookIconType2 />
-                <InstagramIconType2 />
-                <LinkdinType2 />
-                <XIconType2 />
-            </div>
+             <AnchorLink
+               to={`/opportunities/opportunity-details/${opportunity.slug}/#Newsletter`}
+               title="Abonnez-vous à notre Newsletter"
+             >
+               <div className="text-[#0270A0] underline font-semibold">
+                 Abonnez-vous à notre Newsletter
+               </div>
+             </AnchorLink>
+             <div className="font-bold text-start mt-2">
+               Vous avez une question sur cet opportunitie ?
+             </div>
+             <LangLink to="/contact" className="text-[#0270A0] underline font-semibold">
+               Contactez-nous !
+             </LangLink>
+            <div className="font-bold text-start mt-2">Partager avec vos amis</div>
+            <div className="flex gap-4">
+                <Link
+                  to={shareToFacebook(fullUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FacebookIconType2 />
+                </Link>
+                <Link
+                  to={shareToLinkedIn(fullUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <LinkdinType2 />
+                </Link>
+                <Link
+                  to={shareToTwitter(fullUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <XIconType2 />
+                </Link>
+                <CopyToClipboard url={fullUrl}>
+                  <div className="bg-primary size-[33px] rounded-full shadow-helmi flex items-center justify-center">
+                    <CopyIcon2 />
+                  </div>
+                </CopyToClipboard>
+              </div>
         </div>
     );
 }

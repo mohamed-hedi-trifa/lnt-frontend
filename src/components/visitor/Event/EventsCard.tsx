@@ -20,18 +20,14 @@ export default function EventsCard({ event}: { event: any}) {
     : lang === "fr" ? "Date non disponible" : "Date not available";
 
 
-
-
     return (
-        <div className="flex flex-col bg-white rounded-xl pb-5 h-full w-[300px] shadow-helmi ">
-          {/* Image Section */}
+        <div className="flex flex-col bg-white rounded-xl pb-5 h-full sm:w-[300px] w-[350px] shadow-helmi ">
           <img
             className="w-full sm:h-[222px] h-[202px] object-cover rounded-t-md"
             src={`${process.env.GATSBY_API_URL}${event.image}`}
             alt={event.title_en || event.title_fr}
           />
     
-          {/* Content Section */}
           <div className="py-2 text-start px-5 flex-grow">
             <h3 className="font-semibold sm:text-xl min-h-[29px]">
               {event.title_en || event.title_fr}
@@ -57,12 +53,12 @@ export default function EventsCard({ event}: { event: any}) {
             <div className="flex justify-center">
               <hr className="mt-2 w-full max-w-[275px] border-t border-gray-600" />
             </div>
-            <div className='mx-3'>
+            <div className='mx-3 mt-3'>
                 {/* Location & Expiry Information */}
-                <div className="text-start text-[14px] mt-3 font-normal">
+                <div className="font-normal text-[16px]">
                   <span className="text-[#0270A0] font-bold text-[16px]">Lieu :</span> {event.location_en || event.location_fr}
                 </div>
-                <div className="text-starttext-[14px] mt-1 font-normal pb-4">
+                <div className="text-start text-[14px] mt-1 font-normal pb-4">
                   <span className="text-[#0270A0] font-bold text-[16px]">Date :</span> {formattedDate}
                 </div>
                 {/* Button Section */}

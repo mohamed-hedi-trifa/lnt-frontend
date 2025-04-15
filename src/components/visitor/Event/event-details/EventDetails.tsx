@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
 import EventDetailslImage from './EventDetailslImage'
 import axios from "axios";
 import EventDetailsContent from './EventDetailsContent';

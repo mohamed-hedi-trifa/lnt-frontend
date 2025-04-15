@@ -4,6 +4,7 @@ import "./BlogDetail.css";
 import Title from "../atoms/titles/Title";
 import { navigate } from "gatsby";
 import Loader from "../atoms/loader";
+import PdfIcon from "@/assets/icons/PdfIcon.png";
 
 // Helper function to parse custom markdown-like syntax
 const parseContent = (content: any) => {
@@ -144,7 +145,10 @@ export default function SpeciesDetail({ location, params }: { location: any; par
                         download
                         href={`${process.env.GATSBY_API_URL}${item.file_path}`}
                       >
-                        Download Pdf
+                        <div className="my-10 flex items-center">
+                         <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
+                         <p className="ml-4 font-semibold text-xl">{item.file_path}</p>
+                        </div>
                       </a>
                     </div>
                   ) : item.type == "cin" ? (
