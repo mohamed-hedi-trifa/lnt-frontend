@@ -8,6 +8,7 @@ import Media from "../../Media";
 import PageParagraph from "@/components/atoms/PageParagraph";
 import "./TrainingDetailsContent.css";
 import Loader from "@/components/atoms/loader";
+import PdfIcon from "@/assets/icons/PdfIcon.png";
 
 // --- Helpers ---
 
@@ -164,9 +165,11 @@ export default function TrainingDetailsContent({ location, params }: TrainingDet
                         <a
                           download
                           href={`${process.env.GATSBY_API_URL}${item.file_path}`}
-                          className="text-blue-600 underline"
                         >
-                          Download Pdf
+                           <div className="my-10 flex items-center">
+                           <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
+                           <p className="ml-4 font-semibold text-xl">{item.file_path}</p>
+                          </div>
                         </a>
                       </div>
                     )}

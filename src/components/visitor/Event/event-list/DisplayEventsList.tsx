@@ -3,7 +3,6 @@ import FilterIcon from '@/assets/icons/FilterIcon';
 import EventsideBar from '../EventsideBar';
 import TrainingSessionsCards from './TrainingSessionsCards';
 import FollowUsEvent from '../FollowUsEvent';
-import QuestionEvent from '../QuestionEvent';
 import Question from '@/components/atoms/Question';
 
 interface DisplayEventsListProps {
@@ -23,9 +22,7 @@ export default function DisplayEventsList({ lang, eventTypeSlug, eventTypeName }
     <div className="max-w-[1400px] mx-auto">
       <div className="flex flex-col sm:flex-row gap-5">
         <EventsideBar isOpened={isOpened} setIsOpened={setIsOpened} />
-
         <section className="flex-1 mx-4 sm:mx-0">
-          {/* Bouton affiché sur mobile pour ouvrir le sidebar */}
           <div className="sm:hidden flex justify-between relative z-20">
             <button
               type="button"
@@ -36,10 +33,8 @@ export default function DisplayEventsList({ lang, eventTypeSlug, eventTypeName }
               <div className="text-center text-white text-sm font-bold">Filtres</div>
             </button>
           </div>
-
           <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug} />
         </section>
-
         <div className="flex flex-col mx-4 gap-8">
           <FollowUsEvent />
           <Question />

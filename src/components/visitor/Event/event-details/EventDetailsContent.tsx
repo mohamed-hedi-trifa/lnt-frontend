@@ -5,15 +5,12 @@ import PageParagraph2 from "@/components/atoms/PageParagraph2";
 import { navigate } from "gatsby";
 import Title from "@/components/atoms/titles/Title";
 import BlogList from "../../aire-marine/monitoring/marin/species/BlogList";
+import PdfIcon from "@/assets/icons/PdfIcon.png";
 
-// Helper function to parse custom markdown-like syntax
 const parseContent = (content: any) => {
   if (!content) return "";
 
-  // Replace **bold** with <strong>bold</strong>
   const boldParsed = content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-
-  // Detect URLs and convert them to clickable links
   const linkParsed = boldParsed.replace(
     /(https?:\/\/[^\s]+)/g,
     '<a href="$1" class="markdown-link" target="_blank" rel="noopener noreferrer">$1</a>'
@@ -87,7 +84,6 @@ export default function EventDetailsContent({ location, params }: { location: an
                   item.type === "title" ? (
                     <Title customClassName="mb-2">{item.content}</Title>
                   ) : item.type === "text" ? (
-                    // Apply the markdown parser to the text content
                     <PageParagraph2>
 
                       <div
@@ -111,7 +107,10 @@ export default function EventDetailsContent({ location, params }: { location: an
                         download
                         href={`${process.env.GATSBY_API_URL}${item.file_path}`}
                       >
-                        Download Pdf
+                        <div className="my-10 flex items-center">
+                         <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
+                         <p className="ml-4 font-semibold text-xl">{item.file_path}</p>
+                        </div>
                       </a>
                     </div>
                   ) : item.type === 'list' ? (

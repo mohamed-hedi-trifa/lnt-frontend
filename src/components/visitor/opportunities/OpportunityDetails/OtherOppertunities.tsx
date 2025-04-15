@@ -1,19 +1,33 @@
 import React, { useState } from 'react';
 import OpportunityCard from '../OpportunityCard';
+import LangLink from '@/components/LangLink';
+import Title from '@/components/atoms/titles/Title';
+import PageParagraph2 from "@/components/atoms/PageParagraph2";
 
+interface SectionHeaderProps {
+  title: React.ReactNode;
+  text: string;
+}
+const SectionHeader = ({ title, text }: SectionHeaderProps) => (
+  <div className="flex flex-col items-center text-center justify-center py-10">
+    <Title size="text-2xl sm:text-[36px] pb-4">{title}</Title>
+    <PageParagraph2>
+      <p className="font-semibold text-lg sm:text-[20px] text-center max-w-3xl mx-auto">
+        {text}
+      </p>
+    </PageParagraph2>
+  </div>
+);
 export default function OtherOppertunities({moreOpportunities} : {moreOpportunities:any}) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className='flex flex-col gap-6 items-center sm:px-44'>
-            <h2 className='font-bold text-2xl '>
-                <span className='text-[#0270A0]'>Découvrez</span> d'autres Opportunités
-            </h2>
-
-            <p>
-                Explorez nos autres offres et trouvez l'opportunité qui correspond à vos aspirations
-            </p>
-            <div className='grid sm:grid-cols-3 gap-4 px-4 sm:px-0'>
+        <div >            
+            <SectionHeader 
+             title={<span><span className="text-primary">Découvrez</span>  d'autres Opportunités</span>}
+             text="Explorez nos autres offres et trouvez l'opportunité qui correspond à vos aspirations"
+             />
+            <div className='flex justify-center gap-9 pb-10 sm:px-0 px-5 flex-col sm:flex-row'>
                 {moreOpportunities?.map((opportunity) => (
 
                     <OpportunityCard opportunity={opportunity} />
@@ -25,13 +39,11 @@ export default function OtherOppertunities({moreOpportunities} : {moreOpportunit
 
 
 
-            <div className='w-full '>
-                <button className="text-white sm:mb-0  mb-5 sm:text-xs  font-medium  self-start rounded-3xl bg-gradient-to-r from-[#51ADC6] to-[#006E9F] w-fit py-2 px-6 
- shadow-[0px_6px_12px_rgba(0,0,0,0.3)] 
- hover:shadow-[0px_10px_20px_rgba(0,0,0,0.4)] 
- hover:opacity-90 transition duration-300 ease-in-out"
-                    >Voir Tous les Opportunités </button>
-            </div>
+            <LangLink to="/opportunities">
+                <button className="px-8 py-3 my-4 bg-gradient-to-r from-[#006E9F] via-[#51ADC6] to-[#006E9F] transition-all duration-300 bg-[length:200%_100%] bg-left hover:bg-right text-white font-bold rounded-full shadow-md">
+                    Voir Toutes les Opportunités
+                </button>
+            </LangLink>
 
      
         </div >

@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import OpportunityDetailsImage from './OpportunityDetailsImage'
-
 import RightSideOpportunityDetails from './RightSideOpportunityDetails';
 import OpportunityDetailsContent from './OpportunityDetailsContent';
-import JoinUs from '../JoinUs';
 import OtherOppertunities from './OtherOppertunities';
-
 import JobOfferModal from '../JobOfferModal';
 import CallForTrenderModal from '../CallForTrenderModal';
-import InternshipModal from '../InternshipModal';
 import InternshipApplicationFormModal from '../InternshipApplicationFormModal';
 
 export default function OpportunityDetails({ location, params }: { location: any; params: any }) {
@@ -55,8 +51,6 @@ export default function OpportunityDetails({ location, params }: { location: any
     return (
         <div>
             <main className={`relative`}>
-
-                {/* <div className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${isOpened ? "opacity-50" : "opacity-0 pointer-opportunities-none"}`} onClick={() => setIsOpened(false)}></div> */}
                 <OpportunityDetailsImage opportunity={opportunity} />
 
                 <section className='flex sm:gap-20 gap-12 flex-col sm:grid sm:grid-cols-3    my-5 text-center max-w-7xl w-full mx-auto justify-between  sm:mt-20 mt-10 px-5 h-fit   '>
@@ -93,7 +87,7 @@ export default function OpportunityDetails({ location, params }: { location: any
 
                 <section className=' flex-col  text-center max-w-7xl w-full mx-auto justify-between   px-5 h-fit  my-10 '>
 
-                    <hr className="border-black mb-8" />
+                    <hr className="border-black " />
                     <OtherOppertunities moreOpportunities={moreOpportunities} />
                 </section>
             </main>

@@ -5,9 +5,7 @@ import OpportunityImage from './OpportunityImage';
 import DisplayOpportinitiesList from './DisplayOpportinitiesList';
 import PageTitle from '@/components/atoms/titles/PageTitle';
 import JoinUs from './JoinUs';
-import FollowUsEvent from '../Event/FollowUsEvent';
-import QuestionEvent from '../Event/QuestionEvent';
-import FollowUsOpportunity from './FollowUsOpportunity';
+
 
 
 
@@ -29,20 +27,12 @@ export default function Opportunities() {
                 </section>
 
 
-                <section className='flex gap-20 flex-col sm:flex-row   text-center max-w-7xl w-full mx-auto justify-start items-start  mt-4 px-5 h-fit   '>
 
-                    <div className='h-full w-full ' >
-                        <DisplayOpportinitiesList  />
+                    <div className='w-full ' >
+                        <DisplayOpportinitiesList opportunities={[]} />
                     </div>
 
-                    <div className='flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10  sm:w-[300px] mb-6'>
-                        <FollowUsOpportunity />
-                        <QuestionEvent />
-
-                    </div>
-
-                </section>
-                <section className=' flex-col  text-center max-w-7xl w-full mx-auto justify-between   px-5 h-fit  my-10 '>
+                <section className=' flex-col  text-center max-w-7xl w-full mx-auto justify-between px-5 h-fit my-20 '>
 
                     <hr className="border-black mb-8" />
                     <JoinUs />

@@ -7,14 +7,8 @@ import BlogList from "../../aire-marine/monitoring/marin/species/BlogList";
 import Calendar from "@/assets/icons/Calendar";
 import Media from "../../Media";
 import "./NewsDetailsContent.css";
+import PdfIcon from "@/assets/icons/PdfIcon.png";
 
-// --- Helpers ---
-
-/**
- * Parse un contenu au format markdown-like afin de convertir :
- * - **texte** en <strong>texte</strong>
- * - les URL en liens cliquables
- */
 const parseContent = (content: string) => {
   if (!content) return "";
   const boldParsed = content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
@@ -25,9 +19,7 @@ const parseContent = (content: string) => {
   return linkParsed;
 };
 
-/**
- * Formate une date selon le format anglais.
- */
+
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = {
@@ -172,7 +164,10 @@ export default function NewsDetailsContent({ location, params }: NewsDetailsCont
                           href={`${process.env.GATSBY_API_URL}${item.file_path}`}
                           className="text-blue-600 underline"
                         >
-                          Download Pdf
+                        <div className="my-10 flex items-center">
+                         <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
+                         <p className="ml-4 font-semibold text-xl">{item.file_path}</p>
+                        </div>
                         </a>
                       </div>
                     )}

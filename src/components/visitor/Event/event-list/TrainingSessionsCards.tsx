@@ -54,7 +54,7 @@ export default function TrainingSessionsCards({ lang, eventTypeSlug }: TrainingS
   if (loading) return <div>Loading...</div>;
 
   return (
-    <section className="flex flex-col gap-8 w-full relative z-10 my-5">
+    <section className="flex flex-col gap-8 w-full relative z-10 my-5 justify-center items-center">
       {itemsList && itemsList.length > 0 ? (
         <div className="grid sm:grid-cols-2 gap-5 ">
           {itemsList.map((event: any) => (
