@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AchievementCard from './AchievementCard';
 import Pagination from '../../Pagination';
@@ -30,13 +30,10 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
   const [itemsList, setItemsList] = useState<any[]>([]);
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
   const resSafeLength = (arr: any[]) => (Array.isArray(arr) ? arr.length : 0);
-  const [searchQuery, setSearchQuery] = useState(filter.searchQuery || '');
+  
   const [themes, setThemes] = useState<number[]>(filter.themes || []);
 
-  const handleSearchChange = (e: any) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1);
-  };
+
 
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
@@ -84,10 +81,15 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
   }, []);
 
   useEffect(() => {
-    getAchievements(searchQuery, currentPage, filter.themes || []);
-  }, [searchQuery, currentPage, filter, sortOrder]);
+    getAchievements(filter.searchQuery, currentPage, filter.themes || []);
+  }, [filter.searchQuery, currentPage, filter, sortOrder]);
 
-  if (loading) return <div className='flex justify-center items-center pt-40'> <Loader/> </div> ;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center pt-40">
+        <Loader />
+      </div>
+    );
 
   const startIndex = (currentPage - 1) * limit + 1;
   const endIndex = Math.min(currentPage * limit, resSafeLength(itemsList));

@@ -4,7 +4,7 @@ interface CheckboxProps {
   label?: string;
   name?: string;
   checked?: boolean;
-  onChange?: (checked: boolean) => void;
+  onChange?: (checked: boolean, e?:any) => void;
   color?: string;
   borderColor?: string;
   nb?:number;
