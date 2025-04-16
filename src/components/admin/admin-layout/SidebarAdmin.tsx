@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from "axios";
 import { Accordion, AccordionHeader, AccordionBody } from '@material-tailwind/react';
 import { Link } from 'gatsby';
 import { useAuthContext } from '../../../contexts/AuthProvider';
@@ -7,11 +8,24 @@ import { HomeIcon, UsersIcon, PhotoIcon } from '@heroicons/react/24/outline';
 export default function SidebarAdmin() {
     const { user } = useAuthContext();
     const [openSection, setOpenSection] = useState(null);
-
+    const [notifications, setNotifications] = useState([]);
     useEffect(() => {
         console.log("user:", user);
     }, [user]);
 
+    const fetchNotifications = async () => {
+        try {
+            const response = await axios.get("/api/admin/notifications");
+            setNotifications(response.data);
+
+        } catch (error) {
+            console.error("Error fetching applications:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchNotifications();
+    }, []);
     const toggleSection = (section: any) => {
         setOpenSection(openSection === section ? null : section);
     };
@@ -83,17 +97,50 @@ export default function SidebarAdmin() {
                             )}
                             {section === 'Notifications' && (
                                 <>
-                                    <Link to="/admin/internship-application" className="block p-4 text-gray-300 hover:bg-gray-700">Internship Application</Link>
-                                    <Link to="/admin/benevole" className="block p-4 text-gray-300 hover:bg-gray-700">Benevole</Link>
-                                    <Link to="/admin/call-for-tender" className="block p-4 text-gray-300 hover:bg-gray-700">
+                                    <Link to="/admin/internship-application" className="block p-4 text-gray-300 hover:bg-gray-700">
                                         <div className='w-full flex items-center justify-between'>
-                                            <span>Call For tender</span>
-                                            <div className='w-7 h-7 bg-yellow-500 z-10 rounded-full flex justify-center items-center'>
-                                                <span className='z-20 text-black font-bold'>1</span>
-                                            </div>
+                                            <span>Internship Application</span>
+                                            {notifications.internship > 0 && (
+                                                <div className='w-7 h-7 bg-yellow-500 z-10 rounded-full flex justify-center items-center'>
+                                                    <span className='z-20 text-black font-bold'>{notifications.internship}</span>
+                                                </div>
+                                            )}
                                         </div>
                                     </Link>
-                                    <Link to="/admin/job-offer" className="block p-4 text-gray-300 hover:bg-gray-700">Job Offer</Link>
+                                    <Link to="/admin/benevole" className="block p-4 text-gray-300 hover:bg-gray-700">
+                                        <div className='w-full flex items-center justify-between'>
+                                            <span>Benevole</span>
+                                            {notifications.volunteer > 0 && (
+                                                <div className='w-7 h-7 bg-yellow-500 z-10 rounded-full flex justify-center items-center'>
+                                                    <span className='z-20 text-black font-bold'>{notifications.volunteer}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </Link>
+                                    <Link to="/admin/call-for-tender" className="block p-4 text-gray-300 hover:bg-gray-700">
+
+                                        <div className='w-full flex items-center justify-between'>
+                                            <span>Call For tender</span>
+                                            {notifications.tender > 0 && (
+                                                <div className='w-7 h-7 bg-yellow-500 z-10 rounded-full flex justify-center items-center'>
+                                                    <span className='z-20 text-black font-bold'>{notifications.tender}</span>
+                                                </div>
+                                            )}
+                                        </div>
+
+
+                                    </Link>
+                                    <Link to="/admin/job-offer" className="block p-4 text-gray-300 hover:bg-gray-700">
+
+                                        <div className='w-full flex items-center justify-between'>
+                                            <span>Job Offer</span>
+                                            {notifications.job_offer > 0 && (
+                                                <div className='w-7 h-7 bg-yellow-500 z-10 rounded-full flex justify-center items-center'>
+                                                    <span className='z-20 text-black font-bold'>{notifications.job_offer}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </Link>
                                 </>
                             )}
                         </AccordionBody>
