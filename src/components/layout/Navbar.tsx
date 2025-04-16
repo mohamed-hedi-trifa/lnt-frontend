@@ -159,7 +159,7 @@ function Navbar({ location }: { location: any }) {
         className={`w-full px-3 ${
           isScrolled
             ? "bg-[linear-gradient(90deg,#51ADC6_0%,_#006E9F_100%)]"
-            : "bg-[linear-gradient(90deg,rgba(81,173,198,0.25)_0%,rgba(0,110,159,0.25)_100%)]"
+            : "bg-[linear-gradient(90deg,rgba(81,173,198,0.6)_0%,rgba(0,110,159,0.6)_100%)]"
         } duration-200`}
       >
         <div className="flex items-center justify-between max-w-7xl mx-auto">

@@ -7,19 +7,16 @@ interface AchievementCardProps {
 }
 
 export default function AchievementCard({ achievement }: AchievementCardProps) {
-  // Ensure themes is always an array
   const themesArray = Array.isArray(achievement.themes) ? achievement.themes : [];
 
   return (
     <div className="bg-white shadow-helmi p-4 flex flex-col gap-4 rounded-xl min-h-[420px] h-full">
-      {/* Adjust the image URL if needed for your backend */}
       <img
         src={`${process.env.GATSBY_API_URL}${achievement.image}`}
         alt="achievement"
         className="h-[240px] w-full object-cover rounded-md shadow-lg"
       />
 
-      {/* Themes: flex-wrap so they wrap on new line if many */}
       <div className="flex gap-4 flex-wrap">
         {themesArray.map((theme) => {
           const themeName = theme.name_fr || theme.name_en || 'N/A';
