@@ -1,148 +1,194 @@
 import React, { useState, FormEvent } from "react";
-
 import axios, { AxiosError } from "axios";
-import { Link } from "gatsby";
-// import ReactLoading from "react-loading";
 import Swal from "sweetalert2";
+import {
+  PhoneArrowUpRightIcon,
+  EnvelopeOpenIcon,
+  MapPinIcon,
+} from "@heroicons/react/24/solid";
 import { AnimationOnScroll } from "react-animation-on-scroll";
-import { EnvelopeIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/solid";
 
 interface FormData {
-    name: string;
-    email: string;
-    subject: string;
-    message: string;
-}
-
-interface FormErrors {
-    name?: string;
-    email?: string;
-    subject?: string;
-    message?: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
 }
 
 function sendRequest(data: FormData) {
-    return axios.post('/api/create-message', data);
+  return axios.post("/api/create-message", data);
 }
 
 const Contact: React.FC = () => {
-    const [name, setName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [subject, setSubject] = useState<string>("");
-    const [message, setMessage] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(false);
-    const [errors, setErrors] = useState<any>({});
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [subject, setSubject] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState<any>({});
 
-    const resetInputs = () => {
-        setName("");
-        setEmail("");
-        setSubject("");
-        setMessage("");
-        setErrors([]);
+  const resetInputs = () => {
+    setName("");
+    setEmail("");
+    setSubject("");
+    setMessage("");
+    setErrors([]);
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (loading) return;
+
+    const data: FormData = {
+      name: name.trim(),
+      email: email.trim(),
+      subject: subject.trim(),
+      message: message.trim(),
     };
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
+    setLoading(true);
+    try {
+      await sendRequest(data);
+      Swal.fire("Succés", "Votre email a été envoyé avec succès", "success");
+      resetInputs();
+      setErrors([]);
+    } catch (err) {
+      const errorResponse = (err as AxiosError).response;
+      if (errorResponse && errorResponse.data) {
+        setErrors(errorResponse.data.errors);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        if (loading) return;
+  return (
+    <div className="w-full  min-h-screen py-16 border-t">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 pt-[106px]">        
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-primary">
+              CONTACTEZ-NOUS
+            </h2>
+            <p className="text-2xl font-semibold text-black mt-2">
+              Nous sommes à votre écoute
+            </p>
+          </div>
 
-        const nameVal = name.trim();
-        const emailVal = email.trim();
-        const subjectVal = subject.trim();
-        const messageVal = message.trim();
-
-        const data: FormData = {
-            name: nameVal,
-            email: emailVal,
-            subject: subjectVal,
-            message: messageVal,
-        };
-
-        setLoading(true);
-
-        try {
-            await sendRequest(data);
-            Swal.fire("Succés", "Votre email a été envoyé avec succès", "success");
-            resetInputs();
-            setErrors([]);
-        } catch (err) {
-            const errorResponse = (err as AxiosError).response;
-            if (errorResponse && errorResponse.data) {
-                setErrors(errorResponse.data.errors);
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    return (
-        <div className="w-full bg-[#f9f9f9] border-t">
-            <div className="w-full px-8 py-8 max-w-w1300 mx-auto">
-                <AnimationOnScroll duration={2} animateIn="animate__fadeInUp">
-                    <div className="mb-10">
-                        <div className="flex justify-center font-bold text-[#4da6e7]">CONTACTEZ NOUS</div>
-                        <div className="text-black font-bold text-3xl flex justify-center">Contactez-nous dès maintenant</div>
-                    </div>
-                    <div className="shadow-xl grid grid-cols-12 p-10 bg-white gap-4 rounded-xl">
-                        <div className="col-span-12 xl:col-span-5">
-                            <div className="w-full">
-                            <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3192.76092339878!2d10.195379876595958!3d36.84820142223363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1simmeuble%20new%20Tower%20-%20centre%20urbain%20nord%20%E2%80%93%20Tunis!5e0!3m2!1sen!2stn!4v1689236728352!5m2!1sen!2stn"
-                                    width="100%" height="636px" frameBorder="0" style={{ border: 0 }}
-                                    allowFullScreen></iframe>
-                            </div>
-                        </div>
-                        <div className="break-all col-span-12 xl:col-span-7 flex flex-col gap-4">
-                            <div className="grid grid-cols-12 gap-4 text-gray-500">
-                                <div className="col-span-12 sm:col-span-4 shadow-xl flex flex-col items-center py-5 px-5 rounded-xl">
-                                    {/* <img src={phoneIcon} alt="Phone Icon" /> */}
-                                    <PhoneIcon className="h-16 w-16 text-[#4da6e7]" />
-                                    <div>(+216) 50258146</div>
-                                </div>
-                                <div className="col-span-12 sm:col-span-4 shadow-xl flex flex-col items-center py-5 px-5 rounded-xl">
-                                    {/* <img src={hornIcon} alt="Horn Icon" /> */}
-                                    <EnvelopeIcon className="h-16 w-16 text-[#4da6e7]" />
-                                    <div>Helmi@gmail.com</div>
-                                </div>
-                                <div className="col-span-12 sm:col-span-4 shadow-xl flex flex-col items-center py-5 px-5 rounded-xl">
-                                    {/* <img src={locationIcon} alt="Location Icon" /> */}
-                                    <MapPinIcon className="w-16 h-16 text-[#4da6e7]" />
-                                    <div>Dar Helmi, Kraten, Kerkennah</div>
-                                </div>
-                            </div>
-                            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                                <div className="grid grid-cols-12 gap-4">
-                                    <div className="col-span-12 sm:col-span-6 flex flex-col justify-around gap-4">
-                                        <div className="flex flex-col">
-                                            <input className="py-2 px-4 border rounded-full outline-none" type="text" placeholder="Nom" value={name} onChange={e => setName(e.target.value)} />
-                                            <span className="text-red-500">{errors?.name}</span>
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <input className="py-2 px-4 border rounded-full outline-none" type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-                                            <span className="text-red-500">{errors?.email}</span>
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <input className="py-2 px-4 border rounded-full outline-none" type="text" placeholder="Sujet" value={subject} onChange={e => setSubject(e.target.value)} />
-                                            <span className="text-red-500">{errors?.subject}</span>
-                                        </div>
-                                    </div>
-                                    <div className="col-span-12 sm:col-span-6 flex flex-col">
-                                        <textarea className="py-3 px-5 border rounded-3xl outline-none w-full" name="message" placeholder="Message" cols={30} rows={8} value={message} onChange={e => setMessage(e.target.value)} ></textarea>
-                                        <span className="text-red-500">{errors?.message}</span>
-                                    </div>
-                                </div>
-                                <div className="flex justify-center">
-                                    <button className="w-full sm:w-[50%] border border-[#4da6e7] text-[#4da6e7] rounded-full p-3 hover:bg-[#4da6e7] transition duration-300 hover:text-white">
-                                        Envoyer le message maintenant.
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </AnimationOnScroll>
+        <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
+          <AnimationOnScroll
+            duration={1.5}
+            animateIn="animate__fadeInLeftBig"
+            animateOnce
+            className="col-span-1 xl:col-span-2 w-full"
+          >
+            <div className="h-full w-full shadow-2xl rounded-2xl overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.0534666483472!2d11.255356599999999!3d34.8297482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1301a9e32deb070d%3A0x453f7c016acebeb3!2sAssociation%20Kraten%20du%20d%C3%A9veloppement%20durable%20de%20la%20culture%20et%20du%20loisir%20AKDDCL!5e0!3m2!1sfr!2stn!4v1740282338761!5m2!1sfr!2stn"
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                style={{ border: 0, minHeight: "500px" }}
+                allowFullScreen
+              ></iframe>
             </div>
+          </AnimationOnScroll>
+
+          <AnimationOnScroll
+            duration={1.5}
+            animateIn="animate__fadeInRightBig"
+            animateOnce
+            className="col-span-1 xl:col-span-3 flex flex-col gap-8"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="flex flex-col items-center p-5 border border-gray-300 rounded-2xl shadow hover:shadow-lg transition">
+                <PhoneArrowUpRightIcon className="h-12 w-12 text-primary mb-2" />
+                <p className="text-sm text-gray-700 font-semibold">
+                  (+216) 50258146
+                </p>
+              </div>
+              <div className="flex flex-col items-center p-5 border border-gray-300 rounded-2xl shadow hover:shadow-lg transition">
+                <EnvelopeOpenIcon className="h-12 w-12 text-blue-600 mb-2" />
+                <p className="text-sm text-gray-700 font-semibold text-center">
+                  Contact@akddclkerkennah.org.tn
+                </p>
+              </div>
+              <div className="flex flex-col items-center p-5 border border-gray-300 rounded-2xl shadow hover:shadow-lg transition">
+                <MapPinIcon className="h-12 w-12 text-red-600 mb-2" />
+                <p className="text-sm text-gray-700 font-semibold text-center">
+                  Port de Pêche Kraten, Kerkennah
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-helmi">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="flex flex-col">
+                    <input
+                      className="py-3 px-5 border rounded-full outline-none focus:ring-2 focus:ring-primary"
+                      type="text"
+                      placeholder="Nom"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    {errors?.name && (
+                      <span className="text-red-500 mt-1">{errors?.name}</span>
+                    )}
+                  </div>
+                  <div className="flex flex-col">
+                    <input
+                      className="py-3 px-5 border rounded-full outline-none focus:ring-2 focus:ring-primary"
+                      type="email"
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    {errors?.email && (
+                      <span className="text-red-500 mt-1">{errors?.email}</span>
+                    )}
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <input
+                    className="py-3 px-5 border rounded-full outline-none focus:ring-2 focus:ring-primary"
+                    type="text"
+                    placeholder="Sujet"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                  />
+                  {errors?.subject && (
+                    <span className="text-red-500 mt-1">
+                      {errors?.subject}
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <textarea
+                    className="py-3 px-5 border rounded-2xl outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="Message"
+                    rows={5}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  />
+                  {errors?.message && (
+                    <span className="text-red-500 mt-1">
+                      {errors?.message}
+                    </span>
+                  )}
+                </div>
+                <button
+                  type="submit"
+                  className="w-full sm:w-1/2 mx-auto py-3 px-6 rounded-full bg-gradient-to-r from-secondary to-primary text-white font-semibold hover:opacity-90 transition"
+                >
+                  {loading ? "Envoi en cours..." : "Envoyer le message"}
+                </button>
+              </form>
+            </div>
+          </AnimationOnScroll>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Contact;

@@ -13,6 +13,7 @@ import LangLink from "@/components/LangLink";
 import IEdition from "@/models/IEdition";
 import ShareButton from "@/components/visitor/our-festival/upcoming/ShareButton";
 import PageParagraph2 from "@/components/atoms/PageParagraph2";
+import SectionHeader from "@/components/SectionHeader";
 
 const gallery = [
   '/festivales_images/img1.jpg',
@@ -28,21 +29,7 @@ const gallery = [
   '/festivales_images/img.jpg',
 ];
 
-interface SectionHeaderProps {
-  title: React.ReactNode;
-  text: string;
-}
 
-const SectionHeader = ({ title, text }: SectionHeaderProps) => (
-  <div className="flex flex-col items-center text-center justify-center py-10">
-    <Title size="text-2xl sm:text-[36px] pb-4">{title}</Title>
-    <PageParagraph2>
-      <p className="font-semibold text-lg sm:text-[20px] text-center max-w-3xl mx-auto">
-        {text}
-      </p>
-    </PageParagraph2>
-  </div>
-);
 
 export default function FestivalVenir() {
   const [edition, setEdition] = useState<IEdition | null>(null);

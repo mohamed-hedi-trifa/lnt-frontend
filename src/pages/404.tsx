@@ -7,7 +7,7 @@ const pageStyles = {
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
 }
 const headingStyles = {
-  marginTop: 0,
+  marginTop: 40,
   marginBottom: 64,
   maxWidth: 320,
 }
@@ -38,7 +38,7 @@ const NotFoundPage: React.FC<PageProps> = () => {
           </>
         ) : null}
         <br />
-        <Link to="/">Go home</Link>.
+        <Link to="/" className="text-primary text-2xl font-semibold underline">Go home</Link>
       </p>
     </main>
   )

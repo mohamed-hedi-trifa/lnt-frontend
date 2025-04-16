@@ -46,7 +46,7 @@ export default function OpportunityCard({ opportunity }: { opportunity: any }) {
 
     return (
         <>
-            <div className="flex flex-col bg-white rounded-xl pb-5 h-full sm:w-[300px] w-[350px] shadow-helmi ">
+            <div className="flex flex-col bg-white rounded-xl pb-5 sm:min-h-[420px] h-full sm:w-[300px] w-[350px] shadow-helmi ">
                 <div className="flex w-full justify-between px-4 sm:py-2 py-3 items-center">
                     <h4 className='font-bold  '>{opportunity?.type}</h4>
                     <span className={` w-3 h-3 rounded-[50%] ${calculateTimeRemaining(opportunity?.due_date) !== "Expiré" ? "bg-[#29F11B]" : "bg-[#FF0000]"}`}></span>
