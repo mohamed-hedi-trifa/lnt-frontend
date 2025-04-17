@@ -1,13 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import Swal from 'sweetalert2';
-import ReactLoading from "react-loading"
 import Modal from '../../../Modal';
 import Title from '../../../atoms/titles/Title';
 import { Link } from 'gatsby';
 import { FacebookOutlined, Instagram, LinkedIn } from '@mui/icons-material';
 import { X } from '@mui/icons-material';
-import InstagramIcon from '@/assets/icons/InstagramIcon';
 import InstagramIconStyle2 from '@/assets/icons/InstagramIconStyle2';
 
 export default function PartnerModal({ partner, show, hide }: { partner: any, show: boolean, hide: () => void }) {

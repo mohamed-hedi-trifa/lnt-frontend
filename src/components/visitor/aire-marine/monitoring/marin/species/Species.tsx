@@ -7,16 +7,13 @@ import Title from "@/components/atoms/titles/Title";
 import PageParagraph from "@/components/atoms/PageParagraph";
 import BlogList from "./BlogList";
 import SpeciesTitle from "@/components/atoms/titles/SpeciesTitle";
-import Table from "@/components/visitor/who-are-we/rapports/Table";
 import DecouvrezDautresEspeces from "./DecouvrezDautresEspeces";
 import Media from "@/components/visitor/Media";
 import AMCPSuiviScientifiqueSidebar from "@/components/layout/AMCPSuiviScientifiqueSidebar";
-
+import PdfIcon from "@/assets/icons/PdfIcon.png";
 
 import TableSpecies from "./TableSpecies";
 import Loader from "@/components/atoms/loader";
-
-
 
 // Fonction utilitaire pour parser le contenu markdown
 const parseContent = (content: string): string => {
@@ -56,15 +53,12 @@ export default function Species({ location, params }: { location: any; params: a
 
           setBlogSpecies(res.data);
 
-          // Extraction de la langue depuis l'URL
           const searchParams = new URLSearchParams(location.search);
           const urlLanguage = searchParams.get("lang");
 
-          // Si la langue extraite existe dans le contenu, on l'utilise
           if (urlLanguage && res.data[`title_${urlLanguage}`]) {
             setLanguage(urlLanguage);
           } else {
-            // Par défaut, utiliser l'anglais ou le français selon la disponibilité
             setLanguage(res.data.title_en ? "en" : "fr");
           }
         })
@@ -75,25 +69,25 @@ export default function Species({ location, params }: { location: any; params: a
     }
   }, [location, params.slug]);
 
-  console.log("-------------------- blogSpecies --------------------");
-  console.log(blogSpecies);
-
-
-
   if (!blogSpecies) {
-    return <div className='flex justify-center items-center pt-40'> <Loader/> </div>;
+    return (
+      <div className="flex justify-center items-center pt-40">
+        <Loader />
+      </div>
+    );
   }
 
   return (
     <div
-      className="min-h-full bg-cover bg-center bg-fixed"
+      className="min-h-full bg-cover bg-center md:bg-fixed bg-local"
       style={{ backgroundImage: `url(${process.env.GATSBY_API_URL}${blogSpecies.image})` }}
     >
       <img
-        className="w-full object-cover h-[80vh]"
+        className="w-full h-[50vh] md:h-[80vh] object-cover"
         src={achievementsHero}
         alt="Achievements Hero"
       />
+
       <div className="flex justify-center pb-4">
         <SpeciesTitle
           title={blogSpecies[`title_${language}`] || ""}
@@ -101,23 +95,24 @@ export default function Species({ location, params }: { location: any; params: a
           fontSize="text-[48px] md:text-[64px] text-start"
         />
       </div>
-      <section className="px-4">
+
+      <section className="px-4 sm:px-6 lg:px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col sm:flex-row relative sm:gap-8">
             <AMCPSuiviScientifiqueSidebar />
-            <div className="grow w-full flex flex-col mx-auto shadow-helmi gap-4 rounded-[12px] bg-[rgba(255,255,255,0.8)]">
+            <div className="grow w-full flex flex-col mx-auto shadow-helmi gap-4 rounded-[12px] bg-[rgba(255,255,255,0.8)] px-4 sm:px-0">
               {/* Sous-titre */}
               <SectionTitle2
                 title={blogSpecies[`subtitle_${language}`] || ""}
                 width="w-full"
                 color="#000000"
                 fontSize="text-[28px] lg:text-[36px] text-center sm:text-start font-semibold italic"
-                spacing="sm:mt-0 px-10 pt-6"
+                spacing="sm:mt-0 px-2 sm:px-10 pt-6"
               />
 
               {/* Résumé */}
               {blogSpecies[`summary_${language}`] && (
-                <div className="px-10 text-center sm:text-start">
+                <div className="px-4 sm:px-16 text-center sm:text-start">
                   <PageParagraph>
                     {blogSpecies[`summary_${language}`]}
                   </PageParagraph>
@@ -128,9 +123,7 @@ export default function Species({ location, params }: { location: any; params: a
               {blogSpecies.content_items
                 ?.filter((item: any) => item.language === language && item.type === "list")
                 .sort((a: any, b: any) => a.order - b.order)
-                .map((item: any) => (
-                  <BlogList key={item.id} content={item.content} />
-                ))}
+                .map((item: any) => <BlogList key={item.id} content={item.content} />)}
 
               {/* Autres contenus */}
               {blogSpecies.content_items
@@ -144,7 +137,7 @@ export default function Species({ location, params }: { location: any; params: a
                           variant="pill"
                           size="text-[24px] sm:text-[24px]"
                           key={item.id}
-                          customClassName="items-start px-10 mt-2"
+                          customClassName="items-start sm:px-10 mt-2"
                         >
                           {item.content}
                         </Title>
@@ -153,7 +146,7 @@ export default function Species({ location, params }: { location: any; params: a
                       return (
                         <PageParagraph key={item.id}>
                           <div
-                            className="px-10 sm:text-start"
+                            className="px-4 sm:px-16 sm:text-start"
                             dangerouslySetInnerHTML={{ __html: parseContent(item.content) }}
                           />
                         </PageParagraph>
@@ -171,85 +164,92 @@ export default function Species({ location, params }: { location: any; params: a
                     case "pdf":
                       return (
                         <div key={item.id}>
-                          <a download href={`${process.env.GATSBY_API_URL}${item.file_path}`}>
-                            <div className="text-blue">Download Pdf</div>
+                          <a
+                            download
+                            href={`${process.env.GATSBY_API_URL}${item.file_path}`}
+                          >
+                            <div className="mb-10 flex items-center  sm:px-10">
+                             <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
+                             <p className="ml-4 font-semibold text-[18px] text-[#0270A0] underline">{item.file_path}</p>
+                            </div>
                           </a>
                         </div>
                       );
                     case "cin":
                       return (
-                        <div className="col-span-10 p-2 px-5">
-                          <div className="self-stretch p-5 rounded-xl  outline outline-1 outline-offset-[-1px] outline-black inline-flex flex-col justify-start items-start overflow-hidden">
-                            <div className="self-stretch  flex flex-col justify-center items-start gap-3">
-                              <div className="self-stretch flex flex-col justify-center items-start gap-2.5">
-                                <div className="self-stretch inline-flex justify-start items-center gap-2.5">
-                                  <img src="/icons/etiqueter.png" alt="" />
-                                  <div className="flex-1 inline-flex flex-col justify-center items-center gap-[3px]">
-                                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Nom scientifique</div>
-                                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
-                                      {blogSpecies.scientific_name_en || blogSpecies.scientific_name_fr}
-                                    </div>
-                                  </div>
+                        <div key={item.id} className="col-span-10 p-2 px-5">
+                          <div className="p-5 rounded-xl outline outline-1 outline-offset-[-1px] outline-black flex flex-col gap-6">
+                            {/* Scientific Name */}
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <img src="/icons/etiqueter.png" alt="" />
+                              <div className="flex-1 inline-flex flex-col gap-1">
+                                <div className="text-black text-xl font-bold leading-7">
+                                  Nom scientifique
                                 </div>
-                                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
-                              </div>
-                              <div className="flex flex-col justify-center items-start gap-2.5">
-                                <div className="inline-flex justify-center items-center gap-2.5">
-                                  <img src="/icons/monde.png" alt="" />
-                                  <div className="w-[665px] inline-flex flex-col justify-start items-start gap-[3px]">
-                                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Répartition / Habitat</div>
-                                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
-
-                                      {blogSpecies.distribution_habitat_en || blogSpecies.distribution_habitat_fr}
-                                    </div>
-                                  </div>
+                                <div className="text-black text-xl font-medium leading-7">
+                                  {blogSpecies.scientific_name_en || blogSpecies.scientific_name_fr}
                                 </div>
-                                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
                               </div>
-                              <div className="self-stretch flex flex-col justify-center items-start gap-2.5">
-                                <div className="self-stretch inline-flex justify-start items-center gap-2.5">
-                                  <img src="/icons/regle.png" alt="" />
-                                  <div className="flex-1 inline-flex flex-col justify-start items-start gap-[3px]">
-                                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Taille et Morphologie</div>
-                                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+                            </div>
+                            <hr className="border-stone-400" />
 
-                                      {blogSpecies.size_morphology_en || blogSpecies.size_morphology_fr}
-                                    </div>
-                                  </div>
+                            {/* Distribution / Habitat */}
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <img src="/icons/monde.png" alt="" />
+                              <div className="flex-1 inline-flex flex-col gap-1">
+                                <div className="text-black text-xl font-bold leading-7">
+                                  Répartition / Habitat
                                 </div>
-                                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
-                              </div>
-                              <div className="self-stretch flex flex-col justify-center items-start gap-2.5">
-                                <div className="self-stretch inline-flex justify-start items-center gap-2.5">
-                                  <img src="/icons/coutellerie.png" alt="" />
-                                  <div className="flex-1 inline-flex flex-col justify-start items-start gap-[3px]">
-                                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Régime alimentaire</div>
-                                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
-
-                                      {blogSpecies.diet_en || blogSpecies.diet_fr}
-                                    </div>
-                                  </div>
+                                <div className="text-black text-xl font-medium leading-7">
+                                  {blogSpecies.distribution_habitat_en || blogSpecies.distribution_habitat_fr}
                                 </div>
-                                <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
                               </div>
+                            </div>
+                            <hr className="border-stone-400" />
 
-                              <div className="flex flex-col justify-center items-center gap-2.5">
-                                <div className="w-[741px] inline-flex justify-center items-center gap-2.5">
-                                  <img src="/icons/point-dexclamation.png" alt="" />
-                                  <div className="flex-1 inline-flex flex-col justify-start items-start gap-[3px]">
-                                    <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Statut de Conservation</div>
-                                    <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
+                            {/* Size & Morphology */}
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <img src="/icons/regle.png" alt="" />
+                              <div className="flex-1 inline-flex flex-col gap-1">
+                                <div className="text-black text-xl font-bold leading-7">
+                                  Taille et Morphologie
+                                </div>
+                                <div className="text-black text-xl font-medium leading-7">
+                                  {blogSpecies.size_morphology_en || blogSpecies.size_morphology_fr}
+                                </div>
+                              </div>
+                            </div>
+                            <hr className="border-stone-400" />
 
+                            {/* Diet */}
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <img src="/icons/coutellerie.png" alt="" />
+                              <div className="flex-1 inline-flex flex-col gap-1">
+                                <div className="text-black text-xl font-bold leading-7">
+                                  Régime alimentaire
+                                </div>
+                                <div className="text-black text-xl font-medium leading-7">
+                                  {blogSpecies.diet_en || blogSpecies.diet_fr}
+                                </div>
+                              </div>
+                            </div>
+                            <hr className="border-stone-400" />
 
-                                      {blogSpecies.conservation_status_en || blogSpecies.conservation_status_fr}
-                                    </div>
-                                  </div>
+                            {/* Conservation Status */}
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <img src="/icons/point-dexclamation.png" alt="" />
+                              <div className="flex-1 inline-flex flex-col gap-1">
+                                <div className="text-black text-xl font-bold leading-7">
+                                  Statut de Conservation
+                                </div>
+                                <div className="text-black text-xl font-medium leading-7">
+                                  {blogSpecies.conservation_status_en || blogSpecies.conservation_status_fr}
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      )
+                      );
                     default:
                       return null;
                   }
@@ -258,35 +258,37 @@ export default function Species({ location, params }: { location: any; params: a
           </div>
         </div>
       </section>
-      <div className="w-screen mx-0 rounded-[12px] bg-[rgba(255,255,255,0.8)] mt-[60px] shadow-helmi">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-center mx-16 py-10">
-            <div className="text-center">
-              <h1 className="text-[28px] sm:text-[36px] font-bold">
-                <span className="text-[#0270A0]">Immersion visuelle</span> dans l'écosystème de { blogSpecies.title_fr || blogSpecies.title_en }
-              </h1>
-              <PageParagraph>
-                <p className="text-[20px] font-semibold mt-4 mx-20 text-center">
-                  Découvrez la richesse visuelle de { blogSpecies.title_fr || blogSpecies.title_en } à travers des images captivantes et des vidéos éducatives
-                </p>
-              </PageParagraph>
-            </div>
+
+      {/* Immersion visuelle */}
+      <div className="w-full bg-[rgba(255,255,255,0.8)] mt-[60px] shadow-helmi">
+        <div className="max-w-6xl mx-auto px-4 sm:px-0">
+          <div className="flex flex-col items-center justify-center py-10">
+            <h1 className="text-[28px] sm:text-[36px] font-bold text-center">
+              <span className="text-[#0270A0]">Immersion visuelle</span> dans l'écosystème de {blogSpecies.title_fr || blogSpecies.title_en}
+            </h1>
+            <PageParagraph>
+              <p className="text-[20px] font-semibold mt-4 mx-4 sm:mx-20 text-center">
+                Découvrez la richesse visuelle de {blogSpecies.title_fr || blogSpecies.title_en} à travers des images captivantes et des vidéos éducatives
+              </p>
+            </PageParagraph>
           </div>
           <Media mediaContent={blogSpecies} />
           <hr className="my-10 border-1 border-[#000000]" />
-          <div className="text-center mx-20">
+
+          {/* Recherche et connaissance */}
+          <div className="text-center mx-4 sm:mx-20">
             <h1 className="text-[28px] sm:text-[36px] font-bold">
-              <span className="text-[#0270A0]">Recherche</span> et Connaissances sur { blogSpecies.title_fr || blogSpecies.title_en }
+              <span className="text-[#0270A0]">Recherche</span> et Connaissances sur {blogSpecies.title_research_knowledge_en || blogSpecies.title_research_knowledge_fr}
             </h1>
           </div>
           <PageParagraph>
-            <div className="mx-28 pt-4 font-semibold text-[18px] sm:text-[20px]">
-              <p className="mb-[30px] text-center">
-                {blogSpecies.description_research_knowledge_en || blogSpecies.description_research_knowledge_fr }
-              </p>
+            <div className="mx-4 sm:mx-28 py-4 font-semibold text-[18px] sm:text-[20px] text-center">
+              {blogSpecies.description_research_knowledge_en || blogSpecies.description_research_knowledge_fr}
             </div>
           </PageParagraph>
           <TableSpecies data={blogSpecies.researchKnowledge} />
+
+          {/* Découvrir autres espèces */}
           <section className="border-t border-[#000000] mt-10 py-10">
             <DecouvrezDautresEspeces currentBlog={blogSpecies} />
           </section>

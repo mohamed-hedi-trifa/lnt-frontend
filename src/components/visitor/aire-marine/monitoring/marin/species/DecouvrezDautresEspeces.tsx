@@ -62,7 +62,7 @@ export default function DecouvrezDautresEspeces({ currentBlog }: { currentBlog: 
             ?.filter((research) => research.id !== currentBlog.id)
             .map((research, index) => (
               <swiper-slide key={index} class="relative w-fit">
-                     <Link to={`/protected-air-marine-coastal-areas/monitoring/${research.type}/${research.slug}`}>
+                <Link to={`/protected-air-marine-coastal-areas/monitoring/${research.type}/${research.slug}`}>
                   <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
                 </Link>
               </swiper-slide>
@@ -75,7 +75,9 @@ export default function DecouvrezDautresEspeces({ currentBlog }: { currentBlog: 
             ?.filter((research) => research.id !== currentBlog.id)
             .map((research, index) => (
               <div key={index} className="relative">
-                <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
+                <Link to={`/protected-air-marine-coastal-areas/monitoring/${research.type}/${research.slug}`}>
+                  <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
+                </Link>
               </div>
             ))}
         </div>
