@@ -12,6 +12,7 @@ import PageParagraph from '../../../atoms/PageParagraph'
 import presentationHero from "../../../../assets/images/presentation2-hero.jpg"
 import HeroSection from '../../HeroSection'
 import Title from '../../../atoms/titles/Title';
+import PdfIcon from "@/assets/icons/PdfIcon.png";
 
 export default function PresentationSection2() {
     const [loading, setLoading] = useState(true);
@@ -188,7 +189,7 @@ export default function PresentationSection2() {
                          
                                 >
                                     <div key={item.id} className="flex items-center p-2">
-                                        <img src="/images/Pdf.png" alt="item" className="w-[40px] h-[45px] object-cover" />
+                                        <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
                                         <span className="text-[12px] md:text-[16px] ml-[16px] text-[#0270A0] underline">
                                             {item.title || "Plan_de_gestion_AMCP.pdf"}.pdf
                                         </span>

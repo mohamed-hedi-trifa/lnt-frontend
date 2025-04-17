@@ -3,13 +3,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import PageTitle from '../../../atoms/titles/PageTitle'
 import Sidebar from '../../../layout/Sidebar'
-import ahmedYellow from "../../../../assets/images/ahmed-yellow.png"
-import fatmaB from "../../../../assets/images/FatmaB.png"
-import habibK from "../../../../assets/images/HabibK.png"
-import hakimS from "../../../../assets/images/HakimS.png"
-import jamilK from "../../../../assets/images/JamilK.png"
-import karimB from "../../../../assets/images/KarimB.png"
-import najahH from "../../../../assets/images/NajahH.png"
 import partnersHero from "../../../../assets/images/partners-hero.jpg";
 import ImageHistoire from '../our-team/ImageHistoire'
 import Partners from './Partners'
@@ -17,15 +10,6 @@ import HeroSection from '../../HeroSection'
 import PageParagraph from "@/components/atoms/PageParagraph";
 
 
-const IMAGES = [
-    ahmedYellow,
-    fatmaB,
-    habibK,
-    hakimS,
-    jamilK,
-    karimB,
-    najahH
-]
 
 export default function PartnersPage() {
     const [partners, setPartners] = useState<any>(null);

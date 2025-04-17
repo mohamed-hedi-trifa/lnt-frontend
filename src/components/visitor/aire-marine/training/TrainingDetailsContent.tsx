@@ -166,9 +166,9 @@ export default function TrainingDetailsContent({ location, params }: TrainingDet
                           download
                           href={`${process.env.GATSBY_API_URL}${item.file_path}`}
                         >
-                           <div className="my-10 flex items-center">
+                           <div className="mb-10 flex items-center">
                            <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
-                           <p className="ml-4 font-semibold text-xl">{item.file_path}</p>
+                           <p className="ml-4 font-semibold text-[18px] text-[#0270A0] underline">{item.file_path}</p>
                           </div>
                         </a>
                       </div>

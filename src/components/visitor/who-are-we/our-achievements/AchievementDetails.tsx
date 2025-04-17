@@ -11,14 +11,11 @@ import Question from '@/components/atoms/Question';
 export default function AchievementDetails({ location, params }: { location: any; params: any }) {
   const searchParams = new URLSearchParams(location?.search);
   const paramLang = searchParams.get("lang");
-  
-  // Au lieu d'un tableau vide, on stocke un objet ou null
   const [achievement, setAchievement] = useState<any>(null);
 
   const getAchievements = async (slugAchievements: string) => {
     try {
       const response = await axios.get(`/api/achievements/${slugAchievements}`);
-      // On suppose que l'API renvoie directement un seul achievement
       setAchievement(response.data);
     } catch (error) {
       console.error("Error fetching achievement:", error);
@@ -36,14 +33,13 @@ export default function AchievementDetails({ location, params }: { location: any
     <main className="relative">
       <HeroAcheivement />
 
-      {/* Fil d'Ariane */}
+
       <div className="max-w-full mx-auto pl-6 sm:pl-0">
         <Breadcrumbs />
       </div>
 
       <section className="flex justify-center gap-20 sm:flex-row flex-col my-5 text-center max-w-7xl w-full mx-auto mt-20 px-5 h-fit">
         <div className="">
-          {/* Détails de la réalisation */}
           <AchievementDetailsContent params={params} location={location} />
         </div>
 

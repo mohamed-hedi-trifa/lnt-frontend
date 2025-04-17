@@ -41,7 +41,7 @@ export default function ShareButton() {
             </AccordionHeader>
 
             <AccordionBody className="p-0 text-white">
-              <div className='p-2 flex flex-col items-center gap-5 bg-[rgba(255,255,255,0.37)] py-3'>
+              <div className='p-2 flex flex-col items-center gap-5 bg-[rgba(255,255,255,0.37)] py-2'>
                 <Link to={shareToFacebook(fullUrl)} target="_blank" rel="noopener noreferrer">
                   <FacebookCircleIcon width="30px" height="30px" />
                 </Link>
@@ -57,7 +57,7 @@ export default function ShareButton() {
                         </div>
                     </CopyToClipboard>
               </div>
-              <div className='-rotate-90 mb-8 mt-[90px] text-[24px] font-bold text-nowrap'>
+              <div className='-rotate-90 mb-8 mt-[80px] text-[20px] font-bold text-nowrap'>
                 Partager :
               </div>
             </AccordionBody>
