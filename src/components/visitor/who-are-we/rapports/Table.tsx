@@ -1,4 +1,6 @@
 import React from "react";
+import PdfIcon from "@/assets/icons/PdfIcon.png";
+
 
 const Table: React.FC<{ data: { title: string; date: string; pdf_link: string }[] }> = ({ data }) => {
   return (
@@ -28,7 +30,7 @@ const Table: React.FC<{ data: { title: string; date: string; pdf_link: string }[
                   rel="noopener noreferrer" // Recommended for security
                   className="flex justify-center items-center"
                 >
-                  <img src="/images/Pdf.png" alt="item" className="w-[40px] h-[45px] object-cover" />
+                  <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
                   <span className="text-[12px] md:text-[16px] ml-[16px] text-[#0270A0] underline">
                     {item.title}.pdf
                   </span>
