@@ -75,10 +75,10 @@ export default function OpportunityDetails({ location, params }: { location: any
 
 
                 {opportunity.type === 'job-offer' && (
-                    <JobOfferModal show={modalShow} hide={() => setModalShow(false)} />
+                    <JobOfferModal show={modalShow} hide={() => setModalShow(false)}  opportunityId={opportunity.id}/>
                 )}
                 {opportunity.type === 'call-for-tender' && (
-                    <CallForTrenderModal show={modalShow} hide={() => setModalShow(false)} />
+                    <CallForTrenderModal show={modalShow} hide={() => setModalShow(false)}  opportunityId={opportunity.id}/>
                 )}
                 {opportunity.type === 'internship' && (
                     <InternshipApplicationFormModal show={modalShow} hide={() => setModalShow(false)} opportunityId={opportunity.id}/>

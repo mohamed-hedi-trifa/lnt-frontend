@@ -114,11 +114,6 @@ export default function OpportunityDetailsContent({ location, params }: { locati
                                                 
                                             </a>
                                         </div>
-                                    ) : item.type === 'list' ? (
-                                        <div>
-                                            <BlogList content={item.content} />
-                                        </div>
-
                                     ) : null
 
                                 ) : null}
