@@ -16,9 +16,10 @@ interface FormData {
     email: string;
     phone: string;
     address: string;
+    opportunity_id: number;
 }
 
-export default function CallForTrenderModal({ show, hide }: { show: boolean, hide: () => void }) {
+export default function CallForTrenderModal({ show, hide, opportunityId }: { show: boolean, hide: () => void , opportunityId: number}) {
     const [isSuccess, setIsSuccess] = useState(false);
     const [formData, setFormData] = useLocalStorage<FormData>("submit-application", {
         company_name: "",
@@ -29,15 +30,20 @@ export default function CallForTrenderModal({ show, hide }: { show: boolean, hid
         email: "",
         phone: "",
         address: "",
+        opportunity_id: opportunityId,
 
     });
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
     // const [cvFile, setCvFile] = useState<File | null>(null);
-    const [cvFileName, setCvFileName] = useState<string>('');
-    const [motivation_letter, setMotivation_letter] = useState<File | null>(null);
-    const [motivationLetterFileName, setMotivationLetterFileName] = useState<string>('');
+
+    const [business_license, setBusiness_license] = useState<File | null>(null);
+    const [technical_and_financial_offer, setTechnicalFnancialOffer] =  useState<File[]>([]);
+    const [technicalFinancialOfferName, setTechnicalFinancialOfferName] = useState<string[]>([]);
+
+    const [BusinessLicenseFileName, setBusinessLicenseFileName] = useState<string>('');
+    const [technicalFinancialOfferFileName, setTechnicalFinancialOfferFileNameFileName] = useState<File[]>([]);
     const [otherDocuments, setOtherDocuments] = useState<File[]>([]);
     const [otherDocumentNames, setOtherDocumentNames] = useState<string[]>([]);
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -48,6 +54,25 @@ export default function CallForTrenderModal({ show, hide }: { show: boolean, hid
         });
     };
 
+
+    const handleTechnicalFinancialOfferChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const files = Array.from(e.target.files);
+
+            // Validate each file
+            const validFiles = files.filter(file => {
+                if (file.size > 5 * 1024 * 1024) {
+                    toast.error(`Le fichier ${file.name} dépasse la taille maximale de 5 Mo.`);
+                    return false;
+                }
+
+                return true;
+            });
+
+            setTechnicalFnancialOffer(prev => [...prev, ...validFiles]);
+            setTechnicalFinancialOfferName(prev => [...prev, ...validFiles.map(file => file.name)]);
+        }
+    };
     const handleOtherDocumentsChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const files = Array.from(e.target.files);
@@ -58,7 +83,7 @@ export default function CallForTrenderModal({ show, hide }: { show: boolean, hid
                     toast.error(`Le fichier ${file.name} dépasse la taille maximale de 5 Mo.`);
                     return false;
                 }
-         
+
                 return true;
             });
 
@@ -67,31 +92,37 @@ export default function CallForTrenderModal({ show, hide }: { show: boolean, hid
         }
     };
 
+    const removeTechnicalFnancialOffer = (index: number) => {
+        setTechnicalFnancialOffer(prev => prev.filter((_, i) => i !== index));
+        setTechnicalFinancialOfferName(prev => prev.filter((_, i) => i !== index));
+    };
     const removeOtherDocument = (index: number) => {
         setOtherDocuments(prev => prev.filter((_, i) => i !== index));
         setOtherDocumentNames(prev => prev.filter((_, i) => i !== index));
     };
-    const handleCvFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+
+
+    const handleBusinessLicenseFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const file = e.target.files[0];
             if (file.size > 5 * 1024 * 1024) {
-                setErrors({ ...errors, cvFile: "Le fichier ne doit pas dépasser 5 Mo." });
+                setErrors({ ...errors, business_license: "Le fichier ne doit pas dépasser 5 Mo." });
                 return;
             }
-            setCvFile(file);
-            setCvFileName(file.name);
+            setBusiness_license(file);
+            setBusinessLicenseFileName(file.name);
         }
     };
 
-    const handleMotivationLetterFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleTechnicalFinancialOfferFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const file = e.target.files[0];
             if (file.size > 5 * 1024 * 1024) {
-                setErrors({ ...errors, motivation_letter: "Le fichier ne doit pas dépasser 5 Mo." });
+                setErrors({ ...errors, technical_and_financial_offer: "Le fichier ne doit pas dépasser 5 Mo." });
                 return;
             }
-            setMotivation_letter(file);
-            setMotivationLetterFileName(file.name);
+            setTechnicalFnancialOffer(file);
+            setTechnicalFinancialOfferFileNameFileName(file.name);
         }
     };
 
@@ -127,9 +158,13 @@ export default function CallForTrenderModal({ show, hide }: { show: boolean, hid
         // if (cvFile) {
         //     formDataToSend.append("cv_file", cvFile);
         // }
-        if (motivation_letter) {
-            formDataToSend.append("motivation_letter", motivation_letter);
+        if (business_license) {
+            formDataToSend.append("business_license", business_license);
         }
+
+        technical_and_financial_offer.forEach((file, index) => {
+            formDataToSend.append(`technical_and_financial_offer[${index}]`, file);
+        });
 
         otherDocuments.forEach((file, index) => {
             formDataToSend.append(`other_documents[${index}]`, file);
@@ -153,9 +188,10 @@ export default function CallForTrenderModal({ show, hide }: { show: boolean, hid
                 email: "",
                 phone: "",
                 address: "",
+                opportunity_id: opportunityId,
             });
-            setCvFile(null);
-            setMotivation_letter(null);
+            setBusiness_license(null);
+            setTechnicalFnancialOffer(null);
             setErrors({});
 
             toast.success("Votre demande a été envoyée avec succès !");
@@ -172,140 +208,142 @@ export default function CallForTrenderModal({ show, hide }: { show: boolean, hid
     };
 
     return (
-        <ModalOppourtunity title="Soumettez Votre Candidature" show={show} hide={hide}>
+        <>
             {!isSuccess ? (
-                <form onSubmit={handleSubmit} className="bg-white px-6 rounded-lg shadow-lg w-[800px] max-h-[calc(100vh-60px)] overflow-y-auto relative">
+                <ModalOppourtunity title="Soumettez Votre Candidature" show={show} hide={hide}>
 
-                    <div className="flex items-start flex-col mt-4 gap-5">
-                        <h1 className="font-semibold text-lg">À Propos de l'entreprise</h1>
+                    <form onSubmit={handleSubmit} className="bg-white px-6 rounded-lg shadow-lg w-[800px] max-h-[calc(100vh-60px)] overflow-y-auto relative">
 
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Nom de l'entreprise "
-                                id="Nom de l'entreprise "
-                                name="company_name"
-                                value={formData.company_name}
-                                onChange={handleChange}
-                                type="text"
-                                required
-                                width="500px"
-                            />
-                            {errors.company_name && <div className="text-red-500 text-sm">{errors.company_name}</div>}
-                        </div>
+                        <div className="flex items-start flex-col mt-4 gap-5">
+                            <h1 className="font-semibold text-lg">À Propos de l'entreprise</h1>
 
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Matricule Fiscale"
-                                id="tax_identification_number"
-                                name="tax_identification_number"
-                                value={formData.tax_identification_number}
-                                onChange={handleChange}
-                                type="text"
-                                required
-                                width="500px"
-                            />
-                            {errors.tax_identification_number && <div className="text-red-500 text-sm">{errors.tax_identification_number}</div>}
-                        </div>
-
-                        <div className="flex flex-col items-start gap-1">
-                            <label className="font-semibold text-sm">
-                                Date de création <span className="text-[#FF0000]">*</span>
-                            </label>
-                            <div className="flex gap-5">
-                                <SelectFieldOpportunity
-                                    id="birth_day"
-                                    name="birth_day"
-                                    value={formData.birth_day}
+                            <div className="flex gap-6">
+                                <InputFieldOpportunity
+                                    label="Nom de l'entreprise "
+                                    id="Nom de l'entreprise "
+                                    name="company_name"
+                                    value={formData.company_name}
                                     onChange={handleChange}
+                                    type="text"
                                     required
-                                    options={Array.from({ length: 31 }, (_, i) => (i + 1).toString())}
-                                    placeholder="Jours"
-                                    width="100px"
+                                    width="500px"
                                 />
-                                <SelectFieldOpportunity
-                                    id="birth_month"
-                                    name="birth_month"
-                                    value={formData.birth_month}
-                                    onChange={handleChange}
-                                    required
-                                    options={[
-                                        'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
-                                    ]}
-                                    valueoptions={[
-                                        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
-                                    ]}
-                                    placeholder="Mois"
-                                    width="100px"
-                                />
-                                <SelectFieldOpportunity
-                                    id="birth_year"
-                                    name="birth_year"
-                                    value={formData.birth_year}
-                                    onChange={handleChange}
-                                    required
-                                    options={Array.from({ length: 60 }, (_, i) => (2015 - i).toString())}
-                                    placeholder="Années"
-                                    width="100px"
-                                />
+                                {errors.company_name && <div className="text-red-500 text-sm">{errors.company_name}</div>}
                             </div>
-                            {errors.birth_date && <div className="text-red-500 text-sm">{errors.birth_date}</div>}
+
+                            <div className="flex gap-6">
+                                <InputFieldOpportunity
+                                    label="Matricule Fiscale"
+                                    id="tax_identification_number"
+                                    name="tax_identification_number"
+                                    value={formData.tax_identification_number}
+                                    onChange={handleChange}
+                                    type="text"
+                                    required
+                                    width="500px"
+                                />
+                                {errors.tax_identification_number && <div className="text-red-500 text-sm">{errors.tax_identification_number}</div>}
+                            </div>
+
+                            <div className="flex flex-col items-start gap-1">
+                                <label className="font-semibold text-sm">
+                                    Date de création <span className="text-[#FF0000]">*</span>
+                                </label>
+                                <div className="flex gap-5">
+                                    <SelectFieldOpportunity
+                                        id="birth_day"
+                                        name="birth_day"
+                                        value={formData.birth_day}
+                                        onChange={handleChange}
+                                        required
+                                        options={Array.from({ length: 31 }, (_, i) => (i + 1).toString())}
+                                        placeholder="Jours"
+                                        width="100px"
+                                    />
+                                    <SelectFieldOpportunity
+                                        id="birth_month"
+                                        name="birth_month"
+                                        value={formData.birth_month}
+                                        onChange={handleChange}
+                                        required
+                                        options={[
+                                            'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                                        ]}
+                                        valueoptions={[
+                                            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
+                                        ]}
+                                        placeholder="Mois"
+                                        width="100px"
+                                    />
+                                    <SelectFieldOpportunity
+                                        id="birth_year"
+                                        name="birth_year"
+                                        value={formData.birth_year}
+                                        onChange={handleChange}
+                                        required
+                                        options={Array.from({ length: 60 }, (_, i) => (2025 - i).toString())}
+                                        placeholder="Années"
+                                        width="100px"
+                                    />
+                                </div>
+                                {errors.birth_date && <div className="text-red-500 text-sm">{errors.birth_date}</div>}
+                            </div>
+
+                            <div className="flex gap-6">
+                                <InputFieldOpportunity
+                                    label="Adresse e-mail"
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    type="email"
+                                    required
+                                    width="500px"
+                                />
+                                {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
+                            </div>
+
+                            <div className="flex gap-6">
+                                <InputFieldOpportunity
+                                    label="Numéro de téléphone"
+                                    id="phone"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    type="tel"
+                                    required
+                                    width="500px"
+                                />
+                                {errors.phone && <div className="text-red-500 text-sm">{errors.phone}</div>}
+                            </div>
+
+                            <div className="flex gap-6">
+                                <InputFieldOpportunity
+                                    label="Adresse"
+                                    id="address"
+                                    name="address"
+                                    value={formData.address}
+                                    onChange={handleChange}
+                                    required
+                                    width="500px"
+                                />
+                                {errors.address && <div className="text-red-500 text-sm">{errors.address}</div>}
+                            </div>
                         </div>
 
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Adresse e-mail"
-                                id="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                type="email"
-                                required
-                                width="500px"
-                            />
-                            {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
-                        </div>
+                        <hr className="border-t-2 border-black mt-5" />
+                        <div className="flex items-start flex-col mt-4">
+                            <h1 className="font-semibold text-lg mb-2">Documents à Joindre</h1>
 
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Numéro de téléphone"
-                                id="phone"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                type="tel"
-                                required
-                                width="500px"
-                            />
-                            {errors.phone && <div className="text-red-500 text-sm">{errors.phone}</div>}
-                        </div>
+                            <p className="text-start">
+                                Veuillez ajouter votre CV et, si possible, une lettre de motivation pour compléter votre demande.
+                            </p>
 
-                        <div className="flex gap-6">
-                            <InputFieldOpportunity
-                                label="Adresse"
-                                id="address"
-                                name="address"
-                                value={formData.address}
-                                onChange={handleChange}
-                                required
-                                width="500px"
-                            />
-                            {errors.address && <div className="text-red-500 text-sm">{errors.address}</div>}
-                        </div>
-                    </div>
+                            <p>
+                                <span className="font-semibold underline">Formats acceptés</span> : PDF, taille maximale 5 Mo
+                            </p>
 
-                    <hr className="border-t-2 border-black mt-5" />
-                    <div className="flex items-start flex-col mt-4">
-                        <h1 className="font-semibold text-lg mb-2">Documents à Joindre</h1>
-
-                        <p className="text-start">
-                            Veuillez ajouter votre CV et, si possible, une lettre de motivation pour compléter votre demande.
-                        </p>
-
-                        <p>
-                            <span className="font-semibold underline">Formats acceptés</span> : PDF, taille maximale 5 Mo
-                        </p>
-
-                        {/* <div className="flex flex-col items-start gap-2 mt-2">
+                            {/* <div className="flex flex-col items-start gap-2 mt-2">
                             <label className="font-semibold text-sm">
                                 Joindre votre CV <span className="text-[#FF0000]">*</span>
                             </label>
@@ -330,92 +368,142 @@ export default function CallForTrenderModal({ show, hide }: { show: boolean, hid
                             {errors.cvFile && <div className="text-red-500 text-sm">{errors.cvFile}</div>}
                         </div> */}
 
-                        <div className="flex flex-col items-start gap-2 mt-2">
-                            <label className="font-semibold text-sm">
-                                Joindre votre Lettre de Motivation
-                            </label>
-                            <div className="relative w-full max-w-sm">
-                                <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD] border-dashed">
-                                    <UploadIcon />
-                                    <span className="text-gray-700 ml-2 font-medium">
-                                        {motivationLetterFileName ? motivationLetterFileName : "Joindre votre Lettre de Motivation"}
-                                    </span>
-                                    <input
-                                        type="file"
-                                        id="motivation_letter"
-                                        name="motivation_letter"
-                                        accept="application/pdf"
-                                        onChange={handleMotivationLetterFileChange}
-                                        className="hidden"
-                                    />
+                            <div className="flex flex-col items-start gap-2 mt-2">
+                                <label className="font-semibold text-sm">
+                                    Joindre votre Patente
                                 </label>
+                                <div className="relative w-full max-w-sm">
+                                    <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD] border-dashed">
+                                        <UploadIcon />
+                                        <span className="text-gray-700 ml-2 font-medium">
+                                            {BusinessLicenseFileName ? BusinessLicenseFileName : "Joindre votre Patente"}
+                                        </span>
+                                        <input
+                                            type="file"
+                                            id="business_license"
+                                            name="business_license"
+                                            accept="application/pdf"
+                                            onChange={handleBusinessLicenseFileChange}
+                                            className="hidden"
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+
+
+
+                            <div className="flex flex-col items-start gap-2 mt-2">
+                                <label className="font-semibold text-sm">
+                                Joindre votre Offre technique et financier
+                                </label>
+                                <div className="relative w-full max-w-sm">
+                                    <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD] border-dashed">
+                                        <UploadIcon />
+                                        <span className="text-gray-700 ml-2 font-medium">
+                                            Ajouter d'autres documents
+                                        </span>
+                                        <input
+                                            type="file"
+                                            id="other_documents"
+                                            name="other_documents"
+
+                                            onChange={handleTechnicalFinancialOfferChange}
+                                            className="hidden"
+                                            multiple
+                                        />
+                                    </label>
+                                </div>
+
+                                {/* Display the list of uploaded documents */}
+                                {technicalFinancialOfferName.length > 0 && (
+                                    <div className="w-full mt-2 space-y-2">
+                                        {technicalFinancialOfferName.map((name, index) => (
+                                            <div key={index} className="flex items-center justify-between bg-gray-100 p-2 rounded">
+                                                <span className="text-sm truncate max-w-xs">{name}</span>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeTechnicalFnancialOffer(index)}
+                                                    className="text-red-500 hover:text-red-700"
+                                                >
+                                                    ×
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                <p className="text-xs text-gray-500">
+                                    Vous pouvez ajouter plusieurs documents PDF (5 Mo maximum par fichier)
+                                </p>
+                            </div>
+
+                            <div className="flex flex-col items-start gap-2 mt-2">
+                                <label className="font-semibold text-sm">
+                                    Autres documents (optionnel)
+                                </label>
+                                <div className="relative w-full max-w-sm">
+                                    <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD] border-dashed">
+                                        <UploadIcon />
+                                        <span className="text-gray-700 ml-2 font-medium">
+                                            Ajouter d'autres documents
+                                        </span>
+                                        <input
+                                            type="file"
+                                            id="other_documents"
+                                            name="other_documents"
+
+                                            onChange={handleOtherDocumentsChange}
+                                            className="hidden"
+                                            multiple
+                                        />
+                                    </label>
+                                </div>
+
+                                {/* Display the list of uploaded documents */}
+                                {otherDocumentNames.length > 0 && (
+                                    <div className="w-full mt-2 space-y-2">
+                                        {otherDocumentNames.map((name, index) => (
+                                            <div key={index} className="flex items-center justify-between bg-gray-100 p-2 rounded">
+                                                <span className="text-sm truncate max-w-xs">{name}</span>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeOtherDocument(index)}
+                                                    className="text-red-500 hover:text-red-700"
+                                                >
+                                                    ×
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                <p className="text-xs text-gray-500">
+                                    Vous pouvez ajouter plusieurs documents PDF (5 Mo maximum par fichier)
+                                </p>
                             </div>
                         </div>
 
-                        <div className="flex flex-col items-start gap-2 mt-2">
-                            <label className="font-semibold text-sm">
-                                Autres documents (optionnel)
-                            </label>
-                            <div className="relative w-full max-w-sm">
-                                <label className="flex items-center gap-2 cursor-pointer border border-gray-300 px-4 py-2 rounded-lg bg-[#F8F8FD] border-dashed">
-                                    <UploadIcon />
-                                    <span className="text-gray-700 ml-2 font-medium">
-                                        Ajouter d'autres documents
-                                    </span>
-                                    <input
-                                        type="file"
-                                        id="other_documents"
-                                        name="other_documents"
+                        <hr className="border-t-2 border-black mt-5" />
+                        <div className="w-full mt-4 flex flex-col gap-4">
+                            <button
+                                type="submit"
+                                className="bg-[#0270A0] text-white py-2 px-4 rounded-lg font-semibold w-full"
+                            >
+                                Envoyer la demande
+                            </button>
 
-                                        onChange={handleOtherDocumentsChange}
-                                        className="hidden"
-                                        multiple
-                                    />
-                                </label>
-                            </div>
-
-                            {/* Display the list of uploaded documents */}
-                            {otherDocumentNames.length > 0 && (
-                                <div className="w-full mt-2 space-y-2">
-                                    {otherDocumentNames.map((name, index) => (
-                                        <div key={index} className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                                            <span className="text-sm truncate max-w-xs">{name}</span>
-                                            <button
-                                                type="button"
-                                                onClick={() => removeOtherDocument(index)}
-                                                className="text-red-500 hover:text-red-700"
-                                            >
-                                                ×
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            <p className="text-xs text-gray-500">
-                                Vous pouvez ajouter plusieurs documents PDF (5 Mo maximum par fichier)
+                            <p className="text-start">
+                                En envoyant la demande, vous confirmez que vous acceptez nos
+                                <span className="underline mx-1 text-[#0077B6]">Conditions d'utilisation</span>
+                                et notre
+                                <span className="underline mx-1 text-[#0077B6]">Politique de confidentialité</span>.
                             </p>
                         </div>
-                    </div>
+                    </form>
 
-                    <hr className="border-t-2 border-black mt-5" />
-                    <div className="w-full mt-4 flex flex-col gap-4">
-                        <button
-                            type="submit"
-                            className="bg-[#0270A0] text-white py-2 px-4 rounded-lg font-semibold w-full"
-                        >
-                            Envoyer la demande
-                        </button>
-
-                        <p className="text-start">
-                            En envoyant la demande, vous confirmez que vous acceptez nos
-                            <span className="underline mx-1 text-[#0077B6]">Conditions d'utilisation</span>
-                            et notre
-                            <span className="underline mx-1 text-[#0077B6]">Politique de confidentialité</span>.
-                        </p>
-                    </div>
-                </form>
+                </ModalOppourtunity>
             ) : (
+                <ModalOppourtunity title="" show={show} hide={hide}>
                 <div className="w-full flex flex-col gap-3 justify-between items-center">
 
                     <div className="bg-[#feefef] p-6 rounded-lg shadow-lg w-[500px] flex flex-col gap-3 justify-between items-center ">
@@ -443,7 +531,8 @@ export default function CallForTrenderModal({ show, hide }: { show: boolean, hid
                         </button>
                     </div>
                 </div>
+                </ModalOppourtunity>
             )}
-        </ModalOppourtunity>
+        </>
     );
 }

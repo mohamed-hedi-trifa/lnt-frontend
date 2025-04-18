@@ -100,9 +100,9 @@ export default function SidebarAdmin() {
                                     <Link to="/admin/internship-application" className="block p-4 text-gray-300 hover:bg-gray-700">
                                         <div className='w-full flex items-center justify-between'>
                                             <span>Internship Application</span>
-                                            {notifications.internship > 0 && (
+                                            {notifications.internshipApplication > 0 && (
                                                 <div className='w-7 h-7 bg-yellow-500 z-10 rounded-full flex justify-center items-center'>
-                                                    <span className='z-20 text-black font-bold'>{notifications.internship}</span>
+                                                    <span className='z-20 text-black font-bold'>{notifications.internshipApplication}</span>
                                                 </div>
                                             )}
                                         </div>
@@ -137,6 +137,18 @@ export default function SidebarAdmin() {
                                             {notifications.job_offer > 0 && (
                                                 <div className='w-7 h-7 bg-yellow-500 z-10 rounded-full flex justify-center items-center'>
                                                     <span className='z-20 text-black font-bold'>{notifications.job_offer}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </Link>
+
+                                    <Link to="/admin/internship" className="block p-4 text-gray-300 hover:bg-gray-700">
+
+                                        <div className='w-full flex items-center justify-between'>
+                                            <span>Opportunity Internship</span>
+                                            {notifications.OpportunityInternship > 0 && (
+                                                <div className='w-7 h-7 bg-yellow-500 z-10 rounded-full flex justify-center items-center'>
+                                                    <span className='z-20 text-black font-bold'>{notifications.OpportunityInternship}</span>
                                                 </div>
                                             )}
                                         </div>

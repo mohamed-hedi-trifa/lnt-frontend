@@ -179,43 +179,6 @@ const ContentItem = ({
           </div>
           <input id={`upload-${idx}`} type="file" accept="image/*,application/pdf" onChange={(e) => handleItemContentChange(idx, e)} className="hidden" />
         </div>
-      ) : item.type === "list" ? (
-        <div className="col-span-10 p-2">
-          <ul className="list-disc">
-            {item.content.map((listItem: any, listIdx: number) => (
-              <li key={listIdx} className="flex items-center gap-2 py-1">
-                {listItem.image && (
-                  <img
-                    src={listItem.image?.includes("upload") ? `${process.env.GATSBY_API_URL}${listItem.image}` : listItem.image}
-                    alt="List item"
-                    className="w-16 h-16 object-contain"
-                  />
-                )}
-                <Textarea value={listItem.text} onChange={(e) => handleListChange(idx, listIdx, e.target.value)} divClassNames="grow" />
-                <label
-                  htmlFor={`upload-list-${idx}-${listIdx}`}
-                  className="w-full min-[450px]:w-fit px-4 py-2 rounded-lg flex gap-3 items-center text-white bg-primary hover:bg-primaryHover cursor-pointer transition duration-300"
-                >
-                  <ArrowUpTrayIcon className="size-4" />
-                  Image
-                </label>
-                <input
-                  id={`upload-list-${idx}-${listIdx}`}
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleListImageChange(idx, listIdx, e)}
-                  className="hidden"
-                />
-                <Button type="button" onClick={() => removeListItem(idx, listIdx)} customClassnames="delete bg-white hover:bg-white">
-                  <TrashIcon className="h-6 w-6 text-red-500" />
-                </Button>
-              </li>
-            ))}
-          </ul>
-          <Button type="button" onClick={() => addListItem(idx)} customClassnames="bg-primary hover:bg-primaryHover mt-2">
-            Add Item
-          </Button>
-        </div>
       ) : item.type === "cin" ? (
         <div className="col-span-10 p-2">
           <div className="self-stretch p-5 rounded-xl  outline outline-1 outline-offset-[-1px] outline-black inline-flex flex-col justify-start items-start overflow-hidden">

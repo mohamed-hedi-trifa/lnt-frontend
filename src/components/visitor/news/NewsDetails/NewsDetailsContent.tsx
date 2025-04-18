@@ -171,11 +171,11 @@ export default function NewsDetailsContent({ location, params }: NewsDetailsCont
                         </a>
                       </div>
                     )}
-                    {item.type === "list" && (
+                    {/* {item.type === "list" && (
                       <div className="mb-2">
                         <BlogList content={item.content} />
                       </div>
-                    )}
+                    )} */}
                   </>
                 )}
               </div>
