@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { jsPDF } from "jspdf";
+import Swal from "sweetalert2";
 
 const ApplicationsList = () => {
     const [applications, setApplications] = useState([]);
@@ -126,7 +127,18 @@ const ApplicationsList = () => {
         doc.save(`volunteer_application_${application.id}_${application.last_name}.pdf`);
         setLoading(false);
     };
+    const markAsRead = async (id) => {
+        try {
+            const response = await axios.put(`/api/benevole/mark-read/${id}`).then((res) => {
+                Swal.fire("Success", res.data.message, "success");
+                fetchApplications();
+            });
 
+
+        } catch (error) {
+            console.error('Error marking application as read:', error);
+        }
+    };
     return (
         <div className="p-6">
             <h1 className="text-2xl font-semibold mb-4">Benevole</h1>
@@ -196,6 +208,20 @@ const ApplicationsList = () => {
                                     >
                                         {loading ? "Generating..." : "Export PDF"}
                                     </button>
+                                </td>
+                                <td className="py-2 px-4 border">
+                                    <button
+                                        onClick={() => markAsRead(application.id)}
+                                        disabled={application.is_read === "yes"}
+                                        className={`${application.is_read === "yes"
+                                            ? "bg-gray-400 cursor-not-allowed"
+                                            : "bg-green-500 hover:bg-green-700"
+                                            } text-white font-bold py-1 px-3 rounded text-sm`}
+                                    >
+                                        {application.is_read === "yes" ? "Already Read" : "Mark As Read"}
+                                    </button>
+
+
                                 </td>
                             </tr>
                         ))}

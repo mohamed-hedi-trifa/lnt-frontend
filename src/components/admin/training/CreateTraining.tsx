@@ -331,12 +331,12 @@ const CreateTraining: React.FC = () => {
                 Text
               </Button>
             </div>
-            <div className="mb-1">
+            {/* <div className="mb-1">
               <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("list")}>
                 <PlusIcon className="h-4 w-4" />
                 List
               </Button>
-            </div>
+            </div> */}
             <div className="mb-1">
               <Button type="button" customClassnames="!py-1 !px-3 !text-xs !flex justify-center items-center" onClick={() => addNewItem("image")}>
                 <PlusIcon className="h-4 w-4" />
