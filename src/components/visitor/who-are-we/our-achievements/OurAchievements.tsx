@@ -247,7 +247,7 @@ export default function OurAchievements() {
 
   return (
     <main className="relative">
-      {/* overlay */}
+     {/* Overlay for the sidebar in mobile */}
       <div
         className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${
           isOpened ? 'opacity-50' : 'opacity-0 pointer-events-none'
@@ -255,22 +255,32 @@ export default function OurAchievements() {
         onClick={() => setIsOpened(false)}
       />
 
-      {/* hero */}
+      {/* Hero */}
       <HeroSection
         imgSrc={achievementsHero}
         title="Nos Actions, Notre Impact"
         subTitle={
-          <>
-            Découvrez les projets qui transforment Kerkennah : des initiatives locales
-            qui protègent, valorisent et inspirent
-          </>
+          <div>
+            <div>Découvrez les projets qui transforment Kerkennah :</div> 
+            des initiatives locales qui protègent, valorisent et inspirent
+          </div>
         }
       />
 
       <PageTitle title="Our Achievements" />
 
       <PageBody>
-        {/* intro paragraphs... */}
+        <section className="w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10">
+          <Sidebar />
+          <section className="w-fit flex flex-col gap-4">
+            <PageParagraph>
+              Depuis sa création, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL) s'engage activement pour la préservation de l'archipel de Kerkennah...
+            </PageParagraph>
+            <PageParagraph>
+              Chaque projet est réalisé en étroite collaboration avec nos partenaires...
+            </PageParagraph>
+          </section>
+        </section>
       </PageBody>
 
       <section className="max-w-[1400px] mx-auto">
