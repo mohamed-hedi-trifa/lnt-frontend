@@ -1,3 +1,4 @@
+// src/components/visitor/who-are-we/our-achievements/OurAchievements.tsx
 import React, { useEffect, useState, useRef } from 'react';
 import ImageHistoire from '../our-team/ImageHistoire';
 import AchievementsCards from './AchievementsCards';
@@ -11,39 +12,43 @@ import DateRangeSelector from '../../who-are-we/our-achievements/DateRangeSelect
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import Checkbox from '../../posts/Checkbox';
 import FilterTitle from '../../posts/FilterTitle';
-import axios from "axios";
+import axios from 'axios';
 import FollowUsAchivement from './FollowUsAchivement';
 import { useTranslation } from '@/contexts/TranslationContext';
 import Question from '@/components/atoms/Question';
 import DateDropdown from '../../DateDropdown';
 
+const ShimmerBar = ({ className = '' }: { className?: string }) => (
+  <div className={`relative overflow-hidden bg-gray-300/70 rounded ${className}`}>
+    <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent)]" />
+  </div>
+);
+
+const SkeletonCheckbox = () => <ShimmerBar className="h-4 w-40" />;
+
 export default function OurAchievements() {
-  const { t, lang } = useTranslation();
+  const { lang } = useTranslation();
 
   const [themes, setThemes] = useState<any[]>([]);
+  const [themesLoading, setThemesLoading] = useState(true);
+
   const [selectedThemes, setSelectedThemes] = useState<any[]>([]);
   const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null);
-  const [isOpened, setIsOpened] = useState(false); // For the sidebar
+  const [isOpened, setIsOpened] = useState(false); /* sidebar */
   const [showAllThemes, setShowAllThemes] = useState(false);
 
-  // New state variables to track custom date range activation and dropdown open state
   const [isCustomRangeActive, setIsCustomRangeActive] = useState(false);
   const [isCustomDropdownOpen, setIsCustomDropdownOpen] = useState(false);
 
-  // Ref for the search input
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  // Use a ref for the selected date range (for tracking only)
   const selectedRangeRef = useRef<{ startDate: Date; endDate: Date; key: string }>({
     startDate: new Date(),
     endDate: new Date(),
-    key: "selection",
+    key: 'selection',
   });
-
-  // isCustomDateRangeModified stored as a ref
   const isCustomDateRangeModifiedRef = useRef(false);
 
-  // Applied filters (updated only on "Appliquer")
   const [appliedFilters, setAppliedFilters] = useState({
     themes: [] as any[],
     dateFilter: null as string | null,
@@ -52,100 +57,92 @@ export default function OurAchievements() {
     searchQuery: '' as string,
   });
 
-  // Fetch themes on mount
+  /* ▸ fetch themes */
   useEffect(() => {
-    axios.get("/api/theme").then((res) => {
-      setThemes(res.data);
-    });
+    axios
+      .get('/api/theme')
+      .then((res) => setThemes(res.data))
+      .finally(() => setThemesLoading(false));
   }, []);
 
-  // Body scrolling toggling
+  /* ▸ lock body on sidebar open */
   useEffect(() => {
-    document.querySelector("body")!.style.overflow = isOpened ? "hidden" : "visible";
+    document.querySelector('body')!.style.overflow = isOpened ? 'hidden' : 'visible';
   }, [isOpened]);
 
-  // Handle theme changes
-  const handleThemeChange = (themeId: string, isChecked: boolean) => {
-    if (isChecked) {
-      setSelectedThemes((prev) => [...prev, themeId]);
-    } else {
-      setSelectedThemes((prev) => prev.filter((id) => id !== themeId));
-    }
-  };
+  /* ▸ theme change */
+  const handleThemeChange = (themeId: string, checked: boolean) =>
+    setSelectedThemes((prev) =>
+      checked ? [...prev, themeId] : prev.filter((id) => id !== themeId)
+    );
 
-  // Callback passed to DateRangeSelector: update the ref and mark that it has been modified
+  /* ▸ custom date change */
   const handleDateRangeChange = (range: any) => {
     selectedRangeRef.current = range;
     isCustomDateRangeModifiedRef.current = true;
     setIsCustomRangeActive(true);
   };
 
-  // Apply filters—read the current date range from the ref
+  /* ▸ apply / reset */
   const applyFilters = () => {
-    const searchQueryValue = searchInputRef.current ? searchInputRef.current.value : '';
+    const q = searchInputRef.current?.value ?? '';
     setAppliedFilters({
       themes: selectedThemes,
       dateFilter: selectedDateFilter,
-      startDate: isCustomDateRangeModifiedRef.current ? selectedRangeRef.current.startDate : null,
+      startDate: isCustomDateRangeModifiedRef.current
+        ? selectedRangeRef.current.startDate
+        : null,
       endDate: isCustomDateRangeModifiedRef.current ? selectedRangeRef.current.endDate : null,
-      searchQuery: searchQueryValue,
+      searchQuery: q,
     });
     setIsOpened(false);
   };
-
-  // Reset filters and clear the search field
   const resetFilters = () => {
     setSelectedThemes([]);
     setSelectedDateFilter(null);
     setIsCustomRangeActive(false);
     setIsCustomDropdownOpen(false);
     isCustomDateRangeModifiedRef.current = false;
-    if (searchInputRef.current) {
-      searchInputRef.current.value = '';
-    }
+    if (searchInputRef.current) searchInputRef.current.value = '';
   };
 
   const displayedThemes = showAllThemes ? themes : themes.slice(0, 6);
 
-  // Sidebar sub-component
+  /* ▸ sidebar component */
   const LeftSidebar = () => (
     <aside
-      className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 sm:sticky sm:top-[116px] inset-0 p-5
-        transition duration-300 lg:translate-x-0
-        ${isOpened ? 'translate-x-0' : 'translate-x-[-100%]'} 
-      `}
+      className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 sm:sticky sm:top-[116px] inset-0 p-5 transition duration-300 lg:translate-x-0 ${
+        isOpened ? 'translate-x-0' : 'translate-x-[-100%]'
+      }`}
     >
       <div
         className="opacity-90 sm:opacity-100 bg-white flex flex-col p-[10px] gap-4 sm:gap-10 w-full sm:w-[320px] rounded-xl shadow-xl overflow-y-auto pointer-events-auto h-full"
         style={{
           boxShadow:
-            "0px -8px 80px 0px rgba(0,0,0,0.07), 0px -2.92px 29.2px 0px rgba(0,0,0,0.05), 0px -1.42px 14.18px 0px rgba(0,0,0,0.04), 0px -0.69px 6.95px 0px rgba(0,0,0,0.03), 0px -0.27px 2.75px 0px rgba(0,0,0,0.02)"
+            '0px -8px 80px 0px rgba(0,0,0,0.07), 0px -2.92px 29.2px 0px rgba(0,0,0,0.05), 0px -1.42px 14.18px 0px rgba(0,0,0,0.04), 0px -0.69px 6.95px 0px rgba(0,0,0,0.03), 0px -0.27px 2.75px 0px rgba(0,0,0,0.02)',
         }}
       >
-        {/* --- Search Input --- */}
+        {/* search */}
         <div className="border rounded-lg border-black flex gap-4 p-2">
           <MagnifyingGlassIcon className="size-5" />
-          <input
-            type="text"
-            placeholder="Recherche"
-            className="outline-none"
-            ref={searchInputRef}
-          />
+          <input type="text" placeholder="Recherche" className="outline-none" ref={searchInputRef} />
         </div>
-        
-        {/* --- Themes --- */}
+
+        {/* themes */}
         <div className="flex flex-col gap-5">
           <FilterTitle title="Thèmes" />
           <div className="flex flex-col gap-3">
-            {displayedThemes.map((theme: any) => (
-              <Checkbox
-                key={theme.id}
-                label={theme[`name_${lang}`]}
-                checked={selectedThemes.includes(theme.id)}
-                onChange={(checked) => handleThemeChange(theme.id, checked)}
-              />
-            ))}
-            {themes.length > 6 && (
+            {themesLoading
+              ? Array.from({ length: 6 }).map((_, i) => <SkeletonCheckbox key={i} />)
+              : displayedThemes.map((t) => (
+                  <Checkbox
+                    key={t.id}
+                    label={t[`name_${lang}`]}
+                    checked={selectedThemes.includes(t.id)}
+                    onChange={(c) => handleThemeChange(t.id, c)}
+                  />
+                ))}
+            {!themesLoading && themes.length > 6 && (
               !showAllThemes ? (
                 <button
                   className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium"
@@ -165,87 +162,52 @@ export default function OurAchievements() {
           </div>
         </div>
 
-        {/* --- Dates --- */}
+        {/* dates */}
         <div className="flex flex-col gap-5 relative z-50">
           <FilterTitle title="Date" />
           <div className="flex flex-col gap-3">
-            <Checkbox 
-              label="Aujourd'hui" 
-              checked={selectedDateFilter === 'today'}
-              onChange={(checked) => {
-                if (checked) {
-                  setSelectedDateFilter('today');
-                  setIsCustomRangeActive(false);
-                  setIsCustomDropdownOpen(false);
-                } else {
-                  setSelectedDateFilter(null);
+            {['today', 'week', 'month', 'year'].map((key) => (
+              <Checkbox
+                key={key}
+                label={
+                  key === 'today'
+                    ? "Aujourd'hui"
+                    : key === 'week'
+                    ? 'Cette Semaine'
+                    : key === 'month'
+                    ? 'Ce Mois'
+                    : 'Cette Année'
                 }
-              }}
-            />
-            <Checkbox 
-              label="Cette Semaine" 
-              checked={selectedDateFilter === 'week'}
-              onChange={(checked) => {
-                if (checked) {
-                  setSelectedDateFilter('week');
-                  setIsCustomRangeActive(false);
-                  setIsCustomDropdownOpen(false);
-                } else {
-                  setSelectedDateFilter(null);
-                }
-              }}
-            />
-            <Checkbox 
-              label="Ce Mois" 
-              checked={selectedDateFilter === 'month'}
-              onChange={(checked) => {
-                if (checked) {
-                  setSelectedDateFilter('month');
-                  setIsCustomRangeActive(false);
-                  setIsCustomDropdownOpen(false);
-                } else {
-                  setSelectedDateFilter(null);
-                }
-              }}
-            />
-            <Checkbox 
-              label="Cette Année" 
-              checked={selectedDateFilter === 'year'}
-              onChange={(checked) => {
-                if (checked) {
-                  setSelectedDateFilter('year');
-                  setIsCustomRangeActive(false);
-                  setIsCustomDropdownOpen(false);
-                } else {
-                  setSelectedDateFilter(null);
-                }
-              }}
-            />
+                checked={selectedDateFilter === key}
+                onChange={(c) => {
+                  if (c) {
+                    setSelectedDateFilter(key);
+                    setIsCustomRangeActive(false);
+                    setIsCustomDropdownOpen(false);
+                  } else setSelectedDateFilter(null);
+                }}
+              />
+            ))}
 
-            {/* "Configurer" date range using DateDropdown */}
+            {/* custom range */}
             <DateDropdown
               onOpen={() => setIsCustomDropdownOpen(true)}
               onClose={() => setIsCustomDropdownOpen(false)}
               item={
-                <DateRangeSelector
-                  value={selectedRangeRef.current}
-                  onDateRangeChange={handleDateRangeChange}
-                />
+                <DateRangeSelector value={selectedRangeRef.current} onDateRangeChange={handleDateRangeChange} />
               }
               position="left"
-              renderItem={(item) => <div className="py-1">{item}</div>}
+              renderItem={(i) => <div className="py-1">{i}</div>}
             >
-              {(isOpen) => (
-                <Checkbox 
-                  label="Configurer" 
-                  checked={isOpen || isCustomRangeActive} 
-                  onChange={(checked) => {
-                    if (isOpen || isCustomRangeActive) {
-                      // Uncheck only when explicitly toggling the custom range off
+              {(open) => (
+                <Checkbox
+                  label="Configurer"
+                  checked={open || isCustomRangeActive}
+                  onChange={() => {
+                    if (open || isCustomRangeActive) {
                       setIsCustomRangeActive(false);
                       setIsCustomDropdownOpen(false);
                     } else {
-                      // Open the dropdown for custom range selection
                       setIsCustomDropdownOpen(true);
                       setSelectedDateFilter(null);
                     }
@@ -256,18 +218,12 @@ export default function OurAchievements() {
           </div>
         </div>
 
-        {/* --- Apply & Reset --- */}
+        {/* buttons */}
         <div className="flex justify-between">
-          <button
-            className="bg-primary text-sm text-white px-[10px] py-2 rounded-xl font-semibold"
-            onClick={applyFilters}
-          >
+          <button className="bg-primary text-sm text-white px-[10px] py-2 rounded-xl font-semibold" onClick={applyFilters}>
             Appliquer
           </button>
-          <button
-            className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]"
-            onClick={resetFilters}
-          >
+          <button className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]" onClick={resetFilters}>
             Réinitialiser
           </button>
         </div>
@@ -275,9 +231,10 @@ export default function OurAchievements() {
     </aside>
   );
 
+  /* ▸ render */
   return (
     <main className="relative">
-      {/* Overlay for the sidebar in mobile */}
+      {/* overlay */}
       <div
         className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${
           isOpened ? 'opacity-50' : 'opacity-0 pointer-events-none'
@@ -285,15 +242,15 @@ export default function OurAchievements() {
         onClick={() => setIsOpened(false)}
       />
 
-      {/* Hero */}
+      {/* hero */}
       <HeroSection
         imgSrc={achievementsHero}
         title="Nos Actions, Notre Impact"
         subTitle={
-          <div>
-            <div>Découvrez les projets qui transforment Kerkennah :</div> 
-            des initiatives locales qui protègent, valorisent et inspirent
-          </div>
+          <>
+            <div>Découvrez les projets qui transforment Kerkennah :</div> des initiatives locales
+            qui protègent, valorisent et inspirent
+          </>
         }
       />
 
@@ -304,11 +261,11 @@ export default function OurAchievements() {
           <Sidebar />
           <section className="w-fit flex flex-col gap-4">
             <PageParagraph>
-              Depuis sa création, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL) s'engage activement pour la préservation de l'archipel de Kerkennah...
+              Depuis sa création, l’Association Kratten du Développement Durable de la Culture et
+              du Loisir (AKDDCL) s'engage activement pour la préservation de l'archipel de
+              Kerkennah...
             </PageParagraph>
-            <PageParagraph>
-              Chaque projet est réalisé en étroite collaboration avec nos partenaires...
-            </PageParagraph>
+            <PageParagraph>Chaque projet est réalisé en étroite collaboration avec nos partenaires...</PageParagraph>
           </section>
         </section>
       </PageBody>
@@ -317,16 +274,13 @@ export default function OurAchievements() {
         <hr className="my-6 border-black" />
         <section className="flex flex-col sm:flex-row gap-5">
           <LeftSidebar />
-          
-          {/* Main content */}
+
+          {/* achievements list */}
           <section className="flex-1 mx-4 sm:mx-0">
-            <AchievementsCards 
-              filter={appliedFilters}
-              setIsOpened={setIsOpened}
-            />
+            <AchievementsCards filter={appliedFilters} setIsOpened={setIsOpened} />
           </section>
 
-          {/* Right side items */}
+          {/* right widgets */}
           <section className="flex flex-col mx-4 gap-8">
             <FollowUsAchivement />
             <Question />

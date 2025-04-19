@@ -178,7 +178,7 @@ const Contact: React.FC = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full sm:w-1/2 mx-auto py-3 px-6 rounded-full bg-gradient-to-r from-secondary to-primary text-white font-semibold hover:opacity-90 transition"
+                  className="w-full sm:w-1/2 mx-auto py-3 px-6 rounded-full bg-gradient-to-r from-secondary to-primary text-white font-semibold hover:opacity-90 transition shadow-lg"
                 >
                   {loading ? "Envoi en cours..." : "Envoyer le message"}
                 </button>

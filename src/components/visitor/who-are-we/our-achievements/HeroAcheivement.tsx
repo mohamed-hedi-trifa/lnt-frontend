@@ -79,7 +79,6 @@ export default function HeroAcheivement({
   if (achievementsData.length === 0) {
     return (
       <div className="w-full h-[412px] sm:h-[607px] bg-gray-200 flex items-center justify-center">
-        Aucune réalisation
       </div>
     );
   }
