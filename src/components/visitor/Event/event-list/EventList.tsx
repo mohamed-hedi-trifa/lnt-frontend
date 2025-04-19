@@ -69,7 +69,7 @@ export default function EventList({ location, params }: EventListProps) {
         {eventType && (
           <DisplayEventsList
             lang={language}
-            eventTypeSlug={eventType.id}
+            eventTypeSlug={eventType.slug }
             eventTypeName={language === "fr" ? eventType.name_fr : eventType.name_en}
           />
         )}

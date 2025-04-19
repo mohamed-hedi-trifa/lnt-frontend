@@ -42,7 +42,7 @@ export default function EventDetailsContent({ location, params }: { location: an
         .then((res) => {
           setEvent(res.data);
 
-       
+
           const searchParams = new URLSearchParams(location.search);
           const urlLanguage = searchParams.get("lang");
 
@@ -55,7 +55,7 @@ export default function EventDetailsContent({ location, params }: { location: an
         })
         .catch((err) => {
           console.error("Error fetching blog post:", err);
-  
+
           navigate("/404");
         });
     }
@@ -108,18 +108,21 @@ export default function EventDetailsContent({ location, params }: { location: an
                         href={`${process.env.GATSBY_API_URL}${item.file_path}`}
                       >
                         <div className="mb-10 flex items-center">
-                         <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
-                         <p className="ml-4 font-semibold text-[18px] text-[#0270A0] underline">{item.file_path}</p>
+                          <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
+                          <p className="ml-4 font-semibold text-[18px] text-[#0270A0] underline">
+                            {item.file_path.split('/').pop().split('5555_')[1]}
+                          </p>
+
                         </div>
                       </a>
                     </div>
                   ) : item.type === 'list' ? (
                     <div>
-                        <BlogList content={item.content} />
+                      <BlogList content={item.content} />
                     </div>
-               
-                  ): null
-                  
+
+                  ) : null
+
                 ) : null}
               </div>
             ))}

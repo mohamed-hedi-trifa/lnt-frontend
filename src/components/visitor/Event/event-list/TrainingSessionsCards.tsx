@@ -7,9 +7,10 @@ import NoEventsMessage from '../NoEventsMessage';
 interface TrainingSessionsCardsProps {
   lang: string;
   eventTypeSlug: string;
+  eventTypeName: string;
 }
 
-export default function TrainingSessionsCards({ lang, eventTypeSlug }: TrainingSessionsCardsProps) {
+export default function TrainingSessionsCards({ lang, eventTypeSlug, eventTypeName }: TrainingSessionsCardsProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -30,6 +31,7 @@ export default function TrainingSessionsCards({ lang, eventTypeSlug }: TrainingS
 
   const getEvents = async (query: string, page: number, eventTypeSlug: string) => {
     setLoading(true);
+    console.log(eventTypeSlug)
     try {
       const params = { query, page, limit, eventTypeSlug };
       const res = await axios.get('/api/get-active-events/10', { params });
@@ -62,7 +64,7 @@ export default function TrainingSessionsCards({ lang, eventTypeSlug }: TrainingS
           ))}
         </div>
       ) : (
-        <NoEventsMessage eventTypeTitle={eventTypeSlug} />
+        <NoEventsMessage  eventTypeName={eventTypeName}/>
       )}
 
       {totalPages > 1 && (

@@ -70,7 +70,7 @@ export default function SpeciesDetail({ location, params }: { location: any; par
   };
 
   if (!blogPost) {
-    return <div className='flex justify-center items-center pt-40'> <Loader/> </div>;
+    return <div className='flex justify-center items-center pt-40'> <Loader /> </div>;
   }
 
   return (
@@ -146,8 +146,10 @@ export default function SpeciesDetail({ location, params }: { location: any; par
                         href={`${process.env.GATSBY_API_URL}${item.file_path}`}
                       >
                         <div className="mb-10 flex items-center">
-                         <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
-                         <p className="ml-4 font-semibold text-[18px] text-[#0270A0] underline">{item.file_path}</p>
+                          <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
+                          <p className="ml-4 font-semibold text-[18px] text-[#0270A0] underline">
+                            {item.file_path.split('/').pop().split('5555_')[1]}
+                          </p>
                         </div>
                       </a>
                     </div>

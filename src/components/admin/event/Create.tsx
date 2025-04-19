@@ -430,7 +430,7 @@ CreateEvent: React.FC = () => {
                 {/* Map Picker */}
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700">Select Location</label>
-                    <MapPicker onSelectLocation={handleSelectLocation} initialPosition={[34.829198, 11.258197]}/>
+                    <MapPicker onSelectLocation={handleSelectLocation} initialPosition={[34.829198, 11.258197]}   role=""/>
                 </div>
 
                 {/* Display Selected Latitude and Longitude (Optional) */}

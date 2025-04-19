@@ -103,7 +103,7 @@ const ContentItem = ({
                 });
               }
             });
-            
+
         }
       });
     } else {
@@ -112,7 +112,7 @@ const ContentItem = ({
     }
   };
 
-  
+
 
   const handleListImageChange = (index: number, listIndex: number, e: any) => {
     const updatedItems = [...items];
@@ -177,7 +177,13 @@ const ContentItem = ({
             </label>
             <p>{item.file?.name || "No files selected"}</p>
           </div>
-          <input id={`upload-${idx}`} type="file" accept="image/*,application/pdf" onChange={(e) => handleItemContentChange(idx, e)} className="hidden" />
+          <input
+            id={`upload-${idx}`}
+            type="file"
+            accept="application/pdf"
+            onChange={(e) => handleItemContentChange(idx, e)}
+            className="hidden"
+          />
         </div>
       ) : item.type === "cin" ? (
         <div className="col-span-10 p-2">
@@ -290,11 +296,11 @@ const ContentItem = ({
               </div>
               <div className="self-stretch flex flex-col justify-center items-start gap-2.5">
                 <div className="self-stretch inline-flex justify-start items-center gap-2.5">
-                <img src="/icons/coutellerie.png" alt="" />
+                  <img src="/icons/coutellerie.png" alt="" />
                   <div className="flex-1 inline-flex flex-col justify-start items-start gap-[3px]">
                     <div className="self-stretch justify-start text-black text-xl font-bold font-['Montserrat'] leading-7">Régime alimentaire</div>
                     <div className="self-stretch justify-start text-black text-xl font-medium font-['Montserrat'] leading-7">
-                    {language === "en" && (
+                      {language === "en" && (
                         <Textarea
                           name="diet_en"
                           value={formData.diet_en}
@@ -323,7 +329,7 @@ const ContentItem = ({
                 </div>
                 <div className="self-stretch h-0 outline outline-1 outline-offset-[-0.50px] outline-stone-400"></div>
               </div>
-         
+
               <div className="flex flex-col justify-center items-center gap-2.5">
                 <div className="w-[741px] inline-flex justify-center items-center gap-2.5">
                   <img src="/icons/point-dexclamation.png" alt="" />
