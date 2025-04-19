@@ -2,8 +2,9 @@
 import React from "react";
 
 interface CheckboxProps {
+  /** unique name/id for this checkbox */
+  name: string;
   label?: string;
-  name?: string;
   checked: boolean;
   onChange: (checked: boolean, e?: React.ChangeEvent<HTMLInputElement>) => void;
   color?: string;
@@ -12,8 +13,8 @@ interface CheckboxProps {
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({
+  name,
   label = "Checkbox",
-  name = "custom-checkbox",
   checked,
   onChange,
   color = "bg-blue-500",
@@ -30,7 +31,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
   return (
     <div className="flex items-center gap-[10px]">
-      {/* Hidden native checkbox for accessibility */}
+      {/* Hidden native checkbox */}
       <input
         type="checkbox"
         id={name}
@@ -40,7 +41,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
         onChange={handleInputChange}
       />
 
-      {/* Visible box */}
+      {/* Styled box */}
       <div
         onClick={handleBoxClick}
         className={`w-6 h-6 flex items-center justify-center rounded-lg border-2 ${borderColor} cursor-pointer transition-all ${
@@ -65,7 +66,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
         )}
       </div>
 
-      {/* Label */}
+      {/* Label correctly wired to input via htmlFor */}
       <label htmlFor={name} className="text-gray-800 cursor-pointer">
         {label}
       </label>
