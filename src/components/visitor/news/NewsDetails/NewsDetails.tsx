@@ -7,6 +7,7 @@ import NewsDetailsContent from './NewsDetailsContent';
 import FollowUs from '../FollowUs';
 import Question from '../Question';
 import RelatedNews from './RelatedNews';
+import RelatedBlog from '../RelatedBlog';
 
 export default function NewsDetails({ location, params }: { location: any; params: any }) {
     const searchParams = new URLSearchParams(location?.search);
@@ -14,6 +15,7 @@ export default function NewsDetails({ location, params }: { location: any; param
   
     
     const [news, setNews] = useState([]);
+    const [relatedNews, setRelatedNews] = useState([]);
     const [moreEvents, setMoreNews] = useState([]);
     
     const getNews = async (slugNews: string) => {
@@ -25,10 +27,19 @@ export default function NewsDetails({ location, params }: { location: any; param
       }
     };
   
-  
+    const getRelatedNews = async (slugNews: string) => {
+      try {
+        const response = await axios.get(`/api/related-news/${slugNews}`);
+        setRelatedNews(response.data);
+      } catch (error) {
+        console.error("Error fetching news types:", error);
+      }
+    };
+
     useEffect(() => {
       const slugNews = params.slug;
       getNews(slugNews);
+      getRelatedNews(slugNews)
   
     }, [location]);
 
@@ -55,7 +66,7 @@ export default function NewsDetails({ location, params }: { location: any; param
                     <div className='h-full md:col-span-1 col-span-2 flex flex-col gap-20 pb-10 sm:pb-0'>
                         <FollowUs />
                         <Question />
-                        <RelatedNews/>
+                        <RelatedBlog relatedBlog={relatedNews} headerName='Actualités Connexes' route="/news/"/>
 
                     </div>
 

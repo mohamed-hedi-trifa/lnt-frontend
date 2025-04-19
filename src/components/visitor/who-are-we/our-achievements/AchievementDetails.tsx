@@ -3,9 +3,10 @@ import axios from "axios";
 import Breadcrumbs from '../../../Breadcumbs';
 import HeroAcheivement from './HeroAcheivement';
 import AchievementDetailsContent from './AchievementDetailsContent';
-import RelatedAchievement from './RelatedAchievement';
+
 import FollowUsAchivement from './FollowUsAchivement';
 import Question from '@/components/atoms/Question';
+import RelatedBlog from '../../news/RelatedBlog';
 
 
 export default function AchievementDetails({ location, params }: { location: any; params: any }) {
@@ -25,9 +26,21 @@ export default function AchievementDetails({ location, params }: { location: any
   useEffect(() => {
     const slugAchievements = params.slug;
     getAchievements(slugAchievements);
-  }, [location]); 
+    getRelatedAchievements(slugAchievements);
+  }, [location]);
 
   const [isOpened, setIsOpened] = useState(false);
+
+  const [relatedAchievements, setRelatedAchievements] = useState([]);
+
+  const getRelatedAchievements = async (slugAchievements: string) => {
+    try {
+      const response = await axios.get(`/api/related-achievements/${slugAchievements}`);
+      setRelatedAchievements(response.data);
+    } catch (error) {
+      console.error("Error fetching achievements types:", error);
+    }
+  };
 
   return (
     <main className="relative">
@@ -46,8 +59,12 @@ export default function AchievementDetails({ location, params }: { location: any
         <div className="h-full md:col-span-1 col-span-2 flex flex-col gap-10 pb-10 sm:pb-0">
           <FollowUsAchivement />
           <Question />
+   
+            {
+              relatedAchievements.length > 0 && <RelatedBlog relatedBlog={relatedAchievements} headerName="Réalisation Connexes" route="/who-are-we/our-achievements/"/>
+            }
+   
 
-          <RelatedAchievement currentAchievement={achievement} />
         </div>
       </section>
     </main>

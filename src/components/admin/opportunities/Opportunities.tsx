@@ -120,7 +120,7 @@ export default function Opportunity() {
                   <div className="hidden sm:block text-start col-span-1">ID</div>
                   <div className="text-start col-span-2">Image</div>
                   <div className="text-start col-span-3">Title</div> {/* Reduced from 5 to 4 */}
-                  <div className="text-start col-span-2">Due Date</div>
+                  <div className="text-start col-span-2">Type</div>
                   <div className="text-start col-span-2">Location</div>
                   <div className="col-span-1">is_visible</div> {/* Reduced from 2 to 1 */}
                   <div className="hidden sm:block text-end col-span-1">Actions</div>
@@ -137,7 +137,7 @@ export default function Opportunity() {
                       <div className="text-start col-span-3 font-bold">
                         {item.title_en || item.title_fr}
                       </div>
-                      <div className="col-span-2 text-start">{item.due_date}</div>
+                      <div className="col-span-2 text-start">{item.type}</div>
                       <div className="col-span-2 text-start">{item.location_en || item.location_fr}</div>
                       <div className="col-span-1">
 

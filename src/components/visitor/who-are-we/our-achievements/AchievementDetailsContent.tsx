@@ -167,11 +167,11 @@ export default function AchievementDetailsContent({ location, params }: Achievem
                         </a>
                       </div>
                     )}
-                    {/* {item.type === "list" && (
+                    {item.type === "list" && (
                       <div className="mb-2">
                         <BlogList content={item.content} />
                       </div>
-                    )} */}
+                    )}
                   </>
                 )}
               </div>
