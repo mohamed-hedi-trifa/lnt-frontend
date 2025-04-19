@@ -134,7 +134,7 @@ const SidebarFilters = React.memo(function SidebarFilters({ onApply, onReset }: 
               checked={selectedDateFilter === 'year'}
               onChange={(checked) => setSelectedDateFilter(checked ? 'year' : null)}
             />
-            <ButtonDropdown
+          {/*  <ButtonDropdown
               customDropdown={true}
               item={
                 <DateRangeSelector
@@ -146,7 +146,7 @@ const SidebarFilters = React.memo(function SidebarFilters({ onApply, onReset }: 
               renderItem={(item) => <div className="py-1">{item}</div>}
             >
               {(isOpen) => <Checkbox label="Configurer" />}
-            </ButtonDropdown>
+            </ButtonDropdown> */}
           </div>
         </div>
         <div className="flex justify-between">
