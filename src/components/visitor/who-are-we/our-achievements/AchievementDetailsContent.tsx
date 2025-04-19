@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { navigate } from "gatsby";
+import PageParagraph from "@/components/atoms/PageParagraph";
 import Title from "@/components/atoms/titles/Title";
 import BlogList from "../../aire-marine/monitoring/marin/species/BlogList";
 import Calendar from "@/assets/icons/Calendar";
 import Media from "../../Media";
-import PageParagraph2 from "@/components/atoms/PageParagraph2";
-import "./AchievementDetailsContent.css";
+import "./NewsDetailsContent.css";
 import PdfIcon from "@/assets/icons/PdfIcon.png";
 
 const parseContent = (content: string) => {
@@ -22,10 +22,15 @@ const parseContent = (content: string) => {
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
-  const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" };
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
   return date.toLocaleDateString("en-US", options);
 };
 
+// --- Sous-composant SectionHeader ---
 interface SectionHeaderProps {
   title: React.ReactNode;
 }
@@ -36,32 +41,33 @@ const SectionHeader = ({ title }: SectionHeaderProps) => (
   </div>
 );
 
-// --- Composant principal AchievementDetailsContent ---
-interface AchievementDetailsContentProps {
+// --- Composant principal NewsDetailsContent ---
+interface NewsDetailsContentProps {
   location: any;
   params: any;
 }
 
-export default function AchievementDetailsContent({ location, params }: AchievementDetailsContentProps) {
-  const [achievement, setAchievement] = useState<any>(null);
+export default function NewsDetailsContent({ location, params }: NewsDetailsContentProps) {
+  const [news, setNews] = useState<any>(null);
   const [slug, setSlug] = useState<string | null>(null);
   const [language, setLanguage] = useState<string>("en");
 
-  // Récupération du slug à partir des paramètres
+  // Récupération du slug depuis les paramètres
   useEffect(() => {
     const slugParam = params.slug;
     setSlug(slugParam);
   }, [params.slug]);
 
-  // Chargement des données d'une réalisation en fonction du slug
+  // Récupération des données de l'actualité en fonction du slug
   useEffect(() => {
     if (slug) {
       axios
-        .get(`/api/achievements/${slug}`)
+        .get(`/api/news/${slug}`)
         .then((res) => {
-          setAchievement(res.data);
+          setNews(res.data);
           const searchParams = new URLSearchParams(location.search);
           const urlLanguage = searchParams.get("lang");
+
           if (urlLanguage && res.data[`title_${urlLanguage}`]) {
             setLanguage(urlLanguage);
           } else {
@@ -69,28 +75,29 @@ export default function AchievementDetailsContent({ location, params }: Achievem
           }
         })
         .catch((err) => {
-          console.error("Error fetching achievement:", err);
+          console.error("Error fetching blog post:", err);
           navigate("/404");
         });
     }
   }, [slug, location.search]);
 
-  if (!achievement) {
+  if (!news) {
     return <div className="w-full text-center py-10">Loading...</div>;
   }
 
   return (
     <div className="w-full">
-      {/* Conteneur centré avec padding réactif */}
-      <div className="w-full px-4 sm:px-8 text-start max-w-3xl mx-auto" dir={language === "ar" ? "rtl" : "ltr"}>
-        {/* En-tête de la réalisation */}
+      {/* Container centré avec marges réactives */}
+      <div
+        className="w-full px-4 sm:px-8 text-start max-w-3xl mx-auto"
+        dir={language === "ar" ? "rtl" : "ltr"}
+      >
+        {/* En-tête de l'actualité */}
         <div className="flex flex-col gap-5">
-          <h2 className="text-[28px] sm:text-[36px] font-semibold">
-            {achievement.title_en || achievement.title_fr}
-          </h2>
-          {achievement.themes && achievement.themes.length > 0 && (
+          <h2 className="text-[28px] sm:text-[36px] font-semibold">{news.title_en || news.title_fr}</h2>
+          {news.themes && news.themes.length > 0 && (
             <div className="flex flex-wrap items-center gap-2 text-sm font-semibold">
-              {achievement.themes.map((theme: any, idx: number) => (
+              {news.themes.map((theme: any, idx: number) => (
                 <div
                   key={theme.id || idx}
                   className="px-2.5 py-1 bg-[#0270A0] rounded-md inline-flex justify-center items-center gap-2 shadow-lg"
@@ -106,7 +113,7 @@ export default function AchievementDetailsContent({ location, params }: Achievem
             <Calendar />
             <span>
               Le{" "}
-              {new Date(achievement.date).toLocaleDateString("fr-FR", {
+              {new Date(news.date).toLocaleDateString("fr-FR", {
                 day: "numeric",
                 month: "long",
                 year: "numeric",
@@ -114,15 +121,15 @@ export default function AchievementDetailsContent({ location, params }: Achievem
             </span>
           </div>
           <img
-            src={`${process.env.GATSBY_API_URL}${achievement.image}`}
-            alt="achievement"
-            className="w-full h-auto max-h-[500px] object-cover rounded-md shadow-lg"
+            src={`${process.env.GATSBY_API_URL}${news.image}`}
+            alt="news"
+            className="w-full max-w-full h-auto max-h-[500px] object-cover rounded-md shadow-lg"
           />
         </div>
 
-        {/* Corps du contenu */}
+        {/* Contenu de l'actualité */}
         <div className="mt-10 flex flex-col gap-4">
-          {achievement.content_items
+          {news.content_items
             ?.sort((a: any, b: any) => a.order - b.order)
             .map((item: any) => (
               <div key={item.id}>
@@ -134,12 +141,12 @@ export default function AchievementDetailsContent({ location, params }: Achievem
                       </Title>
                     )}
                     {item.type === "text" && (
-                      <PageParagraph2>
+                      <PageParagraph>
                         <div
                           className="mb-4 ml-6"
                           dangerouslySetInnerHTML={{ __html: parseContent(item.content) }}
                         />
-                      </PageParagraph2>
+                      </PageParagraph>
                     )}
                     {item.type === "image" && (
                       <div className="mb-2 flex justify-center">
@@ -157,13 +164,12 @@ export default function AchievementDetailsContent({ location, params }: Achievem
                           href={`${process.env.GATSBY_API_URL}${item.file_path}`}
                           className="text-blue-600 underline"
                         >
-                          <div className="mb-10 flex items-center">
-                            <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
-                            <p className="ml-4 font-semibold text-[18px] text-[#0270A0] underline">
-                              {item.file_path.split('/').pop().split('5555_')[1]}
-
-                            </p>
-                          </div>
+                        <div className="mb-10 flex items-center">
+                         <img className="h-16 w-[50px]" src={PdfIcon} alt="PDF Icon" />
+                         <p className="ml-4 font-semibold text-[18px] text-[#0270A0] underline">
+                         {item.file_path.split('/').pop().split('5555_')[1]}
+                          </p>
+                        </div>
                         </a>
                       </div>
                     )}
@@ -188,7 +194,7 @@ export default function AchievementDetailsContent({ location, params }: Achievem
           }
         />
         <div className="mb-20">
-          <Media mediaContent={achievement} />
+          <Media mediaContent={news} />
         </div>
       </div>
     </div>
