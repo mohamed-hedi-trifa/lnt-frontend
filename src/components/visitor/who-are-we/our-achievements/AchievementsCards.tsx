@@ -8,7 +8,24 @@ import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
 import sortIcon from '@/assets/icons/sort-icon.png';
 import { Link } from 'gatsby';
 import EmptyAchievements from './EmptyAchievements';
-import Loader from '@/components/atoms/loader';
+
+const ShimmerBar = ({ className = '' }: { className?: string }) => (
+  <div className={`relative overflow-hidden bg-gray-300/70 rounded ${className}`}>
+    <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent)]" />
+  </div>
+);
+
+const AchievementCardSkeleton = () => (
+  <div className="bg-white shadow-helmi p-4 flex flex-col gap-4 rounded-xl min-h-[420px] h-full">
+    <ShimmerBar className="h-[240px] w-full rounded-md" />
+    <div className="flex gap-2 mt-2">
+      <ShimmerBar className="h-6 w-20" />
+      <ShimmerBar className="h-6 w-20" />
+    </div>
+    <ShimmerBar className="h-6 w-3/4 mt-4" />
+    <ShimmerBar className="h-4 w-1/3 mt-auto" />
+  </div>
+);
 
 interface AchievementsCardsProps {
   filter: {
@@ -23,33 +40,24 @@ interface AchievementsCardsProps {
 }
 
 export default function AchievementsCards({ filter, setIsOpened }: AchievementsCardsProps) {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [limit] = useState<number>(10);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [limit] = useState(10);
+  const [loading, setLoading] = useState(true);
   const [itemsList, setItemsList] = useState<any[]>([]);
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
-  const resSafeLength = (arr: any[]) => (Array.isArray(arr) ? arr.length : 0);
-  
-  const [themes, setThemes] = useState<number[]>(filter.themes || []);
 
+  const handlePageChange = (p: number) => p > 0 && p <= totalPages && setCurrentPage(p);
 
-
-  const handlePageChange = (newPage: number) => {
-    if (newPage > 0 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-    }
-  };
-
-  function getAchievements(query: any, page = currentPage, themes: number[]) {
+  const fetchAchievements = (query: any, page = currentPage) => {
     setLoading(true);
     axios
       .get(`/api/get-active-achievements/${limit}`, {
         params: {
-          query: query,
-          themes: themes,
-          page: page,
-          sortOrder: sortOrder,
+          query,
+          themes: filter.themes || [],
+          page,
+          sortOrder,
           dateFilter: filter.dateFilter,
           startDate: filter.startDate,
           endDate: filter.endDate,
@@ -58,44 +66,29 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
       .then((res) => {
         setItemsList(res.data.data);
         setTotalPages(res.data.last_page);
-        setLoading(false);
       })
-      .catch((err) => {
-        setLoading(false);
-      });
-  }
-
-  function getThemes() {
-    axios
-      .get('/api/theme')
-      .then((res) => {
-        setThemes(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+      .finally(() => setLoading(false));
+  };
 
   useEffect(() => {
-    getThemes();
-  }, []);
-
-  useEffect(() => {
-    getAchievements(filter.searchQuery, currentPage, filter.themes || []);
-  }, [filter.searchQuery, currentPage, filter, sortOrder]);
+    fetchAchievements(filter.searchQuery, currentPage);
+  }, [filter, currentPage, sortOrder]);
 
   if (loading)
     return (
-      <div className="flex justify-center items-center pt-40">
-        <Loader />
-      </div>
+      <section className="grid sm:grid-cols-2 gap-4 my-5">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <AchievementCardSkeleton key={i} />
+        ))}
+      </section>
     );
 
   const startIndex = (currentPage - 1) * limit + 1;
-  const endIndex = Math.min(currentPage * limit, resSafeLength(itemsList));
+  const endIndex = Math.min(currentPage * limit, itemsList.length);
 
   return (
     <div>
+      {/* -------- Desktop header -------- */}
       <div className="hidden sm:flex justify-between relative z-20">
         <ButtonDropdown
           items={[
@@ -103,17 +96,15 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
             { key: 'asc', name: 'Les plus anciens' },
           ]}
           position="left"
-          onSelect={(item: any) => {
-            setSortOrder(item.key);
-          }}
+          onSelect={(item) => setSortOrder(item.key)}
           renderItem={(item) => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
         >
-          {(isOpen) => (
+          {(open) => (
             <button className="h-12 rounded-[10px] border-2 border-black flex items-center">
               <div className="px-2 py-1.5 flex items-center gap-2">
                 <img src={sortIcon} className="size-6" alt="Sort Icon" />
-                <div className="text-black text-xl font-medium font-['Montserrat']">Trier</div>
-                <div className={`w-6 h-6 transition duration-200 ${isOpen ? '-rotate-180' : ''}`}>
+                <div className="text-black text-xl font-medium">Trier</div>
+                <div className={`w-6 h-6 transition duration-200 ${open ? '-rotate-180' : ''}`}>
                   <ArrowDownIcon />
                 </div>
               </div>
@@ -121,19 +112,17 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
           )}
         </ButtonDropdown>
 
-        <div className="text-black text-xl font-semibold font-['Montserrat'] mt-[2px]">
-          {`${startIndex} - ${endIndex} de ${itemsList.length} Réalisations`}
-        </div>
+        <div className="text-black text-xl font-semibold mt-[2px]">{`${startIndex} - ${endIndex} de ${itemsList.length} Réalisations`}</div>
       </div>
 
+      {/* -------- Mobile header -------- */}
       <div className="sm:hidden flex justify-between pr-5 relative z-20">
         <button
-          type="button"
           onClick={() => setIsOpened(true)}
           className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl flex items-center gap-2.5"
         >
           <FilterIcon />
-          <div className="text-white text-sm font-bold font-['Montserrat']">Filtres</div>
+          <div className="text-white text-sm font-bold">Filtres</div>
         </button>
 
         <ButtonDropdown
@@ -142,17 +131,15 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
             { key: 'asc', name: 'Les plus anciens' },
           ]}
           position="right"
-          onSelect={(item: any) => {
-            setSortOrder(item.key);
-          }}
+          onSelect={(item) => setSortOrder(item.key)}
           renderItem={(item) => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
         >
-          {(isOpen) => (
+          {(open) => (
             <button className="h-12 rounded-[10px] border-2 border-black flex items-center">
               <div className="px-2 py-1.5 flex items-center gap-2">
                 <img src={sortIcon} className="size-6" alt="Sort Icon" />
-                <div className="text-black text-xl font-medium font-['Montserrat']">Trier</div>
-                <div className={`w-6 h-6 transition duration-200 ${isOpen ? '-rotate-180' : ''}`}>
+                <div className="text-black text-xl font-medium">Trier</div>
+                <div className={`w-6 h-6 transition duration-200 ${open ? '-rotate-180' : ''}`}>
                   <ArrowDownIcon />
                 </div>
               </div>
@@ -165,21 +152,26 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
         {`${startIndex} - ${endIndex} de ${itemsList.length} réalisations`}
       </div>
 
+      {/* -------- Achievements grid -------- */}
       <section className="flex flex-col gap-8 w-full relative z-10 my-5">
         {itemsList.length === 0 ? (
           <EmptyAchievements />
         ) : (
           <>
             <div className="grid sm:grid-cols-2 gap-4">
-              {itemsList.map((achievement: any) => (
-                <Link key={achievement.id} to={`/who-are-we/our-achievements/${achievement.slug}`}>
-                  <AchievementCard achievement={achievement} />
+              {itemsList.map((ach) => (
+                <Link key={ach.id} to={`/who-are-we/our-achievements/${ach.slug}`}>
+                  <AchievementCard achievement={ach} />
                 </Link>
               ))}
             </div>
             {totalPages > 1 && (
               <div className="flex justify-center px-4 sm:px-0">
-                <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+                <Pagination
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
               </div>
             )}
           </>
