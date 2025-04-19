@@ -111,7 +111,8 @@ export default function Event() {
                   <div className="hidden sm:block text-start col-span-1">ID</div>
                   <div className="text-start col-span-2">Image</div>
                   <div className="text-start col-span-3">Title</div> {/* Reduced from 5 to 4 */}
-                  <div className="text-start col-span-2">Date</div>
+                  <div className="text-start col-span-2">Event Type</div>
+
                   <div className="text-start col-span-2">Location</div>
                   <div className="col-span-1">is_visible</div> {/* Reduced from 2 to 1 */}
                   <div className="hidden sm:block text-end col-span-1">Actions</div>
@@ -128,7 +129,10 @@ export default function Event() {
                       <div className="text-start col-span-3 font-bold">
                         {item.title_en || item.title_fr}
                       </div>
-                      <div className="col-span-2 text-start">{formatDateTime(item.event_start_at)}</div>
+                      <div className="text-start col-span-2 font-bold">
+                      {item.event_type.name_en || item.event_type.name_fr }
+                      </div>
+                 
                       <div className="col-span-2 text-start">{item.location_en || item.location_fr}</div>
                       <div className="col-span-1">
 

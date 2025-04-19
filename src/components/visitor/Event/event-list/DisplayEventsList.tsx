@@ -33,7 +33,7 @@ export default function DisplayEventsList({ lang, eventTypeSlug, eventTypeName }
               <div className="text-center text-white text-sm font-bold">Filtres</div>
             </button>
           </div>
-          <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug} />
+          <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug} eventTypeName={eventTypeName} />
         </section>
         <div className="flex flex-col mx-4 gap-8">
           <FollowUsEvent />

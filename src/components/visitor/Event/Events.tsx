@@ -84,12 +84,13 @@ export default function Events() {
 
     const eventType = eventTypes.find(eventType => eventType.display_place === displayPlace);
 
-    console.log(eventType?.events)
+    
     return (
       <div>
         <TitleSectionEvent
           headerName={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle}
           showButton={eventType ? (eventType?.events?.length > 0 ? true : false) : false}
+          eventTypeSlug={eventType ? eventType?.slug : ""}
         />
         {eventType ? (
           displayPlace === 'card3' ? (
