@@ -17,7 +17,6 @@ type LeftSidebarProps = {
   themes: any[];
   themesLoading: boolean;
 
-  // ---- All‑themes + individual themes ----
   selectedAllThemes: boolean;
   handleAllThemesChange: (checked: boolean) => void;
   selectedThemes: string[];
@@ -25,7 +24,6 @@ type LeftSidebarProps = {
   showAllThemes: boolean;
   setShowAllThemes: Dispatch<SetStateAction<boolean>>;
 
-  // ---- date filters ----
   selectedDateFilter: string | null;
   setSelectedDateFilter: Dispatch<SetStateAction<string | null>>;
   isCustomRangeActive: boolean;
@@ -33,7 +31,6 @@ type LeftSidebarProps = {
   setIsCustomDropdownOpen: Dispatch<SetStateAction<boolean>>;
   handleDateRangeChange: (range: any) => void;
 
-  // common
   resetFilters: () => void;
   searchQuery: string;
   setSearchQuery: Dispatch<SetStateAction<string>>;
@@ -73,8 +70,8 @@ const SidebarFilters = memo(function LeftSidebar({
   return (
     <aside
       className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 ${
-        isSticky ? 'sm:sticky' : 'sm:relative'
-      } sm:top-[116px] inset-0 p-5 transition duration-300 lg:translate-x-0 ${
+        isSticky ? 'sm:sticky sm:top-[116px]' : 'sm:relative'
+      } inset-0 p-5 transition duration-300 lg:translate-x-0 ${
         isOpened ? 'translate-x-0' : 'translate-x-[-100%]'
       }`}
     >
@@ -101,8 +98,9 @@ const SidebarFilters = memo(function LeftSidebar({
         <div className="flex flex-col gap-5">
           <FilterTitle title="Thèmes" />
           <div className="flex flex-col gap-3">
-            {/* “All Themes” */}
+            {/* All Themes */}
             <Checkbox
+              name="all-themes"
               label="Tous les thèmes"
               checked={selectedAllThemes}
               onChange={handleAllThemesChange}
@@ -113,6 +111,7 @@ const SidebarFilters = memo(function LeftSidebar({
               : displayedThemes.map((t) => (
                   <Checkbox
                     key={t.id}
+                    name={`theme-${t.id}`}
                     label={t[`name_${lang}`]}
                     checked={selectedThemes.includes(t.id)}
                     onChange={(c) => handleThemeChange(t.id, c)}
@@ -130,13 +129,14 @@ const SidebarFilters = memo(function LeftSidebar({
           </div>
         </div>
 
-        {/* date filters (exclusive selection) */}
+        {/* date filters (exclusive) */}
         <div className="flex flex-col gap-5 relative z-50">
           <FilterTitle title="Date" />
           <div className="flex flex-col gap-3">
             {['today', 'week', 'month', 'year'].map((key) => (
               <Checkbox
                 key={key}
+                name={`date-${key}`}
                 label={
                   key === 'today'
                     ? "Aujourd'hui"
