@@ -1,178 +1,170 @@
-import React, { useEffect, useState } from 'react';
-import axios from "axios";
+// src/components/visitor/who-are-we/our-achievements/SidebarFilters.tsx
+import React, { Dispatch, SetStateAction, memo } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import ButtonDropdown from '@/components/ButtonDropdown';
-import DateRangeSelector from '../../who-are-we/our-achievements/DateRangeSelector';
 import Checkbox from '../../posts/Checkbox';
 import FilterTitle from '../../posts/FilterTitle';
-import { useTranslation } from '@/contexts/TranslationContext';
 
-interface SidebarFiltersProps {
-  onApply: (filters: {
-    themes: any[];
-    dateFilter: string | null;
-    startDate: Date | null;
-    endDate: Date | null;
-    searchQuery: string;
-  }) => void;
-  onReset: () => void;
-}
+const ShimmerBar = ({ className = '' }: { className?: string }) => (
+  <div className={`relative overflow-hidden bg-gray-300/70 rounded ${className}`}>
+    <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent)]" />
+  </div>
+);
+const SkeletonCheckbox = () => <ShimmerBar className="h-4 w-40" />;
 
-const SidebarFilters = React.memo(function SidebarFilters({ onApply, onReset }: SidebarFiltersProps) {
-  const { t, lang } = useTranslation();
-  const [themes, setThemes] = useState<any[]>([]);
-  const [selectedThemes, setSelectedThemes] = useState<any[]>([]);
-  const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null);
-  const [showAllThemes, setShowAllThemes] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  
-  // Initial calendar value for display only
-  const [selectedRange, setSelectedRange] = useState<{ startDate: Date; endDate: Date; key: string }>({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: "selection"
-  });
-  // Flag to indicate whether the user has changed the date range.
-  const [isCustomDateRangeModified, setIsCustomDateRangeModified] = useState(false);
+type LeftSidebarProps = {
+  isSticky?: boolean;
+  lang: string;
+  themes: any[];
+  themesLoading: boolean;
 
-  useEffect(() => {
-    axios.get("/api/theme").then((res) => {
-      setThemes(res.data);
-    });
-  }, []);
+  // ---- All‑themes + individual themes ----
+  selectedAllThemes: boolean;
+  handleAllThemesChange: (checked: boolean) => void;
+  selectedThemes: string[];
+  handleThemeChange: (id: string, checked: boolean) => void;
+  showAllThemes: boolean;
+  setShowAllThemes: Dispatch<SetStateAction<boolean>>;
 
-  function handleThemeChange(themeId: string, isChecked: boolean) {
-    if (isChecked) {
-      setSelectedThemes((prev) => [...prev, themeId]);
-    } else {
-      setSelectedThemes((prev) => prev.filter((id) => id !== themeId));
-    }
-  }
+  // ---- date filters ----
+  selectedDateFilter: string | null;
+  setSelectedDateFilter: Dispatch<SetStateAction<string | null>>;
+  isCustomRangeActive: boolean;
+  isCustomDropdownOpen: boolean;
+  setIsCustomDropdownOpen: Dispatch<SetStateAction<boolean>>;
+  handleDateRangeChange: (range: any) => void;
 
-  const handleDateRangeChange = (range: any) => {
-    setSelectedRange(range);
-    setIsCustomDateRangeModified(true);
-  };
+  // common
+  resetFilters: () => void;
+  searchQuery: string;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
+  isOpened: boolean;
+  setIsOpened: Dispatch<SetStateAction<boolean>>;
+  selectedRangeRef: React.MutableRefObject<{ startDate: Date; endDate: Date; key: string }>;
+  isCustomDateRangeModifiedRef: React.MutableRefObject<boolean>;
+};
 
+const SidebarFilters = memo(function LeftSidebar({
+  isSticky = true,
+  lang,
+  themes,
+  themesLoading,
+  selectedAllThemes,
+  handleAllThemesChange,
+  selectedThemes,
+  handleThemeChange,
+  showAllThemes,
+  setShowAllThemes,
+  selectedDateFilter,
+  setSelectedDateFilter,
+  isCustomRangeActive,
+  isCustomDropdownOpen,
+  setIsCustomDropdownOpen,
+  handleDateRangeChange,
+  resetFilters,
+  searchQuery,
+  setSearchQuery,
+  isOpened,
+  setIsOpened,
+  selectedRangeRef,
+  isCustomDateRangeModifiedRef,
+}: LeftSidebarProps) {
   const displayedThemes = showAllThemes ? themes : themes.slice(0, 6);
 
   return (
     <aside
-      className="sm:hidden pointer-events-auto fixed z-50 inset-0 p-5 transition duration-300"
-      style={{ background: "rgba(0, 0, 0, 0.5)" }}
+      className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 ${
+        isSticky ? 'sm:sticky' : 'sm:relative'
+      } sm:top-[116px] inset-0 p-5 transition duration-300 lg:translate-x-0 ${
+        isOpened ? 'translate-x-0' : 'translate-x-[-100%]'
+      }`}
     >
       <div
-        className="opacity-90 bg-white flex flex-col p-[10px] gap-4 sm:gap-10 w-full rounded-xl shadow-xl overflow-y-auto h-full"
+        className="opacity-90 sm:opacity-100 bg-white flex flex-col p-[10px] gap-4 sm:gap-10 w-full sm:w-[320px] rounded-xl shadow-xl overflow-y-auto pointer-events-auto h-full"
         style={{
           boxShadow:
-            "0px -8px 80px 0px rgba(0,0,0,0.07), 0px -2.92px 29.2px 0px rgba(0,0,0,0.05), 0px -1.42px 14.18px 0px rgba(0,0,0,0.04), 0px -0.69px 6.95px 0px rgba(0,0,0,0.03), 0px -0.27px 2.75px 0px rgba(0,0,0,0.02)"
+            '0px -8px 80px 0px rgba(0,0,0,0.07), 0px -2.92px 29.2px 0px rgba(0,0,0,0.05), 0px -1.42px 14.18px 0px rgba(0,0,0,0.04), 0px -0.69px 6.95px 0px rgba(0,0,0,0.03), 0px -0.27px 2.75px 0px rgba(0,0,0,0.02)',
         }}
       >
+        {/* search */}
         <div className="border rounded-lg border-black flex gap-4 p-2">
-          <MagnifyingGlassIcon className="size-5" />
+          <MagnifyingGlassIcon className="h-5 w-5" />
           <input
             type="text"
             placeholder="Recherche"
-            className="outline-none"
+            className="outline-none w-full"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
+
+        {/* themes */}
         <div className="flex flex-col gap-5">
           <FilterTitle title="Thèmes" />
           <div className="flex flex-col gap-3">
-            {displayedThemes.map((theme: any) => (
-              <Checkbox
-                key={theme.id}
-                label={theme[`name_${lang}`]}
-                checked={selectedThemes.includes(theme.id)}
-                onChange={(checked) => handleThemeChange(theme.id, checked)}
-              />
-            ))}
-            {themes.length > 6 && (
-              <>
-                {!showAllThemes && (
-                  <button
-                    className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium"
-                    onClick={() => setShowAllThemes(true)}
-                  >
-                    Afficher {themes.length - 6} de plus
-                  </button>
-                )}
-                {showAllThemes && (
-                  <button
-                    className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium"
-                    onClick={() => setShowAllThemes(false)}
-                  >
-                    Afficher moins
-                  </button>
-                )}
-              </>
+            {/* “All Themes” */}
+            <Checkbox
+              label="Tous les thèmes"
+              checked={selectedAllThemes}
+              onChange={handleAllThemesChange}
+            />
+
+            {themesLoading
+              ? Array.from({ length: 6 }).map((_, i) => <SkeletonCheckbox key={i} />)
+              : displayedThemes.map((t) => (
+                  <Checkbox
+                    key={t.id}
+                    label={t[`name_${lang}`]}
+                    checked={selectedThemes.includes(t.id)}
+                    onChange={(c) => handleThemeChange(t.id, c)}
+                  />
+                ))}
+
+            {!themesLoading && themes.length > 6 && (
+              <button
+                className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium"
+                onClick={() => setShowAllThemes(!showAllThemes)}
+              >
+                {showAllThemes ? 'Afficher moins' : `Afficher ${themes.length - 6} de plus`}
+              </button>
             )}
           </div>
         </div>
+
+        {/* date filters (exclusive selection) */}
         <div className="flex flex-col gap-5 relative z-50">
           <FilterTitle title="Date" />
           <div className="flex flex-col gap-3">
-            <Checkbox 
-              label="Aujourd'hui" 
-              checked={selectedDateFilter === 'today'}
-              onChange={(checked) => setSelectedDateFilter(checked ? 'today' : null)}
-            />
-            <Checkbox 
-              label="Cette Semaine" 
-              checked={selectedDateFilter === 'week'}
-              onChange={(checked) => setSelectedDateFilter(checked ? 'week' : null)}
-            />
-            <Checkbox 
-              label="Ce Mois" 
-              checked={selectedDateFilter === 'month'}
-              onChange={(checked) => setSelectedDateFilter(checked ? 'month' : null)}
-            />
-            <Checkbox 
-              label="Cette Année" 
-              checked={selectedDateFilter === 'year'}
-              onChange={(checked) => setSelectedDateFilter(checked ? 'year' : null)}
-            />
-          {/*  <ButtonDropdown
-              customDropdown={true}
-              item={
-                <DateRangeSelector
-                  value={selectedRange}
-                  onDateRangeChange={handleDateRangeChange}
-                />
-              }
-              position="left"
-              renderItem={(item) => <div className="py-1">{item}</div>}
-            >
-              {(isOpen) => <Checkbox label="Configurer" />}
-            </ButtonDropdown> */}
+            {['today', 'week', 'month', 'year'].map((key) => (
+              <Checkbox
+                key={key}
+                label={
+                  key === 'today'
+                    ? "Aujourd'hui"
+                    : key === 'week'
+                    ? 'Cette Semaine'
+                    : key === 'month'
+                    ? 'Ce Mois'
+                    : 'Cette Année'
+                }
+                checked={selectedDateFilter === key}
+                onChange={(c) => {
+                  if (c) {
+                    setSelectedDateFilter(key);
+                    setIsCustomDropdownOpen(false);
+                  } else {
+                    setSelectedDateFilter(null);
+                  }
+                }}
+              />
+            ))}
           </div>
         </div>
-        <div className="flex justify-between">
-          <button
-            className="bg-primary text-sm text-white px-[10px] py-2 rounded-xl font-semibold"
-            onClick={() => {
-              onApply({
-                themes: selectedThemes,
-                dateFilter: selectedDateFilter,
-                startDate: isCustomDateRangeModified ? selectedRange.startDate : null,
-                endDate: isCustomDateRangeModified ? selectedRange.endDate : null,
-                searchQuery
-              });
-            }}
-          >
-            Appliquer
-          </button>
+
+        {/* reset */}
+        <div className="flex justify-end mt-4">
           <button
             className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]"
-            onClick={() => {
-              setSelectedThemes([]);
-              setSelectedDateFilter(null);
-              setIsCustomDateRangeModified(false);
-              setSearchQuery("");
-              if (onReset) onReset();
-            }}
+            onClick={resetFilters}
           >
             Réinitialiser
           </button>
@@ -182,4 +174,4 @@ const SidebarFilters = React.memo(function SidebarFilters({ onApply, onReset }: 
   );
 });
 
-export { SidebarFilters };
+export default SidebarFilters;
