@@ -34,38 +34,10 @@ export default function RelatedTrainings({ currentTraining }: { currentTraining:
   const [relatedList, setRelatedList] = useState<TrainingType[]>([]);
 
   useEffect(() => {
-    // Si pas encore de data, on ne fait rien
-    if (!currentTraining) return;
 
-    // Récupérer toutes les achievements
-    axios
-      .get<TrainingType[]>('/api/training')
-      .then((res) => {
-        const allAchievements = res.data || [];
-
-        // Récupère la liste d'IDs de thèmes du current
-        const currentThemeIds = currentTraining.themes?.map((t) => t.id) || [];
-
-        // Filtrer celles qui partagent au moins un thème
-        const filtered = allAchievements.filter((ach) => {
-          if (ach.id === currentTraining.id) return false; // exclude itself
-
-          // Au moins un thème commun ?
-          const achThemeIds = ach.themes?.map((t) => t.id) || [];
-          // test d'intersection
-          const intersection = achThemeIds.filter((id) => currentThemeIds.includes(id));
-          return intersection.length > 0; // s'il y a au moins 1 ID commun
-        });
-
-        // On ne garde que 4 max
-        const max4 = filtered.slice(0, 4);
-
-        setRelatedList(max4);
-      })
-      .catch((err) => console.error('Error fetching achievements for related:', err));
+   
   }, [currentTraining]);
 
-  // Si aucune Achievement connexe, on n'affiche rien ou on affiche un message
   if (relatedList.length === 0) return null;
 
   return (

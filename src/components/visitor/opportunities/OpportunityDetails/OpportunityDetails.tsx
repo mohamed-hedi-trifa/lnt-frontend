@@ -61,7 +61,7 @@ export default function OpportunityDetails({ location, params }: { location: any
                     </div>
 
                     <div className='flex flex-col h-full w-full sm:col-span-1  gap-10'>
-                        <RightSideOpportunityDetails opportunity={opportunity} language={language} />
+                        <RightSideOpportunityDetails opportunity={opportunity} language={language} params={params}/>
 
 
 

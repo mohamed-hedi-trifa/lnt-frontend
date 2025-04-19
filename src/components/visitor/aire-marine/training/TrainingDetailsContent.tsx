@@ -175,11 +175,11 @@ export default function TrainingDetailsContent({ location, params }: TrainingDet
                         </a>
                       </div>
                     )}
-                    {/* {item.type === "list" && (
+                    {item.type === "list" && (
                       <div className="mb-2">
                         <BlogList content={item.content} />
                       </div>
-                    )} */}
+                    )}
                   </>
                 )}
               </div>

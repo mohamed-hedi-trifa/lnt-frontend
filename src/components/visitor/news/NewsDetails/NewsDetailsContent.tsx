@@ -8,6 +8,7 @@ import Calendar from "@/assets/icons/Calendar";
 import Media from "../../Media";
 import "./NewsDetailsContent.css";
 import PdfIcon from "@/assets/icons/PdfIcon.png";
+import NewsBlogList from "./NewsBlogList";
 
 const parseContent = (content: string) => {
   if (!content) return "";
@@ -173,11 +174,11 @@ export default function NewsDetailsContent({ location, params }: NewsDetailsCont
                         </a>
                       </div>
                     )}
-                    {/* {item.type === "list" && (
+                    {item.type === "list" && (
                       <div className="mb-2">
-                        <BlogList content={item.content} />
+                        <NewsBlogList content={item.content} />
                       </div>
-                    )} */}
+                    )}
                   </>
                 )}
               </div>
