@@ -7,6 +7,7 @@ import NewsDetailsContent from './NewsDetailsContent';
 import FollowUs from '../FollowUs';
 import Question from '../Question';
 import RelatedBlog from '../RelatedBlog';
+import RelatedNews from '../RelatedNews';
 
 export default function NewsDetails({ location, params }: { location: any; params: any }) {
     const searchParams = new URLSearchParams(location?.search);
@@ -62,10 +63,10 @@ export default function NewsDetails({ location, params }: { location: any; param
                         <NewsDetailsContent params={params} location={location} />
                     </div>
 
-                    <div className='h-full md:col-span-1 col-span-2 flex flex-col gap-20 pb-10 sm:pb-0'>
+                    <div className='h-full md:col-span-1 col-span-2 flex flex-col gap-20 pb-10 '>
                         <FollowUs />
                         <Question />
-                        <RelatedBlog relatedBlog={relatedNews} headerName='Actualités Connexes' route="/news/"/>
+                        <RelatedNews relatedBlog={relatedNews} headerName='Actualités Connexes' route="/news/"/>
 
                     </div>
 

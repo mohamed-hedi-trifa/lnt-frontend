@@ -3,6 +3,7 @@ import React from 'react'
 
 export default function CardRelatedBlog({ imgSrc, title, date }: { imgSrc: any, title: string, date: string }) {
   return (
+    <div className='border-b border-[#183354] '>
     <article className="flex flex-col gap-4 py-[25px] w-full ">
       <div className="w-full lg:w-[300px] lg:h-[200px] overflow-hidden">
         <img src={`${process.env.GATSBY_API_URL}${imgSrc}`}
@@ -16,5 +17,6 @@ export default function CardRelatedBlog({ imgSrc, title, date }: { imgSrc: any, 
       </Title>
       <div className="text-sm text-gray-500">{date}</div>
     </article>
+    </div>
   )
 }
