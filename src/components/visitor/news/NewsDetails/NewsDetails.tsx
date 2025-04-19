@@ -6,7 +6,6 @@ import Breadcrumbs from '@/components/Breadcumbs';
 import NewsDetailsContent from './NewsDetailsContent';
 import FollowUs from '../FollowUs';
 import Question from '../Question';
-import RelatedNews from './RelatedNews';
 import RelatedBlog from '../RelatedBlog';
 
 export default function NewsDetails({ location, params }: { location: any; params: any }) {
