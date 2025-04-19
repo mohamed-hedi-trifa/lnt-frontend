@@ -26,7 +26,7 @@ export default function OurAchievements() {
   const [themesLoading, setThemesLoading] = useState(true);
 
   // ---- NEW: All‑themes + individual themes state ----
-  const [selectedAllThemes, setSelectedAllThemes] = useState(false);
+  const [selectedAllThemes, setSelectedAllThemes] = useState(true);
   const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
 
   const handleAllThemesChange = (checked: boolean) => {
