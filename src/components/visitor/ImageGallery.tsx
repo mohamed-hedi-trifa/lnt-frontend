@@ -65,7 +65,7 @@ const ImageGallery = ({ images = []}: { images: any }) => {
               nextEl: ".thumb-next",
               prevEl: ".thumb-prev",
             }}
-            spaceBetween={25}
+            spaceBetween={15}
             slidesPerView={6}
             watchSlidesProgress={true}
             className="mt-4"
@@ -77,7 +77,7 @@ const ImageGallery = ({ images = []}: { images: any }) => {
                 <img
                   src={`${process.env.GATSBY_API_URL}${item.media_url}`}
                   alt="evenement"
-                  className="w-full h-[100px] object-cover rounded-xl"
+                  className="w-[100px] h-[100px] object-cover rounded-xl"
                 />
               </SwiperSlide>
                 ))}
