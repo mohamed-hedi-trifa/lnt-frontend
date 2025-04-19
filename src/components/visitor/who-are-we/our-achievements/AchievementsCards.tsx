@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+// src/components/visitor/who-are-we/our-achievements/AchievementsCards.tsx
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import AchievementCard from './AchievementCard';
 import Pagination from '../../Pagination';
@@ -40,41 +41,55 @@ interface AchievementsCardsProps {
 }
 
 export default function AchievementsCards({ filter, setIsOpened }: AchievementsCardsProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [limit] = useState(10);
-  const [loading, setLoading] = useState(true);
-  const [itemsList, setItemsList] = useState<any[]>([]);
-  const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
+  const [currentPage, setCurrentPage]   = useState(1);
+  const [totalPages, setTotalPages]     = useState(1);
+  const [limit]                        = useState(10);
+  const [loading, setLoading]           = useState(true);
+  const [itemsList, setItemsList]       = useState<any[]>([]);
+  const [sortOrder, setSortOrder]       = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
 
-  const handlePageChange = (p: number) => p > 0 && p <= totalPages && setCurrentPage(p);
+  // track whether we've ever loaded once
+  const isFirstLoadRef = useRef(true);
 
-  const fetchAchievements = (query: any, page = currentPage) => {
-    setLoading(true);
-    axios
-      .get(`/api/get-active-achievements/${limit}`, {
+  const handlePageChange = (p: number) => {
+    if (p > 0 && p <= totalPages) {
+      setCurrentPage(p);
+    }
+  };
+
+  const fetchAchievements = async (query: any, page = currentPage) => {
+    // only show skeleton on very first load
+    if (isFirstLoadRef.current) {
+      setLoading(true);
+    }
+
+    try {
+      const res = await axios.get(`/api/get-active-achievements/${limit}`, {
         params: {
           query,
-          themes: filter.themes || [],
+          themes:     filter.themes || [],
           page,
           sortOrder,
           dateFilter: filter.dateFilter,
-          startDate: filter.startDate,
-          endDate: filter.endDate,
+          startDate:  filter.startDate,
+          endDate:    filter.endDate,
         },
-      })
-      .then((res) => {
-        setItemsList(res.data.data);
-        setTotalPages(res.data.last_page);
-      })
-      .finally(() => setLoading(false));
+      });
+
+      setItemsList(res.data.data);
+      setTotalPages(res.data.last_page);
+    } finally {
+      setLoading(false);
+      isFirstLoadRef.current = false;
+    }
   };
 
   useEffect(() => {
     fetchAchievements(filter.searchQuery, currentPage);
   }, [filter, currentPage, sortOrder]);
 
-  if (loading)
+  // ONLY show the skeleton grid on the very first load:
+  if (loading && isFirstLoadRef.current) {
     return (
       <section className="grid sm:grid-cols-2 gap-4 my-5">
         {Array.from({ length: 6 }).map((_, i) => (
@@ -82,9 +97,11 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
         ))}
       </section>
     );
+  }
 
+  // compute for header counts
   const startIndex = (currentPage - 1) * limit + 1;
-  const endIndex = Math.min(currentPage * limit, itemsList.length);
+  const endIndex   = Math.min(currentPage * limit, itemsList.length);
 
   return (
     <div>
@@ -93,14 +110,17 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
         <ButtonDropdown
           items={[
             { key: 'desc', name: 'Les plus récents' },
-            { key: 'asc', name: 'Les plus anciens' },
+            { key: 'asc',  name: 'Les plus anciens' },
           ]}
           position="left"
-          onSelect={(item) => setSortOrder(item.key)}
-          renderItem={(item) => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
+          onSelect={item => setSortOrder(item.key)}
+          renderItem={item => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
         >
-          {(open) => (
-            <button className="h-12 rounded-[10px] border-2 border-black flex items-center">
+          {open => (
+            <button
+              type="button"
+              className="h-12 rounded-[10px] border-2 border-black flex items-center"
+            >
               <div className="px-2 py-1.5 flex items-center gap-2">
                 <img src={sortIcon} className="size-6" alt="Sort Icon" />
                 <div className="text-black text-xl font-medium">Trier</div>
@@ -112,12 +132,15 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
           )}
         </ButtonDropdown>
 
-        <div className="text-black text-xl font-semibold mt-[2px]">{`${startIndex} - ${endIndex} de ${itemsList.length} Réalisations`}</div>
+        <div className="text-black text-xl font-semibold mt-[2px]">
+          {`${startIndex} - ${endIndex} de ${itemsList.length} Réalisations`}
+        </div>
       </div>
 
       {/* -------- Mobile header -------- */}
       <div className="sm:hidden flex justify-between pr-5 relative z-20">
         <button
+          type="button"
           onClick={() => setIsOpened(true)}
           className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl flex items-center gap-2.5"
         >
@@ -128,14 +151,17 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
         <ButtonDropdown
           items={[
             { key: 'desc', name: 'Les plus récents' },
-            { key: 'asc', name: 'Les plus anciens' },
+            { key: 'asc',  name: 'Les plus anciens' },
           ]}
           position="right"
-          onSelect={(item) => setSortOrder(item.key)}
-          renderItem={(item) => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
+          onSelect={item => setSortOrder(item.key)}
+          renderItem={item => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
         >
-          {(open) => (
-            <button className="h-12 rounded-[10px] border-2 border-black flex items-center">
+          {open => (
+            <button
+              type="button"
+              className="h-12 rounded-[10px] border-2 border-black flex items-center"
+            >
               <div className="px-2 py-1.5 flex items-center gap-2">
                 <img src={sortIcon} className="size-6" alt="Sort Icon" />
                 <div className="text-black text-xl font-medium">Trier</div>
@@ -159,7 +185,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
         ) : (
           <>
             <div className="grid sm:grid-cols-2 gap-4">
-              {itemsList.map((ach) => (
+              {itemsList.map(ach => (
                 <Link key={ach.id} to={`/who-are-we/our-achievements/${ach.slug}`}>
                   <AchievementCard achievement={ach} />
                 </Link>

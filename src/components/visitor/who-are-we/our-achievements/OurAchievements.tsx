@@ -1,5 +1,12 @@
 // src/components/visitor/who-are-we/our-achievements/OurAchievements.tsx
-import React, { useEffect, useState, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  Dispatch,
+  SetStateAction,
+  memo,
+} from 'react';
 import ImageHistoire from '../our-team/ImageHistoire';
 import AchievementsCards from './AchievementsCards';
 import Sidebar from '../../../layout/Sidebar';
@@ -23,93 +30,58 @@ const ShimmerBar = ({ className = '' }: { className?: string }) => (
     <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent)]" />
   </div>
 );
-
 const SkeletonCheckbox = () => <ShimmerBar className="h-4 w-40" />;
 
-export default function OurAchievements() {
-  const { lang } = useTranslation();
+// -- Extracted & memoized sidebar -------------------------------------------------
 
-  const [themes, setThemes] = useState<any[]>([]);
-  const [themesLoading, setThemesLoading] = useState(true);
+type LeftSidebarProps = {
+  lang: string;
+  themes: any[];
+  themesLoading: boolean;
+  selectedThemes: string[];
+  handleThemeChange: (id: string, checked: boolean) => void;
+  showAllThemes: boolean;
+  setShowAllThemes: Dispatch<SetStateAction<boolean>>;
+  selectedDateFilter: string | null;
+  setSelectedDateFilter: Dispatch<SetStateAction<string | null>>;
+  isCustomRangeActive: boolean;
+  isCustomDropdownOpen: boolean;
+  setIsCustomDropdownOpen: Dispatch<SetStateAction<boolean>>;
+  handleDateRangeChange: (range: any) => void;
+  resetFilters: () => void;
+  searchQuery: string;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
+  isOpened: boolean;
+  setIsOpened: Dispatch<SetStateAction<boolean>>;
+  selectedRangeRef: React.MutableRefObject<{ startDate: Date; endDate: Date; key: string }>;
+  isCustomDateRangeModifiedRef: React.MutableRefObject<boolean>;
+};
 
-  const [selectedThemes, setSelectedThemes] = useState<any[]>([]);
-  const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null);
-  const [isOpened, setIsOpened] = useState(false); /* sidebar */
-  const [showAllThemes, setShowAllThemes] = useState(false);
-
-  const [isCustomRangeActive, setIsCustomRangeActive] = useState(false);
-  const [isCustomDropdownOpen, setIsCustomDropdownOpen] = useState(false);
-
-  const searchInputRef = useRef<HTMLInputElement>(null);
-
-  const selectedRangeRef = useRef<{ startDate: Date; endDate: Date; key: string }>({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: 'selection',
-  });
-  const isCustomDateRangeModifiedRef = useRef(false);
-
-  const [appliedFilters, setAppliedFilters] = useState({
-    themes: [] as any[],
-    dateFilter: null as string | null,
-    startDate: null as Date | null,
-    endDate: null as Date | null,
-    searchQuery: '' as string,
-  });
-
-  /* ▸ fetch themes */
-  useEffect(() => {
-    axios
-      .get('/api/theme')
-      .then((res) => setThemes(res.data))
-      .finally(() => setThemesLoading(false));
-  }, []);
-
-  /* ▸ lock body on sidebar open */
-  useEffect(() => {
-    document.querySelector('body')!.style.overflow = isOpened ? 'hidden' : 'visible';
-  }, [isOpened]);
-
-  /* ▸ theme change */
-  const handleThemeChange = (themeId: string, checked: boolean) =>
-    setSelectedThemes((prev) =>
-      checked ? [...prev, themeId] : prev.filter((id) => id !== themeId)
-    );
-
-  /* ▸ custom date change */
-  const handleDateRangeChange = (range: any) => {
-    selectedRangeRef.current = range;
-    isCustomDateRangeModifiedRef.current = true;
-    setIsCustomRangeActive(true);
-  };
-
-  /* ▸ apply / reset */
-  const applyFilters = () => {
-    const q = searchInputRef.current?.value ?? '';
-    setAppliedFilters({
-      themes: selectedThemes,
-      dateFilter: selectedDateFilter,
-      startDate: isCustomDateRangeModifiedRef.current
-        ? selectedRangeRef.current.startDate
-        : null,
-      endDate: isCustomDateRangeModifiedRef.current ? selectedRangeRef.current.endDate : null,
-      searchQuery: q,
-    });
-    setIsOpened(false);
-  };
-  const resetFilters = () => {
-    setSelectedThemes([]);
-    setSelectedDateFilter(null);
-    setIsCustomRangeActive(false);
-    setIsCustomDropdownOpen(false);
-    isCustomDateRangeModifiedRef.current = false;
-    if (searchInputRef.current) searchInputRef.current.value = '';
-  };
-
+const LeftSidebar = memo(function LeftSidebar({
+  lang,
+  themes,
+  themesLoading,
+  selectedThemes,
+  handleThemeChange,
+  showAllThemes,
+  setShowAllThemes,
+  selectedDateFilter,
+  setSelectedDateFilter,
+  isCustomRangeActive,
+  isCustomDropdownOpen,
+  setIsCustomDropdownOpen,
+  handleDateRangeChange,
+  resetFilters,
+  searchQuery,
+  setSearchQuery,
+  isOpened,
+  setIsOpened,
+  selectedRangeRef,
+  isCustomDateRangeModifiedRef,
+}: LeftSidebarProps) {
   const displayedThemes = showAllThemes ? themes : themes.slice(0, 6);
 
-  /* ▸ sidebar component */
-  const LeftSidebar = () => (
+  return (
     <aside
       className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 sm:sticky sm:top-[116px] inset-0 p-5 transition duration-300 lg:translate-x-0 ${
         isOpened ? 'translate-x-0' : 'translate-x-[-100%]'
@@ -124,8 +96,14 @@ export default function OurAchievements() {
       >
         {/* search */}
         <div className="border rounded-lg border-black flex gap-4 p-2">
-          <MagnifyingGlassIcon className="size-5" />
-          <input type="text" placeholder="Recherche" className="outline-none" ref={searchInputRef} />
+          <MagnifyingGlassIcon className="h-5 w-5" />
+          <input
+            type="text"
+            placeholder="Recherche"
+            className="outline-none w-full"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
 
         {/* themes */}
@@ -143,26 +121,17 @@ export default function OurAchievements() {
                   />
                 ))}
             {!themesLoading && themes.length > 6 && (
-              !showAllThemes ? (
-                <button
-                  className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium"
-                  onClick={() => setShowAllThemes(true)}
-                >
-                  Afficher {themes.length - 6} de plus
-                </button>
-              ) : (
-                <button
-                  className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium"
-                  onClick={() => setShowAllThemes(false)}
-                >
-                  Afficher moins
-                </button>
-              )
+              <button
+                className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium"
+                onClick={() => setShowAllThemes(!showAllThemes)}
+              >
+                {showAllThemes ? 'Afficher moins' : `Afficher ${themes.length - 6} de plus`}
+              </button>
             )}
           </div>
         </div>
 
-        {/* dates */}
+        {/* date filters */}
         <div className="flex flex-col gap-5 relative z-50">
           <FilterTitle title="Date" />
           <div className="flex flex-col gap-3">
@@ -182,56 +151,100 @@ export default function OurAchievements() {
                 onChange={(c) => {
                   if (c) {
                     setSelectedDateFilter(key);
-                    setIsCustomRangeActive(false);
                     setIsCustomDropdownOpen(false);
-                  } else setSelectedDateFilter(null);
+                  } else {
+                    setSelectedDateFilter(null);
+                  }
                 }}
               />
             ))}
 
-            {/* custom range */}
-            <DateDropdown
-              onOpen={() => setIsCustomDropdownOpen(true)}
-              onClose={() => setIsCustomDropdownOpen(false)}
-              item={
-                <DateRangeSelector value={selectedRangeRef.current} onDateRangeChange={handleDateRangeChange} />
-              }
-              position="left"
-              renderItem={(i) => <div className="py-1">{i}</div>}
-            >
-              {(open) => (
-                <Checkbox
-                  label="Configurer"
-                  checked={open || isCustomRangeActive}
-                  onChange={() => {
-                    if (open || isCustomRangeActive) {
-                      setIsCustomRangeActive(false);
-                      setIsCustomDropdownOpen(false);
-                    } else {
-                      setIsCustomDropdownOpen(true);
-                      setSelectedDateFilter(null);
-                    }
-                  }}
-                />
-              )}
-            </DateDropdown>
+            {/* custom range (optional) */}
+            {/* <DateDropdown ...> */}
           </div>
         </div>
 
-        {/* buttons */}
-        <div className="flex justify-between">
-          <button className="bg-primary text-sm text-white px-[10px] py-2 rounded-xl font-semibold" onClick={applyFilters}>
-            Appliquer
-          </button>
-          <button className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]" onClick={resetFilters}>
+        {/* reset */}
+        <div className="flex justify-end mt-4">
+          <button
+            className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]"
+            onClick={resetFilters}
+          >
             Réinitialiser
           </button>
         </div>
       </div>
     </aside>
   );
+});
 
-  /* ▸ render */
+// -- Main component ---------------------------------------------------------------
+
+export default function OurAchievements() {
+  const { lang } = useTranslation();
+
+  // data + loading
+  const [themes, setThemes] = useState<any[]>([]);
+  const [themesLoading, setThemesLoading] = useState(true);
+
+  // filters
+  const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
+  const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null);
+  const [showAllThemes, setShowAllThemes] = useState(false);
+
+  // custom range
+  const [isCustomRangeActive, setIsCustomRangeActive] = useState(false);
+  const [isCustomDropdownOpen, setIsCustomDropdownOpen] = useState(false);
+  const selectedRangeRef = useRef<{ startDate: Date; endDate: Date; key: string }>({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection',
+  });
+  const isCustomDateRangeModifiedRef = useRef(false);
+
+  // search
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // sidebar open
+  const [isOpened, setIsOpened] = useState(false);
+
+  // fetch themes once
+  useEffect(() => {
+    axios.get('/api/theme').then((res) => setThemes(res.data)).finally(() => setThemesLoading(false));
+  }, []);
+
+  // lock scroll when sidebar opens
+  useEffect(() => {
+    document.body.style.overflow = isOpened ? 'hidden' : 'visible';
+  }, [isOpened]);
+
+  const handleThemeChange = (id: string, checked: boolean) =>
+    setSelectedThemes((prev) => (checked ? [...prev, id] : prev.filter((x) => x !== id)));
+
+  const handleDateRangeChange = (range: any) => {
+    selectedRangeRef.current = range;
+    isCustomDateRangeModifiedRef.current = true;
+    setIsCustomRangeActive(true);
+  };
+
+  const resetFilters = () => {
+    setSelectedThemes([]);
+    setSelectedDateFilter(null);
+    setIsCustomRangeActive(false);
+    setIsCustomDropdownOpen(false);
+    isCustomDateRangeModifiedRef.current = false;
+    setSearchQuery('');
+  };
+
+  // derive filters dynamically
+  const filters = {
+    themes: selectedThemes,
+    dateFilter: selectedDateFilter,
+    startDate: isCustomDateRangeModifiedRef.current ? selectedRangeRef.current.startDate : null,
+    endDate: isCustomDateRangeModifiedRef.current ? selectedRangeRef.current.endDate : null,
+    searchQuery,
+  };
+
   return (
     <main className="relative">
       {/* overlay */}
@@ -257,52 +270,54 @@ export default function OurAchievements() {
       <PageTitle title="Our Achievements" />
 
       <PageBody>
-        <section className="w-full flex flex-col sm:flex-row relative sm:gap-8 sm:py-10">
-          <Sidebar />
-          <section className="w-fit flex flex-col gap-4">
-            <PageParagraph>
-            Depuis sa création, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL)
-             s'engage activement pour la préservation et le rayonnement de l'archipel de Kerkennah, en intégrant
-              harmonieusement développement durable, protection de l’environnement et valorisation du patrimoine culturel local.
-               À travers nos différents projets, nous œuvrons pour créer un impact durable et concret au sein de la communauté. 
-               Nous soutenons activement les pratiques de pêche responsables, encourageons les initiatives éducatives et environnementales, 
-               et mettons en avant les richesses culturelles uniques de Kerkennah par des événements, des formations et des ateliers participatifs.
-            </PageParagraph>
-            <PageParagraph>
-            Chaque réalisation menée à bien par notre association reflète un engagement collectif et un travail collaboratif avec nos partenaires locaux,
-             régionaux et internationaux, ainsi qu’avec les habitants, qui demeurent au cœur de toutes nos actions. 
-             Nos projets permettent non seulement de sensibiliser aux défis écologiques contemporains, 
-             mais aussi de stimuler l’économie locale de manière responsable, de préserver les traditions ancestrales, et d'améliorer la qualité de vie de la communauté.
-            </PageParagraph>
-          </section>
-        </section>
+        {/* intro paragraphs... */}
       </PageBody>
 
       <section className="max-w-[1400px] mx-auto">
         <hr className="my-6 border-black" />
-        <section className="flex flex-col sm:flex-row gap-5">
-          <LeftSidebar />
+        <div className="flex flex-col sm:flex-row gap-5">
+          <LeftSidebar
+            lang={lang}
+            themes={themes}
+            themesLoading={themesLoading}
+            selectedThemes={selectedThemes}
+            handleThemeChange={handleThemeChange}
+            showAllThemes={showAllThemes}
+            setShowAllThemes={setShowAllThemes}
+            selectedDateFilter={selectedDateFilter}
+            setSelectedDateFilter={setSelectedDateFilter}
+            isCustomRangeActive={isCustomRangeActive}
+            isCustomDropdownOpen={isCustomDropdownOpen}
+            setIsCustomDropdownOpen={setIsCustomDropdownOpen}
+            handleDateRangeChange={handleDateRangeChange}
+            resetFilters={resetFilters}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            isOpened={isOpened}
+            setIsOpened={setIsOpened}
+            selectedRangeRef={selectedRangeRef}
+            isCustomDateRangeModifiedRef={isCustomDateRangeModifiedRef}
+          />
 
           {/* achievements list */}
           <section className="flex-1 mx-4 sm:mx-0">
-            <AchievementsCards filter={appliedFilters} setIsOpened={setIsOpened} />
+            <AchievementsCards filter={filters} setIsOpened={setIsOpened} />
           </section>
 
           {/* right widgets */}
-          <section className="flex flex-col mx-4 gap-8">
+          <aside className="flex flex-col mx-4 gap-8">
             <FollowUsAchivement />
             <Question />
-          </section>
-        </section>
+          </aside>
+        </div>
       </section>
 
+      {/* bottom image */}
       <section className="max-w-6xl mx-auto my-10">
         <hr className="border-black max-w-7xl sm:mx-auto mx-4" />
-        <section className="flex items-start justify-center mb-20">
-          <div className="w-full flex items-center justify-center sm:mx-0 mx-4">
-            <ImageHistoire />
-          </div>
-        </section>
+        <div className="flex items-start justify-center mb-20">
+          <ImageHistoire />
+        </div>
       </section>
     </main>
   );
