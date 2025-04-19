@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "gatsby";
 import { AnchorLink } from "gatsby-plugin-anchor-links";
 import LocationIcon from "@/assets/icons/LocationIcon";
@@ -10,6 +11,7 @@ import CopyToClipboard from "@/components/atoms/CopyToClipboard";
 import LangLink from "@/components/LangLink";
 import { IEvent } from "@/models/IEvent";
 import loadable from "@loadable/component";
+import RelatedBlog from "../../news/RelatedBlog";
 
 const MapPicker = loadable(() => import("@/components/MapPicker"), { ssr: false });
 
@@ -44,12 +46,25 @@ export default function RightSideEventDetails({
     if (event?.latitude != null && event?.longitude != null) {
       setInitialPosition([event.latitude, event.longitude]);
     }
+
+    getRelatedNews(event.slug)
   }, [event?.latitude, event?.longitude]);
+
 
   const handleSelectLocation = (lat: any, lng: any) => {
     return;
   };
 
+  const [relatedEvents, setRelatedNews] = useState([]);
+
+  const getRelatedNews = async (slugNews: string) => {
+    try {
+      const response = await axios.get(`/api/related-events/${slugNews}`);
+      setRelatedNews(response.data);
+    } catch (error) {
+      console.error("Error fetching events types:", error);
+    }
+  };
   return (
     <div className="flex flex-col justify-start gap-2 items-start">
       <div className="font-bold">Où se déroule l'événement ?</div>
@@ -68,9 +83,8 @@ export default function RightSideEventDetails({
         href={mapUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className={`flex gap-2 font-semibold ${
-          !hasCoordinates ? "pointer-events-none opacity-50" : ""
-        }`}
+        className={`flex gap-2 font-semibold ${!hasCoordinates ? "pointer-events-none opacity-50" : ""
+          }`}
         aria-disabled={!hasCoordinates}
       >
         <div className="flex gap-2 sm:justify-start items-center pt-2">
@@ -132,6 +146,12 @@ export default function RightSideEventDetails({
         <button className="bg-[#0270A0] w-fit px-5 py-3 rounded-lg text-white font-semibold sm:hidden block mt-5">
           Ajouter à votre calendrier
         </button>
+      </div>
+
+      <div className="mt-5">
+        {
+          relatedEvents.length > 0 && <RelatedBlog relatedBlog={relatedEvents} headerName="Evénements Connexes" route="/event/event-details/"/>
+        }
       </div>
     </div>
   );

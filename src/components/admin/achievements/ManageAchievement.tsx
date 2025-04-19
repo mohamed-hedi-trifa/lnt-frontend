@@ -5,7 +5,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import AchievementGallery from "./AchievementGallery";
 
 export default function ManageAchievement({ params }: { params: any }) {
-    const [achievement, setEvent] = useState<any>(null);
+    const [achievement, setAchievements] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [slug, setSlug] = useState<string | null>(null);
 
@@ -20,7 +20,7 @@ export default function ManageAchievement({ params }: { params: any }) {
     const getAchievement = async () => {
         try {
             const res = await axios.get(`/api/achievements/${slug}`);
-            setEvent(res.data);
+            setAchievements(res.data);
         } catch (err) {
             Swal.fire("Error", err.response?.data?.message || "Failed to fetch achievement", "error");
         } finally {

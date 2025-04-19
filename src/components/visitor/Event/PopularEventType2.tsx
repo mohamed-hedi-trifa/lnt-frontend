@@ -8,6 +8,7 @@ import LocationIcon from '@/assets/icons/LocationIcon'
 import TitleSectionEvent from './TitleSectionEvent'
 import EmptyEvent1 from './EmptyEvent1'
 import NoEventsMessage from './NoEventsMessage'
+import { Link } from 'gatsby'
 
 export default function PopularEventType2({ events, eventTypeTitle, language = "fr" }: { events: any, language: string , eventTypeTitle: string}) {
 
@@ -43,7 +44,8 @@ export default function PopularEventType2({ events, eventTypeTitle, language = "
             <div className="flex w-full justify-center sm:flex-row flex-col sm:gap-5 gap-2 mt-10 sm:px-0 px-12">
                 {eventsData.map((event, index) => (
                     <React.Fragment key={index}>
-                        <div className="flex flex-col gap-2 ">
+                 
+                        <Link to={`/event/event-details/${event.slug}`}  className="flex flex-col gap-2 ">
                             <img src={`${process.env.GATSBY_API_URL}${event?.image}`}
                                 className=' object-cover aspect-square rounded-xl sm:h-[288px] h-[258px]'
                                 alt={event?.title_en || event?.title_fr} />
@@ -74,7 +76,7 @@ export default function PopularEventType2({ events, eventTypeTitle, language = "
 
                             </div>
 
-                        </div>
+                        </Link>
 
                         {(index + 1) % 4 !== 0 && (
                             <div className="w-[2px] my-4 h-auto bg-[#B3B3B3]" />
