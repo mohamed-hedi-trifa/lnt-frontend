@@ -1,52 +1,53 @@
-import React, { useState } from "react";
+// src/components/posts/Checkbox.tsx
+import React from "react";
 
 interface CheckboxProps {
   label?: string;
   name?: string;
-  checked?: boolean;
-  onChange?: (checked: boolean, e?:any) => void;
+  checked: boolean;
+  onChange: (checked: boolean, e?: React.ChangeEvent<HTMLInputElement>) => void;
   color?: string;
   borderColor?: string;
-  nb?:number;
+  nb?: number;
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({
   label = "Checkbox",
   name = "custom-checkbox",
-  checked = false,
+  checked,
   onChange,
   color = "bg-blue-500",
   borderColor = "border-black",
-  nb=""
+  nb,
 }) => {
-  const [isChecked, setIsChecked] = useState(checked);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.checked, e);
+  };
 
-  const handleToggle = () => {
-    const newChecked = !isChecked;
-    setIsChecked(newChecked);
-    if (onChange) onChange(newChecked);
+  const handleBoxClick = () => {
+    onChange(!checked);
   };
 
   return (
     <div className="flex items-center gap-[10px]">
-      {/* Hidden checkbox input */}
+      {/* Hidden native checkbox for accessibility */}
       <input
         type="checkbox"
         id={name}
         name={name}
         className="hidden"
-        checked={isChecked}
-        onChange={handleToggle}
+        checked={checked}
+        onChange={handleInputChange}
       />
 
-      {/* Custom checkbox UI */}
+      {/* Visible box */}
       <div
-        onClick={handleToggle}
+        onClick={handleBoxClick}
         className={`w-6 h-6 flex items-center justify-center rounded-lg border-2 ${borderColor} cursor-pointer transition-all ${
-          isChecked ? color : "bg-transparent"
+          checked ? color : "bg-transparent"
         }`}
       >
-        {isChecked && (
+        {checked && (
           <svg
             className="w-4 h-4 text-white"
             viewBox="0 0 24 24"
@@ -65,14 +66,12 @@ const Checkbox: React.FC<CheckboxProps> = ({
       </div>
 
       {/* Label */}
-      <label
-        htmlFor={name}
-        className="text-gray-800 cursor-pointer"
-        onClick={handleToggle}
-      >
+      <label htmlFor={name} className="text-gray-800 cursor-pointer">
         {label}
       </label>
-      {nb&&<div className="font-medium">({nb})</div>}
+
+      {/* Optional count */}
+      {nb !== undefined && <div className="font-medium">({nb})</div>}
     </div>
   );
 };
