@@ -33,35 +33,35 @@ const EditFinancialSource = ({ location, params }: { location: any; params: any 
     }, [location]);
 
     useEffect(() => {
-        const fetchKeyMoment = async () => {
+        const fetchfFnancialSource = async () => {
             if (!slug) return;
             try {
                 const response = await axios.get(`/api/financial-source/${slug}`);
-                const keyMoment: any = response.data;
+                const financialSource: any = response.data;
 
 
                 // Set form data
                 setFormData({
-                    period: keyMoment.period ?? "",
-                    source: keyMoment.source ?? "",
-                    title_en: keyMoment.title_en ?? "",
-                    description_en: keyMoment.description_en ?? "",
-                    description_fr: keyMoment.description_fr ?? "",
-                    amount: keyMoment.amount ?? "",
-                    title_fr: keyMoment.title_fr ?? "",
+                    period: financialSource.period ?? "",
+                    source: financialSource.source ?? "",
+                    title_en: financialSource.title_en ?? "",
+                    description_en: financialSource.description_en ?? "",
+                    description_fr: financialSource.description_fr ?? "",
+                    amount: financialSource.amount ?? "",
+                    title_fr: financialSource.title_fr ?? "",
 
                 });
 
 
                 if (!["en", "fr"].includes(paramLang || "")) {
-                    setLanguage(keyMoment.title_en ? "en" : "fr");
+                    setLanguage(financialSource.title_en ? "en" : "fr");
                 }
             } catch (error) {
                 console.error("Error fetching blog post:", error);
             }
         };
 
-        fetchKeyMoment();
+        fetchfFnancialSource();
     }, [slug, paramLang]);
 
     const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -102,7 +102,7 @@ const EditFinancialSource = ({ location, params }: { location: any; params: any 
             });
             if (response.status === 200) {
                 Swal.fire("Success", "Financial source updated successfully", "success");
-                navigate("/admin/key-moment");
+                navigate("/admin/financial-source");
             }
         } catch (error) {
             console.error("Error updating blog:", error);
