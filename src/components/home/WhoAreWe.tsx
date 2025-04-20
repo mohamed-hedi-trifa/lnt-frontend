@@ -47,7 +47,7 @@ export default function WhoAreWe() {
           </p>
           </PageParagraph>
           <LangLink
-            to="/who-are-we"
+            to="/who-are-we/our-history"
             className="mt-4 flex justify-center sm:justify-start pt-4"
           >
             <Button variant="primary">

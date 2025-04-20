@@ -76,7 +76,7 @@ export default function AllNews() {
 
   return (
     <div className="mt-10 w-full">
-      <div className="px-5">
+      <div className="">
         <HeaderSection headerName="Toutes les Actualités" />
       </div>
       <div className="flex flex-col sm:flex-row gap-5 mt-10">

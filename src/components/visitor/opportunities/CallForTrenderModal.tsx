@@ -210,7 +210,7 @@ export default function CallForTrenderModal({ show, hide, opportunityId }: { sho
     return (
         <>
             {!isSuccess ? (
-                <ModalOppourtunity title="Soumettez Votre Candidature" show={show} hide={hide}>
+                <ModalOppourtunity title="Soumettez Votre Offre" show={show} hide={hide}>
 
                     <form onSubmit={handleSubmit} className="bg-white px-6 rounded-lg shadow-lg w-[800px] max-h-[calc(100vh-60px)] overflow-y-auto relative">
 

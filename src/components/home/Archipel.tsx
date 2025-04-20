@@ -30,7 +30,7 @@ export default function Archipel() {
             </p>
           </PageParagraph>
           <LangLink
-            to="/aire"
+            to="/protected-air-marine-coastal-areas/presentation"
             className="hidden mt-4 justify-center sm:flex pt-6"
           >
             <Button variant="primary">
@@ -45,7 +45,7 @@ export default function Archipel() {
         </article>
       </div>
       <LangLink
-            to="/aire"
+            to="/protected-air-marine-coastal-areas/presentation"
             className="flex mt-4 justify-center sm:hidden"
           >
             <Button variant="primary">

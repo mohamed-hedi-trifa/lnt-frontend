@@ -1,131 +1,124 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import Pagination from '../Pagination';
-import NewsCard from './NewsCard';
-import { Link } from 'gatsby';
-import ButtonDropdown from '@/components/ButtonDropdown';
+import Pagination from "../Pagination";
+import NewsCard from "./NewsCard";
+import { Link } from "gatsby";
+import ButtonDropdown from "@/components/ButtonDropdown";
 import sortIcon from "@/assets/icons/sort-icon.png";
-import FilterIcon from '@/assets/icons/FilterIcon';
-import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
-import EmptyAchievements from '../who-are-we/our-achievements/EmptyAchievements';
-import EmptyNews from './EmptyNews';
+import FilterIcon from "@/assets/icons/FilterIcon";
+import ArrowDownIcon from "@/assets/icons/ArrowDownIcon";
+import EmptyNews from "./EmptyNews";
 
-interface NewsCardsProps {
+/* ─────────── loader helper ─────────── */
+const Shimmer = ({ className = "" }: { className?: string }) => (
+  <div className={`relative overflow-hidden bg-gray-300/70 rounded ${className}`}>
+    <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent)]" />
+  </div>
+);
+
+interface Props {
   filter: {
     searchQuery?: string;
     themes?: number[];
     dateFilter?: string | null;
-    sortOrder?: 'desc' | 'asc';
+    sortOrder?: "desc" | "asc";
   };
-  setIsOpened: (val: boolean) => void;
+  setIsOpened: (b: boolean) => void;
 }
 
-export default function NewsCards({ filter, setIsOpened }: NewsCardsProps) {
+export default function NewsCards({ filter, setIsOpened }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [limit] = useState(10);
   const [loading, setLoading] = useState(true);
-  const [itemsList, setItemsList] = useState([]);
+  const [itemsList, setItemsList] = useState<any[]>([]);
+  const [sortOrder, setSortOrder] = useState<"desc" | "asc">(filter.sortOrder || "desc");
+  const firstLoad = useRef(true);
 
-  const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
-  const isFirstLoadRef = useRef(true);
+  const handlePageChange = (p: number) => p > 0 && p <= totalPages && setCurrentPage(p);
 
-  const handlePageChange = (newPage: number) => {
-    if (newPage > 0 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-    }
-  };
-
-  const getNews = (query: any, page = currentPage) => {
-    if (isFirstLoadRef.current) {
-      setLoading(true);
-    }
-    axios.get(`/api/get-active-news/${limit}`, {
-      params: {
-        query,
-        themes: filter.themes || [],
-        page,
-        sortOrder,
-        dateFilter: filter.dateFilter,
-
-      },
-    })
-      .then(res => {
-        setItemsList(res.data.data);
-        setTotalPages(res.data.last_page);
-        console.log(filter.themes);
-        setLoading(false);
+  const fetchNews = (q: any, page = currentPage) => {
+    if (firstLoad.current) firstLoad.current = false;
+    setLoading(true);
+    axios
+      .get(`/api/get-active-news/${limit}`, {
+        params: { query: q, themes: filter.themes || [], page, sortOrder, dateFilter: filter.dateFilter },
       })
-      .catch(err => {
-        console.error("Error fetching news:", err);
-        setLoading(false);
-      });
+      .then((r) => {
+        setItemsList(r.data.data);
+        setTotalPages(r.data.last_page);
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
-    getNews(filter.searchQuery, currentPage);
+    fetchNews(filter.searchQuery, currentPage);
   }, [filter, currentPage, sortOrder]);
 
-  if (loading) return <p className='w-full text-center'>Loading...</p>;
+  /* ---------- loader grid ---------- */
+  if (loading) {
+    return (
+      <div className="grid sm:grid-cols-3 gap-4 px-4 sm:px-0 my-5 sm:my-10">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <Shimmer key={i} className="rounded-xl h-[420px] w-full max-w-[300px]" />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div>
-      <div className='hidden sm:flex justify-between relative z-20 items-center'>
+      {/* ----- top bar (idem design) ----- */}
+      <div className="hidden sm:flex justify-between items-center relative z-20">
         <ButtonDropdown
           items={[
-            { key: 'desc', name: 'Les plus récents' },
-            { key: 'asc', name: 'Les plus anciens' },
+            { key: "desc", name: "Les plus récents" },
+            { key: "asc", name: "Les plus anciens" },
           ]}
           position="left"
-          onSelect={item => setSortOrder(item.key)}
-          renderItem={item => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
+          onSelect={(it) => setSortOrder(it.key)}
+          renderItem={(it) => <div className="py-1 px-4 cursor-pointer">{it.name}</div>}
         >
-          {(isOpen) => (
+          {(open) => (
             <button className="h-12 rounded-xl border-2 border-black flex items-center">
               <div className="flex items-center gap-2 px-2 py-1.5">
-                <img src={sortIcon} alt="sort icon" className="w-6" />
-                <span className="text-black text-xl font-medium">Trier</span>
-                <div className={`w-6 h-6 transition duration-200 ${isOpen ? "-rotate-180" : ""}`}>
+                <img src={sortIcon} className="w-6" />
+                <span className="text-xl font-medium">Trier</span>
+                <div className={`w-6 h-6 transition ${open ? "-rotate-180" : ""}`}>
                   <ArrowDownIcon />
                 </div>
               </div>
             </button>
           )}
         </ButtonDropdown>
-        {itemsList.length === 0 ? (
-        ''
-      ) : (
-        <>  
-        <div className="text-xl font-semibold mt-[2px] pr-14">
-          {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} publications`}
-        </div>
-        </>
-      )}
+        {itemsList.length > 0 && (
+          <div className="text-xl font-semibold pr-14">
+            {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} publications`}
+          </div>
+        )}
       </div>
+
+      {/* ----- mobile bar ----- */}
       <div className="sm:hidden flex justify-between pr-5 relative z-20">
-        <button
-          type="button"
-          onClick={() => setIsOpened(true)}
-          className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl flex items-center gap-2.5"
-        >
+        <button onClick={() => setIsOpened(true)} className="w-[103px] h-[41px] px-2.5 py-5 bg-gradient-to-r from-[#006e9f] to-[#51adc6] rounded-tr-xl rounded-br-xl shadow-xl flex items-center gap-2.5">
           <FilterIcon />
           <span className="text-white text-sm font-bold">Filtres</span>
         </button>
         <ButtonDropdown
           items={[
-            { key: 'desc', name: 'Les plus récents' },
-            { key: 'asc', name: 'Les plus anciens' },
+            { key: "desc", name: "Les plus récents" },
+            { key: "asc", name: "Les plus anciens" },
           ]}
           position="right"
-          onSelect={item => setSortOrder(item.key)}
-          renderItem={item => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
+          onSelect={(it) => setSortOrder(it.key)}
+          renderItem={(it) => <div className="py-1 px-4 cursor-pointer">{it.name}</div>}
         >
-          {(isOpen) => (
+          {(open) => (
             <button className="h-12 rounded-xl border-2 border-black flex items-center">
               <div className="flex items-center gap-2 px-2 py-1.5">
-                <img src={sortIcon} alt="Sort Icon" className="w-6" />
-                <span className="text-black text-xl font-medium">Trier</span>
-                <div className={`w-6 h-6 transition duration-200 ${isOpen ? "-rotate-180" : ""}`}>
+                <img src={sortIcon} className="w-6" />
+                <span className="text-xl font-medium">Trier</span>
+                <div className={`w-6 h-6 transition ${open ? "-rotate-180" : ""}`}>
                   <ArrowDownIcon />
                 </div>
               </div>
@@ -133,23 +126,15 @@ export default function NewsCards({ filter, setIsOpened }: NewsCardsProps) {
           )}
         </ButtonDropdown>
       </div>
-      {itemsList.length === 0 ? (
-        ''
-      ) : (
+
+      {itemsList.length === 0 && <EmptyNews />}
+
+      {itemsList.length > 0 && (
         <>
-          <div className='sm:hidden px-5 font-semibold pt-5 text-start'>
-            {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} publications`}
-          </div>
-        </>
-      )}
-      {itemsList.length === 0 ? (
-        <EmptyNews />
-      ) : (
-        <>
-          <section className='grid sm:grid-cols-3 gap-4 px-4 sm:px-0 my-5 sm:my-10'>
-            {itemsList.map((news: any) => (
-              <Link key={news.id} to={`/news/${news.slug}`}>
-                <NewsCard news={news} />
+          <section className="grid sm:grid-cols-3 gap-4 px-4 sm:px-0 my-5 sm:my-10">
+            {itemsList.map((n) => (
+              <Link key={n.id} to={`/news/${n.slug}`}>
+                <NewsCard news={n} />
               </Link>
             ))}
           </section>
