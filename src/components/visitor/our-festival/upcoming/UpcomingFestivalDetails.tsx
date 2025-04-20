@@ -12,6 +12,13 @@ import LangLink from "@/components/LangLink";
 import IEdition from "@/models/IEdition";
 import ShareButton from "@/components/visitor/our-festival/upcoming/ShareButton";
 import SectionHeader from "@/components/SectionHeader";
+import LoadingSpinner from "./LoadingSpinner";
+
+const ShimmerBar = ({ className = '' }: { className?: string }) => (
+  <div className={`relative overflow-hidden bg-gray-300/70 rounded ${className}`}>
+    <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent)]" />
+  </div>
+)
 
 const gallery = [
   "/festivales_images/img1.jpg",
@@ -30,14 +37,20 @@ const gallery = [
 export default function FestivalVenir() {
   const [edition, setEdition] = useState<IEdition | null>(null);
   const [prevEditions, setPrevEditions] = useState<IEdition[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingPrevEditions, setIsLoadingPrevEditions] = useState(true);
 
   useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true);
+        setIsLoadingPrevEditions(true);
+        
         const [editionRes, prevEditionsRes] = await Promise.all([
           axios.get("/api/get-current-edition"),
           axios.get("/api/previous-editions"),
         ]);
+        
         setEdition(editionRes.data);
         setPrevEditions(prevEditionsRes.data);
       } catch (err: any) {
@@ -47,9 +60,20 @@ export default function FestivalVenir() {
             "Échec de la récupération des données",
           "error"
         );
+      } finally {
+        setIsLoading(false);
+        setIsLoadingPrevEditions(false);
       }
     })();
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+     <ShimmerBar className="h-6 w-full" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -85,12 +109,11 @@ export default function FestivalVenir() {
             </p>
           ) : (
             <div className='w-full'>
-            <div className="bg-[rgba(255,255,255,0.5)] shadow-helmi p-10 font-bold mt-6 text-start leading-[45px] text-lg rounded-lg">
-            Aucun festival n’est encore programmé pour le moment !
-            Restez informé(e) en vous inscrivant à notre newsletter : vous serez parmi les premiers à découvrir les dates et les détails de notre prochain Festival de la Culture des Îles Méditerranéennes de Kerkennah.
-
+              <div className="bg-[rgba(255,255,255,0.5)] shadow-helmi p-10 font-bold mt-6 text-start leading-[45px] text-lg rounded-lg">
+                Aucun festival n'est encore programmé pour le moment !
+                Restez informé(e) en vous inscrivant à notre newsletter : vous serez parmi les premiers à découvrir les dates et les détails de notre prochain Festival de la Culture des Îles Méditerranéennes de Kerkennah.
+              </div>
             </div>
-        </div>
           )}
 
           {edition && (
@@ -107,11 +130,17 @@ export default function FestivalVenir() {
                 text="Explorez les moments forts et les activités qui rythmeront cette édition unique du festival"
               />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center items-stretch lg:max-w-5xl md:max-w-3xl mx-auto mt-5">
-                {edition.events?.map((event, index) => (
-                  <EventsEditionCards key={index} event={event} />
-                ))}
-              </div>
+              {isLoading ? (
+                <div className="flex justify-center my-12">
+            <ShimmerBar className="h-6 w-full" />
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center items-stretch lg:max-w-5xl md:max-w-3xl mx-auto mt-5">
+                  {edition.events?.map((event, index) => (
+                    <EventsEditionCards key={index} event={event} />
+                  ))}
+                </div>
+              )}
 
               <hr className="border-t border-black mt-10" />
               <SectionHeader
@@ -127,6 +156,7 @@ export default function FestivalVenir() {
               <div className="mt-12">
                 <Partners partners={edition.partners || []} />
               </div>
+              
               <hr className="border-t border-black mt-10" />
               <SectionHeader
                 title={
@@ -153,7 +183,13 @@ export default function FestivalVenir() {
             text="Plongez dans l'histoire et revivez les moments forts des éditions passées qui ont marqué Kerkennah"
           />
 
-          <PastEditionsCarousel prevEditions={prevEditions} />
+          {isLoadingPrevEditions ? (
+            <div className="flex justify-center my-12">
+         <ShimmerBar className="h-6 w-full" />
+            </div>
+          ) : (
+            <PastEditionsCarousel prevEditions={prevEditions} />
+          )}
         </section>
       </div>
 

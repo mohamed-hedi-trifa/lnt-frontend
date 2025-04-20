@@ -58,7 +58,7 @@ export default function Achievements() {
   if (loading) {
     return <div>Loading...</div>
   }
-  const handleToggle = (item:any) => {
+  const handleToggle = (item: any) => {
     const updatedStatus = item.status === "visible" ? "hidden" : "visible";
 
 
@@ -70,8 +70,8 @@ export default function Achievements() {
         Swal.fire("Success", res.data.message, "success");
 
         // Update the local state only on success
-        setItemsList((prevItems:any) =>
-          prevItems.map((itm:any) =>
+        setItemsList((prevItems: any) =>
+          prevItems.map((itm: any) =>
             itm.id === item.id ? { ...itm, status: updatedStatus } : itm
           )
         );

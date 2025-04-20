@@ -8,20 +8,21 @@ interface TrainingSessionsCardsProps {
   lang: string;
   eventTypeSlug: string;
   eventTypeName: string;
+  filter: {
+    searchQuery?: string;
+    dateFilter?: string | null;
+  };
 }
 
-export default function TrainingSessionsCards({ lang, eventTypeSlug, eventTypeName }: TrainingSessionsCardsProps) {
-  const [searchQuery, setSearchQuery] = useState('');
+export default function TrainingSessionsCards({ lang, eventTypeSlug, eventTypeName, filter }: TrainingSessionsCardsProps) {
+
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 10; // Nombre d'éléments par page
   const [loading, setLoading] = useState(true);
   const [itemsList, setItemsList] = useState<any[]>([]);
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1);
-  };
+
 
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
@@ -29,12 +30,21 @@ export default function TrainingSessionsCards({ lang, eventTypeSlug, eventTypeNa
     }
   };
 
-  const getEvents = async (query: string, page: number, eventTypeSlug: string) => {
+  const getEvents = async (query: any, page= currentPage, eventTypeSlug: string) => {
     setLoading(true);
     console.log(eventTypeSlug)
     try {
       const params = { query, page, limit, eventTypeSlug };
-      const res = await axios.get('/api/get-active-events/10', { params });
+      const res = await axios.get(`/api/get-active-events/${limit}`, { 
+        params: {
+          query, 
+          page, 
+          limit, 
+          eventTypeSlug,
+          dateFilter: filter.dateFilter,
+        },
+
+       });
       setItemsList(res.data.data);
       setTotalPages(res.data.last_page);
     } catch (err: any) {
@@ -49,9 +59,9 @@ export default function TrainingSessionsCards({ lang, eventTypeSlug, eventTypeNa
 
   useEffect(() => {
     if (eventTypeSlug) {
-      getEvents(searchQuery, currentPage, eventTypeSlug);
+      getEvents(filter.searchQuery, currentPage, eventTypeSlug);
     }
-  }, [searchQuery, currentPage, eventTypeSlug]);
+  }, [filter, currentPage, eventTypeSlug]);
 
   if (loading) return <div>Loading...</div>;
 

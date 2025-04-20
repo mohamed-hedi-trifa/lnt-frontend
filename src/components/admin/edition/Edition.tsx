@@ -56,9 +56,30 @@ export default function Edition() {
         });
     };
     if (loading) {
-        return   "Loading...";
+        return "Loading...";
     }
+    const handleToggle = (item: any) => {
+        const updatedStatus = item.status === "visible" ? "hidden" : "visible";
 
+
+        axios
+            .put(`/api/edition/status/${item.slug}`, {
+                status: updatedStatus,
+            })
+            .then((res) => {
+                Swal.fire("Success", res.data.message, "success");
+
+                setItemsList((prevItems: any) =>
+                    prevItems.map((itm: any) =>
+                        itm.id === item.id ? { ...itm, status: updatedStatus } : itm
+                    )
+                );
+                getEditions();
+            })
+            .catch((err) => {
+                Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
+            });
+    };
     return (
         <>
             <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
@@ -91,12 +112,25 @@ export default function Edition() {
                                                     <div className="font-bold">{item.name_en || item.name_fr}sqdfqs</div>{" "}
                                                 </div>
 
-                                                <div className="pt-3 col-span-2">{item.status == 'hidden' ? "Hidden" : "Visible"}</div>
+                                                <div className="pt-3 col-span-2">
+
+
+                                                    <label className="toggle-switch">
+                                                        <input
+                                                            type="checkbox"
+                                                            name="status"
+                                                            checked={item.status === "visible"}
+                                                            onChange={() => handleToggle(item)}
+                                                        />
+                                                        <span className="slider"></span>
+                                                    </label>
+
+                                                </div>
                                                 <div className="pt-3 text-end sm:text-center col-span-1 sm:col-span-2">
                                                     <div className="grid grid-cols-12">
 
                                                         <div className="col-span-12 sm:col-span-6 flex justify-end sm:justify-center">
-                          
+
                                                             <Link to={`/admin/edition/edition-details/${item.slug}`}>
                                                                 <MagnifyingGlassIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
                                                             </Link>
