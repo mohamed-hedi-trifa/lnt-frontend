@@ -42,19 +42,19 @@ export default function OpportunityCards({filter}: OpportunityCardsProps) {
   const [loading, setLoading] = useState(true);
   const [itemsList, setItemsList] = useState([]);
 
-  function getPosts(query: any, page = currentPage, opportunityTypes) {
+  function getOpportunities(query: any, page = currentPage) {
     setLoading(true);
     axios.get(`/api/get-active-opportunities/${limit ? limit : ""}`, {
       params: {
         query: query,
         page: page,
-        opportunityTypes: opportunityTypes,
         dateFilter: filter.dateFilter,
+        opportunityTypes: filter.opportunityTypes,
       }
     }).then(res => {
       setItemsList(res.data.data);
-      console.log(res.data.data)
       setTotalPages(res.data.last_page); // Get total pages from response
+     
       setLoading(false);
     }).catch(err => {
       // Swal.fire('Error', err?.response?.data?.message, "error");
@@ -63,8 +63,8 @@ export default function OpportunityCards({filter}: OpportunityCardsProps) {
   }
 
   useEffect(() => {
-    getPosts(filter.searchQuery, currentPage, filter.opportunityTypes || []);
-  }, [filter.searchQuery, currentPage, filter]);
+    getOpportunities(filter.searchQuery, currentPage, filter.opportunityTypes || []);
+  }, [filter, currentPage]);
 
   if (loading) return "Loading..."
 
