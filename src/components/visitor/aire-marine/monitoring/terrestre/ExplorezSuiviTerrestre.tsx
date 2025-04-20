@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { SwiperOptions } from "swiper/types";
+import { Link } from "gatsby";
 
 
 
@@ -54,7 +55,9 @@ export default function ExplorezSuiviTerrestre() {
         <swiper-container ref={swiperRef} class="w-full mt-[50px] mb-[50px] mx-auto" init="false">
           {researches?.map((research, index) => (
             <swiper-slide key={index} class="relative w-fit">
-              <ResearchCard image={research.image} title={research.title} />
+              <Link to={`/protected-air-marine-coastal-areas/monitoring/${research.type}/${research.slug}`}>
+                <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
+              </Link>
             </swiper-slide>
           ))}
         </swiper-container>
@@ -63,10 +66,13 @@ export default function ExplorezSuiviTerrestre() {
         <div className="grid grid-cols-2 mt-[50px] mb-[80px] gap-[20px]">
           {researches?.map((research, index) => (
             <div key={index} className="relative">
-              <ResearchCard image={research.image} title={research.title} />
+              <Link to={`/protected-air-marine-coastal-areas/monitoring/${research.type}/${research.slug}`}>
+                <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
+              </Link>
             </div>
           ))}
         </div>
+        
       </div>
     </article>
   );

@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { SwiperOptions } from "swiper/types";
+import { Link } from "gatsby";
 
 type Research = {
   image?: string;
@@ -14,17 +15,17 @@ export default function ExplorezSuiviMarin() {
   const [researches, setResearches] = useState();
 
   const getResearches = async () => {
-      try {
+    try {
 
-          const res = await axios.get("/api/get-marin-researches");
-          setResearches(res.data);
-          console.log(res.data)
+      const res = await axios.get("/api/get-marin-researches");
+      setResearches(res.data);
+      console.log(res.data)
 
-      } catch (err) {
-          Swal.fire("Error", err.response?.data?.message || "Failed to fetch edition", "error");
-      } finally {
+    } catch (err) {
+      Swal.fire("Error", err.response?.data?.message || "Failed to fetch edition", "error");
+    } finally {
 
-      }
+    }
   };
 
   useEffect(() => {
@@ -59,7 +60,9 @@ export default function ExplorezSuiviMarin() {
         <swiper-container ref={swiperRef} class="w-full mt-[50px] mb-[50px] mx-auto" init="false">
           {researches?.map((research, index) => (
             <swiper-slide key={index} class="relative w-fit">
-              <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
+              <Link to={`/protected-air-marine-coastal-areas/monitoring/${research.type}/${research.slug}`}>
+                <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
+              </Link>
             </swiper-slide>
           ))}
         </swiper-container>
@@ -68,7 +71,9 @@ export default function ExplorezSuiviMarin() {
         <div className="grid grid-cols-2 mt-[50px] mb-[80px] gap-[20px]">
           {researches?.map((research, index) => (
             <div key={index} className="relative">
-              <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
+              <Link to={`/protected-air-marine-coastal-areas/monitoring/${research.type}/${research.slug}`}>
+                <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
+              </Link>
             </div>
           ))}
         </div>
