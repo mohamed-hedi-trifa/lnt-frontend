@@ -82,21 +82,23 @@ export default function Species({ location, params }: { location: any; params: a
       className="min-h-full bg-cover bg-center md:bg-fixed bg-local"
       style={{ backgroundImage: `url(${process.env.GATSBY_API_URL}${blogSpecies.image})` }}
     >
-      <img
+      {/* <img
         className="w-full h-[50vh] md:h-[80vh] object-cover"
         src={achievementsHero}
         alt="Achievements Hero"
-      />
+      /> */}
+      <div className="h-[116px]"></div>
 
-      <div className="flex justify-center pb-4">
+      <div className="flex justify-center pb-10  ">
         <SpeciesTitle
           title={blogSpecies[`title_${language}`] || ""}
           width="w-[160px]"
           fontSize="text-[48px] md:text-[64px] text-start"
+          
         />
       </div>
 
-      <section className="px-4 sm:px-6 lg:px-4">
+      <section className="px-4 sm:px-6 lg:px-4 ">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col sm:flex-row relative sm:gap-8">
             <AMCPSuiviScientifiqueSidebar />
