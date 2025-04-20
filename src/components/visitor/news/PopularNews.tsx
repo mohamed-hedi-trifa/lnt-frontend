@@ -49,7 +49,7 @@ export default function PopularNews() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-l from-black/90 to-black/20" />
                 </div>
-                <div className="absolute left-8 bottom-8  text-white">
+                <div className="absolute left-8 bottom-8 text-white">
                   <div className="flex gap-4 mb-2">
                     {article.themes?.slice(0, 2).map((theme, idx) => (
                       <div key={idx} className="px-2.5 py-1 bg-white/30 rounded inline-flex items-center">

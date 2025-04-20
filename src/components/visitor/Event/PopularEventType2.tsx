@@ -1,95 +1,191 @@
-import React from 'react'
+// src/components/PopularEventType2.tsx
+import React, { useState } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { CalendarIcon } from "@heroicons/react/24/outline";
+import LocationIcon from "@/assets/icons/LocationIcon";
+import NoEventsMessage from "./NoEventsMessage";
+import { Link } from "gatsby";
 
-import eventImage2 from '../../../assets/images/eventImage2.jpg'
-import eventImage3 from '../../../assets/images/eventImage3.jpg'
-import eventImage4 from '../../../assets/images/eventImage4.jpg'
-import { CalendarIcon } from '@heroicons/react/24/outline'
-import LocationIcon from '@/assets/icons/LocationIcon'
-import TitleSectionEvent from './TitleSectionEvent'
-import EmptyEvent1 from './EmptyEvent1'
-import NoEventsMessage from './NoEventsMessage'
-import { Link } from 'gatsby'
+interface Event {
+  id: string;
+  slug: string;
+  image: string;
+  title_en: string;
+  title_fr: string;
+  location_en: string;
+  location_fr: string;
+  event_start_at: string;
+  // add any other fields you need…
+}
 
-export default function PopularEventType2({ events, eventTypeTitle, language = "fr" }: { events: any, language: string, eventTypeTitle: string }) {
+export default function PopularEventType2({
+  events,
+  eventTypeTitle,
+  language = "fr",
+}: {
+  events: Event[];
+  eventTypeTitle: string;
+  language?: "fr" | "en";
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-    if (!events || events.length === 0) {
-        return <NoEventsMessage eventTypeTitle={eventTypeTitle} />;
-    }
+  if (!events || events.length === 0) {
+    return <NoEventsMessage eventTypeTitle={eventTypeTitle} />;
+  }
 
-    const eventsData = events.slice(0, 3);
+  const nextSlide = () =>
+    setCurrentIndex((i) => (i + 1) % events.length);
+  const prevSlide = () =>
+    setCurrentIndex((i) => (i - 1 + events.length) % events.length);
 
-
-    const formatEventDate = (dateString, language) => {
-        const date = new Date(dateString.replace(" ", "T")); // Convert to valid date format
-
-        const options = {
-            weekday: "long", // Full weekday name (e.g., "Friday" or "Vendredi")
-            day: "numeric",  // Day of the month (e.g., "2")
-            month: "long",   // Full month name (e.g., "August" or "août")
-            year: "numeric", // Full year (e.g., "2024")
-            hour: "numeric", // Hour (e.g., "17" or "5")
-            minute: "numeric", // Minute (e.g., "00")
-            hour12: language === "en", // Use 12-hour format for English, 24-hour for French
-        };
-
-        const formatter = new Intl.DateTimeFormat(language === "fr" ? "fr-FR" : "en-US", options);
-        return formatter.format(date);
+  const formatDate = (iso: string) => {
+    const d = new Date(iso.replace(" ", "T"));
+    const opts: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: language === "en",
     };
+    return d.toLocaleDateString(
+      language === "fr" ? "fr-FR" : "en-US",
+      opts
+    );
+  };
 
-
-    return (
-
-
-
-        <div className="flex w-full justify-center sm:flex-row flex-col sm:gap-5 gap-2 mt-10 sm:px-0 px-12">
-            {eventsData.map((event, index) => (
-                <React.Fragment key={index}>
-
-                    <Link to={`/event/event-details/${event.slug}`} className="flex flex-col gap-2 ">
-                        <img src={`${process.env.GATSBY_API_URL}${event?.image}`}
-                            className=' object-cover aspect-square rounded-xl sm:h-[288px] h-[258px]'
-                            alt={event?.title_en || event?.title_fr} />
-
-                        <div className="flex flex-col sm:h-[110px] justify-between gap-4 sm:gap-0 ">
-                            <div className="font-bold sm:text-lg text-xl text-[#183354] text-start "> {event?.title_en || event?.title_fr}</div>
-
-                            <div className="flex flex-col sm:gap-1 gap-2 text-[#6D757F] font-semibold">
-                                <div className="flex gap-2 items-center">
-                                    <CalendarIcon className='w-5' />
-                                    <span className="uppercase text-start text-xs">
-
-
-                                        {
-                                            event?.event_start_at ?
-                                                formatEventDate(event?.event_start_at, language)
-                                                :
-                                                "Date not available"
-                                        }
-                                    </span>
-                                </div>
-
-                                <div className="flex gap-2 sm:justify-start items-center ml-[2px]">
-                                    <LocationIcon />
-                                    <span className="uppercases text-start  text-xs">{event.location_en || event.location_fr}</span>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </Link>
-
-                    {(index + 1) % 4 !== 0 && (
-                        <div className="w-[2px] my-4 h-auto bg-[#B3B3B3]" />
-                    )}
-
-
-                </React.Fragment>
-
-
-            ))}
-
+  return (
+    <div className="">
+      {/* DESKTOP */}
+      <div className="hidden sm:flex flex-col w-[977px] mx-auto mt-5 gap-2.5">
+        {/* Top row: first 3 */}
+        <div className="flex gap-2.5">
+          {events.slice(0, 3).map((ev) => (
+            <Link
+              key={ev.id}
+              to={`/event/event-details/${ev.slug}`}
+              className="relative w-[319px] h-[330px] rounded-xl overflow-hidden shadow-lg flex items-end p-8"
+            >
+              <img
+                src={`${process.env.GATSBY_API_URL}${ev.image}`}
+                alt={language === "fr" ? ev.title_fr : ev.title_en}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.16)_100%)]" />
+              <div className="relative bottom-[10px] z-10 flex flex-col gap-2 text-white">
+                <div className="text-lg font-bold capitalize text-start">
+                  {language === "fr" ? ev.title_fr : ev.title_en}
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CalendarIcon className="w-5" />
+                  <span className="font-semibold">
+                    {formatDate(ev.event_start_at)}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <LocationIcon />
+                  <span className="font-semibold">
+                    {language === "fr"
+                      ? ev.location_fr
+                      : ev.location_en}
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
 
+        {/* Bottom row: next 2 */}
+        <div className="flex gap-2.5">
+          {events.slice(3, 5).map((ev) => (
+            <Link
+              key={ev.id}
+              to={`/event/event-details/${ev.slug}`}
+              className="relative flex-1 h-[300px] rounded-xl overflow-hidden"
+            >
+              <img
+                src={`${process.env.GATSBY_API_URL}${ev.image}`}
+                alt={language === "fr" ? ev.title_fr : ev.title_en}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.16)_100%)]" />
+              <div className="absolute left-8 bottom-[45px] text-white flex flex-col gap-2">
+                <div className="text-lg font-bold capitalize text-start">
+                  {language === "fr" ? ev.title_fr : ev.title_en}
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CalendarIcon className="w-5" />
+                  <span className="font-semibold">
+                    {formatDate(ev.event_start_at)}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <LocationIcon />
+                  <span className="font-semibold">
+                    {language === "fr"
+                      ? ev.location_fr
+                      : ev.location_en}
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
 
-    )
+      {/* MOBILE */}
+      <div className="sm:hidden mt-10 px-2">
+        <div className="flex items-center justify-between gap-3">
+          <button onClick={prevSlide}>
+            <ChevronLeftIcon className="w-10 text-[#3E3232] cursor-pointer" />
+          </button>
+
+          <Link
+            to={`/event/event-details/${events[currentIndex].slug}`}
+            className="relative w-full h-[300px] rounded-xl overflow-hidden shadow-lg flex items-end p-4"
+          >
+            <img
+              src={`${process.env.GATSBY_API_URL}${events[currentIndex].image}`}
+              alt={
+                language === "fr"
+                  ? events[currentIndex].title_fr
+                  : events[currentIndex].title_en
+              }
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-l from-black/90 to-black/20" />
+            <div className="relative z-10 flex flex-col gap-2 text-white">
+              <div className="text-lg font-bold capitalize">
+                {language === "fr"
+                  ? events[currentIndex].title_fr
+                  : events[currentIndex].title_en}
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <CalendarIcon className="w-5" />
+                <span className="font-semibold">
+                  {formatDate(events[currentIndex].event_start_at)}
+                </span>
+              </div>
+            </div>
+          </Link>
+
+          <button onClick={nextSlide}>
+            <ChevronRightIcon className="w-10 text-[#3E3232] cursor-pointer" />
+          </button>
+        </div>
+
+        {/* Indicators */}
+        <div className="flex justify-center mt-5 gap-3">
+          {events.map((_, idx) => (
+            <span
+              key={idx}
+              className={`w-3 h-3 rounded-full ${
+                idx === currentIndex ? "bg-[#0270A0]" : "bg-black/30"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
