@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, } from 'react';
 import axios from 'axios'
 import HeroSection from '../../HeroSection'
 import PageTitle from '@/components/atoms/titles/PageTitle'
@@ -7,15 +7,11 @@ import formationHero from '../../../../assets/images/formation-hero.jpeg'
 import AMCPSidebar from '@/components/layout/AMCPSidebar'
 import PageParagraph from '@/components/atoms/PageParagraph'
 import ContainerImageMarine from '../ContainerImageMarine'
-import ButtonDropdown from '@/components/ButtonDropdown'
-import DateRangeSelector from '../../who-are-we/our-achievements/DateRangeSelector'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
-import Checkbox from '../../posts/Checkbox'
-import FilterTitle from '../../posts/FilterTitle'
 import TrainingCards from './TrainingCards'
 import Question from '@/components/atoms/Question'
 import FollowUsTraining from './FollowUsTraining'
 import { useTranslation } from '@/contexts/TranslationContext'
+import TrainingSideBar from './TrainingSideBar'
 
 const ShimmerBar = ({ className = '' }: { className?: string }) => (
   <div className={`relative overflow-hidden bg-gray-300/70 rounded ${className}`}>
@@ -29,94 +25,142 @@ const images = [
 ]
 
 export default function Training() {
-  const [isOpened, setIsOpened] = useState(false)
-  const { t, lang } = useTranslation()
-  const [themes, setThemes] = useState<any[]>([])
-  const [loadingThemes, setLoadingThemes] = useState(true)
-  const [selectedThemes, setSelectedThemes] = useState<any[]>([])
-  const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null)
-  const [showAllThemes, setShowAllThemes] = useState(false)
+  // const [isOpened, setIsOpened] = useState(false)
+  // const { t, lang } = useTranslation()
+  // const [themes, setThemes] = useState<any[]>([])
+  // const [loadingThemes, setLoadingThemes] = useState(true)
+  // const [selectedThemes, setSelectedThemes] = useState<any[]>([])
+  // const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null)
+  // const [showAllThemes, setShowAllThemes] = useState(false)
 
+  // useEffect(() => {
+  //   axios.get('/api/theme').then(res => {
+  //     setThemes(res.data)
+  //     setLoadingThemes(false)
+  //   })
+  // }, [])
+
+  // useEffect(() => {
+  //   document.querySelector('body')!.style.overflow = isOpened ? 'hidden' : 'visible'
+  // }, [isOpened])
+
+  // const handleThemeChange = (id: string, checked: boolean) =>
+  //   setSelectedThemes(p => (checked ? [...p, id] : p.filter(i => i !== id)))
+
+  // const displayedThemes = showAllThemes ? themes : themes.slice(0, 6)
+
+
+  const { lang } = useTranslation();
+
+  // data + loading
+  const [themes, setThemes] = useState<any[]>([]);
+  const [themesLoading, setThemesLoading] = useState(true);
+
+  // ---- NEW: All‑themes + individual themes state ----
+ 
+
+
+  // const [selectedType, setSelectedType] = useState<string[]>([]);
+  // const [selectedAllTypes, setSelectedAllTypes] = useState(true);
+    // const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
+ // const [selectedAllThemes, setSelectedAllThemes] = useState(true);
+  const [selectedType, setSelectedType] = useState<string | null>(null); // 'formation', 'campement' or null
+const [selectedAllTypes, setSelectedAllTypes] = useState<boolean>(true);
+
+const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
+const [selectedAllThemes, setSelectedAllThemes] = useState<boolean>(true);
+
+  const handleAllTypesChange = (checked: boolean) => {
+    setSelectedAllTypes(checked);
+    if (checked) {
+      setSelectedType(null); // Clear specific type selection
+    }
+  };
+  
+  const handleTypeChange = (id: string, checked: boolean) => {
+    if (checked) {
+      setSelectedAllTypes(false);
+      setSelectedType(id); // Only one type selected
+    } else {
+      setSelectedType(null); // Uncheck
+    }
+  };
+  
+  const handleAllThemesChange = (checked: boolean) => {
+    setSelectedAllThemes(checked);
+    if (checked) {
+      setSelectedThemes([]);
+    }
+  };
+  
+  const handleThemeChange = (id: string, checked: boolean) => {
+    if (checked && selectedAllThemes) {
+      setSelectedAllThemes(false);
+    }
+    setSelectedThemes((prev) =>
+      checked ? [...prev, id] : prev.filter((x) => x !== id)
+    );
+  };
+  
+
+  // filters
+  const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null);
+  const [showAllThemes, setShowAllThemes] = useState(false);
+
+  // custom range
+  const [isCustomRangeActive, setIsCustomRangeActive] = useState(false);
+  const [isCustomDropdownOpen, setIsCustomDropdownOpen] = useState(false);
+  const selectedRangeRef = useRef<{ startDate: Date; endDate: Date; key: string }>({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection',
+  });
+  const isCustomDateRangeModifiedRef = useRef(false);
+  const handleDateRangeChange = (range: any) => {
+    selectedRangeRef.current = range;
+    isCustomDateRangeModifiedRef.current = true;
+    setIsCustomRangeActive(true);
+  };
+
+  // search
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // sidebar open
+  const [isOpened, setIsOpened] = useState(false);
+
+  // fetch themes once
   useEffect(() => {
-    axios.get('/api/theme').then(res => {
-      setThemes(res.data)
-      setLoadingThemes(false)
-    })
-  }, [])
+    axios.get('/api/theme').then((res) => setThemes(res.data)).finally(() => setThemesLoading(false));
+  }, []);
 
+  // lock scroll when sidebar opens
   useEffect(() => {
-    document.querySelector('body')!.style.overflow = isOpened ? 'hidden' : 'visible'
-  }, [isOpened])
+    document.body.style.overflow = isOpened ? 'hidden' : 'visible';
+  }, [isOpened]);
 
-  const handleThemeChange = (id: string, checked: boolean) =>
-    setSelectedThemes(p => (checked ? [...p, id] : p.filter(i => i !== id)))
+  const resetFilters = () => {
+    setSelectedAllThemes(false);
+    setSelectedThemes([]);
+    setSelectedDateFilter(null);
+    setIsCustomRangeActive(false);
+    setIsCustomDropdownOpen(false);
+    isCustomDateRangeModifiedRef.current = false;
+    setSearchQuery('');
+  };
 
-  const displayedThemes = showAllThemes ? themes : themes.slice(0, 6)
+  const filters = {
+    themes: selectedAllThemes ? [] : selectedThemes,
+    type: selectedAllTypes ? '' : selectedType,
+    dateFilter: selectedDateFilter,
+    startDate: isCustomDateRangeModifiedRef.current ? selectedRangeRef.current.startDate : null,
+    endDate: isCustomDateRangeModifiedRef.current ? selectedRangeRef.current.endDate : null,
+    searchQuery,
+  };
 
-  const LeftSidebar = () => (
-    <aside
-      className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 sm:sticky sm:top-[116px] inset-0 p-5 transition duration-300 lg:translate-x-0 ${isOpened ? 'translate-x-0' : 'translate-x-[-100%]'}`}
-    >
-      <div
-        className="opacity-90 sm:opacity-100 bg-white flex flex-col p-[10px] gap-4 sm:gap-10 w-full sm:w-[320px] rounded-xl shadow-xl overflow-y-auto pointer-events-auto h-full"
-        style={{ boxShadow: '0px -8px 80px 0px rgba(0,0,0,0.07),0px -2.92px 29.2px 0px rgba(0,0,0,0.05),0px -1.42px 14.18px 0px rgba(0,0,0,0.04),0px -0.69px 6.95px 0px rgba(0,0,0,0.03),0px -0.27px 2.75px 0px rgba(0,0,0,0.02)' }}
-      >
-        <div className="border rounded-lg border-black flex gap-4 p-2">
-          <MagnifyingGlassIcon className="size-5" />
-          <input type="text" placeholder="Recherche" />
-        </div>
 
-        <div className="flex flex-col gap-5">
-          <FilterTitle title="Type d'activité" />
-          <div className="flex flex-col gap-3">
-            <Checkbox label="Tous les types" nb={10} />
-            <Checkbox label="Formation" />
-            <Checkbox label="Campement Scientifique" />
-          </div>
-        </div>
 
-        <div className="flex flex-col gap-5">
-          <FilterTitle title="Thèmes" />
-          <div className="flex flex-col gap-3">
-            {loadingThemes
-              ? Array.from({ length: 6 }).map((_, i) => <ShimmerBar key={i} className="h-6 w-full" />)
-              : displayedThemes.map(th => (
-                  <Checkbox key={th.id} label={th[`name_${lang}`]} checked={selectedThemes.includes(th.id)} onChange={c => handleThemeChange(th.id, c)} />
-                ))}
-            {!loadingThemes && themes.length > 6 && (
-              <button
-                className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium"
-                onClick={() => setShowAllThemes(p => !p)}
-              >
-                {showAllThemes ? 'Afficher moins' : `Afficher ${themes.length - 6} de plus`}
-              </button>
-            )}
-          </div>
-        </div>
 
-        <div className="flex flex-col gap-5 relative z-50">
-          <FilterTitle title="Date" />
-          <div className="flex flex-col gap-3">
-            {['today', 'week', 'month', 'year'].map(k => (
-              <Checkbox key={k} label={k === 'today' ? "Aujourd'hui" : k === 'week' ? 'Cette Semaine' : k === 'month' ? 'Ce Mois' : 'Cette Année'} checked={selectedDateFilter === k} onChange={c => setSelectedDateFilter(c ? k : null)} />
-            ))}
-            <ButtonDropdown customDropdown item={<DateRangeSelector />} position="left" renderItem={i => <div className="py-1">{i}</div>}>
-              {open => <Checkbox label="Configurer" />}
-            </ButtonDropdown>
-          </div>
-        </div>
 
-        <div className="flex justify-between">
-          <button className="bg-primary text-sm text-white px-[10px] py-2 rounded-xl font-semibold" onClick={() => setIsOpened(false)}>
-            Appliquer
-          </button>
-          <button className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]" onClick={() => { setSelectedThemes([]); setSelectedDateFilter(null) }}>
-            Réinitialiser
-          </button>
-        </div>
-      </div>
-    </aside>
-  )
 
   return (
     <main className="relative">
@@ -146,8 +190,44 @@ export default function Training() {
       <section className="max-w-[1400px] mx-auto">
         <hr className="my-6 border-black" />
         <section className="flex flex-col sm:flex-row gap-5">
-          <LeftSidebar />
-          <TrainingCards filter={{ themes: selectedThemes, dateFilter: selectedDateFilter }} setIsOpened={setIsOpened} />
+          <TrainingSideBar
+
+            isSticky={false}
+            lang={lang}
+            themes={themes}
+            themesLoading={themesLoading}
+            selectedType={selectedType}
+            selectedAllTypes={selectedAllTypes}
+            handleAllTypesChange={handleAllTypesChange}
+            //TYPE
+            handleTypeChange={handleTypeChange}
+
+            // themes props
+            selectedAllThemes={selectedAllThemes}
+            handleAllThemesChange={handleAllThemesChange}
+            selectedThemes={selectedThemes}
+            handleThemeChange={handleThemeChange}
+            showAllThemes={showAllThemes}
+            setShowAllThemes={setShowAllThemes}
+
+            // date props
+            selectedDateFilter={selectedDateFilter}
+            setSelectedDateFilter={setSelectedDateFilter}
+            isCustomRangeActive={isCustomRangeActive}
+            isCustomDropdownOpen={isCustomDropdownOpen}
+            setIsCustomDropdownOpen={setIsCustomDropdownOpen}
+            handleDateRangeChange={handleDateRangeChange}
+
+            // common
+            resetFilters={resetFilters}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            isOpened={isOpened}
+            setIsOpened={setIsOpened}
+            selectedRangeRef={selectedRangeRef}
+            isCustomDateRangeModifiedRef={isCustomDateRangeModifiedRef}
+          />
+          <TrainingCards filter={filters} setIsOpened={setIsOpened} />
           <section className="flex flex-col mx-4 gap-8">
             <FollowUsTraining />
             <Question />
