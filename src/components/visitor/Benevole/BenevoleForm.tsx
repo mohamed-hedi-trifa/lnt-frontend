@@ -161,7 +161,7 @@ const BenevoleForm: React.FC = () => {
     return (
         <div>
             {!isFormFilled ? (
-                <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg relative sm:mr-10">
+                <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-helmi relative sm:mr-10">
                     <h2 className="text-xl font-semibold mb-4 text-[#0270A0]">Formulaire de Demande de Bénévolat</h2>
 
                     <hr className="border-t-2 border-black" />
