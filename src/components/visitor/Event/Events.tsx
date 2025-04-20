@@ -16,6 +16,7 @@ import { useTranslation } from "@/contexts/TranslationContext";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import Question from '@/components/atoms/Question';
+import PopularEventType3 from './PopularEventType3';
 
 
 export default function Events() {
@@ -93,7 +94,13 @@ export default function Events() {
           eventTypeSlug={eventType ? eventType?.slug : ""}
         />
         {eventType ? (
-          displayPlace === 'card3' ? (
+          displayPlace === 'card3' ?(
+            <PopularEventType3
+              events={eventType.events} 
+              eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} 
+              language={lang} 
+            />
+          ) : displayPlace === "card2" ? (
             <PopularEventType2 
               events={eventType.events} 
               eventTypeTitle={eventType ? (eventType.name_en || eventType.name_fr) : defaultTitle} 
@@ -205,7 +212,7 @@ export default function Events() {
       </section>
 
       <section className="rounded-xl shadow-helmi mb-10 bg-[rgba(255, 255, 255, 0.40)]">
-        <div className='my-5 py-10 text-center max-w-7xl w-full mx-auto justify-between mt-20 px-5 h-fit'>
+        <div className='my-5 py-10 text-center max-w-[1339px] w-full mx-auto justify-between mt-20 h-fit'>
           {renderEventSection('card3', 'Loisirs et Activités Sportives')}
         </div>
       </section>
