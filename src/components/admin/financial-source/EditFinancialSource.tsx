@@ -194,7 +194,7 @@ const EditFinancialSource = ({ location, params }: { location: any; params: any 
                     onChange={handleChange}
                     step="0.001"
                     min="0"
-                    max="9999.999"
+                    max="9999999.999"
                 />
 
 

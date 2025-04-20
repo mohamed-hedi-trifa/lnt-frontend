@@ -82,7 +82,7 @@ export default function EventDetailsContent({ location, params }: { location: an
               <div key={item.id}>
                 {item.language === language ? (
                   item.type === "title" ? (
-                    <Title customClassName="mb-2">{item.content}</Title>
+                    <Title customClassName="mb-2"  variant="pill" >{item.content}</Title>
                   ) : item.type === "text" ? (
                     <PageParagraph2>
 
