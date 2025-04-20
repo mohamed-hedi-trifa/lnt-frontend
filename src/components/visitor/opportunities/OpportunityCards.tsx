@@ -51,25 +51,31 @@ export default function OpportunityCards({ filter }: OpportunityCardsProps) {
   const [loading, setLoading] = useState(true);
   const [itemsList, setItemsList] = useState<any[]>([]);
 
-  const handlePageChange = (p: number) => p > 0 && p <= totalPages && setCurrentPage(p);
 
-  const fetchPosts = () => {
+  function getOpportunities(query: any, page = currentPage) {
     setLoading(true);
-    axios
-      .get(`/api/get-active-opportunities/${limit}`, {
-        params: {
-          query: filter.searchQuery,
-          page: currentPage,
-          opportunityTypes: filter.opportunityTypes,
-          dateFilter: filter.dateFilter,
-        },
-      })
-      .then((r) => {
-        setItemsList(r.data.data);
-        setTotalPages(r.data.last_page);
-      })
-      .finally(() => setLoading(false));
-  };
+    axios.get(`/api/get-active-opportunities/${limit ? limit : ""}`, {
+      params: {
+        query: query,
+        page: page,
+        dateFilter: filter.dateFilter,
+        opportunityTypes: filter.opportunityTypes,
+      }
+    }).then(res => {
+      setItemsList(res.data.data);
+      setTotalPages(res.data.last_page); // Get total pages from response
+     
+      setLoading(false);
+    }).catch(err => {
+      // Swal.fire('Error', err?.response?.data?.message, "error");
+      setLoading(false);
+    });
+  }
+
+  useEffect(() => {
+    getOpportunities(filter.searchQuery, currentPage, filter.opportunityTypes || []);
+  }, [filter, currentPage]);
+
 
   useEffect(fetchPosts, [filter, currentPage]);
 

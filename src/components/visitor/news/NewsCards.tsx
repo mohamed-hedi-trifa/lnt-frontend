@@ -75,8 +75,8 @@ export default function NewsCards({ filter, setIsOpened }: NewsCardsProps) {
             { key: 'asc', name: 'Les plus anciens' },
           ]}
           position="left"
-          onSelect={(item: any) => setSortOrder(item.key)}
-          renderItem={(item) => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
+          onSelect={item => setSortOrder(item.key)}
+          renderItem={item => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
         >
           {(isOpen) => (
             <button className="h-12 rounded-xl border-2 border-black flex items-center">
@@ -109,8 +109,8 @@ export default function NewsCards({ filter, setIsOpened }: NewsCardsProps) {
             { key: 'asc', name: 'Les plus anciens' },
           ]}
           position="right"
-          onSelect={(item: any) => setSortOrder(item.key)}
-          renderItem={(item) => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
+          onSelect={item => setSortOrder(item.key)}
+          renderItem={item => <div className="py-1 px-4 cursor-pointer">{item.name}</div>}
         >
           {(isOpen) => (
             <button className="h-12 rounded-xl border-2 border-black flex items-center">

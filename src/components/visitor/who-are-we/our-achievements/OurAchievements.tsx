@@ -105,9 +105,8 @@ export default function OurAchievements() {
     <main className="relative">
       {/* Overlay for the sidebar in mobile */}
       <div
-        className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${
-          isOpened ? 'opacity-50' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${isOpened ? 'opacity-50' : 'opacity-0 pointer-events-none'
+          }`}
         onClick={() => setIsOpened(false)}
       />
 
@@ -117,7 +116,7 @@ export default function OurAchievements() {
         title="Nos Actions, Notre Impact"
         subTitle={
           <div>
-            <div>Découvrez les projets qui transforment Kerkennah :</div> 
+            <div>Découvrez les projets qui transforment Kerkennah :</div>
             des initiatives locales qui protègent, valorisent et inspirent
           </div>
         }
