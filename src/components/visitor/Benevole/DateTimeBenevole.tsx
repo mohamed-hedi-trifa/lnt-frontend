@@ -16,7 +16,7 @@ const DateTimeBenevole: React.FC<DateTimeBenevoleProps> = ({
   onChange,
 }) => {
   return (
-    <div className="relative w-[149px] flex flex-col gap-1">
+    <div className="relative w-[200px] flex flex-col gap-1">
 
 
       {/* Time Input */}
