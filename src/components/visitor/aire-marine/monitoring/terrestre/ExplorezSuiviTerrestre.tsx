@@ -72,6 +72,7 @@ export default function ExplorezSuiviTerrestre() {
             </div>
           ))}
         </div>
+        
       </div>
     </article>
   );
