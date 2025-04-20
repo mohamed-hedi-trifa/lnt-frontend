@@ -50,7 +50,7 @@ export default function News() {
           <RecentArticle />
           <PopularNews />
         </div>
-        <div className="flex flex-col gap-10 px-5 w-full">
+        <div className="flex flex-col gap-10 px-5 w-[300px]">
           <FollowUs />
           <Question />
           <PopularCategory />

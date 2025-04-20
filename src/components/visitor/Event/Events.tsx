@@ -191,7 +191,7 @@ export default function Events() {
     <main className="relative">
       <EventImage events={events} language={lang} />
 
-      <section className="my-5 text-center max-w-7xl mx-auto w-full mt-20 px-5">
+      <section className="my-5 text-center max-w-[1400px] mx-auto w-full mt-20 px-5">
         <PageTitle title="Événements" />
         <PageParagraph fontWeight="font-semibold" spacing="leading-[1.4]">
           Bienvenue dans notre espace dédié aux événements qui rythment la vie culturelle, éducative et sportive de l'archipel de Kerkennah. Qu'il s'agisse d'ateliers inspirants, de festivals mémorables ou d'activités sportives, chaque événement est une opportunité de célébrer la diversité et la richesse de notre communauté.

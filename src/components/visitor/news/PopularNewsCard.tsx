@@ -13,20 +13,20 @@ export default function PopularNewsCard({ article }: { article: any }) {
                 <div className="absolute left-[30px] bottom-[20px] right-[60px]  text-white flex flex-col gap-3 sm:gap-4">
                     <div className="flex gap-2 flex-wrap">
 
-                    {article.themes?.map((item: any) =>
-                        <div className="px-2.5 py-1 bg-white/30 rounded-[3px] inline-flex justify-center items-center gap-2.5">
-                            <div className="justify-center text-white text-sm font-semibold font-['Montserrat'] leading-tight">
-                                {item?.name_en || item?.name_fr}
+                        {article.themes?.map((item: any) =>
+                            <div className="px-2.5 py-1 bg-white/30 rounded-[3px] inline-flex justify-center items-center gap-2.5">
+                                <div className="justify-center text-white text-sm font-semibold font-['Montserrat'] leading-tight">
+                                    {item?.name_en || item?.name_fr}
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
 
                     </div>
                     <div className="sm:text-sm sm:leading-6 font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-                        {article.card_description_en || article.card_description_fr}
+                        {article.title_fr || article.title_en}
                     </div>
                     <div className="flex gap-2 text-white  items-center">
-   <Calendar/>
+                        <Calendar />
                         <span className="uppercase font-light text-xs">
                             {new Date(article.created_at).toLocaleDateString("fr-FR", {
                                 day: "numeric",

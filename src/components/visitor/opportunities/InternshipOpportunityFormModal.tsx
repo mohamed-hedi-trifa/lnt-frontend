@@ -170,7 +170,7 @@ export default function InternshipOpportunityFormModal({ show, hide,  opportunit
     };
 
     return (
-        <ModalOppourtunity title="Formulaire de Demande de Stage" show={show} hide={hide}>
+        <ModalOppourtunity title="Soumettez Votre Candidature" show={show} hide={hide}>
             {!isSuccess ? (
                 <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg w-[800px] max-h-[calc(100vh-60px)] overflow-y-auto relative">
 

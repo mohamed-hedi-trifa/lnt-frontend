@@ -113,8 +113,13 @@ export default function TrainingCards({ filter, setIsOpened }: TrainingCardsProp
             </button>
           )}
         </ButtonDropdown>
-
-        <div className="text-black text-xl font-semibold mt-[2px]">{`${startIndex} - ${endIndex} de ${itemsList.length} Publications`}</div>
+        {itemsList.length === 0 ? (
+          ""
+        ) : (
+          <>
+            <div className="text-black text-xl font-semibold mt-[2px]">{`${startIndex} - ${endIndex} de ${itemsList.length} Publications`}</div>
+          </>
+        )}
       </div>
 
       <div className="sm:hidden flex justify-between pr-5 relative z-20">
@@ -147,8 +152,14 @@ export default function TrainingCards({ filter, setIsOpened }: TrainingCardsProp
           )}
         </ButtonDropdown>
       </div>
+      {itemsList.length === 0 ? (
+        ""
+      ) : (
+        <>
+          <div className="sm:hidden px-5 font-semibold pt-5">{`${startIndex} - ${endIndex} de ${itemsList.length} Publications`}</div>
+        </>
+      )}
 
-      <div className="sm:hidden px-5 font-semibold pt-5">{`${startIndex} - ${endIndex} de ${itemsList.length} Publications`}</div>
 
       <section className="flex flex-col gap-8 w-full relative z-10 my-5 sm:my-10">
         {itemsList.length === 0 ? (
