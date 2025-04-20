@@ -491,11 +491,6 @@ const BenevoleForm: React.FC = () => {
                             <p>
                                 Merci d'avoir postulé pour devenir bénévole avec l'AKDDCL. Nous avons bien reçu votre demande et nous l'examinerons dans les plus brefs délais.
                             </p>
-                            <p>
-                                En attendant, n'hésitez pas à explorer nos autres opportunités ou à
-                                <span className="underline text-[#0077B6] mx-1">nous contacter</span>
-                                pour toute question supplémentaire.
-                            </p>
                         </div>
                     </div>
                 </div>
