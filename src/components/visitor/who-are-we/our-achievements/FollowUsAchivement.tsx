@@ -21,10 +21,10 @@ export default function FollowUsAchivement() {
               <div className='text-black'><FacebookIcon /></div>
               <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">facebook</div>
             </Link>
-            <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
+            {/* <Link to='#' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
               <div className='text-black'><XIcon /></div>
               <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">X</div>
-            </Link>
+            </Link> */}
             <Link to='https://www.instagram.com/akddcl.kerkennah/' className="w-full sm:w-[147px] h-[44.50px] px-[31px] py-2.5 bg-[#e8f1f1] rounded-md shadow-xl inline-flex items-center gap-[15px]">
               <div className='text-black'><InstagramIcon /></div>
               <div className="w-[72px] h-6 text-[#183354] text-sm font-medium font-['Montserrat'] capitalize leading-normal">Instagram</div>
