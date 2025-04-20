@@ -7,6 +7,7 @@ import OtherOppertunities from "./OtherOppertunities";
 import JobOfferModal from "../JobOfferModal";
 import CallForTrenderModal from "../CallForTrenderModal";
 import InternshipApplicationFormModal from "../InternshipApplicationFormModal";
+import InternshipOpportunityFormModal from "../InternshipOpportunityFormModal";
 
 const Shimmer = ({ className = "" }: { className?: string }) => (
   <div className={`relative overflow-hidden bg-gray-300/70 rounded ${className}`}>
@@ -91,7 +92,7 @@ export default function OpportunityDetails({ location, params }: { location: any
           </div>
           {opportunity.type === "job-offer" && <JobOfferModal show={modalShow} hide={() => setModalShow(false)} opportunityId={opportunity.id} />}
           {opportunity.type === "call-for-tender" && <CallForTrenderModal show={modalShow} hide={() => setModalShow(false)} opportunityId={opportunity.id} />}
-          {opportunity.type === "internship" && <InternshipApplicationFormModal show={modalShow} hide={() => setModalShow(false)} opportunityId={opportunity.id} />}
+          {opportunity.type === "internship" && <InternshipOpportunityFormModal show={modalShow} hide={() => setModalShow(false)} opportunityId={opportunity.id} />}
         </>
       )}
 
