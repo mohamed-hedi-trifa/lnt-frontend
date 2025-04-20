@@ -57,14 +57,14 @@ export default function PopularEventType2({
   return (
     <div className="">
       {/* DESKTOP */}
-      <div className="hidden sm:flex flex-col w-[977px] mx-auto mt-5 gap-2.5">
+      <div className="hidden sm:flex flex-col w-full mx-auto mt-5 gap-2.5">
         {/* Top row: first 3 */}
         <div className="flex gap-2.5">
           {events.slice(0, 3).map((ev) => (
             <Link
               key={ev.id}
               to={`/event/event-details/${ev.slug}`}
-              className="relative w-[319px] h-[330px] rounded-xl overflow-hidden shadow-lg flex items-end p-8"
+              className="relative w-full h-[330px] rounded-xl overflow-hidden shadow-lg flex items-end p-8"
             >
               <img
                 src={`${process.env.GATSBY_API_URL}${ev.image}`}

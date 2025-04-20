@@ -7,6 +7,8 @@ import ButtonDropdown from '@/components/ButtonDropdown';
 import sortIcon from "@/assets/icons/sort-icon.png";
 import FilterIcon from '@/assets/icons/FilterIcon';
 import ArrowDownIcon from '@/assets/icons/ArrowDownIcon';
+import EmptyAchievements from '../who-are-we/our-achievements/EmptyAchievements';
+import EmptyNews from './EmptyNews';
 
 interface NewsCardsProps {
   filter: {
@@ -24,7 +26,7 @@ export default function NewsCards({ filter, setIsOpened }: NewsCardsProps) {
   const [limit] = useState(10);
   const [loading, setLoading] = useState(true);
   const [itemsList, setItemsList] = useState([]);
- 
+
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
   const isFirstLoadRef = useRef(true);
 
@@ -34,35 +36,35 @@ export default function NewsCards({ filter, setIsOpened }: NewsCardsProps) {
     }
   };
 
-  const getNews = (query: any, page= currentPage) => {
+  const getNews = (query: any, page = currentPage) => {
     if (isFirstLoadRef.current) {
       setLoading(true);
     }
     axios.get(`/api/get-active-news/${limit}`, {
       params: {
         query,
-        themes:     filter.themes || [],
+        themes: filter.themes || [],
         page,
         sortOrder,
         dateFilter: filter.dateFilter,
 
       },
     })
-    .then(res => {
-      setItemsList(res.data.data);
-      setTotalPages(res.data.last_page);
-      console.log(filter.themes);
-      setLoading(false);
-    })
-    .catch(err => {
-      console.error("Error fetching news:", err);
-      setLoading(false);
-    });
+      .then(res => {
+        setItemsList(res.data.data);
+        setTotalPages(res.data.last_page);
+        console.log(filter.themes);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching news:", err);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
     getNews(filter.searchQuery, currentPage);
-  }, [filter, currentPage,  sortOrder]);
+  }, [filter, currentPage, sortOrder]);
 
   if (loading) return <p className='w-full text-center'>Loading...</p>;
 
@@ -90,9 +92,15 @@ export default function NewsCards({ filter, setIsOpened }: NewsCardsProps) {
             </button>
           )}
         </ButtonDropdown>
+        {itemsList.length === 0 ? (
+        ''
+      ) : (
+        <>  
         <div className="text-xl font-semibold mt-[2px] pr-14">
           {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} publications`}
         </div>
+        </>
+      )}
       </div>
       <div className="sm:hidden flex justify-between pr-5 relative z-20">
         <button
@@ -125,20 +133,32 @@ export default function NewsCards({ filter, setIsOpened }: NewsCardsProps) {
           )}
         </ButtonDropdown>
       </div>
-      <div className='sm:hidden px-5 font-semibold pt-5 text-start'>
-        {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} publications`}
-      </div>
-      <section className='grid sm:grid-cols-2 gap-4 px-4 sm:px-0 my-5 sm:my-10'>
-        {itemsList.map((news: any) => (
-          <Link key={news.id} to={`/news/${news.slug}`}>
-            <NewsCard news={news} />
-          </Link>
-        ))}
-      </section>
-      {totalPages > 1 && (
-        <div className="flex justify-center px-4 sm:px-0">
-          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
-        </div>
+      {itemsList.length === 0 ? (
+        ''
+      ) : (
+        <>
+          <div className='sm:hidden px-5 font-semibold pt-5 text-start'>
+            {`${(currentPage - 1) * limit + 1} - ${Math.min(currentPage * limit, itemsList.length)} de ${itemsList.length} publications`}
+          </div>
+        </>
+      )}
+      {itemsList.length === 0 ? (
+        <EmptyNews />
+      ) : (
+        <>
+          <section className='grid sm:grid-cols-3 gap-4 px-4 sm:px-0 my-5 sm:my-10'>
+            {itemsList.map((news: any) => (
+              <Link key={news.id} to={`/news/${news.slug}`}>
+                <NewsCard news={news} />
+              </Link>
+            ))}
+          </section>
+          {totalPages > 1 && (
+            <div className="flex justify-center px-4 sm:px-0 pt-6 pb-20">
+              <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+            </div>
+          )}
+        </>
       )}
     </div>
   );
