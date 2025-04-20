@@ -13,8 +13,9 @@ export default function PopularEventType1({
   eventTypeTitle: string,
   language: string
 }) {
+  console.log("event type title:",eventTypeTitle)
   if (!events || events.length === 0) {
-    return <NoEventsMessage eventTypeTitle={eventTypeTitle} />
+    return <NoEventsMessage eventTypeName={eventTypeTitle} />
   }
 
   const eventsData = events.slice(1, 4)

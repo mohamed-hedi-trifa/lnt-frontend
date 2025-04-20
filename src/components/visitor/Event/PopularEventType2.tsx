@@ -30,7 +30,7 @@ export default function PopularEventType2({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!events || events.length === 0) {
-    return <NoEventsMessage eventTypeTitle={eventTypeTitle} />;
+    return <NoEventsMessage eventTypeName={eventTypeTitle} />;
   }
 
   const nextSlide = () =>
