@@ -106,7 +106,7 @@ export default function PopularEventType1({
               </div>
               {/* Text */}
               <div className="ml-4 flex-grow flex flex-col justify-between py-2">
-                <h3 className="font-bold sm:text-lg leading-6 text-start max-w-[220px]">
+                <h3 className="font-bold sm:text-lg leading-6 text-start max-w-[250px]">
                   {event.title_en || event.title_fr}
                 </h3>
                 <div className="flex flex-col gap-2 text-[#6D757F] text-xs font-light uppercase">
