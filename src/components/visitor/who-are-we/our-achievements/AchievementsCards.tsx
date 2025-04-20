@@ -41,12 +41,12 @@ interface AchievementsCardsProps {
 }
 
 export default function AchievementsCards({ filter, setIsOpened }: AchievementsCardsProps) {
-  const [currentPage, setCurrentPage]   = useState(1);
-  const [totalPages, setTotalPages]     = useState(1);
-  const [limit]                        = useState(10);
-  const [loading, setLoading]           = useState(true);
-  const [itemsList, setItemsList]       = useState<any[]>([]);
-  const [sortOrder, setSortOrder]       = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [limit] = useState(10);
+  const [loading, setLoading] = useState(true);
+  const [itemsList, setItemsList] = useState<any[]>([]);
+  const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
 
   // track whether we've ever loaded once
   const isFirstLoadRef = useRef(true);
@@ -67,12 +67,12 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
       const res = await axios.get(`/api/get-active-achievements/${limit}`, {
         params: {
           query,
-          themes:     filter.themes || [],
+          themes: filter.themes || [],
           page,
           sortOrder,
           dateFilter: filter.dateFilter,
-          startDate:  filter.startDate,
-          endDate:    filter.endDate,
+          startDate: filter.startDate,
+          endDate: filter.endDate,
         },
       });
 
@@ -101,7 +101,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
 
   // compute for header counts
   const startIndex = (currentPage - 1) * limit + 1;
-  const endIndex   = Math.min(currentPage * limit, itemsList.length);
+  const endIndex = Math.min(currentPage * limit, itemsList.length);
 
   return (
     <div>
@@ -110,7 +110,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
         <ButtonDropdown
           items={[
             { key: 'desc', name: 'Les plus récents' },
-            { key: 'asc',  name: 'Les plus anciens' },
+            { key: 'asc', name: 'Les plus anciens' },
           ]}
           position="left"
           onSelect={item => setSortOrder(item.key)}
@@ -131,10 +131,15 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
             </button>
           )}
         </ButtonDropdown>
-
-        <div className="text-black text-xl font-semibold mt-[2px]">
-          {`${startIndex} - ${endIndex} de ${itemsList.length} Réalisations`}
-        </div>
+        {itemsList.length === 0 ? (
+          ""
+        ) : (
+          <>
+            <div className="text-black text-xl font-semibold mt-[2px]">
+              {`${startIndex} - ${endIndex} de ${itemsList.length} Réalisations`}
+            </div>
+          </>
+        )}
       </div>
 
       {/* -------- Mobile header -------- */}
@@ -151,7 +156,7 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
         <ButtonDropdown
           items={[
             { key: 'desc', name: 'Les plus récents' },
-            { key: 'asc',  name: 'Les plus anciens' },
+            { key: 'asc', name: 'Les plus anciens' },
           ]}
           position="right"
           onSelect={item => setSortOrder(item.key)}
@@ -173,10 +178,15 @@ export default function AchievementsCards({ filter, setIsOpened }: AchievementsC
           )}
         </ButtonDropdown>
       </div>
-
-      <div className="sm:hidden px-5 font-semibold pt-5">
-        {`${startIndex} - ${endIndex} de ${itemsList.length} réalisations`}
-      </div>
+      {itemsList.length === 0 ? (
+        ""
+      ) : (
+        <>
+          <div className="sm:hidden px-5 font-semibold pt-5">
+            {`${startIndex} - ${endIndex} de ${itemsList.length} réalisations`}
+          </div>
+        </>
+      )}
 
       {/* -------- Achievements grid -------- */}
       <section className="flex flex-col gap-8 w-full relative z-10 my-5">

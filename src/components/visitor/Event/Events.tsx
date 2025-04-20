@@ -4,7 +4,6 @@ import PageTitle from '@/components/atoms/titles/PageTitle';
 import PageParagraph from '@/components/atoms/PageParagraph';
 import EventImage from './EventImage';
 import FollowUsEvent from './FollowUsEvent';
-import QuestionEvent from './QuestionEvent';
 import NoEvents from './no-event/noEvents';
 import EmptyEvent1 from './EmptyEvent1';
 import PopularEventType1 from './PopularEventType1';
@@ -199,13 +198,13 @@ export default function Events() {
         </PageParagraph>
       </section>
 
-      <section className="flex gap-[35px] flex-col sm:flex-row my-5 text-center max-w-[1442px] w-full mx-auto justify-between mt-20 px-5 h-fit">
+      <section className="flex gap-[35px] flex-col sm:flex-row my-5 text-center max-w-[1400px] w-full mx-auto justify-between mt-20 px-5 h-fit">
         <div className="h-full w-full flex flex-col gap-[72px]">
           {renderEventSection('card1', 'Ateliers et Formations')}
           {renderEventSection('card2', 'Événements culturels')}
         </div>
 
-        <div className="flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10 sm:w-[300px] mt-[51px]">
+        <div className="flex flex-col h-full w-full md:col-span-1 col-span-2 gap-10 sm:w-[300px] mt-[12px]">
           <FollowUsEvent />
           <Question />
         </div>
