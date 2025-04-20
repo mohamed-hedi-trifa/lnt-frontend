@@ -7,8 +7,7 @@ import XIconType2 from '@/assets/icons/XIconType2';
 import CopyIcon2 from "@/assets/icons/CopyIcon2";
 import CopyToClipboard from "@/components/atoms/CopyToClipboard";
 import LangLink from "@/components/LangLink";
-import { AnchorLink } from "gatsby-plugin-anchor-links"; import loadable from "@loadable/component";
-import RelatedNews from '../../news/NewsDetails/RelatedNews';
+import { AnchorLink } from "gatsby-plugin-anchor-links";
 import RelatedBlog from '../../news/RelatedBlog';
 
 const shareToFacebook = (url: string) =>
@@ -80,7 +79,7 @@ export default function RightSideOpportunityDetails({ opportunity, language, par
 
         {opportunity.contract_type && (
           <div className="flex gap-2 items-center text-start">
-            <img src="/icons/calendrier.png" alt="" width={22} />
+            <img src="/icons/contract.png" alt="" width={22} />
             <p className="text-[13px]">
               <span className="font-semibold">Type de contrat :</span> {opportunity.contract_type}
             </p>
@@ -96,7 +95,7 @@ export default function RightSideOpportunityDetails({ opportunity, language, par
         </div>
 
         <div className="flex gap-2 items-center">
-          <img src="/icons/contract.png" alt="" width={22} />
+          <img src="/icons/calendrier.png" alt="" width={22} />
           <p className='text-[13px]'>
             <span className='font-semibold'>Début du poste : </span>
             {formatDateToMonthYear(opportunity.postStart)}

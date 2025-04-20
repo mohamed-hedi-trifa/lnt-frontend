@@ -2,28 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import Swiper, { SwiperOptions } from "swiper";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { SwiperSlideProps } from "swiper/react";
 import UpcomingCard from "./UpcomingCard";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import LangLink from "../LangLink";
 import { Link } from "gatsby";
 import AchievementCardHome from "./AchievementCardHome";
+
 type Kebab<T extends string, A extends string = ""> = T extends `${infer F}${infer R}`
   ? Kebab<R, `${A}${F extends Lowercase<F> ? "" : "-"}${Lowercase<F>}`>
   : A;
-
-/**
- * Helper for converting object keys to kebab case because Swiper web components parameters are available as kebab-case attributes.
- * @link https://swiperjs.com/element#parameters-as-attributes
- */
-type KebabObjectKeys<T> = {
-  [key in keyof T as Kebab<key & string>]: T[key] extends Object ? KebabObjectKeys<T[key]> : T[key];
-};
-
-/**
- * Swiper 9 doesn't fully support TS yet.
- * @link https://swiperjs.com/swiper-api#parameters
- */
+type KebabObjectKeys<T> = { [k in keyof T as Kebab<k & string>]: T[k] extends Object ? KebabObjectKeys<T[k]> : T[k] };
 type SwiperRef = HTMLElement & { swiper: Swiper; initialize: () => void };
 
 declare global {
@@ -32,14 +20,34 @@ declare global {
       "swiper-container": SwiperContainerAttributes;
       "swiper-slide": SwiperSlideAttributes;
     }
-
     interface SwiperContainerAttributes extends KebabObjectKeys<SwiperOptions> {
       ref?: React.RefObject<SwiperRef>;
       children?: React.ReactNode;
     }
-    interface SwiperSlideAttributes extends KebabObjectKeys<SwiperSlideProps> {}
+    interface SwiperSlideAttributes {
+      class?: string;
+    }
   }
 }
+
+const SkeletonCard = () => (
+  <div className="border rounded-lg overflow-hidden h-[480px] w-[380px] flex flex-col shadow-lg">
+    <div className="w-full h-48 bg-gray-300/70 animate-pulse" />
+    <div className="px-3 py-4 flex flex-col flex-grow justify-between">
+      <div className="space-y-3">
+        <div className="h-4 w-24 bg-gray-300/70 animate-pulse rounded" />
+        <div className="h-6 w-3/4 bg-gray-300/70 animate-pulse rounded" />
+        <div className="h-4 w-full bg-gray-300/70 animate-pulse rounded" />
+        <div className="h-4 w-1/2 bg-gray-300/70 animate-pulse rounded" />
+      </div>
+      <div className="space-y-2">
+        <div className="h-px bg-gray-300" />
+        <div className="h-4 w-3/4 bg-gray-300/70 animate-pulse rounded" />
+        <div className="h-4 w-1/2 bg-gray-300/70 animate-pulse rounded" />
+      </div>
+    </div>
+  </div>
+);
 
 export default function UpcomingEvents() {
   const swiperRef = useRef<SwiperRef>(null);
@@ -47,40 +55,28 @@ export default function UpcomingEvents() {
   const [dataType, setDataType] = useState<string>("");
 
   useEffect(() => {
-    const swiperParams: SwiperOptions = {
+    const params: SwiperOptions = {
       pagination: { clickable: true },
       spaceBetween: 20,
       slidesPerView: 1,
       slidesPerGroup: 1,
-      navigation: {
-        nextEl: "#events-next",
-        prevEl: "#events-prev",
-      },
-      breakpoints: {
-        768: {
-          slidesPerView: 3,
-          slidesPerGroup: 3,
-        },
-      },
+      navigation: { nextEl: "#events-next", prevEl: "#events-prev" },
+      breakpoints: { 768: { slidesPerView: 3, slidesPerGroup: 3 } },
     };
-
-    // Assigne les paramètres au composant swiper (web component)
-    Object.assign(swiperRef.current, swiperParams);
+    Object.assign(swiperRef.current, params);
     swiperRef.current?.initialize();
   }, []);
 
-  const fetchVisibleEventTypes = async () => {
-    try {
-      const response = await axios.get("/api/visible-event-types");
-      setData(response.data.data);
-      setDataType(response.data.type);
-    } catch (error: any) {
-      Swal.fire("Error", error.response?.data?.message || "Failed to fetch event types", "error");
-    }
-  };
-
   useEffect(() => {
-    fetchVisibleEventTypes();
+    axios
+      .get("/api/visible-event-types")
+      .then((r) => {
+        setData(r.data.data);
+        setDataType(r.data.type);
+      })
+      .catch((err) =>
+        Swal.fire("Error", err.response?.data?.message || "Failed to fetch event types", "error")
+      );
   }, []);
 
   return (
@@ -94,43 +90,36 @@ export default function UpcomingEvents() {
         </h2>
 
         <article className="mt-10">
-          {/* Wrapper qui contient la flèche gauche, le carrousel, et la flèche droite */}
           <div className="max-w-[360px] md:max-w-7xl mx-auto flex items-center justify-center gap-4">
-            {/* Flèche gauche */}
-            <button
-              id="events-prev"
-              className="p-2 bg-white rounded-full shadow hover:bg-slate-200 duration-200"
-            >
+            <button id="events-prev" className="p-2 bg-white rounded-full shadow hover:bg-slate-200 duration-200">
               <ChevronLeftIcon className="w-6 h-6 text-[#3344DC]" />
             </button>
 
-            {/* Carrousel Swiper */}
-            <swiper-container ref={swiperRef} class="w-full h-full " init="false">
-              {data?.map((item: any, index: number) => (
-                <swiper-slide key={index} class="pb-10 flex items-center justify-center">
-                  {dataType === "event" ? (
-                    <Link key={item.id} to={`/event/event-details/${item.slug}`}>
-                      <UpcomingCard data={item} type={item.type} />
-                    </Link>
+            <swiper-container ref={swiperRef} class="w-full h-full" init="false">
+              {(data ?? Array.from({ length: 3 })).map((item: any, idx: number) => (
+                <swiper-slide key={idx} class="pb-10 flex items-center justify-center">
+                  {data ? (
+                    dataType === "event" ? (
+                      <Link to={`/event/event-details/${item.slug}`}>
+                        <UpcomingCard data={item} type={item.type} />
+                      </Link>
+                    ) : (
+                      <Link to={`/who-are-we/our-achievements/${item.slug}`}>
+                        <AchievementCardHome achievement={item} />
+                      </Link>
+                    )
                   ) : (
-                    <Link key={item.id} to={`/who-are-we/our-achievements/${item.slug}`}>
-                      <AchievementCardHome achievement={item} /> 
-                    </Link>
+                    <SkeletonCard />
                   )}
                 </swiper-slide>
               ))}
             </swiper-container>
 
-            {/* Flèche droite */}
-            <button
-              id="events-next"
-              className="p-2 bg-white rounded-full shadow hover:bg-slate-200 duration-200"
-            >
+            <button id="events-next" className="p-2 bg-white rounded-full shadow hover:bg-slate-200 duration-200">
               <ChevronRightIcon className="w-6 h-6 text-[#3344DC]" />
             </button>
           </div>
 
-          {/* Bouton pour voir tous les événements ou réalisations */}
           <LangLink
             to={`/${dataType === "event" ? "event" : "who-are-we/our-achievements"}`}
             className="block w-fit mx-auto mt-8 px-5 py-4 text-white font-semibold rounded-full 

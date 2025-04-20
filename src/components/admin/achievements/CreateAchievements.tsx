@@ -57,7 +57,7 @@ const CreateAchievement: React.FC = () => {
 
             if (result.isConfirmed) {
                 const created = await createAchievement();
-// @ts-ignore
+
                 if (created) navigate(`/admin/achievements/${created.slug}?lang=${lang}`);
             } else if (result.isDenied) {
                 setLanguage(lang);
