@@ -81,17 +81,7 @@ const ApplicationsList = () => {
         yPosition += 5;
 
         // Internship Information Section
-        doc.setFontSize(14);
-        doc.text("Internship Details", 14, yPosition);
-        yPosition += 10;
 
-        doc.setFontSize(12);
-        const internshipInfo = [
-            `Internship Type: ${application.internship_type}`,
-            `Desired Field: ${application.desired_internship_field}`,
-            `Start Date: ${application.start_date}`,
-            `End Date: ${application.end_date}`,
-        ];
 
         internshipInfo.forEach(info => {
             doc.text(info, 14, yPosition);
@@ -183,10 +173,7 @@ const ApplicationsList = () => {
                             <th className="py-2 px-4 border">Institution</th>
                             <th className="py-2 px-4 border">Education Level</th>
                             <th className="py-2 px-4 border">Study Field</th>
-                            <th className="py-2 px-4 border">Internship Type</th>
-                            <th className="py-2 px-4 border">Desired Field</th>
-                            <th className="py-2 px-4 border">Start Date</th>
-                            <th className="py-2 px-4 border">End Date</th>
+
                             <th className="py-2 px-4 border">CV</th>
                             <th className="py-2 px-4 border">Motivation Letter</th>
                             <th className="py-2 px-4 border">Download PDF</th>
@@ -209,10 +196,7 @@ const ApplicationsList = () => {
                                     <td className="py-2 px-4 border">{application.educational_institution}</td>
                                     <td className="py-2 px-4 border">{application.education_level}</td>
                                     <td className="py-2 px-4 border">{application.study_field}</td>
-                                    <td className="py-2 px-4 border">{application.internship_type}</td>
-                                    <td className="py-2 px-4 border">{application.desired_internship_field}</td>
-                                    <td className="py-2 px-4 border">{application.start_date}</td>
-                                    <td className="py-2 px-4 border">{application.end_date}</td>
+
                                     <td className="py-2 px-4 border">
                                         <a
                                             href={`${process.env.GATSBY_API_URL}${application?.cv_path}`}
