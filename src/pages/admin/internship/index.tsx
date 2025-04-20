@@ -197,8 +197,9 @@ const ApplicationsList = () => {
                                     <td className="py-2 px-4 border">{application.education_level}</td>
                                     <td className="py-2 px-4 border">{application.study_field}</td>
 
+
                                     <td className="py-2 px-4 border">
-                                        
+
                                         <a
                                             href={`${process.env.GATSBY_API_URL}${application?.cv_path}`}
                                             target="_blank"
