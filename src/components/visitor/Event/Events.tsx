@@ -192,8 +192,8 @@ export default function Events() {
         </PageParagraph>
       </section>
 
-      <section className="flex gap-20 flex-col sm:flex-row my-5 text-center max-w-7xl w-full mx-auto justify-between mt-20 px-5 h-fit">
-        <div className="h-full w-full">
+      <section className="flex gap-[35px] flex-col sm:flex-row my-5 text-center max-w-[1442px] w-full mx-auto justify-between mt-20 px-5 h-fit">
+        <div className="h-full w-full flex flex-col gap-[72px]">
           {renderEventSection('card1', 'Ateliers et Formations')}
           {renderEventSection('card2', 'Événements culturels')}
         </div>

@@ -69,11 +69,9 @@ const SidebarFilters = memo(function LeftSidebar({
 
   return (
     <aside
-      className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 ${
-        isSticky ? 'sm:sticky sm:top-[116px]' : 'sm:relative'
-      } inset-0 p-5 transition duration-300 lg:translate-x-0 ${
-        isOpened ? 'translate-x-0' : 'translate-x-[-100%]'
-      }`}
+      className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 ${isSticky ? 'sm:sticky sm:top-[116px]' : 'sm:relative'
+        } inset-0 p-5 transition duration-300 lg:translate-x-0 ${isOpened ? 'translate-x-0' : 'translate-x-[-100%]'
+        }`}
     >
       <div
         className="opacity-90 sm:opacity-100 bg-white flex flex-col p-[10px] gap-4 sm:gap-10 w-full sm:w-[320px] rounded-xl shadow-xl overflow-y-auto pointer-events-auto h-full"
@@ -109,14 +107,14 @@ const SidebarFilters = memo(function LeftSidebar({
             {themesLoading
               ? Array.from({ length: 6 }).map((_, i) => <SkeletonCheckbox key={i} />)
               : displayedThemes.map((t) => (
-                  <Checkbox
-                    key={t.id}
-                    name={`theme-${t.id}`}
-                    label={t[`name_${lang}`]}
-                    checked={selectedThemes.includes(t.id)}
-                    onChange={(c) => handleThemeChange(t.id, c)}
-                  />
-                ))}
+                <Checkbox
+                  key={t.id}
+                  name={`theme-${t.id}`}
+                  label={t[`name_${lang}`]}
+                  checked={selectedThemes.includes(t.id)}
+                  onChange={(c) => handleThemeChange(t.id, c)}
+                />
+              ))}
 
             {!themesLoading && themes.length > 6 && (
               <button
@@ -141,10 +139,10 @@ const SidebarFilters = memo(function LeftSidebar({
                   key === 'today'
                     ? "Aujourd'hui"
                     : key === 'week'
-                    ? 'Cette Semaine'
-                    : key === 'month'
-                    ? 'Ce Mois'
-                    : 'Cette Année'
+                      ? 'Cette Semaine'
+                      : key === 'month'
+                        ? 'Ce Mois'
+                        : 'Cette Année'
                 }
                 checked={selectedDateFilter === key}
                 onChange={(c) => {
