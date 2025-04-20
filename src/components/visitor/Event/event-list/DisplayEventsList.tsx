@@ -18,10 +18,32 @@ export default function DisplayEventsList({ lang, eventTypeSlug, eventTypeName }
     document.body.style.overflow = isOpened ? 'hidden' : 'visible';
   }, [isOpened]);
 
+  const [searchQuery, setSearchQuery] = useState('');
+    const [selectedDateFilter, setSelectedDateFilter] = useState<string | null>(null);
+  const [isCustomDropdownOpen, setIsCustomDropdownOpen] = useState(false);
+  const filters = {
+    dateFilter: selectedDateFilter,
+    searchQuery,
+  };
+
+  const resetFilters = () => {
+    setIsCustomDropdownOpen(false);
+    setSelectedDateFilter(null);
+    setSearchQuery('');
+  };
   return (
     <div className="max-w-[1400px] mx-auto">
       <div className="flex flex-col sm:flex-row gap-5">
-        <EventsideBar isOpened={isOpened} setIsOpened={setIsOpened} />
+        <EventsideBar
+          isOpened={isOpened}
+          setIsOpened={setIsOpened}
+          resetFilters={resetFilters}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          setIsCustomDropdownOpen={setIsCustomDropdownOpen}
+          selectedDateFilter={selectedDateFilter}
+          setSelectedDateFilter={setSelectedDateFilter}
+        />
         <section className="flex-1 mx-4 sm:mx-0">
           <div className="sm:hidden flex justify-between relative z-20">
             <button
@@ -33,7 +55,12 @@ export default function DisplayEventsList({ lang, eventTypeSlug, eventTypeName }
               <div className="text-center text-white text-sm font-bold">Filtres</div>
             </button>
           </div>
-          <TrainingSessionsCards lang={lang} eventTypeSlug={eventTypeSlug} eventTypeName={eventTypeName} />
+          <TrainingSessionsCards
+            filter={filters}
+            lang={lang}
+            eventTypeSlug={eventTypeSlug}
+            eventTypeName={eventTypeName}
+          />
         </section>
         <div className="flex flex-col mx-4 gap-8">
           <FollowUsEvent />
