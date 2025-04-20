@@ -7,6 +7,8 @@ import FilterIcon from '@/assets/icons/FilterIcon'
 import ArrowDownIcon from '@/assets/icons/ArrowDownIcon'
 import sortIcon from '@/assets/icons/sort-icon.png'
 import { Link } from 'gatsby'
+import EmptyAchievements from '../../who-are-we/our-achievements/EmptyAchievements'
+import EmptyTraining from './EmptyTraining'
 
 const ShimmerBar = ({ className = '' }: { className?: string }) => (
   <div className={`relative overflow-hidden bg-gray-300/70 rounded ${className}`}>
@@ -24,16 +26,18 @@ const TrainingCardSkeleton = () => (
 
 interface TrainingCardsProps {
   filter: {
-    searchQuery?: string
-    themes?: number[]
-    dateFilter?: string | null
-    sortOrder?: 'desc' | 'asc'
-  }
-  setIsOpened: (val: boolean) => void
+    searchQuery?: string;
+    themes?: number[];
+    type?: string;
+    dateFilter?: string | null;
+    sortOrder?: 'desc' | 'asc';
+    startDate?: Date | null;
+    endDate?: Date | null;
+  };
+  setIsOpened: (val: boolean) => void;
 }
 
 export default function TrainingCards({ filter, setIsOpened }: TrainingCardsProps) {
-  const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [limit] = useState(10)
@@ -41,30 +45,35 @@ export default function TrainingCards({ filter, setIsOpened }: TrainingCardsProp
   const [loading, setLoading] = useState(true)
   const [itemsList, setItemsList] = useState<any[]>([])
 
+
   const handlePageChange = (p: number) => p > 0 && p <= totalPages && setCurrentPage(p)
 
-  const fetchPosts = (query: any, page = currentPage) => {
+  const fetchTraining = (query: any, page = currentPage) => {
     setLoading(true)
     axios
       .get(`/api/get-active-training/${limit}`, {
         params: {
           query,
           themes: filter.themes || [],
+          type: filter.type || "",
           page,
           sortOrder,
           dateFilter: filter.dateFilter,
+          startDate: filter.startDate,
+          endDate: filter.endDate,
         },
       })
       .then(res => {
         setItemsList(res.data.data)
         setTotalPages(res.data.last_page)
+
       })
       .finally(() => setLoading(false))
   }
 
   useEffect(() => {
-    fetchPosts(searchQuery, currentPage)
-  }, [searchQuery, currentPage, filter, sortOrder])
+    fetchTraining(filter.searchQuery, currentPage);
+  }, [filter, currentPage, sortOrder]);
 
   if (loading)
     return (
@@ -142,17 +151,23 @@ export default function TrainingCards({ filter, setIsOpened }: TrainingCardsProp
       <div className="sm:hidden px-5 font-semibold pt-5">{`${startIndex} - ${endIndex} de ${itemsList.length} Publications`}</div>
 
       <section className="flex flex-col gap-8 w-full relative z-10 my-5 sm:my-10">
-        <div className="grid sm:grid-cols-2 gap-4 px-4 sm:px-0">
-          {itemsList.map(t => (
-            <Link key={t.id} to={`/protected-air-marine-coastal-areas/training/${t.slug}`}>
-              <TrainingCard training={t} />
-            </Link>
-          ))}
-        </div>
-        {totalPages > 1 && (
-          <div className="flex justify-center px-4 sm:px-0">
-            <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
-          </div>
+        {itemsList.length === 0 ? (
+          <EmptyTraining />
+        ) : (
+          <>
+            <div className="grid sm:grid-cols-2 gap-4 px-4 sm:px-0">
+              {itemsList.map(t => (
+                <Link key={t.id} to={`/protected-air-marine-coastal-areas/training/${t.slug}`}>
+                  <TrainingCard training={t} />
+                </Link>
+              ))}
+            </div>
+            {totalPages > 1 && (
+              <div className="flex justify-center px-4 sm:px-0">
+                <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+              </div>
+            )}
+          </>
         )}
       </section>
     </section>
