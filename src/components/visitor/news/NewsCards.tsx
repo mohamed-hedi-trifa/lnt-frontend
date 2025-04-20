@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from "axios";
 import Pagination from '../Pagination';
 import NewsCard from './NewsCard';
@@ -14,8 +14,6 @@ interface NewsCardsProps {
     themes?: number[];
     dateFilter?: string | null;
     sortOrder?: 'desc' | 'asc';
-    startDate?: Date | null;
-    endDate?: Date | null;
   };
   setIsOpened: (val: boolean) => void;
 }
@@ -26,9 +24,9 @@ export default function NewsCards({ filter, setIsOpened }: NewsCardsProps) {
   const [limit] = useState(10);
   const [loading, setLoading] = useState(true);
   const [itemsList, setItemsList] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(filter.searchQuery || '');
+ 
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>(filter.sortOrder || 'desc');
-  const [selectedThemes, setSelectedThemes] = useState<number[]>(filter.themes || []);
+  const isFirstLoadRef = useRef(true);
 
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
@@ -36,22 +34,24 @@ export default function NewsCards({ filter, setIsOpened }: NewsCardsProps) {
     }
   };
 
-  const getNews = (query: string, page: number) => {
-    setLoading(true);
+  const getNews = (query: any, page= currentPage) => {
+    if (isFirstLoadRef.current) {
+      setLoading(true);
+    }
     axios.get(`/api/get-active-news/${limit}`, {
       params: {
         query,
-        themes: selectedThemes,
+        themes:     filter.themes || [],
         page,
         sortOrder,
         dateFilter: filter.dateFilter,
-        startDate: filter.startDate,
-        endDate: filter.endDate,
+
       },
     })
     .then(res => {
       setItemsList(res.data.data);
       setTotalPages(res.data.last_page);
+      console.log(filter.themes);
       setLoading(false);
     })
     .catch(err => {
@@ -61,8 +61,8 @@ export default function NewsCards({ filter, setIsOpened }: NewsCardsProps) {
   };
 
   useEffect(() => {
-    getNews(searchQuery, currentPage);
-  }, [searchQuery, currentPage, filter, sortOrder, selectedThemes]);
+    getNews(filter.searchQuery, currentPage);
+  }, [filter, currentPage,  sortOrder]);
 
   if (loading) return <p className='w-full text-center'>Loading...</p>;
 
