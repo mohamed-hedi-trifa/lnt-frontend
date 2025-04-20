@@ -105,9 +105,8 @@ export default function OurAchievements() {
     <main className="relative">
       {/* Overlay for the sidebar in mobile */}
       <div
-        className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${
-          isOpened ? 'opacity-50' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${isOpened ? 'opacity-50' : 'opacity-0 pointer-events-none'
+          }`}
         onClick={() => setIsOpened(false)}
       />
 
@@ -117,7 +116,7 @@ export default function OurAchievements() {
         title="Nos Actions, Notre Impact"
         subTitle={
           <div>
-            <div>Découvrez les projets qui transforment Kerkennah :</div> 
+            <div>Découvrez les projets qui transforment Kerkennah :</div>
             des initiatives locales qui protègent, valorisent et inspirent
           </div>
         }
@@ -130,10 +129,10 @@ export default function OurAchievements() {
           <Sidebar />
           <section className="w-fit flex flex-col gap-4">
             <PageParagraph>
-              Depuis sa création, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL) s'engage activement pour la préservation de l'archipel de Kerkennah...
+            Depuis sa création, l’Association Kratten du Développement Durable de la Culture et du Loisir (AKDDCL) s'engage activement pour la préservation et le rayonnement de l'archipel de Kerkennah, en intégrant harmonieusement développement durable, protection de l’environnement et valorisation du patrimoine culturel local. À travers nos différents projets, nous œuvrons pour créer un impact durable et concret au sein de la communauté. Nous soutenons activement les pratiques de pêche responsables, encourageons les initiatives éducatives et environnementales, et mettons en avant les richesses culturelles uniques de Kerkennah par des événements, des formations et des ateliers participatifs
             </PageParagraph>
             <PageParagraph>
-              Chaque projet est réalisé en étroite collaboration avec nos partenaires...
+            Chaque réalisation menée à bien par notre association reflète un engagement collectif et un travail collaboratif avec nos partenaires locaux, régionaux et internationaux, ainsi qu’avec les habitants, qui demeurent au cœur de toutes nos actions. Nos projets permettent non seulement de sensibiliser aux défis écologiques contemporains, mais aussi de stimuler l’économie locale de manière responsable, de préserver les traditions ancestrales, et d'améliorer la qualité de vie de la communauté.
             </PageParagraph>
           </section>
         </section>

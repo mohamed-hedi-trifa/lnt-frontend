@@ -21,12 +21,12 @@ export default function AchievementCardHome({ achievement }: AchievementCardHome
   const titleText = achievement.title_fr || achievement.title_en || "";
   const truncatedTitle = truncateText(titleText, 120);
   return (
-    <div className="border rounded-lg overflow-hidden h-[450px] w-[380px] flex flex-col shadow-lg">
+    <div className="border rounded-lg overflow-hidden h-[450px] w-[380px] flex flex-col shadow-md">
       <div className="w-full h-48 flex-shrink-0">
         <img
           src={`${process.env.GATSBY_API_URL}${achievement.image}`}
           alt="achievement"
-          className="h-full w-full object-cover "
+          className="h-full w-full object-cover shadow-lg "
         />
       </div>  
       <div className="px-3 py-4 flex flex-col flex-grow justify-between">

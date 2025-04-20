@@ -19,11 +19,7 @@ export default function PopularEventType1({
 
   const eventsData = events.slice(1, 4)
 
-  /**
-   * Formats dates exactly like your mockups:
-   * FR → "15 FÉVRIER 2025 À 10:30"
-   * EN → "WEDNESDAY, FEBRUARY 13, 2025 AT 1:13 PM"
-   */
+
   const formatEventDate = (dateString: string, language: string): string => {
     const date = new Date(dateString.replace(" ", "T"))
     const day = date.getDate()

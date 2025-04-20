@@ -47,10 +47,9 @@ export default function Species({ location, params }: { location: any; params: a
 
   return (
     <div
-      className="min-h-full bg-cover bg-center md:bg-fixed bg-local"
+      className="min-h-full bg-cover bg-center md:bg-fixed bg-local pt-[146px]"
       style={{ backgroundImage: loading ? 'none' : `url(${process.env.GATSBY_API_URL}${blogSpecies.image})` }}
     >
-      <img src={achievementsHero} alt="" className="w-full h-[50vh] md:h-[80vh] object-cover" />
 
       <div className="flex justify-center pb-4">
         {loading ? <ShimmerBar className="h-12 w-1/2 max-w-[300px]" /> : <SpeciesTitle title={blogSpecies[`title_${language}`]} width="w-[160px]" fontSize="text-[48px] md:text-[64px] text-start" />}
