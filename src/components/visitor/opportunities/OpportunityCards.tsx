@@ -77,7 +77,6 @@ export default function OpportunityCards({ filter }: OpportunityCardsProps) {
   }, [filter, currentPage]);
 
 
-  useEffect(fetchPosts, [filter, currentPage]);
 
   return (
     <section className="flex flex-col gap-8 w-full relative z-10 my-5 justify-center items-center">
