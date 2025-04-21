@@ -24,15 +24,17 @@ export default function CallForTrenderModal({ show, hide, opportunityId }: { sho
     const [formData, setFormData] = useLocalStorage<FormData>("submit-application", {
         company_name: "",
         tax_identification_number: "",
-        birth_day: 0,
-        birth_month: 0,
-        birth_year: 0,
+        birth_day: "",
+        birth_month: "",
+        birth_year: "",
         email: "",
         phone: "",
         address: "",
         opportunity_id: opportunityId,
 
     });
+    const today = new Date();
+
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -131,7 +133,20 @@ export default function CallForTrenderModal({ show, hide, opportunityId }: { sho
 
         if (!formData.company_name) newErrors.company_name = "Le nom de l'entreprise est requis.";
         if (!formData.tax_identification_number) newErrors.tax_identification_number = "Le prénom est requis.";
-        if (!formData.birth_day || !formData.birth_month || !formData.birth_year) newErrors.birth_date = "La date de création est requise.";
+        if (!formData.birth_day || !formData.birth_month || !formData.birth_year) {
+            newErrors.birth_date = "La date de création est requise.";
+          } else {
+            // Construction de la date saisie (les mois en JS sont indexés de 0 à 11)
+            const inputDate = new Date(
+              Number(formData.birth_year),
+              Number(formData.birth_month) - 1,
+              Number(formData.birth_day)
+            );
+          
+            if (inputDate > today) {
+              newErrors.birth_date = "La date ne peut pas être supérieure à aujourd’hui.";
+            }
+          }
         if (!formData.email) newErrors.email = "L'adresse e-mail est requise.";
         if (!formData.phone) newErrors.phone = "Le numéro de téléphone est requis.";
         if (!formData.address) newErrors.address = "L'adresse est requise.";

@@ -66,7 +66,7 @@ export default function RightSideEventDetails({
     }
   };
   return (
-    <div className="flex flex-col justify-start gap-2 items-start">
+    <div className="flex flex-col justify-start gap-2 items-start pb-20">
       <div className="font-bold">Où se déroule l'événement ?</div>
       <div className="relative sm:justify-start sm:items-start justify-center items-center">
         {initialPosition ? (
@@ -148,11 +148,11 @@ export default function RightSideEventDetails({
         </button>
       </div>
 
-      <div className="mt-5">
+      {/* <div className="mt-5">
         {
           relatedEvents.length > 0 && <RelatedBlog relatedBlog={relatedEvents} headerName="Evénements Connexes" route="/event/event-details/"/>
         }
-      </div>
+      </div> */}
     </div>
   );
 }

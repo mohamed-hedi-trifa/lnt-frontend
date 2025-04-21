@@ -264,7 +264,7 @@ const CreateFinancialSource: React.FC = () => {
                     onChange={handleChange}
                     step="0.001"
                     min="0"
-                    max="9999.999"
+                    max="9999999.999"
                 />
        {errors.amount && <div className="text-red-500 text-sm">{errors.amount}</div>}
                 <Button type="submit" disabled={isLoading}>

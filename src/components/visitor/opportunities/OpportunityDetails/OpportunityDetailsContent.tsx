@@ -44,7 +44,7 @@ export default function OpportunityDetailsContent({ location, params }: { locati
       {opportunity.content_items
         ?.sort((a: any, b: any) => a.order - b.order)
         .map((item: any) => {
-          if (item.type === "title") return <Title key={item.id} customClassName="pt-6">{item.content}</Title>;
+          if (item.type === "title") return <Title key={item.id}  variant="pill" customClassName="pt-6">{item.content}</Title>;
           if (item.type === "text")
             return (
               <PageParagraph2 key={item.id}>

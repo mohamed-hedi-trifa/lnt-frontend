@@ -57,11 +57,11 @@ export default function EventDetails({ location, params }: { location: any; para
 
       </section>
 
-      <section className=' flex-col  text-center max-w-7xl w-full mx-auto justify-between   px-5 h-fit  my-10 '>
+      {/* <section className=' flex-col  text-center max-w-7xl w-full mx-auto justify-between   px-5 h-fit  my-10 '>
 
         <hr className="border-black " />
         <MoreEvent moreEvents={moreEvents} />
-      </section>
+      </section> */}
     </main>
   )
 }
