@@ -52,7 +52,7 @@ function ButtonDropdown({
             {renderItem(item)}
           </div>
         ) : (
-          <ul className={`divide-y w-max max-w-[200px] p-2 rounded shadow-[1px_1px_5px_rgb(0,0,0,.3)] absolute top-full bg-white translate-y-[10px] list-none ${POSITIONS[position]}`}>
+          <ul className={`divide-y w-max max-w-[200px] p-2 rounded shadow-[1px_1px_5px_rgb(0,0,0,.3)] absolute top-full bg-white translate-y-[10px] list-none z-40 ${POSITIONS[position]}`}>
             {items && items.map((dropdownItem, index) => (
               <li
                 key={index}

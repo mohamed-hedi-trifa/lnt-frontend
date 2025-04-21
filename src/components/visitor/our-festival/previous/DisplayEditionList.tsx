@@ -9,22 +9,41 @@ import PreviousEditionSidebar from './PreviousEditionSidebar';
 import PreviousEditionCard from './PreviousEditionCard';
 import Pagination from '../../Pagination';
 import FollowUsPreviousEdition from './FollowUsPreviousEdition';
-import QuestionEvent from '../../Event/QuestionEvent';
 import Question from '@/components/atoms/Question';
+import { useTranslation } from '@/contexts/TranslationContext';
+
+interface Edition {
+  id: string;
+  name_en: string;
+  name_fr: string;
+  start_date: string;
+  end_date: string;
+  card_description_en: string;
+  card_description_fr: string;
+  place_en: string;
+  place_fr: string;
+  slug: string;
+  year: number;
+  image: string;
+}
 
 export default function DisplayEditionList() {
-  const [edition, setEdition] = useState([]);
-  const [prevEditions, setPrevEditions] = useState([]);
+  const { lang } = useTranslation();
+  const [editions, setEditions] = useState<Edition[]>([]);
+  const [prevEditions, setPrevEditions] = useState<Edition[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [sortCriteria, setSortCriteria] = useState('name'); // Tri par défaut sur le nom
-  const [sortOrder, setSortOrder] = useState('asc'); // Ordre croissant par défaut
-  const [language, setLanguage] = useState('en'); // Langue par défaut
-  const [filteredYears, setFilteredYears] = useState<number[]>([]); // Années filtrées
-  const [isSidebarOpened, setIsSidebarOpened] = useState(false); // État d'ouverture de la sidebar
-  const formatDateRange = (startDate, endDate) => {
-    const options = { day: "numeric", month: "long", year: "numeric" };
+  const [sortCriteria, setSortCriteria] = useState<'name' | 'start_date'>('name');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [editionsLoading, setEditionsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedAllEditions, setSelectedAllEditions] = useState(true);
+  const [selectedEditions, setSelectedEditions] = useState<string[]>([]);
+  const [isSidebarOpened, setIsSidebarOpened] = useState(false);
+
+  const formatDateRange = (startDate: string, endDate: string) => {
+    const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" };
     const start = new Date(startDate);
     const end = new Date(endDate);
     const isSameYear = start.getFullYear() === end.getFullYear();
@@ -39,63 +58,89 @@ export default function DisplayEditionList() {
     }
   };
 
-  const getEdition = async () => {
-    try {
-      const res = await axios.get('/api/get-current-edition');
-      setEdition(res.data);
-    } catch (err: any) {
-      Swal.fire('Error', err.response?.data?.message || 'Erreur lors de la récupération de l\'édition', 'error');
-    }
-  };
+  // Fetch all editions for sidebar filters
+  useEffect(() => {
+    const fetchEditions = async () => {
+      try {
+        const response = await axios.get('/api/previous-editions');
+        setEditions(response.data);
+      } catch (error) {
+        console.error('Error fetching editions:', error);
+      } finally {
+        setEditionsLoading(false);
+      }
+    };
+    
+    fetchEditions();
+  }, []);
 
-  // Récupération des éditions précédentes avec filtres
-  const getPrevEditions = async (page = 1) => {
+  // Fetch paginated previous editions with filters
+  const fetchPrevEditions = async (page = currentPage) => {
     try {
-      const res = await axios.get('/api/previous-editions-pagination', {
+      const response = await axios.get('/api/previous-editions-pagination', {
         params: {
+          searchQuery,
           page,
-          per_page: 6,
-          sort_by: sortCriteria,
-          order: sortOrder,
-          language,
-          years: filteredYears.join(','),
+          editions: selectedAllEditions ? [] : selectedEditions,
+          sortBy: sortCriteria,
+          sortOrder,
         },
       });
-      setPrevEditions(res.data.data);
-      setTotalPages(res.data.last_page);
-      setTotalItems(res.data.total);
-    } catch (err: any) {
-      Swal.fire('Error', err.response?.data?.message || 'Erreur lors de la récupération des éditions', 'error');
+      
+      setPrevEditions(response.data.data);
+      setTotalPages(response.data.last_page);
+      setTotalItems(response.data.total);
+    } catch (error) {
+      Swal.fire('Error', 'Error fetching previous editions', 'error');
+      console.error('Error fetching previous editions:', error);
     }
   };
 
-  // Gestion du changement de page
+  useEffect(() => {
+    fetchPrevEditions();
+    // Reset to first page when filters change
+    setCurrentPage(1);
+  }, [searchQuery, selectedAllEditions, selectedEditions, sortCriteria, sortOrder]);
+
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
       setCurrentPage(newPage);
-      getPrevEditions(newPage);
     }
   };
 
-  // Gestion du tri
   const handleSortChange = (item: { id: number; name: string }) => {
     if (item.name === 'Trier par Nom') {
       setSortCriteria('name');
     } else if (item.name === 'Trier par Date') {
       setSortCriteria('start_date');
     }
-    // Inverse l'ordre à chaque clic
     setSortOrder(prevOrder => (prevOrder === 'asc' ? 'desc' : 'asc'));
   };
 
-  // Chargement initial et lors des changements de filtres/tri
-  useEffect(() => {
-    getEdition();
-    getPrevEditions(currentPage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortCriteria, sortOrder, language, filteredYears, currentPage]);
+  const handleAllEditionsChange = (checked: boolean) => {
+    setSelectedAllEditions(checked);
+    if (checked) {
+      setSelectedEditions([]);
+    }
+  };
 
-  // Gestion du débordement lors de l'ouverture de la sidebar
+  const handleEditionChange = (id: string, checked: boolean) => {
+    if (checked && selectedAllEditions) {
+      setSelectedAllEditions(false);
+    }
+    setSelectedEditions(prev => 
+      checked ? [...prev, id] : prev.filter(x => x !== id)
+    );
+  };
+
+  const resetFilters = () => {
+    setSelectedAllEditions(true);
+    setSelectedEditions([]);
+    setSearchQuery('');
+    setSortCriteria('name');
+    setSortOrder('asc');
+  };
+
   useEffect(() => {
     document.body.style.overflow = isSidebarOpened ? 'hidden' : 'visible';
   }, [isSidebarOpened]);
@@ -106,16 +151,25 @@ export default function DisplayEditionList() {
         {/* Sidebar */}
         <div className="md:col-span-3 gap-6">
           <PreviousEditionSidebar
+            isSticky={false}
+            lang={lang}
+            editions={editions}
+            editionsLoading={editionsLoading}
+            selectedAllEditions={selectedAllEditions}
+            handleAllEditionsChange={handleAllEditionsChange}
+            selectedEditions={selectedEditions}
+            handleEditionChange={handleEditionChange}
+            resetFilters={resetFilters}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
             isOpened={isSidebarOpened}
             setIsOpened={setIsSidebarOpened}
-            filteredYears={filteredYears}
-            setFilteredYears={setFilteredYears}
           />
         </div>
 
-        {/* Contenu principal */}
+        {/* Main Content */}
         <div className="md:col-span-6 flex flex-col gap-6">
-          {/* En-tête Desktop */}
+          {/* Desktop Header */}
           <div className="hidden sm:flex justify-between items-center py-4">
             <ButtonDropdown
               items={[
@@ -134,7 +188,7 @@ export default function DisplayEditionList() {
             >
               {(isOpen) => (
                 <button className="flex items-center gap-2 border-2 border-black rounded-lg px-4 py-2">
-                  <img src={sortIcon} alt="Icône de tri" className="w-6 h-6" />
+                  <img src={sortIcon} alt="Sort icon" className="w-6 h-6" />
                   <span className="text-black text-lg font-medium">Trier</span>
                   <div className={`transition-transform duration-200 ${isOpen ? '-rotate-180' : ''}`}>
                     <ArrowDownIcon />
@@ -143,12 +197,12 @@ export default function DisplayEditionList() {
               )}
             </ButtonDropdown>
             <div className="text-black text-lg font-semibold">
-              {currentPage * 10 - 9} - {Math.min(currentPage * 10, totalItems)} de {totalItems} Publications
+              {Math.min((currentPage - 1) * 10 + 1, totalItems)} - {Math.min(currentPage * 10, totalItems)} of {totalItems} Publications
             </div>
           </div>
 
-          {/* En-tête Mobile */}
-          <div className="sm:hidden flex justify-between items-center z-20 sticky top-0  py-2">
+          {/* Mobile Header */}
+          <div className="sm:hidden flex justify-between items-center z-20 sticky top-0 py-2">
             <button
               type="button"
               onClick={() => setIsSidebarOpened(true)}
@@ -165,7 +219,7 @@ export default function DisplayEditionList() {
               position="right"
               renderItem={(item) => (
                 <div
-                  className="py-2 px-4 hover:bg-gray-100 cursor-pointer "
+                  className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
                   onClick={() => handleSortChange(item)}
                 >
                   {item.name}
@@ -174,7 +228,7 @@ export default function DisplayEditionList() {
             >
               {(isOpen) => (
                 <button className="flex items-center gap-2 border-2 border-black rounded-lg px-4 py-2 shadow-lg">
-                  <img src={sortIcon} alt="Icône de tri" className="w-6 h-6" />
+                  <img src={sortIcon} alt="Sort icon" className="w-6 h-6" />
                   <span className="text-black text-lg font-medium">Trier</span>
                   <div className={`transition-transform duration-200 ${isOpen ? '-rotate-180' : ''}`}>
                     <ArrowDownIcon />
@@ -184,15 +238,15 @@ export default function DisplayEditionList() {
             </ButtonDropdown>
           </div>
 
-          {/* Liste des éditions */}
+          {/* Editions List */}
           <div className="grid grid-cols-1 gap-6">
-            {prevEditions?.map((edition, index) => (
+            {prevEditions.map((edition, index) => (
               <PreviousEditionCard
                 key={index}
                 date={formatDateRange(edition.start_date, edition.end_date)}
-                description={language === 'en' ? edition.card_description_en : edition.card_description_fr}
-                titre={language === 'en' ? edition.name_en : edition.name_fr}
-                lieu={language === 'en' ? edition.place_en : edition.place_fr}
+                description={lang === 'en' ? edition.card_description_en : edition.card_description_fr}
+                titre={lang === 'en' ? edition.name_en : edition.name_fr}
+                lieu={lang === 'en' ? edition.place_en : edition.place_fr}
                 slug={edition.slug}
                 year={edition.year}
                 image={edition.image}
@@ -201,14 +255,18 @@ export default function DisplayEditionList() {
           </div>
 
           {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="flex justify-center px-4 sm:px-0">
-                <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
-              </div>
-            )}
+          {totalPages > 1 && (
+            <div className="flex justify-center px-4 sm:px-0">
+              <Pagination 
+                totalPages={totalPages} 
+                currentPage={currentPage} 
+                onPageChange={handlePageChange} 
+              />
+            </div>
+          )}
         </div>
 
-        {/* Colonne complémentaire */}
+        {/* Complementary Column */}
         <div className="md:col-span-3 flex flex-col gap-6">
           <FollowUsPreviousEdition />
           <Question />

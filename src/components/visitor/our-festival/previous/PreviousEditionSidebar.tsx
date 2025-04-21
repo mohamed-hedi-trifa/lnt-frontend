@@ -1,149 +1,131 @@
-import React, { useEffect, useState } from 'react';
+// src/components/visitor/who-are-we/our-achievements/SidebarFilters.tsx
+import React, { Dispatch, SetStateAction, memo } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import FilterTitle from '../../posts/FilterTitle';
 import Checkbox from '../../posts/Checkbox';
-import { PlusIcon } from '@heroicons/react/24/solid';
-import axios from 'axios';
+import FilterTitle from '../../posts/FilterTitle';
 
-export default function PreviousEditionSidebar({
-  isOpened,
-  setIsOpened,
-  filteredYears,
-  setFilteredYears,
-}: {
+const ShimmerBar = ({ className = '' }: { className?: string }) => (
+  <div className={`relative overflow-hidden bg-gray-300/70 rounded ${className}`}>
+    <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent)]" />
+  </div>
+);
+const SkeletonCheckbox = () => <ShimmerBar className="h-4 w-40" />;
+
+type LeftSidebarProps = {
+  isSticky?: boolean;
+  lang: string;
+  editions: any[];
+  editionsLoading: boolean;
+
+  selectedAllEditions: boolean;
+  handleAllEditionsChange: (checked: boolean) => void;
+  selectedEditions: string[];
+  handleEditionChange: (id: string, checked: boolean) => void;
+  showAllEditions: boolean;
+  setShowAllEditions: Dispatch<SetStateAction<boolean>>;
+
+
+
+  resetFilters: () => void;
+  searchQuery: string;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
   isOpened: boolean;
-  setIsOpened: (isOpened: boolean) => void;
-  filteredYears: number[];
-  setFilteredYears: (years: number[]) => void;
-}) {
-  const [showAll, setShowAll] = useState(false);
-  const [years, setYears] = useState<number[]>([]);
-  const [selectedYears, setSelectedYears] = useState<number[]>(filteredYears);
 
-  // Update `isAllChecked` whenever `selectedYears` changes
-  const isAllChecked = selectedYears.length === years.length;
+};
 
-  // Handle individual year checkbox change
-  const handleYearCheckboxChange = (year: number) => {
-    const newSelectedYears = selectedYears.includes(year)
-      ? selectedYears.filter((y) => y !== year) // Remove year if already selected
-      : [...selectedYears, year]; // Add year if not selected
+const PreviousEditionSidebar = memo(function LeftSidebar({
+  isSticky = true,
+  lang,
+  editions,
+  editionsLoading,
+  selectedAllEditions,
+  handleAllEditionsChange,
+  selectedEditions,
+  handleEditionChange,
+  showAllEditions,
+  setShowAllEditions,
+  resetFilters,
+  searchQuery,
+  setSearchQuery,
+  isOpened,
 
-    setSelectedYears(newSelectedYears);
-  };
-
-  // Handle "All Editions" checkbox change
-  const handleAllCheckboxChange = () => {
-    if (isAllChecked) {
-      setSelectedYears([]); // Deselect all years
-    } else {
-      setSelectedYears([...years]); // Select all years
-    }
-  };
-
-  // Apply filters and close the sidebar
-  const handleApplyFilters = () => {
-    setFilteredYears(selectedYears);
-    setIsOpened(false); // Close the sidebar
-  };
-
-  // Reset filters
-  const handleResetFilters = () => {
-    setSelectedYears([]);
-    setFilteredYears([]);
-  };
-
-  // Fetch available years on component mount
-  useEffect(() => {
-    const fetchYears = async () => {
-      try {
-        const res = await axios.get('/api/previous-editions-years');
-        setYears(res.data);
-      } catch (err) {
-        console.error('Failed to fetch years:', err);
-      }
-    };
-
-    fetchYears();
-  }, []);
-
-  // Update body overflow when sidebar is opened/closed
-  useEffect(() => {
-    document.body.style.overflow = isOpened ? 'hidden' : 'visible';
-  }, [isOpened]);
+}: LeftSidebarProps) {
+  const displayedEditions = showAllEditions ? editions : editions.slice(0, 6);
 
   return (
     <aside
-      className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 sm:sticky sm:top-[116px] inset-0 pt-5  transition duration-300 lg:translate-x-0 ${
-        isOpened ? 'translate-x-0' : 'translate-x-[-100%]'
-      }`}
-      onClick={() => setIsOpened(false)}
+      className={`pointer-events-none h-screen sm:h-fit fixed z-50 lg:z-10 ${isSticky ? 'sm:sticky sm:top-[116px]' : 'sm:relative'
+        } inset-0  transition duration-300 lg:translate-x-0 ${isOpened ? 'translate-x-0' : 'translate-x-[-100%]'
+        }`}
     >
-      <form
-        className="opacity-90 sm:opacity-100 sm:bg-[rgba(255,255,255,0.7)] bg-white flex flex-col p-[10px] gap-4 sm:gap-10 w-full sm:w-[320px] rounded-xl shadow-helmi overflow-y-auto pointer-events-auto h-full sticky"
-        onClick={(e) => e.stopPropagation()} // Prevent click propagation to parent
+      <div
+        className="opacity-90 sm:opacity-100 bg-white flex flex-col p-[10px] gap-4 sm:gap-10 w-full sm:w-[320px] rounded-xl shadow-xl overflow-y-auto pointer-events-auto h-full"
+        style={{
+          boxShadow:
+            '0px -8px 80px 0px rgba(0,0,0,0.07), 0px -2.92px 29.2px 0px rgba(0,0,0,0.05), 0px -1.42px 14.18px 0px rgba(0,0,0,0.04), 0px -0.69px 6.95px 0px rgba(0,0,0,0.03), 0px -0.27px 2.75px 0px rgba(0,0,0,0.02)',
+        }}
       >
-        {/* Search Input */}
+        {/* search */}
         <div className="border rounded-lg border-black flex gap-4 p-2">
-          <MagnifyingGlassIcon className="size-5" />
-          <input type="text" className='bg-transparent' placeholder="Recherche" />
+          <MagnifyingGlassIcon className="h-5 w-5" />
+          <input
+            type="text"
+            placeholder="Recherche"
+            className="outline-none w-full"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
 
-        {/* Date Filter */}
-        <div className="flex flex-col gap-5 relative z-50">
-          <FilterTitle title="Éditions" />
+        {/* editions */}
+        <div className="flex flex-col gap-5">
+          <FilterTitle title="Thèmes" />
           <div className="flex flex-col gap-3">
-            <div className="flex gap-4">
-              <Checkbox
-                checked={isAllChecked}
-                onChange={handleAllCheckboxChange}
-                label="Tous les Éditions"
-              />
-              <span>({years.length})</span>
-            </div>
+            {/* All Editions */}
+            <Checkbox
+              name="all-editions"
+              label="Tous les Éditions"
+              checked={selectedAllEditions}
+              onChange={handleAllEditionsChange}
+            />
 
-            {/* Display either the first 4 or all years based on `showAll` */}
-            {years.slice(0, showAll ? years.length : 4).map((year) => (
-              <Checkbox
-                key={year}
-                checked={selectedYears.includes(year)}
-                onChange={() => handleYearCheckboxChange(year)}
-                label={`Éditions ${year}`}
-              />
-            ))}
+            {editionsLoading
+              ? Array.from({ length: 6 }).map((_, i) => <SkeletonCheckbox key={i} />)
+              : displayedEditions.map((t) => (
+                <Checkbox
+                  key={t.year}
+                  name={`theme-${t.id}`}
+                  label={"Édition " + t.year}
+                  checked={selectedEditions.includes(t.year)}
+                  onChange={(c) => handleEditionChange(t.year, c)}
+                />
+              ))}
 
-            {/* Show toggle button only if there are more than 4 years */}
-            {years.length > 4 && (
-              <div
-                className="flex gap-2 bg-[#EFEFEF] rounded-lg w-fit px-2 py-1 mt-2 cursor-pointer"
-                onClick={() => setShowAll(!showAll)}
+            {!editionsLoading && editions.length > 6 && (
+              <button
+                className="hover:underline bg-[#EFEFEF] rounded-xl p-[10px] w-fit mt-2 font-medium"
+                onClick={() => setShowAllEditions(!showAllEditions)}
               >
-                <PlusIcon className="w-[18px]" />
-                {showAll ? 'Afficher moins' : `Afficher ${years.length - 4} de plus`}
-              </div>
+                {showAllEditions ? 'Afficher moins' : `Afficher ${editions.length - 6} de plus`}
+              </button>
             )}
-            
           </div>
         </div>
 
-        {/* Buttons */}
-        <div className="flex justify-between">
+
+
+        {/* reset */}
+        <div className="flex justify-end mt-4">
           <button
-            type="button"
-            onClick={handleApplyFilters}
-            className="bg-primary text-sm text-white px-[10px] py-2 rounded-xl font-semibold"
-          >
-            Appliquer les Filtres
-          </button>
-          <button
-            type="button"
-            onClick={handleResetFilters}
             className="text-white font-semibold px-[10px] py-2 rounded-xl bg-[#858585]"
+            onClick={resetFilters}
           >
             Réinitialiser
           </button>
         </div>
-      </form>
+      </div>
     </aside>
   );
-}
+});
+
+export default PreviousEditionSidebar;
