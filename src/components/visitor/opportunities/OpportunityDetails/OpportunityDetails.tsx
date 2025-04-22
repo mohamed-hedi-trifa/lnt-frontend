@@ -55,6 +55,14 @@ export default function OpportunityDetails({ location, params }: { location: any
 
   const lang = new URLSearchParams(location.search).get("lang") === "fr" ? "fr" : "en";
 
+  const isOpportunityActive = (dueDate: any): boolean => {
+    if (!dueDate) return false;
+
+    const now = new Date();
+    const due = new Date(dueDate);
+    return due.getTime() > now.getTime();
+  };
+
   return (
     <main className="relative">
       {/* ---------- header image ---------- */}
@@ -86,9 +94,15 @@ export default function OpportunityDetails({ location, params }: { location: any
       {!loadingOpp && (
         <>
           <div className="text-center mt-5">
-            <button className="bg-[#006E9F] px-7 py-2 rounded-lg text-white font-semibold shadow-lg" onClick={() => setModalShow(true)}>
-              Postuler Maintenant
-            </button>
+            {isOpportunityActive(opportunity?.due_date) && (
+              <button
+                className="bg-[#006E9F] px-7 py-2 rounded-lg text-white font-semibold shadow-lg"
+                onClick={() => setModalShow(true)}
+              >
+                Postuler Maintenant
+              </button>
+            )}
+
           </div>
           {opportunity.type === "job-offer" && <JobOfferModal show={modalShow} hide={() => setModalShow(false)} opportunityId={opportunity.id} />}
           {opportunity.type === "call-for-tender" && <CallForTrenderModal show={modalShow} hide={() => setModalShow(false)} opportunityId={opportunity.id} />}

@@ -10,24 +10,25 @@ import EditIsPopularModal from "./EditIsPopularModal";
 export default function Species() {
   const [loading, setLoading] = useState(true);
   const [itemsList, setItemsList] = useState([]);
+  const [popularSpeciesCount, setPopularSpeciesCount] = useState(true);
 
   function getSpecies() {
     axios
       .get("/api/species")
       .then((res) => {
 
-        setItemsList(res.data);
-
+        setItemsList(res.data.species);
+        setPopularSpeciesCount(res.data.popularSpeciesCount);
         setLoading(false);
       })
       .catch((err) => {
         Swal.fire("Error", err.response.data.message, "error");
       });
   }
-    useEffect(() => {
-      getSpecies();
-      return;
-    }, []);
+  useEffect(() => {
+    getSpecies();
+    return;
+  }, []);
 
   const deleteItem = (e: any, item: any) => {
     e.preventDefault();
@@ -60,7 +61,7 @@ export default function Species() {
     });
   };
   if (loading) {
-    return   "Loading...";
+    return "Loading...";
   }
 
   const handleToggle = (item) => {
@@ -68,15 +69,15 @@ export default function Species() {
       Swal.fire("Error", "Only 'marin' species can be updated.", "error");
       return;
     }
-  
+
     const updatedStatus = item.is_popular === "yes" ? "no" : "yes";
     const popularCount = itemsList.filter(itm => itm.is_popular === "yes").length;
-  
+
     if (updatedStatus === "yes" && popularCount >= 6) {
       Swal.fire("Limit Reached", "You can only have a maximum of 6 popular species.", "warning");
       return;
     }
-  
+
     if (updatedStatus === "yes") {
       Swal.fire({
         title: "Update Species Information",
@@ -114,13 +115,13 @@ export default function Species() {
           const descriptionFr = document.getElementById("description_fr").value.trim();
           const ecologicalImportanceEn = document.getElementById("ecological_importance_en").value.trim();
           const ecologicalImportanceFr = document.getElementById("ecological_importance_fr").value.trim();
-    
+
           // Validate required fields
           if (!descriptionEn || !descriptionFr || !ecologicalImportanceEn || !ecologicalImportanceFr) {
             Swal.showValidationMessage("All fields are required");
             return false; // Prevent the modal from closing
           }
-    
+
           // Return the updated data if validation passes
           return {
             description_en: descriptionEn,
@@ -143,13 +144,14 @@ export default function Species() {
       }).then((result) => {
         if (result.isConfirmed) {
           updateIsPopular(item, updatedStatus, result.value);
+          getSpecies();
         }
       });
     } else {
       updateIsPopular(item, updatedStatus);
     }
   };
-  
+
   // Function to handle the actual update
   const updateIsPopular = (item, updatedStatus, updatedFields = {}) => {
     // Optimistic UI Update
@@ -160,7 +162,7 @@ export default function Species() {
           : itm
       )
     );
-  
+
     // Send update request to backend
     axios
       .put(`/api/species/is-popular/${item.slug}`, {
@@ -172,7 +174,7 @@ export default function Species() {
       })
       .catch((err) => {
         Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
-  
+
         // Revert change if request fails
         setItemsList(prevItems =>
           prevItems.map(itm =>
@@ -181,8 +183,8 @@ export default function Species() {
         );
       });
   };
-  
-  
+
+
 
   const handleToggleStatus = (item) => {
     const updatedStatus = item.status > 0 ? 0 : 1;
@@ -207,6 +209,19 @@ export default function Species() {
         Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
       });
   };
+
+  const handleUpdateCardPlace = (id: number, cardPlace: string) => {
+    axios
+      .put(`/api/species/${id}/update-card-place`, { card_place: cardPlace })
+      .then((res) => {
+        Swal.fire("Success", "Updated success");
+        setItemsList(res.data);
+   
+      })
+      .catch((err) => {
+        Swal.fire("Error", err.response?.data?.message || "Failed to update popular status", "error");
+      });
+  };
   return (
     <>
       <div className="max-w-[80rem] p-2 sm:p-5 mx-auto">
@@ -224,9 +239,10 @@ export default function Species() {
 
                   <div className="pb-3 text-start col-span-2">Image</div>
                   <div className="pb-3 text-start col-span-2 sm:col-span-2">Title</div>
-                  <div className="pb-3 text-start col-span-2">Type</div>
+                  <div className="pb-3 text-start col-span-1">Type</div>
                   <div className="pb-3 col-span-2">is_visible</div>
-                  <div className="pb-3 col-span-2">is_popular</div>
+                  <div className="pb-3 col-span-1">is_popular</div>
+                  <div className="pb-3 text-center col-span-1">Display Place</div>
                   <div className="pb-3 hidden sm:block text-end sm:text-center col-span-2">Actions</div>
                 </div>
                 <div className="divide-y">
@@ -240,19 +256,19 @@ export default function Species() {
                         <div className="pt-3 text-start col-span-2 sm:col-span-2">
                           <div className="font-bold">{item.title_en || item.title_fr}</div>{" "}
                         </div>
-                        <div className="pt-3 col-span-2 text-start">{item.type}</div>
-                        <div className="pt-3 col-span-2">                      
-                        <label className="toggle-switch">
-                          <input
-                            type="checkbox"
-                            name="status"
-                            checked={item.status > 0}
-                            onChange={() => handleToggleStatus(item)}
-                          />
-                          <span className="slider"></span>
-                        </label>
-                      </div>
+                        <div className="pt-3 col-span-1 text-start">{item.type}</div>
                         <div className="pt-3 col-span-2">
+                          <label className="toggle-switch">
+                            <input
+                              type="checkbox"
+                              name="status"
+                              checked={item.status > 0}
+                              onChange={() => handleToggleStatus(item)}
+                            />
+                            <span className="slider"></span>
+                          </label>
+                        </div>
+                        <div className="pt-3 col-span-1">
 
                           <label className="toggle-switch">
                             <input
@@ -266,6 +282,31 @@ export default function Species() {
 
 
                         </div>
+                        <div className="pt-3 col-span-2 text-center">
+                          {
+                            item.is_popular == "yes" ? (
+                              <select
+                                value={item.display_popular_place}
+                                onChange={(e) => handleUpdateCardPlace(item.id, e.target.value)}
+                                className="p-1 border rounded"
+                              >
+                                {
+                                  Array.from({ length: popularSpeciesCount }, (_, i) => (
+                                    <option key={i} value={i + 1}>card {i + 1}</option>
+                                  ))
+                                }
+                                {
+                                  item.display_popular_place > popularSpeciesCount && (
+                                    <option key={item.display_popular_place} value={item.display_popular_place}>card {item.display_popular_place}</option>
+                                  )
+                                }
+                              </select>
+                            ) : (
+                              <div>--</div>
+                            )
+                          }
+                        </div>
+
                         <div className="pt-3 text-end sm:text-center col-span-1 sm:col-span-2">
                           <div className="grid grid-cols-12">
                             <div className="col-span-12 sm:col-span-6 flex justify-end sm:justify-center">
@@ -302,7 +343,7 @@ export default function Species() {
             )}
           </div>
         </div>
-  
+
       </div>
     </>
   );
