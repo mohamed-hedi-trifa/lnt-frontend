@@ -51,6 +51,8 @@ const CreateOpportunity: React.FC = () => {
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const [opportunityType, setOpportunityType] = useState("");
+
 
     const [englishItems, setEnglishItems] = useState<any[]>([]);
     const [frenchItems, setFrenchItems] = useState<any[]>([]);
@@ -130,7 +132,7 @@ const CreateOpportunity: React.FC = () => {
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
-    
+
         if (language === "en") {
             if (!formData.title_en) {
                 newErrors.title_en = "Title is required.";
@@ -141,11 +143,11 @@ const CreateOpportunity: React.FC = () => {
             if (!formData.location_en) {
                 newErrors.location_en = "Location is required.";
             }
-    
+
             if (englishItems.length === 0) {
                 newErrors.items = "At least one content item is required.";
             }
-    
+
         } else {
             if (!formData.title_fr) {
                 newErrors.title_fr = "Title is required.";
@@ -166,28 +168,28 @@ const CreateOpportunity: React.FC = () => {
                 newErrors.items = "At least one content item is required.";
             }
         }
-    
+
         if (formData.type === "") {
             newErrors.type = "Type is required.";
         }
         if (formData.due_date === "") {
             newErrors.due_date = "Due date is required.";
         }
-    
-        if (formData.postStart === "") {
+
+        if (formData.postStart === "" && opportunityType !== "call-for-tender") {
             newErrors.postStart = "PostStart is required.";
         }
-    
-    
-       
+
+
+
         if (formData.type !== "internship" && !formData.contract_type) {
             newErrors.contract_type = "Contract type is required.";
         }
-    
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
-    
+
 
     async function createEvent(): Promise<{ slug: string } | null> {
         if (!validateForm()) {
@@ -288,7 +290,7 @@ const CreateOpportunity: React.FC = () => {
             content: type === "list" ? [{ text: "", image: "" }] : "",
             type,
             language: language,
-            isNew:true,
+            isNew: true,
         };
 
         const updatedItems = language === "en" ? [...englishItems] : [...frenchItems];
@@ -351,7 +353,11 @@ const CreateOpportunity: React.FC = () => {
                     label="Opportunity type:"
                     name="type"
                     value={formData.type}
-                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    onChange={(e) => {
+                        const selectedType = e.target.value;
+                        setFormData({ ...formData, type: selectedType });
+                        setOpportunityType(selectedType);
+                      }}
                 >
                     <option value="">select type</option>
                     <option value="job-offer">job-offer</option>
@@ -374,10 +380,26 @@ const CreateOpportunity: React.FC = () => {
                 {errors.contract_type && <div className="text-red-500 text-sm">{errors.contract_type}</div>}
 
 
-                <Input label="due_date" type="date" name="due_date" value={formData.due_date} onChange={handleChange} />
+                <Input label="due_date" type="formatDateTime" name="due_date" value={formData.due_date} onChange={handleChange} />
                 {errors.due_date && <div className="text-red-500 text-sm">{errors.due_date}</div>}
-                <Input label="Post Start" type="date" name="postStart" value={formData.postStart} onChange={handleChange} />
-                {errors.postStart && <div className="text-red-500 text-sm">{errors.postStart}</div>}
+                {
+                    opportunityType !== "call-for-tender" && (
+                        <>
+                            <Input
+                                label="Post Start"
+                                type="date"
+                                name="postStart"
+                                value={formData.postStart}
+                                onChange={handleChange}
+                            />
+                            {errors.postStart && (
+                                <div className="text-red-500 text-sm">{errors.postStart}</div>
+                            )}
+                        </>
+                    )
+                }
+
+
 
 
 
@@ -438,7 +460,7 @@ const CreateOpportunity: React.FC = () => {
                 <Button type="submit" disabled={isLoading}>
                     {isLoading ? (
                         <div className="w-fit mx-auto">
-                              Loading...
+                            Loading...
                         </div>
                     ) : (
                         "Create Opportunity"

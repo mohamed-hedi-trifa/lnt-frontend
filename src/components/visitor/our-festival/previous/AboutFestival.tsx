@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import edition1 from '../../../../assets/images/edition1.jpg';
 import edition2 from '../../../../assets/images/edition2.jpg';
 import edition3 from '../../../../assets/images/edition3.jpg';
@@ -9,6 +10,25 @@ import edition7 from '../../../../assets/images/edition7.jpg';
 import edition8 from '../../../../assets/images/edition8.jpg';
 
 export default function AboutFestival() {
+
+  const [completedEditions, setCompletedEdition] = useState();
+  const [completedEvents, setCompletedEvent] = useState();
+  function getEditions() {
+ 
+    axios.get("/api/completed/edition-events").then(res => {
+
+      setCompletedEdition(res.data.completedEditions);
+      setCompletedEvent(res.data.completedEvents); 
+     
+
+    }).catch(err => {
+
+    });
+  }
+
+    useEffect(() => {
+      getEditions();
+    }, []);
   return (
     <div className="px-4">
       <div className="flex flex-col md:flex-row items-center justify-between gap-10">
@@ -19,11 +39,11 @@ export default function AboutFestival() {
           </h1>
           <div className="flex flex-wrap gap-5">
             <div className="bg-[#0270A0] rounded-lg px-4 py-3 flex flex-col items-center max-w-[150px] text-white shadow-md">
-              <span className="text-2xl font-bold">8+</span>
+              <span className="text-2xl font-bold">{completedEditions}+</span>
               <p className="font-semibold text-sm text-center">Éditions Organisées</p>
             </div>
             <div className="bg-[#0270A0] rounded-lg px-4 py-3 flex flex-col items-center max-w-[150px] text-white shadow-md">
-              <span className="text-2xl font-bold">40+</span>
+              <span className="text-2xl font-bold">{completedEvents}+</span>
               <p className="font-semibold text-sm text-center">Événements Réalisés</p>
             </div>
           </div>

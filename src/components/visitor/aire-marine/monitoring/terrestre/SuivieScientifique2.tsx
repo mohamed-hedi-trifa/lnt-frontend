@@ -155,7 +155,7 @@ export default function SuiviScientifique2() {
               </article>
             </section>
           </section>
-          <section className='border-t border-[#000000] pb-10'/>
+          
           <ExplorezSuiviTerrestre />
         </div>
       </section>

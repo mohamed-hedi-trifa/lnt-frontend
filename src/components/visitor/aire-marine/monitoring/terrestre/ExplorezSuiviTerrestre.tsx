@@ -6,27 +6,23 @@ import { SwiperOptions } from "swiper/types";
 import { Link } from "gatsby";
 
 
-
 export default function ExplorezSuiviTerrestre() {
   const [researches, setResearches] = useState();
 
   const getResearches = async () => {
     try {
-
       const res = await axios.get("/api/get-terrestre-researches");
       setResearches(res.data);
-      console.log(res.data)
-
+      console.log(res.data);
     } catch (err) {
       Swal.fire("Error", err.response?.data?.message || "Failed to fetch edition", "error");
-    } finally {
-
     }
   };
 
   useEffect(() => {
     getResearches();
-  }, [])
+  }, []);
+
   const swiperRef = useRef<any>(null);
 
   useEffect(() => {
@@ -35,13 +31,21 @@ export default function ExplorezSuiviTerrestre() {
       slidesPerView: "auto",
     };
 
-    Object.assign(swiperRef.current, swiperParams);
-
-    swiperRef.current?.initialize();
+    if (swiperRef.current) {
+      Object.assign(swiperRef.current, swiperParams);
+      swiperRef.current.initialize?.();
+    }
   }, []);
 
+  // Add this conditional check
+  if (!researches || researches.length === 0) {
+    return null;
+  }
+
   return (
-    <article className="">
+    <div>
+      <section className='border-t border-[#000000] pb-10'/>
+      <article className="">
       <div className="text-justify  text-[24px] sm:text-[32px] font-bold pb-4">
         <p className="text-center text-[30px] sm:text-[32px]">
           <span className="text-[#0270A0]">Explorer</span> Les espéces de Notre Suivi Terrestre{" "}
@@ -53,7 +57,7 @@ export default function ExplorezSuiviTerrestre() {
       </div>
       <div className="hidden md:block">
         <swiper-container ref={swiperRef} class="w-full mt-[50px] mb-[50px] mx-auto" init="false">
-          {researches?.map((research, index) => (
+          {researches.map((research, index) => (
             <swiper-slide key={index} class="relative w-fit">
               <Link to={`/protected-air-marine-coastal-areas/monitoring/${research.type}/${research.slug}`}>
                 <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
@@ -64,7 +68,7 @@ export default function ExplorezSuiviTerrestre() {
       </div>
       <div className="md:hidden">
         <div className="grid grid-cols-2 mt-[50px] mb-[80px] gap-[20px]">
-          {researches?.map((research, index) => (
+          {researches.map((research, index) => (
             <div key={index} className="relative">
               <Link to={`/protected-air-marine-coastal-areas/monitoring/${research.type}/${research.slug}`}>
                 <ResearchCard image={research.image} title={research.title_en || research.title_fr} />
@@ -72,9 +76,9 @@ export default function ExplorezSuiviTerrestre() {
             </div>
           ))}
         </div>
-
-        {/* qsdf */}
       </div>
     </article>
+    </div>
+
   );
 }

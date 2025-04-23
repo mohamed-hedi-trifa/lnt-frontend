@@ -21,21 +21,19 @@ interface FormData {
     professional_sector: string;
     interests_motivation: string;
     competences_experiences: string;
-    availability_start_date: string;
-    availability_time: Date;
-    availability_day: number;
-    availability_month: number;
-  
+    source: string;
+    other_text: string;
+
+
 }
 
 const BenevoleForm: React.FC = () => {
     const [isFormFilled, setIsFormFilled] = useState<boolean>(() => {
-        if (typeof window !== "undefined")
-        {
-            return   localStorage.getItem("isFormFilled") === "true";
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("isFormFilled") === "true";
         }
         return false
-      });
+    });
     const [formData, setFormData] = useLocalStorage("benevole-form", {
         first_name: "",
         last_name: "",
@@ -49,9 +47,8 @@ const BenevoleForm: React.FC = () => {
         professional_sector: "",
         interests_motivation: "",
         competences_experiences: "",
-        availability_month: "",
-        availability_day: "",
-        availability_time: "",
+        source: "",
+        other_text: "",
 
     });
 
@@ -59,6 +56,8 @@ const BenevoleForm: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [cvFileName, setCvFileName] = useState<string>("");
     const [motivationLetterFileName, setMotivationLetterFileName] = useState<string>("");
+    const [selectedOption, setSelectedOption] = useState("");
+    const [otherText, setOtherText] = useState("");
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -68,7 +67,7 @@ const BenevoleForm: React.FC = () => {
         });
     };
 
-  
+
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
@@ -82,9 +81,13 @@ const BenevoleForm: React.FC = () => {
         if (!formData.professional_situation) newErrors.professional_situation = "La situation professionnelle est requise.";
         if (!formData.interests_motivation) newErrors.interests_motivation = "Les intérêts et motivations sont requis.";
         if (!formData.competences_experiences) newErrors.competences_experiences = "Les compétences et expériences sont requises.";
-        if (!formData.availability_time || !formData.availability_day || !formData.availability_month) newErrors.availability_start_date = "La date de début de disponibilité est requise.";
         if (!cvFileName) newErrors.cvFile = "Le CV est requis.";
-
+        if (!formData.source) {
+            newErrors.source = "La source est requise.";
+          }
+          if (formData.source === "other" && !formData.other_text) {
+            newErrors.other_text = "Veuillez préciser la source.";
+          }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -106,18 +109,17 @@ const BenevoleForm: React.FC = () => {
             setMotivationLetterFileName(file.name);
         }
     };
-    
+
     useEffect(() => {
-        if (typeof window !== "undefined")
-        {
+        if (typeof window !== "undefined") {
 
             localStorage.setItem("isFormFilled", String(isFormFilled));
         }
-      }, [isFormFilled]);
+    }, [isFormFilled]);
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-       
+
         if (!validateForm()) {
             return;
         }
@@ -137,7 +139,7 @@ const BenevoleForm: React.FC = () => {
         }
 
         setIsLoading(true);
-    
+
         try {
             const response = await axios.post("/api/submit-volunteer-application", formDataToSend, {
                 headers: {
@@ -347,57 +349,55 @@ const BenevoleForm: React.FC = () => {
                             {errors.competences_experiences && <div className="text-red-500 text-sm">{errors.competences_experiences}</div>}
                         </div>
 
-                        <div className="flex flex-col items-start gap-1">
-                            <label className="font-semibold text-sm">
-                                Disponibilité <span className="text-[#FF0000]">*</span>
-                            </label>
-                            <div className="flex sm:gap-5 gap-3 flex-wrap">
+                        
+                    </div>
 
-                                <DateTimeBenevole
+                    <hr className="border-t-2 border-black mt-5" />
+                    <div className="flex items-start flex-col mt-4">
+                        <h1 className="font-semibold text-lg mb-2">
+                            Comment avez-vous connu l'association ?
+                        </h1>
 
-                                    id="availability_time"
-                                    name="availability_time"
-                                    value={formData.availability_time}
-                                
-                                    onChange={handleChange}
+                        {[
+                            { value: "social", label: "Réseaux sociaux (Facebook, Instagram, etc.)" },
+                            { value: "website", label: "Site web de l'association" },
+                            { value: "recommendation", label: "Bouche-à-oreille / Recommandation" },
+                            { value: "event", label: "Événement ou activité organisée par l'association" },
+                            { value: "media", label: "Presse ou média local" },
+                            { value: "flyer", label: "Affiche ou flyer" },
+                            { value: "other", label: "Autre" },
+                        ].map((option) => (
+                            <label key={option.value} className="flex items-center space-x-2 mb-2">
+                                <input
+                                    type="radio"
+                                    name="source"
+                                    value={option.value}
+                                    checked={selectedOption === option.value}
+                                    onChange={(e) => {
+                                        setSelectedOption(e.target.value);
+                                        handleChange(e);
+                                    }}
                                 />
-                                  
-                                <div className="w-[90px]">
-                                    <SelectFieldBenevole
-                                        id="availability_day"
-                                        name="availability_day"
-                                        value={formData.availability_day}
-                                        required
-                                        options={Array.from({ length: 31 }, (_, i) => (i + 1).toString())} // Days 1-31
-                                        placeholder="Jours"
-                                        onChange={handleChange}
-                                        rounded={true}
-                                    />
-                                </div>
+                                <span>{option.label}</span>
+                            </label>
+                        ))}
 
-
-                                <div className="w-[90px]">
-                                    <SelectFieldBenevole
-                                        id="availability_month"
-                                        name="availability_month"
-                                        required
-                                        value={formData.availability_month}
-                                        options={[
-                                            'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
-                                        ]}
-                                        valueoptions={[
-                                            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
-                                        ]}
-                                        placeholder="Mois"
-                                        onChange={handleChange}
-                                        rounded={true}
-                                    />
-                                </div>
-
-                            </div>
-                            {errors.availability_date && <div className="text-red-500 text-sm">{errors.availability_start_date}</div>}
-            
-                        </div>
+                        {selectedOption === "other" && (
+                            <input
+                                type="text"
+                                name="other_text"
+                                placeholder="Précisez (facultatif)"
+                                className="mt-2 border px-3 py-1 rounded-md w-full"
+                                value={otherText}
+                                onChange={(e) => {
+                                    setOtherText(e.target.value)
+                                    handleChange(e)
+                                }
+                                }
+                            />
+                        )}
+                             {errors.source && <div className="text-red-500 text-sm">{errors.source}</div>}
+                             {errors.other_text  && <div className="text-red-500 text-sm">{errors.other_text}</div>}
                     </div>
 
                     <hr className="border-t-2 border-black mt-5" />

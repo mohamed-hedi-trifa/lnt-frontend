@@ -93,11 +93,11 @@ const ApplicationsList = () => {
         
         // Availability
         doc.setFontSize(14);
-        doc.text("Availability", 14, yPosition);
+        doc.text("Source", 14, yPosition);
         yPosition += 10;
         
         doc.setFontSize(12);
-        doc.text(application.availability, 14, yPosition);
+        doc.text(application.source != 'other' ? application.source : application.other_text   , 14, yPosition);
         yPosition += 10;
         
         // Attachments
@@ -156,7 +156,7 @@ const ApplicationsList = () => {
                             <th className="py-2 px-4 border">Professional Sector</th>
                             <th className="py-2 px-4 border">Interests & Motivation</th>
                             <th className="py-2 px-4 border">Competences & Experiences</th>
-                            <th className="py-2 px-4 border">Availability</th>
+                            <th className="py-2 px-4 border">Source</th>
                             <th className="py-2 px-4 border">CV</th>
                             <th className="py-2 px-4 border">Motivation Letter</th>
                             <th className="py-2 px-4 border">Export</th>
@@ -175,7 +175,7 @@ const ApplicationsList = () => {
                                 <td className="py-2 px-4 border">{application.professional_sector}</td>
                                 <td className="py-2 px-4 border">{application.interests_motivation}</td>
                                 <td className="py-2 px-4 border">{application.competences_experiences}</td>
-                                <td className="py-2 px-4 border">{application.availability}</td>
+                                <td className="py-2 px-4 border">{application.source != 'other' ? application.source : application.other_text}</td>
                                 <td className="py-2 px-4 border">
                                     <a
                                         href={`${process.env.GATSBY_API_URL}${application?.cv_path}`}

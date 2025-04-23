@@ -80,7 +80,7 @@ export default function Theme() {
         );
       })
       .catch((err) => {
-        Swal.fire("Error", err.response?.data?.message || "Something went wrong", "error");
+        Swal.fire("Error", err.response?.data?.error || "Something went wrong", "error");
       });
   };
 

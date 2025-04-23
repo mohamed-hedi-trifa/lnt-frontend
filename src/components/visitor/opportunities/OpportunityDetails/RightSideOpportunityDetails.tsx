@@ -94,13 +94,18 @@ export default function RightSideOpportunityDetails({ opportunity, language, par
           </p>
         </div>
 
-        <div className="flex gap-2 items-center">
-          <img src="/icons/calendrier.png" alt="" width={22} />
-          <p className='text-[13px]'>
-            <span className='font-semibold'>Début du poste : </span>
-            {formatDateToMonthYear(opportunity.postStart)}
-          </p>
-        </div>
+        {
+          opportunity.type !== "call-for-tender" && (
+            <div className="flex gap-2 items-center">
+              <img src="/icons/calendrier.png" alt="" width={22} />
+              <p className='text-[13px]'>
+                <span className='font-semibold'>Début du poste : </span>
+                {formatDateToMonthYear(opportunity.postStart)}
+              </p>
+            </div>
+          )
+        }
+
       </div>
 
       <div className="font-bold text-start mt-2">

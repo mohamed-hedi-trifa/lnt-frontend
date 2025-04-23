@@ -41,7 +41,7 @@ const EditOpportunity = ({ location, params }: { location: any; params: any }) =
     const [englishItems, setEnglishItems] = useState<any[]>([]);
     const [frenshItems, setFrenshItems] = useState<any[]>([]);
     const [image, setImage] = useState<File | null>(null);
-
+   const [opportunityType, setOpportunityType] = useState("");
     useEffect(() => {
         const slugParam = params.slug;
         setSlug(slugParam);
@@ -55,7 +55,7 @@ const EditOpportunity = ({ location, params }: { location: any; params: any }) =
                 const response = await axios.get(`/api/opportunities/${slug}`);
                 const opportunity: any = response.data;
 
-
+                setOpportunityType(response.data.type)
                 opportunity.content_items.sort((a: any, b: any) => a.order - b.order);
 
 
@@ -305,7 +305,11 @@ const EditOpportunity = ({ location, params }: { location: any; params: any }) =
                     label="Opportunity type:"
                     name="type"
                     value={formData.type}
-                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    onChange={(e) => {
+                        const selectedType = e.target.value;
+                        setFormData({ ...formData, type: selectedType });
+                        setOpportunityType(selectedType);
+                      }}
                 >
                     <option value="">select type</option>
                     <option value="job-offer">job-offer</option>
@@ -317,12 +321,25 @@ const EditOpportunity = ({ location, params }: { location: any; params: any }) =
                 <Input label="Contract type" type="text" name="contract_type" value={formData.contract_type} onChange={handleChange} />
 
 
-                <Input label="due_date" type="date" name="due_date" value={formData.due_date} onChange={handleChange} />
+                <Input label="due_date" type="formatDateTime" name="due_date" value={formData.due_date} onChange={handleChange} />
 
-                <Input label="Post Start" type="date" name="postStart" value={formData.postStart} onChange={handleChange} />
+  
        
 
-
+                {
+                    opportunityType !== "call-for-tender" && (
+                        <>
+                            <Input
+                                label="Post Start"
+                                type="date"
+                                name="postStart"
+                                value={formData.postStart}
+                                onChange={handleChange}
+                            />
+                 
+                        </>
+                    )
+                }
                 <Select
                     name="status"
                     label="Status"

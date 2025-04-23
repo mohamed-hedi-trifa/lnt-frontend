@@ -9,33 +9,35 @@ import RecentArticle from './RecentArticle';
 import PopularNews from './PopularNews';
 import Question from './Question';
 import PopularCategory from './PopularCategory';
-import AllNews from './AllNews';
+import AllNews from './AllNewsFilter';
+import { Link } from 'gatsby';
+import LangLink from '@/components/LangLink';
 
 export default function News() {
   const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
     if (isOpened) {
-        document.querySelector("body")!.style.overflow = "hidden";
+      document.querySelector("body")!.style.overflow = "hidden";
     } else {
-        document.querySelector("body")!.style.overflow = "visible";
+      document.querySelector("body")!.style.overflow = "visible";
     }
-})
+  })
 
 
   return (
     <main className="relative">
       {/* Overlay */}
-      <div 
+      <div
         className={`fixed z-40 inset-0 bg-black transition-all duration-500 ${isOpened ? "opacity-50" : "opacity-0 pointer-events-none"}`}
         onClick={() => setIsOpened(false)}
       />
-      
-      <NewsImage 
-        imgSrc={newsImage} 
-        btnText="Evénement culturel" 
-        paragraph="Journées d'Échange Culturel à Kerkennah : Valorisation du Patrimoine Naturel et Culturel" 
-        date="LE 4 OCTOBRE 2024" 
+
+      <NewsImage
+        imgSrc={newsImage}
+        btnText="Evénement culturel"
+        paragraph="Journées d'Échange Culturel à Kerkennah : Valorisation du Patrimoine Naturel et Culturel"
+        date="LE 4 OCTOBRE 2024"
       />
 
       <section className="my-5 text-center sm:max-w-[1282px] max-w-7xl mx-auto mt-20 px-5">
@@ -49,17 +51,22 @@ export default function News() {
         <div className="w-full">
           <RecentArticle />
           <PopularNews />
+          <div className='w-full flex justify-center mt-5'>
+            <LangLink to="/news/all-news">
+              <button className="bg-[#0270A0] w-fit px-5 py-3 rounded-lg text-white font-semibold">Voir toutes les actualités</button>
+            </LangLink>
+          </div>
         </div>
         <div className="flex flex-col gap-10 px-5 w-[300px]">
           <FollowUs />
           <Question />
           <PopularCategory />
         </div>
+
+
       </section>
 
-      <section className="my-5 max-w-7xl mx-auto mt-20">
-        <AllNews />
-      </section>
+
     </main>
   );
 }

@@ -10,11 +10,11 @@ import newssImage from '../../../assets/images/news.jpg';
 import PageTitle from '@/components/atoms/titles/PageTitle';
 import PageParagraph from '@/components/atoms/PageParagraph';
 
-export default function AllNews() {
+export default function AllNewsFilter({ location, params }: { location: any; params: any }) {
   const { lang } = useTranslation();
   const [themes, setThemes] = useState([]);
   // params.slug ? [params.slug] : [] 
-  const [selectedThemes, setSelectedThemes] = useState([]);
+  const [selectedThemes, setSelectedThemes] = useState(params.id ? [parseInt(params.id)] : []);
   console.log(selectedThemes)
 
   const [selectedDateFilter, setSelectedDateFilter] = useState(null);
@@ -41,7 +41,7 @@ export default function AllNews() {
   const [themesLoading, setThemesLoading] = useState(true);
 
   // ---- NEW: All‑themes + individual themes state ----
-  const [selectedAllThemes, setSelectedAllThemes] = useState(true);
+  const [selectedAllThemes, setSelectedAllThemes] = useState(params.id ? false: true );
   const [showAllThemes, setShowAllThemes] = useState(false);
   const [isCustomDropdownOpen, setIsCustomDropdownOpen] = useState(false);
 
