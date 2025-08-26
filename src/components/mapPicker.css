@@ -1,8 +1,0 @@
-.leaflet-control-attribution {
-    display: none !important;
-  }
-
-  .map-container {
-    position: relative;
-    z-index: 1; 
-  }

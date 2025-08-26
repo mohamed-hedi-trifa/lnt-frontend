@@ -1,24 +1,19 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/
- */
+
 
 import React from "react";
 import "swiper/css";
 import "react-toastify/dist/ReactToastify.css";
 import "./src/styles/global.css";
 
-import AdminLayout from "./src/components/admin/admin-layout/AdminLayout";
+
 import Layout from "./src/components/layout/Layout";
 // import { config } from "@fortawesome/fontawesome-svg-core"
 // import "@fortawesome/fontawesome-svg-core/styles.css"
 // import "animate.css/animate.min.css";
 import axios from "axios";
-import AdminPrivateRoute from "./src/components/auth/AdminPrivateRoute";
 import AuthProvider from "./src/contexts/AuthProvider";
 import { register } from "swiper/element/bundle";
-import { ToastContainer } from "react-toastify";
+
 
 register();
 
@@ -38,14 +33,9 @@ export function wrapPageElement({ element, props }) {
   // including location, data, etc - you don't need to pass it
   return (
     <AuthProvider>
-      <ToastContainer autoClose={2000} position="bottom-right" closeOnClick={true} />
-      {props.location.pathname.indexOf("/admin") === 0 ? (
-        <AdminPrivateRoute>
-          <AdminLayout>{element}</AdminLayout>
-        </AdminPrivateRoute>
-      ) : (
+
         <Layout {...props}>{element}</Layout>
-      )}
+
     </AuthProvider>
   );
 }

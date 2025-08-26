@@ -1,15 +1,6 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
- */
 
 import * as React from "react";
 
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import FixedBackground from "@/components/FixedBackground";
 
 const Layout = ({ children, location = { pathname: "" } }: { children: React.ReactNode; location: any }) => {
   const haveLayout = () => {
@@ -23,10 +14,10 @@ const Layout = ({ children, location = { pathname: "" } }: { children: React.Rea
 
   return (
     <>
-      <FixedBackground pathname={location?.pathname} />
-      {haveLayout() ? <Navbar location={location} /> : ""}
+  
+      {/* {haveLayout() ? <Navbar location={location} /> : ""} */}
       <div className="">{children}</div>
-      <Footer />
+   
     </>
   );
 };

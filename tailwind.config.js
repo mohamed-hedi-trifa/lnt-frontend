@@ -10,7 +10,7 @@ module.exports = {
 		  'gradient': 'linear-gradient(to right,  #51ADC6, #006E9F)',
 		},
 		colors: {
-		  primary: "#0270A0",
+		  primary: "#E46212",
 		  primaryHover: "#1d4ed8",
 		  secondary: "#51ADC6",
 		},

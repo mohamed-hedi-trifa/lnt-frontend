@@ -1,23 +1,24 @@
+
 import React, { useEffect } from "react";
-import { navigate } from "gatsby";
+import Header from "@/components/visitor/header";
+import HeroSection from "@/components/visitor/homePage/hero-section";
+import FeaturedListings from "@/components/visitor/homePage/featured-listings";
+import WhyChooseUs from "@/components/visitor/homePage/why-choose-us";
+import Footer from "@/components/visitor/footer";
+
 
 const IndexPage = () => {
-    useEffect(() => {
-        const userLang = navigator.language || (navigator as any).userLanguage; // Get user's language
-        const langCode = userLang.split('-')[0]; // Get the language code (e.g., 'fr')
 
-        // Redirect if the language is supported
-        const supportedLanguages = [`en`, `fr`]; // Add your supported languages here
-        if (supportedLanguages.includes(langCode)) {
-            // @ts-ignore
-            navigate(`/${langCode}`); // Redirect to the corresponding language page
-        }
-    }, []);
 
     return (
-        <div>
-            <h1>Welcome to my website!</h1>
-            {/* Other content */}
+        <div className="min-h-screen">
+            <Header />
+            <main>
+                <HeroSection />
+                <FeaturedListings />
+                <WhyChooseUs />
+            </main>
+            <Footer />
         </div>
     );
 };
