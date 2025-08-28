@@ -1,39 +1,87 @@
 "use client"
 
-import  React from "react"
+import React from "react"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-
+import axios from 'axios';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Eye, EyeOff, User, Mail, Phone, Lock, UserCheck } from "lucide-react"
-import Link from "next/link"
+import Swal from 'sweetalert2';
 import Header from "@/components/visitor/header"
 import { Label } from "@/components/ui/label"
-
+import { Link, navigate } from 'gatsby'
+import { useAuthContext } from "@/contexts/AuthProvider"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export default function InscriptionPage() {
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false)
-  const [userRole, setUserRole] = useState("")
-  const [formData, setFormData] = useState({
+
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [userRole, setUserRole] = useState("visitor")
+  const [registerData, setRegisterData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    username: "",
-    password: "",
     phone: "",
-  })
+    password: "",
+    confirmPassword: "",
 
+  })
+  const { user, setUser } = useAuthContext()
   const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
+    setRegisterData((prev) => ({ ...prev, [field]: value }))
   }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Logique d'inscription à implémenter
-    console.log("Données d'inscription:", { ...formData, role: userRole })
+    e.preventDefault();
+    setLoading(true);
+    const data = {
+      firstname: registerData.firstName,
+      lastname: registerData.lastName,
+      email: registerData.email,
+      phone: registerData.phone,
+      password: registerData.password,
+      confirmPassword: registerData.confirmPassword,
+      userRole: userRole
+
+    }
+
+    axios.post('/api/register', data).then(res => {
+
+      setUser(res.data.data.user)
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", res.data.data.token)
+      }
+      if (res.data.data.user.role === 'owner') {
+        navigate("/owner");
+      } else if (res.data.data.user.role === 'admin') {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+
+
+
+    }).catch(err => {
+      setLoading(false);
+
+      if (err.response?.data?.data) {
+
+        const validationErrors = err.response.data.data;
+
+
+        const messages = Object.values(validationErrors).flat().join("\n");
+
+        setError(messages);
+      } else {
+        setError("Une erreur est survenue, veuillez réessayer.");
+      }
+    });
   }
 
   return (
@@ -41,8 +89,8 @@ export default function InscriptionPage() {
       <Header />
 
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-md mx-auto bg-[#FFF8EA]">
-          <Card className="shadow-lg border-0 bg-card">
+        <div className="max-w-lg mx-auto bg-[#FFF8EA]">
+          <Card className="shadow-xl ">
             <CardHeader className="text-center space-y-2">
               <CardTitle className="text-2xl font-serif text-primary">Créer un compte</CardTitle>
               <CardDescription className="text-muted-foreground">
@@ -51,7 +99,13 @@ export default function InscriptionPage() {
             </CardHeader>
 
             <CardContent className="space-y-6">
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-6">
+
+                {error && (
+                  <Alert className="border-red-200 bg-red-50">
+                    <AlertDescription className="text-sm text-red-800">{error}</AlertDescription>
+                  </Alert>
+                )}
                 {/* Nom et Prénom */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
@@ -64,7 +118,7 @@ export default function InscriptionPage() {
                         id="firstName"
                         type="text"
                         placeholder="Votre prénom"
-                        value={formData.firstName}
+                        value={registerData.firstName}
                         onChange={(e) => handleInputChange("firstName", e.target.value)}
                         className="pl-10"
                         required
@@ -82,7 +136,7 @@ export default function InscriptionPage() {
                         id="lastName"
                         type="text"
                         placeholder="Votre nom"
-                        value={formData.lastName}
+                        value={registerData.lastName}
                         onChange={(e) => handleInputChange("lastName", e.target.value)}
                         className="pl-10"
                         required
@@ -102,27 +156,8 @@ export default function InscriptionPage() {
                       id="email"
                       type="email"
                       placeholder="votre@email.com"
-                      value={formData.email}
+                      value={registerData.email}
                       onChange={(e) => handleInputChange("email", e.target.value)}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
-                </div>
-
-                {/* Nom d'utilisateur */}
-                <div className="space-y-2">
-                  <Label htmlFor="username" className="text-sm font-medium">
-                    Nom d'utilisateur
-                  </Label>
-                  <div className="relative">
-                    <UserCheck className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                    <Input
-                      id="username"
-                      type="text"
-                      placeholder="nom_utilisateur"
-                      value={formData.username}
-                      onChange={(e) => handleInputChange("username", e.target.value)}
                       className="pl-10"
                       required
                     />
@@ -157,7 +192,7 @@ export default function InscriptionPage() {
                         id="phone"
                         type="tel"
                         placeholder="+216 XX XXX XXX"
-                        value={formData.phone}
+                        value={registerData.phone}
                         onChange={(e) => handleInputChange("phone", e.target.value)}
                         className="pl-10"
                         required
@@ -178,7 +213,7 @@ export default function InscriptionPage() {
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Votre mot de passe"
-                      value={formData.password}
+                      value={registerData.password}
                       onChange={(e) => handleInputChange("password", e.target.value)}
                       className="pl-10 pr-10"
                       required
@@ -193,12 +228,40 @@ export default function InscriptionPage() {
                   </div>
                 </div>
 
+                {/* Mot de passe */}
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword" className="text-sm font-medium">
+                    Confirmer votre mot de passe
+                  </Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                    <Input
+                      id="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Confirmer votre mot de passe"
+                      value={registerData.confirmPassword}
+                      onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                      className="pl-10 pr-10"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
                 {/* Bouton d'inscription */}
                 <Button
                   type="submit"
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 transition-all duration-200 hover:shadow-lg"
+                  disabled={loading}
+                  className="w-full text-white bg-primary hover:bg-primary/90 font-medium py-3 transition-all duration-200 hover:shadow-lg"
                 >
-                  Créer mon compte
+
+                  {loading ? "chargement..." : "Créer mon compte"}
                 </Button>
               </form>
 
@@ -206,7 +269,7 @@ export default function InscriptionPage() {
               <div className="text-center pt-4 border-t border-border">
                 <p className="text-sm text-muted-foreground">
                   Vous avez déjà un compte ?{" "}
-                  <Link href="/connexion" className="text-primary hover:text-primary/80 font-medium transition-colors">
+                  <Link to="/login" className="text-primary hover:text-primary/80 font-medium transition-colors">
                     Se connecter
                   </Link>
                 </p>
