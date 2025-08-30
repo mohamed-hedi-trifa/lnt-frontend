@@ -174,14 +174,14 @@ export default function InscriptionPage() {
                       <SelectValue placeholder="Sélectionnez votre rôle" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="visiteur">Visiteur</SelectItem>
-                      <SelectItem value="proprietaire">Propriétaire</SelectItem>
+                      <SelectItem value="visitor">visitor</SelectItem>
+                      <SelectItem value="owner">Propriétaire</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 {/* Téléphone (conditionnel pour propriétaires) */}
-                {userRole === "proprietaire" && (
+                {userRole === "owner" && (
                   <div className="space-y-2">
                     <Label htmlFor="phone" className="text-sm font-medium">
                       Numéro de téléphone portable
